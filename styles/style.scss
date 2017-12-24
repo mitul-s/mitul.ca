@@ -22,6 +22,7 @@ a {
     }
     p {
         font-size: 1.2rem;
+        color: $text-grey;
     }
 }
 
@@ -104,6 +105,11 @@ a {
     @extend .padding;
 }
 
+#now {
+    @extend .padding;
+    background-color: $light-grey;
+}
+
 
 // CALL TO ACTION
 
@@ -124,4 +130,6 @@ a {
     background-color: $light-grey;
     width: 100%;
     color: $text-purple;
+    text-align: center;
+    line-height: 8.5vh;   
 }

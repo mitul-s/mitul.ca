@@ -15,6 +15,7 @@ a {
 
 .title p {
   font-size: 1.2rem;
+  color: #637381;
 }
 
 .purple {
@@ -41,7 +42,7 @@ a {
   margin: 0 auto;
 }
 
-.padding, #about, #cta {
+.padding, #about, #now, #cta {
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -87,6 +88,10 @@ a {
   height: 100vh;
 }
 
+#now {
+  background-color: #F7F8FF;
+}
+
 #cta {
   display: flex;
   align-items: center;
@@ -102,5 +107,7 @@ a {
   background-color: #F7F8FF;
   width: 100%;
   color: #8E66EE;
+  text-align: center;
+  line-height: 8.5vh;
 }
 /*# sourceMappingURL=style.css.map */
