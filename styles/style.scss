@@ -4,6 +4,40 @@ $white: #ffffff;
 $light-grey: #F7F8FF;
 $transition: 150ms all;
 
+@mixin grid($columns, $gap) {
+    display: grid;
+    grid-template-columns: $columns;
+    grid-gap: $gap;
+}
+
+@media screen and (max-width: 650px) {
+    .container {
+        width: 90vw !important;
+    }
+    .grid {
+        display: inline !important;
+    }
+
+    .card {
+        border-bottom: 2px solid $text-purple !important;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        margin-right: 0px !important;
+        box-shadow: none !important;
+    }
+
+    .gallery, .content {
+        text-align: left !important;
+        .divider {
+            margin: 0;
+        }
+        .photo {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+// Resets
 
 body, html {
     margin: 0;
@@ -14,6 +48,22 @@ body, html {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+// Custom Standards
+.container {
+    width: 70vw;
+    margin: 0 auto;
+}
+
+.padding {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .title {
@@ -30,13 +80,32 @@ a {
     color: $text-purple;
 }
 
+.text-grey {
+    color: $text-grey;
+}
 
-// Other 
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.inline {
+    display: inline;
+    margin-left: 10px;
+}
+
+.photo {
+    width: 100%;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.50);
+}
+
+// Custom Items
 .btn {
     border: 2px solid $white;
     background-color: none;
     padding: 10px;
-    border-radius: 3px;
+    border-radius: 5px;
     width: 20%;
     margin: 0 auto;
     transition: $transition;
@@ -46,26 +115,20 @@ a {
     }
 }
 
-.container {
-    width: 70vw;
-    margin: 0 auto;
-}
-
-.padding {
-    padding-top: 50px;
-    padding-bottom: 50px;
+.card {
+    border: 2px solid $text-purple;
+    border-bottom: none;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    min-height: 40vh;
+    padding: 10px 30px;
+    box-shadow: 0 -2px 5px 0 rgba(0, 20, 40, 0.20);
 }
 
 .divider {
     width: 10%;
     height: 2px;
     background-color: $text-purple;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 20px;
 }
 
 // NAVIGATION BAR
@@ -98,16 +161,104 @@ a {
     display: flex;
     align-items: center;
     height: 100vh;
+    .arrow-down {
+        position: relative;
+        top: 30vh;
+        text-align: center;
+    }
 }
+    
 
 // ABOUT CONTENT
 #about {
     @extend .padding;
+    .grid {
+        @include grid(50% 50%, 20px);
+    }
+    .about-img {
+        margin-top: 1.4em;
+        // Default ==> margin-top: 0.83em;
+    }
 }
+
+#experience {
+    .grid {
+        @include grid(33.33% 33.33% 33.33%, 0px);
+        text-align: center;
+        margin-top: 40px;
+        .work {
+            margin-right: 20px;
+        }
+    }
+}
+
+/* .card {
+    &:nth-child(1) {
+        border-color: #d40139;
+    }
+    &:nth-child(2) {
+        border-color: #0079c1;
+    }
+    &:nth-child(3) {
+        border-color: #af0b1c;
+    }
+} */
+
+.work-item {
+    list-style: square;
+    padding-left: 2px;
+    text-align: left;
+    li {
+        margin-bottom: 10px;
+        line-height: 1.333;
+    }
+}
+
+// WHATS HAPPENING NOW 
 
 #now {
     @extend .padding;
     background-color: $light-grey;
+    .grid {
+        @include grid(50% 50%, 0px);
+    }
+}
+
+
+// PROJECTS // 
+#projects {
+    @extend .padding;
+}
+
+
+
+// GALLERY // 
+#gallery {
+    @extend .padding;
+    .gallery {
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+    }
+    .grid {
+        @include grid(33% 33% 33%, 20px);
+    }
+    .btn {
+        border: 2px solid $text-purple;
+        text-align: center;
+        color: $text-purple;
+        &:hover {
+            background-color: $text-purple;
+            color: white;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
+        }
+    }
+}
+
+
+#contact {
+    @extend #cta;
+    align-items: left !important; 
+    text-align: left !important; 
 }
 
 
@@ -126,10 +277,26 @@ a {
 // FOOTER CONTENT 
 #footer {
     padding-top:10px;
-    height: 15vh;
+    height: 10vh;
+    font-size: 0.8rem;
     background-color: $light-grey;
     width: 100%;
     color: $text-purple;
-    text-align: center;
-    line-height: 8.5vh;   
+    line-height: 7vh;
+    .grid {
+        @include grid(20% 60% 20%, 0)
+    }
+    li {
+        @extend .inline;
+    }   
 }
+
+.icons span {
+    margin-right: 7px;
+    color: $text-grey;
+    transition: $transition;
+    &:hover {
+        color: $text-purple;
+    }
+}
+
