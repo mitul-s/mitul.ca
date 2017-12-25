@@ -12,6 +12,9 @@
     margin-right: 0px !important;
     box-shadow: none !important;
   }
+  #projects .grid .item {
+    margin-right: 0 !important;
+  }
   .gallery, .content {
     text-align: left !important;
   }
@@ -44,7 +47,7 @@ ul {
   margin: 0 auto;
 }
 
-.padding, #about, #now, #projects, #gallery, #cta, #contact {
+.padding, #about, #now, #projects, #gallery, #contact, #cta {
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -74,6 +77,14 @@ ul {
 .inline, #footer li {
   display: inline;
   margin-left: 10px;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #8E66EE;
 }
 
 .photo {
@@ -202,6 +213,19 @@ ul {
   grid-gap: 0px;
 }
 
+#projects .grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 0;
+}
+
+#projects .grid .item {
+  border: 2px solid #8E66EE;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 10px 30px;
+}
+
 #gallery .gallery {
   margin-top: 5vh;
   margin-bottom: 5vh;
@@ -226,11 +250,30 @@ ul {
 }
 
 #contact {
-  align-items: left !important;
-  text-align: left !important;
+  background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
+  min-height: 30vh;
+  color: #ffffff;
 }
 
-#cta, #contact {
+#contact .contact-input {
+  width: 50%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  margin-bottom: 10px;
+  transition: 150ms all;
+}
+
+#contact .contact-input:focus {
+  outline: none;
+  border: 2px solid #8E66EE;
+}
+
+.form input {
+  display: block;
+}
+
+#cta {
   display: flex;
   align-items: center;
   height: 30vh;

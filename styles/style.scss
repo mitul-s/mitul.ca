@@ -26,6 +26,10 @@ $transition: 150ms all;
         box-shadow: none !important;
     }
 
+    #projects .grid .item {
+        margin-right: 0 !important;
+    }
+
     .gallery, .content {
         text-align: left !important;
         .divider {
@@ -92,6 +96,13 @@ ul {
 .inline {
     display: inline;
     margin-left: 10px;
+}
+
+.link {
+    text-decoration: underline;
+    &:hover {
+        color: $text-purple;
+    }
 }
 
 .photo {
@@ -228,6 +239,16 @@ ul {
 // PROJECTS // 
 #projects {
     @extend .padding;
+    .grid {
+        @include grid(2fr 2fr, 0);
+        .item {
+            border: 2px solid $text-purple;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            padding: 10px 30px;
+        }
+    }
+    
 }
 
 
@@ -256,9 +277,26 @@ ul {
 
 
 #contact {
-    @extend #cta;
-    align-items: left !important; 
-    text-align: left !important; 
+    @extend .padding;
+    background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
+    min-height: 30vh;
+    color: $white;
+    .contact-input {
+        width: 50%;
+        padding: 15px;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        margin-bottom: 10px;
+        transition: $transition;
+        &:focus {
+            outline: none;
+            border: 2px solid $text-purple;
+        }
+    }
+}
+
+.form input {
+    display: block;
 }
 
 
@@ -290,6 +328,8 @@ ul {
         @extend .inline;
     }   
 }
+
+
 
 .icons span {
     margin-right: 7px;
