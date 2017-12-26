@@ -22,12 +22,7 @@ $transition: 150ms all;
         border-bottom: 2px solid $text-purple !important;
         border-radius: 5px;
         margin-bottom: 20px;
-        margin-right: 0px !important;
-        box-shadow: none !important;
-    }
-
-    #projects .grid .item {
-        margin-right: 0 !important;
+        // box-shadow: none !important;
     }
 
     .gallery, .content {
@@ -39,11 +34,16 @@ $transition: 150ms all;
             margin-bottom: 10px;
         }
     }
+
+    .hide {
+        display: none;
+    }
 }
 
 // Resets
 
 body, html {
+    box-sizing: border-box;
     margin: 0;
     height: 100%;
     font-family: 'Roboto', 'Arial', sans-serif;
@@ -174,7 +174,7 @@ ul {
     height: 100vh;
     .arrow-down {
         position: relative;
-        top: 30vh;
+        top: 27vh;
         text-align: center;
     }
 }
@@ -184,7 +184,7 @@ ul {
 #about {
     @extend .padding;
     .grid {
-        @include grid(50% 50%, 20px);
+        @include grid(1fr 1fr, 20px);
     }
     .about-img {
         margin-top: 1.4em;
@@ -194,12 +194,9 @@ ul {
 
 #experience {
     .grid {
-        @include grid(33.33% 33.33% 33.33%, 0px);
+        @include grid(1fr 1fr 1fr, 20px);
         text-align: center;
         margin-top: 40px;
-        .work {
-            margin-right: 20px;
-        }
     }
 }
 
@@ -231,7 +228,20 @@ ul {
     @extend .padding;
     background-color: $light-grey;
     .grid {
-        @include grid(50% 50%, 0px);
+        @include grid(1fr 1fr, 0px);
+    }
+}
+
+
+#cta-email {
+    @extend .padding;
+    background-color: $light-grey;
+    .btn {
+        &:hover {
+            border: 2px solid $text-purple;
+            color: $white;
+            background-color: $text-purple;
+        }
     }
 }
 
@@ -240,10 +250,10 @@ ul {
 #projects {
     @extend .padding;
     .grid {
-        @include grid(2fr 2fr, 0);
+        @include grid(2fr 2fr, 20px);
         .item {
             border: 2px solid $text-purple;
-            margin-right: 20px;
+            // margin-right: 20px;
             margin-bottom: 20px;
             padding: 10px 30px;
         }
@@ -261,7 +271,7 @@ ul {
         margin-bottom: 5vh;
     }
     .grid {
-        @include grid(33% 33% 33%, 20px);
+        @include grid(1fr 1fr 1fr, 20px);
     }
     .btn {
         border: 2px solid $text-purple;
@@ -322,14 +332,12 @@ ul {
     color: $text-purple;
     line-height: 7vh;
     .grid {
-        @include grid(20% 60% 20%, 0)
+        @include grid(1fr 2fr 1fr, 20px)
     }
     li {
         @extend .inline;
     }   
 }
-
-
 
 .icons span {
     margin-right: 7px;

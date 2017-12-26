@@ -9,11 +9,6 @@
     border-bottom: 2px solid #8E66EE !important;
     border-radius: 5px;
     margin-bottom: 20px;
-    margin-right: 0px !important;
-    box-shadow: none !important;
-  }
-  #projects .grid .item {
-    margin-right: 0 !important;
   }
   .gallery, .content {
     text-align: left !important;
@@ -24,9 +19,13 @@
   .gallery .photo, .content .photo {
     margin-bottom: 10px;
   }
+  .hide {
+    display: none;
+  }
 }
 
 body, html {
+  box-sizing: border-box;
   margin: 0;
   height: 100%;
   font-family: 'Roboto', 'Arial', sans-serif;
@@ -47,7 +46,7 @@ ul {
   margin: 0 auto;
 }
 
-.padding, #about, #now, #projects, #gallery, #contact, #cta {
+.padding, #about, #now, #cta-email, #projects, #gallery, #contact, #cta {
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -155,13 +154,13 @@ ul {
 
 #header .arrow-down {
   position: relative;
-  top: 30vh;
+  top: 27vh;
   text-align: center;
 }
 
 #about .grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
 
@@ -171,14 +170,10 @@ ul {
 
 #experience .grid {
   display: grid;
-  grid-template-columns: 33.33% 33.33% 33.33%;
-  grid-gap: 0px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
   text-align: center;
   margin-top: 40px;
-}
-
-#experience .grid .work {
-  margin-right: 20px;
 }
 
 /* .card {
@@ -209,19 +204,28 @@ ul {
 
 #now .grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 0px;
+}
+
+#cta-email {
+  background-color: #F7F8FF;
+}
+
+#cta-email .btn:hover {
+  border: 2px solid #8E66EE;
+  color: #ffffff;
+  background-color: #8E66EE;
 }
 
 #projects .grid {
   display: grid;
   grid-template-columns: 2fr 2fr;
-  grid-gap: 0;
+  grid-gap: 20px;
 }
 
 #projects .grid .item {
   border: 2px solid #8E66EE;
-  margin-right: 20px;
   margin-bottom: 20px;
   padding: 10px 30px;
 }
@@ -233,7 +237,7 @@ ul {
 
 #gallery .grid {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
 }
 
@@ -294,8 +298,8 @@ ul {
 
 #footer .grid {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
-  grid-gap: 0;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 20px;
 }
 
 .icons span {
