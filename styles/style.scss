@@ -172,6 +172,15 @@ ul {
     display: flex;
     align-items: center;
     height: 100vh;
+     background: linear-gradient( rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)),
+     url(../media/img/img-1.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     .arrow-down {
         position: relative;
         top: 27vh;
@@ -187,9 +196,9 @@ ul {
         @include grid(1fr 1fr, 20px);
     }
     .about-img {
-        margin-top: 1.4em;
-        // Default ==> margin-top: 0.83em;
+        margin-top: 1.03em;
     }
+    
 }
 
 #experience {
@@ -251,6 +260,7 @@ ul {
     @extend .padding;
     .grid {
         @include grid(2fr 2fr, 20px);
+        margin-top: 40px;
         .item {
             border: 2px solid $text-purple;
             // margin-right: 20px;
@@ -258,7 +268,24 @@ ul {
             padding: 10px 30px;
         }
     }
-    
+    .photo {
+        box-shadow: none;
+    }
+    .btn {
+        display: inline-block;
+        text-align: center;
+        margin: 10px auto;
+        background-color: $text-purple;
+        color: $white;
+        border: 2px solid $text-purple;
+        font-size: 12px;
+        padding: 10px 0px;
+        &:hover {
+            background-color: $white;
+            color: $text-purple;
+            cursor: pointer;
+        }
+    }
 }
 
 
