@@ -10,6 +10,9 @@
     border-radius: 5px;
     margin-bottom: 20px;
   }
+  .last {
+    margin-bottom: 50px;
+  }
   .gallery, .content {
     text-align: left !important;
   }
@@ -176,6 +179,12 @@ ul {
   margin-top: 1.03em;
 }
 
+.feats {
+  font-size: 0.8rem;
+  line-height: 0.9;
+  margin: 0;
+}
+
 #experience .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -212,7 +221,7 @@ ul {
 
 #now .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 0px;
 }
 

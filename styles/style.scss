@@ -25,6 +25,10 @@ $transition: 150ms all;
         // box-shadow: none !important;
     }
 
+    .last {
+        margin-bottom: 50px;
+    }
+
     .gallery, .content {
         text-align: left !important;
         .divider {
@@ -197,8 +201,13 @@ ul {
     }
     .about-img {
         margin-top: 1.03em;
-    }
-    
+    }   
+}
+
+.feats {
+    font-size: 0.8rem;
+    line-height: 0.9;
+    margin: 0;
 }
 
 #experience {
@@ -237,7 +246,7 @@ ul {
     @extend .padding;
     background-color: $light-grey;
     .grid {
-        @include grid(1fr 1fr, 0px);
+        @include grid(1fr 1fr 1fr, 0px);
     }
 }
 
