@@ -1,4 +1,5 @@
 $text-purple: #8E66EE;
+$secondary: #2F9BF2;
 $text-grey: #637381;
 $white: #ffffff;
 $light-grey: #F7F8FF;
@@ -8,6 +9,12 @@ $transition: 150ms all;
     display: grid;
     grid-template-columns: $columns;
     grid-gap: $gap;
+}
+
+@media screen and (max-width: 950px) {
+    .container {
+        width: 90vw !important;
+    }
 }
 
 @media screen and (max-width: 650px) {
@@ -63,6 +70,17 @@ ul {
     padding-left: 0;
 }
 
+::selection {
+    background: $secondary;
+    color: $white;
+}
+
+::-moz-selection {
+    background: $text-purple;
+    color: $white;
+}
+
+
 // Custom Standards
 .container {
     width: 70vw;
@@ -92,6 +110,17 @@ ul {
     color: $text-grey;
 }
 
+.small {
+    margin-top: -10px;
+    font-size: 12px;
+    line-height: 0.5;
+}
+
+.paragraph {
+    margin: 40px 0;
+    line-height: 1.4;
+}
+
 .center {
     text-align: center;
     margin: 0 auto;
@@ -116,6 +145,9 @@ ul {
 }
 
 // Custom Items
+button {
+    background-color: none !important;
+}
 .btn {
     border: 2px solid $white;
     background-color: none;
@@ -160,7 +192,7 @@ ul {
     color: $text-grey;
     .item {
         float: right;
-        margin-left: 5vw;
+        margin-left: 2vw;
         min-width: 30px;
         transition: 0.2s all;
         // text-transform: uppercase;
@@ -214,7 +246,6 @@ ul {
     .grid {
         @include grid(1fr 1fr 1fr, 20px);
         text-align: center;
-        margin-top: 40px;
     }
 }
 
@@ -269,12 +300,14 @@ ul {
     @extend .padding;
     .grid {
         @include grid(2fr 2fr, 20px);
-        margin-top: 40px;
         .item {
             border: 2px solid $text-purple;
             // margin-right: 20px;
             margin-bottom: 20px;
             padding: 10px 30px;
+        }
+        .text {
+            min-height: 120px; 
         }
     }
     .photo {
@@ -303,7 +336,6 @@ ul {
 #gallery {
     @extend .padding;
     .gallery {
-        margin-top: 5vh;
         margin-bottom: 5vh;
     }
     .grid {
@@ -318,6 +350,9 @@ ul {
             color: white;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
         }
+    }
+    .photo {
+        box-shadow: none;
     }
 }
 

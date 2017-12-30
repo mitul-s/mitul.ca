@@ -12,10 +12,11 @@
 
 <section id="navbar">
     <div class="nav container">
-        <a class="item" href="contact.html">Contact</a>
+        <a class="item" href="#contact">Contact</a>
+        <a class="item" href="#projects">Projects</a>
         <a class="item" href="#experience">Experience</a>
         <a class="item" href="#about">About</a>
-        <a class="item" href="index.html">Home</a>
+        <!-- <a class="item" href="#">Home</a> -->
         <p>Mitul Shah</p>
     </div>
 </section>
@@ -38,9 +39,13 @@
     <div class="container">
         <h2>Download my resume.</h2>
         <p>Want to speed things up and just get to my resume? Download it here. Take a look and shoot me an email whenever you'd like to set up the interview.</p>
-        <a href="media/resume.pdf" target="blank">
-            <div class="btn">Resume</div>
-        </a>
+        
+        <div class="btn">
+            <a href="media/resume.pdf" target="_blank">
+                Resume
+            </a>
+        </div>
+        
     </div>
 </section>
 
@@ -66,11 +71,11 @@
                 <h5>Features & Awards</h5>
                 <div class="text-grey feats">
                     <p>
-                        <a href="http://ryersonian.ca/giving-hacking-a-good-name/" target="blank" class="link">'Giving hacking a good name'</a>
+                        <a href="http://ryersonian.ca/giving-hacking-a-good-name/" target="_blank" class="link">'Giving hacking a good name'</a>
                         - Social Good Hackathon
                     </p>
                     <p>
-                        <a href="#" target="blank" class="link">Metro News, Artist Take</a>
+                        <a href="#" target="_blank" class="link">Metro News, Artist Take</a>
                         - Cover & 500px Workshop 
                     </p>
                     <p>RFPA Financial Planning Case, Mar 2017 - First Place </p>
@@ -79,7 +84,7 @@
                 </div>
             </div>
             <div class="about-img">
-                <img src="media/img/img-1.jpg" class="photo" alt="This is a placeholder">
+                <img src="media/img/about.jpg" class="photo" alt="This is a placeholder">
             </div>
         </div>
     </div>
@@ -89,11 +94,12 @@
     <div class="container">
         <h2>Work Experience</h2>
         <div class="divider"></div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet vitae, ad accusantium recusandae, esse veniam iste assumenda sed pariatur laboriosam est quae maiores amet porro deserunt saepe laborum cum a.</p>
+        <p class="paragraph">Being a co-op student has provided me with the opportunities to work within various financial institutions to learn about to the functions of the bank and how my skills can be leveraged to design innovative solutions. Incase you missed the two keywords above, finance & technology are my two interests and I’m grateful to have combined them both through my work.</p>
         <div class="grid">
             <div class="work card">
                 <!-- <img src="media/img/img-1.jpg" class="photo" alt=""> -->
                 <h3>CIBC Live Labs</h3>
+                <p class="small text-grey">Product Lead, 2018 (Current)</p>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique, iure. Asperiores ipsum ex accusantium laborum eligendi id eaque odit.</p>
                 <ul class="work-item text-grey">
                     <li>Lorem ipsum dolor sit amet consectetur sit amet lorem dolor.</li>
@@ -104,6 +110,7 @@
             </div>
             <div class="work card">
                 <h3>BMO Wealth</h3>
+                <p class="small text-grey">Digital Strategy & Research Analyst, 2017</p>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique, iure. Asperiores ipsum ex accusantium laborum eligendi
                     id eaque odit.</p>
                 <ul class="work-item text-grey">
@@ -115,6 +122,7 @@
             </div>
             <div class="work card last">
                 <h3>CIBC Wealth Tech</h3>
+                <p class="small text-grey">Process Analyst & Developer, 2016</p>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique, iure. Asperiores ipsum ex accusantium laborum eligendi
                     id eaque odit.</p>
                 <ul class="work-item text-grey">
@@ -157,21 +165,39 @@
     <div class="container">
         <h2>Projects</h2>
         <div class="divider"></div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis ex quaerat earum ullam doloremque incidunt explicabo magni. Fugiat earum quis officia exercitationem nam dolor in autem id eveniet? Quasi, veritatis.</p>
+        <p class="paragraph">Outside of school and work, I'm constantly building upon my skills as a developer by completing projects, attending hackathons
+        and meetups. Ranging from basic HTML & CSS to complicated NodeJS, I've completed   
+        <a href="https://github.com/mitul-s/nodeProjects" target="_blank" class="link purple">countless</a>,
+        <a href="https://github.com/mitul-s/freecodecamp" target="_blank" class="link purple">different</a>,
+        <a href="https://github.com/mitul-s/mini-projects"target="_blank" class="link purple">projects</a> 
+        that have taught me how to develop useful web applications. Interested in seeing more? You can check out my 
+        <a href="https://github.com/mitul-s" class="link purple">Github</a> which is always being updated with new projects.</p>
         <div class="grid">
             <div class="item">
-                <h3>Hello</h3>
-                <p class="text-grey">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, exercitatione.</p>
-                <img src="media/img/img-1.jpg" class="photo" alt="">
+                <div class="text">
+                    <h3>RBC Next Great Innovator</h3>
+                    <p class="small text-grey">Hackathon, September 2017</p>
+                    <p class="text-grey">Provide​ ​experiential​ ​learning​ ​opportunities​ ​to​ ​challenge students ​while​ ​solving​ problems​ not​ ​currently​ ​undertaken​ ​by​ ​RBC,​ ​with ​support​ ​and​ ​mentorship​ from RBC leaders.</p>
+                </div>
+                <img src="media/img/mockup.jpeg" class="photo" alt="">
+                <a href="https://github.com/mitul-s/rbc-ngi-hackathon" target="_blank">
                 <div class="btn">Repo</div>
-                <div class="btn">Demo</div>
+                <a href="https://rbc-hack.netlify.com" target="_blank">
+                    <div class="btn">Demo</div>
+                </a>
             </div>
             <div class="item">
-                <h3>Hello</h3>
-                <p class="text-grey">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, exercitatione.</p>
-                <img src="media/img/img-1.jpg" class="photo" alt="">
+                <div class="text">
+                    <h3>#JavaScript30</h3>
+                    <p class="small text-grey">Challenge, Feburary 2017</p>
+                    <p class="text-grey">30 different vanilla JavaScript projects completed within the span of 30 days. This allowed to me to expand my knowledge on ES6 and build dynamic websites. </p>
+                </div>
+                <img src="media/img/mockup-2.jpeg" class="photo" alt="">
+                <a href="https://github.com/mitul-s/javascript30" target="_blank">
                 <div class="btn">Repo</div>
-                <div class="btn">Demo</div>
+                <a href="https://javascript30.com" target="_blank">
+                    <div class="btn">Projects</div>
+                </a>
             </div>
         </div>
     </div>
@@ -189,15 +215,15 @@
         <div class="content center">
             <h2>Photography</h2>
             <div class="divider center"></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt voluptatum aspernatur numquam tenetur quisquam aperiam illum cumque maiores nihil harum.</p>
+            <p class="paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt voluptatum aspernatur numquam tenetur quisquam aperiam illum cumque maiores nihil harum.</p>
         </div>
         <div class="gallery grid">
-            <img class="photo" src="media/img/img-1.jpg" alt="Placeholder">
-            <img class="photo" src="media/img/img-1.jpg" alt="Placeholder">
-            <img class="photo" src="media/img/img-1.jpg" alt="Placeholder">
-            <img class="photo hide" src="media/img/img-1.jpg" alt="Placeholder">
-            <img class="photo hide" src="media/img/img-1.jpg" alt="Placeholder">
-            <img class="photo hide" src="media/img/img-1.jpg" alt="Placeholder">    
+            <img class="photo" src="media/gallery/gallery-1.jpg" alt="Placeholder">
+            <img class="photo" src="media/gallery/gallery-2.jpg" alt="Placeholder">
+            <img class="photo" src="media/gallery/gallery-3.jpg" alt="Placeholder">
+            <img class="photo hide" src="media/gallery/gallery-4.jpg" alt="Placeholder">
+            <img class="photo hide" src="media/gallery/gallery-5.jpg" alt="Placeholder">
+            <img class="photo hide" src="media/gallery/gallery-6.jpg" alt="Placeholder">    
         </div>
         <div class="btn">See More</div>
     </div>
