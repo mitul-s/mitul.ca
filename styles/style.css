@@ -31,6 +31,17 @@
   .hide {
     display: none;
   }
+  .btn {
+    width: 30% !important;
+  }
+  #footer {
+    padding: 50px 0 !important;
+    line-height: 2  !important;
+  }
+  #footer p, #footer .icons {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
 }
 
 body, html {
@@ -61,7 +72,7 @@ ul {
 }
 
 .container {
-  width: 70vw;
+  width: 75vw;
   margin: 0 auto;
 }
 
@@ -122,11 +133,8 @@ ul {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
 }
 
-button {
-  background-color: none !important;
-}
-
 .btn {
+  font: inherit;
   border: 2px solid #ffffff;
   background-color: none;
   padding: 10px;
@@ -137,6 +145,7 @@ button {
 }
 
 .btn:hover {
+  cursor: pointer;
   background-color: #ffffff;
   color: #8E66EE;
 }
@@ -216,6 +225,10 @@ button {
   margin: 0;
 }
 
+#experience {
+  padding-top: 25px;
+}
+
 #experience .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -249,6 +262,15 @@ button {
   background-color: #F7F8FF;
 }
 
+#now h5 {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+#now p {
+  margin: 0;
+}
+
 #now .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -257,6 +279,12 @@ button {
 
 #cta-email {
   background-color: #F7F8FF;
+}
+
+#cta-email .btn {
+  background: none;
+  border: 2px solid #8E66EE;
+  color: #8E66EE;
 }
 
 #cta-email .btn:hover {
@@ -361,9 +389,19 @@ button {
   background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
 }
 
+#cta .btn {
+  background: none;
+  color: #ffffff;
+}
+
+#cta .btn:hover {
+  color: #8E66EE;
+  background: #ffffff;
+}
+
 #footer {
   padding-top: 10px;
-  height: 10vh;
+  min-height: 10vh;
   font-size: 0.8rem;
   background-color: #F7F8FF;
   width: 100%;

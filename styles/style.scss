@@ -49,6 +49,19 @@ $transition: 150ms all;
     .hide {
         display: none;
     }
+
+    .btn {
+        width: 30% !important;
+    }
+
+    #footer {
+        padding: 50px 0 !important;
+        line-height: 2  !important;
+        p, .icons {
+            text-align: center !important;
+            margin: 0 auto !important;
+        }
+    }
 }
 
 // Resets
@@ -83,7 +96,7 @@ ul {
 
 // Custom Standards
 .container {
-    width: 70vw;
+    width: 75vw;
     margin: 0 auto;
 }
 
@@ -145,10 +158,9 @@ ul {
 }
 
 // Custom Items
-button {
-    background-color: none !important;
-}
+
 .btn {
+    font: inherit;
     border: 2px solid $white;
     background-color: none;
     padding: 10px;
@@ -157,6 +169,7 @@ button {
     margin: 0 auto;
     transition: $transition;
     &:hover {
+        cursor: pointer;
         background-color: $white;
         color: $text-purple;
     }
@@ -243,6 +256,7 @@ button {
 }
 
 #experience {
+    padding-top: 25px;
     .grid {
         @include grid(1fr 1fr 1fr, 20px);
         text-align: center;
@@ -276,6 +290,13 @@ button {
 #now {
     @extend .padding;
     background-color: $light-grey;
+    h5 {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    p {
+        margin: 0;
+    }
     .grid {
         @include grid(1fr 1fr 1fr, 0px);
     }
@@ -286,6 +307,9 @@ button {
     @extend .padding;
     background-color: $light-grey;
     .btn {
+        background: none;
+        border: 2px solid $text-purple;
+        color: $text-purple;
         &:hover {
             border: 2px solid $text-purple;
             color: $white;
@@ -391,12 +415,20 @@ button {
     color: $white;
     text-align: center;
     background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
+    .btn {
+        background: none;
+        color: $white;
+        &:hover {
+            color: $text-purple;
+            background: $white;
+        }
+    }
 }
 
 // FOOTER CONTENT 
 #footer {
     padding-top:10px;
-    height: 10vh;
+    min-height: 10vh;
     font-size: 0.8rem;
     background-color: $light-grey;
     width: 100%;
