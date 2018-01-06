@@ -25,6 +25,8 @@ $transition: 150ms all;
         display: inline !important;
     }
 
+
+
     .card {
         border-bottom: 2px solid $text-purple !important;
         border-radius: 5px;
@@ -52,6 +54,10 @@ $transition: 150ms all;
 
     .btn {
         width: 30% !important;
+    }
+
+    .contact-input {
+        width: 80vw !important;
     }
 
     #footer {
@@ -229,7 +235,6 @@ ul {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     .arrow-down {
         position: relative;
         top: 27vh;
@@ -261,6 +266,9 @@ ul {
         @include grid(1fr 1fr 1fr, 20px);
         text-align: center;
     }
+    // .work > p, li {
+    //     font-size: 0.8rem;
+    // }
 }
 
 /* .card {
@@ -369,6 +377,7 @@ ul {
         border: 2px solid $text-purple;
         text-align: center;
         color: $text-purple;
+        background-color: $white;
         &:hover {
             background-color: $text-purple;
             color: white;
@@ -386,16 +395,36 @@ ul {
     background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
     min-height: 30vh;
     color: $white;
-    .contact-input {
+    text-align: center;
+    .divider {
+        background-color: $white;
+        margin: 0 auto;
+    }
+    .container {
         width: 50%;
+    }
+    .contact-input {
+        margin: 0 auto;
+        margin-bottom: 20px;
+        width: 100%;
         padding: 15px;
         border-radius: 5px;
         border: 2px solid transparent;
-        margin-bottom: 10px;
         transition: $transition;
         &:focus {
             outline: none;
             border: 2px solid $text-purple;
+        }
+    }
+    .btn {
+        background-color: transparent;
+        border-color: $white;
+        color: $white;
+        &:hover{
+            background-color: $white;
+            border-color: $white;
+            color: $text-purple;
+            transition: $transition;
         }
     }
 }

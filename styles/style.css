@@ -34,6 +34,9 @@
   .btn {
     width: 30% !important;
   }
+  .contact-input {
+    width: 80vw !important;
+  }
   #footer {
     padding: 50px 0 !important;
     line-height: 2  !important;
@@ -200,7 +203,6 @@ ul {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
 #header .arrow-down {
@@ -344,6 +346,7 @@ ul {
   border: 2px solid #8E66EE;
   text-align: center;
   color: #8E66EE;
+  background-color: #ffffff;
 }
 
 #gallery .btn:hover {
@@ -360,20 +363,44 @@ ul {
   background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
   min-height: 30vh;
   color: #ffffff;
+  text-align: center;
+}
+
+#contact .divider {
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+
+#contact .container {
+  width: 50%;
 }
 
 #contact .contact-input {
-  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 100%;
   padding: 15px;
   border-radius: 5px;
   border: 2px solid transparent;
-  margin-bottom: 10px;
   transition: 150ms all;
 }
 
 #contact .contact-input:focus {
   outline: none;
   border: 2px solid #8E66EE;
+}
+
+#contact .btn {
+  background-color: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+#contact .btn:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #8E66EE;
+  transition: 150ms all;
 }
 
 .form input {
