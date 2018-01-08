@@ -4,7 +4,7 @@
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 750px) {
   .container {
     width: 90vw !important;
   }
@@ -36,6 +36,9 @@
   }
   .contact-input {
     width: 80vw !important;
+  }
+  #now p {
+    margin-bottom: 40px;
   }
   #footer {
     padding: 50px 0 !important;
@@ -124,6 +127,7 @@ ul {
 
 .link {
   text-decoration: underline;
+  transition: 150ms all;
 }
 
 .link:hover {
@@ -264,13 +268,17 @@ ul {
   background-color: #F7F8FF;
 }
 
+#now h3 {
+  line-height: 1.2;
+}
+
 #now h5 {
   font-size: 0.9rem;
   margin-bottom: 0;
 }
 
 #now p {
-  margin: 0;
+  font-size: 12px;
 }
 
 #now .grid {
@@ -378,7 +386,7 @@ ul {
 #contact .contact-input {
   margin: 0 auto;
   margin-bottom: 20px;
-  width: 100%;
+  width: 90%;
   padding: 15px;
   border-radius: 5px;
   border: 2px solid transparent;
@@ -401,6 +409,10 @@ ul {
   border-color: #ffffff;
   color: #8E66EE;
   transition: 150ms all;
+}
+
+#contact a:hover {
+  color: lightgray;
 }
 
 .form input {
