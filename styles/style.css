@@ -159,9 +159,7 @@ ul {
 
 .card {
   border: 2px solid #8E66EE;
-  border-bottom: none;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
   min-height: 40vh;
   padding: 10px 30px;
   box-shadow: 0 -2px 5px 0 rgba(0, 20, 40, 0.2);
@@ -232,7 +230,7 @@ ul {
 }
 
 #experience {
-  padding-top: 25px;
+  padding: 25px 0 50px 0;
 }
 
 #experience .grid {
