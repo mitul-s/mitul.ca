@@ -1,5 +1,7 @@
 // LAST FM API WITH Fetch
 
+console.log('hi there 🏄‍♂️');
+
 let artist = document.getElementById('artist');
 let song = document.getElementById('song');
 let url = document.getElementById('url');
@@ -20,3 +22,19 @@ function getMusic() {
 }
 
 getMusic();
+
+// var alert = document.getElementById('alert')
+// alert.addEventListener('click', function(){
+//     alert.style.display = "none";
+// })
+
+
+const mainImg = document.getElementById('main-img');
+const photo = document.querySelectorAll('.photos img');
+
+photo.forEach(img => 
+    img.addEventListener('click', imgClick));
+
+function imgClick(e){
+    mainImg.src = e.target.src;
+}
