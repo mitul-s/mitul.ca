@@ -2,13 +2,30 @@
   .container {
     width: 90vw !important;
   }
+  .grid-two {
+    display: inline !important;
+  }
+  body {
+    overflow: visible !important;
+  }
 }
 
 @media screen and (max-width: 750px) {
+  body {
+    overflow: visible !important;
+  }
+  #about {
+    height: auto !important;
+    padding-bottom: 30px;
+    padding-top: 30px !important;
+  }
   .container {
     width: 90vw !important;
   }
   .grid {
+    display: inline !important;
+  }
+  .grid-two {
     display: inline !important;
   }
   .card {
@@ -34,12 +51,6 @@
   .btn {
     width: 30% !important;
   }
-  .contact-input {
-    width: 80vw !important;
-  }
-  #now p {
-    margin-bottom: 40px;
-  }
   #footer {
     padding: 50px 0 !important;
     line-height: 2  !important;
@@ -54,7 +65,7 @@ body, html {
   box-sizing: border-box;
   margin: 0;
   height: 100%;
-  font-family: 'Roboto', 'Arial', sans-serif;
+  font-family: 'Ruda', 'Arial', sans-serif;
 }
 
 a {
@@ -78,11 +89,11 @@ ul {
 }
 
 .container {
-  width: 75vw;
+  width: 80vw;
   margin: 0 auto;
 }
 
-.padding, #about, #now, #cta-email, #projects, #gallery, #contact, #cta {
+.padding {
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -171,46 +182,10 @@ ul {
   background-color: #8E66EE;
 }
 
-#navbar {
-  overflow: hidden;
-  height: 10vh;
-  width: 100%;
-  position: absolute;
-}
-
-.nav {
-  line-height: 5vh;
-  color: #637381;
-}
-
-.nav .item {
-  float: right;
-  margin-left: 2vw;
-  min-width: 30px;
-  transition: 0.2s all;
-}
-
-.nav .item:hover {
-  color: #8E66EE;
-}
-
-#header {
+#about {
   display: flex;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url(../media/img/img-1.jpg);
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-#header .arrow-down {
-  position: relative;
-  top: 27vh;
-  text-align: center;
+  height: 89vh;
 }
 
 #about .grid {
@@ -220,224 +195,21 @@ ul {
 }
 
 #about .about-img {
-  margin-top: 1.03em;
+  align-self: center;
+  justify-self: center;
+}
+
+#about h1 {
+  font-size: 2rem;
 }
 
 .feats {
   font-size: 0.8rem;
-  line-height: 0.9;
   margin: 0;
 }
 
-#experience {
-  padding: 25px 0 50px 0;
-}
-
-#experience .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-  text-align: center;
-}
-
-/* .card {
-    &:nth-child(1) {
-        border-color: #d40139;
-    }
-    &:nth-child(2) {
-        border-color: #0079c1;
-    }
-    &:nth-child(3) {
-        border-color: #af0b1c;
-    }
-} */
-.work-item {
-  list-style: square;
-  padding-left: 2px;
-  text-align: left;
-}
-
-.work-item li {
-  margin-bottom: 10px;
-  line-height: 1.333;
-}
-
-#now {
-  background-color: #F7F8FF;
-}
-
-#now h3 {
-  line-height: 1.2;
-}
-
-#now h5 {
-  font-size: 0.9rem;
-  margin-bottom: 0;
-}
-
-#now p {
-  font-size: 12px;
-}
-
-#now .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 0px;
-}
-
-#cta-email {
-  background-color: #F7F8FF;
-}
-
-#cta-email .btn {
-  background: none;
-  border: 2px solid #8E66EE;
-  color: #8E66EE;
-}
-
-#cta-email .btn:hover {
-  border: 2px solid #8E66EE;
-  color: #ffffff;
-  background-color: #8E66EE;
-}
-
-#projects .grid {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  grid-gap: 20px;
-}
-
-#projects .grid .item {
-  border: 2px solid #8E66EE;
-  margin-bottom: 20px;
-  padding: 10px 30px;
-}
-
-#projects .grid .text {
-  min-height: 120px;
-}
-
-#projects .photo {
-  box-shadow: none;
-}
-
-#projects .btn {
-  display: inline-block;
-  text-align: center;
-  margin: 10px auto;
-  background-color: #8E66EE;
-  color: #ffffff;
-  border: 2px solid #8E66EE;
-  font-size: 12px;
-  padding: 10px 0px;
-}
-
-#projects .btn:hover {
-  background-color: #ffffff;
-  color: #8E66EE;
-  cursor: pointer;
-}
-
-#gallery .gallery {
-  margin-bottom: 5vh;
-}
-
-#gallery .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-}
-
-#gallery .btn {
-  border: 2px solid #8E66EE;
-  text-align: center;
-  color: #8E66EE;
-  background-color: #ffffff;
-}
-
-#gallery .btn:hover {
-  background-color: #8E66EE;
-  color: white;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-}
-
-#gallery .photo {
-  box-shadow: none;
-}
-
-#contact {
-  background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
-  min-height: 30vh;
-  color: #ffffff;
-  text-align: center;
-}
-
-#contact .divider {
-  background-color: #ffffff;
-  margin: 0 auto;
-}
-
-#contact .container {
-  width: 50%;
-}
-
-#contact .contact-input {
-  margin: 0 auto;
-  margin-bottom: 20px;
-  width: 90%;
-  padding: 15px;
-  border-radius: 5px;
-  border: 2px solid transparent;
-  transition: 150ms all;
-}
-
-#contact .contact-input:focus {
-  outline: none;
-  border: 2px solid #8E66EE;
-}
-
-#contact .btn {
-  background-color: transparent;
-  border-color: #ffffff;
-  color: #ffffff;
-}
-
-#contact .btn:hover {
-  background-color: #ffffff;
-  border-color: #ffffff;
-  color: #8E66EE;
-  transition: 150ms all;
-}
-
-#contact a:hover {
-  color: lightgray;
-}
-
-.form input {
-  display: block;
-}
-
-#cta {
-  display: flex;
-  align-items: center;
-  height: 30vh;
-  color: #ffffff;
-  text-align: center;
-  background-image: linear-gradient(-142deg, #CB44EB 0%, #2F9BF2 100%);
-}
-
-#cta .btn {
-  background: none;
-  color: #ffffff;
-}
-
-#cta .btn:hover {
-  color: #8E66EE;
-  background: #ffffff;
-}
-
 #footer {
-  padding-top: 10px;
+  padding-top: 5px;
   min-height: 10vh;
   font-size: 0.8rem;
   background-color: #F7F8FF;
@@ -460,5 +232,34 @@ ul {
 
 .icons span:hover {
   color: #8E66EE;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 7px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+
+.photos .photo {
+  transition: 150ms all;
+}
+
+.photos .photo:hover {
+  opacity: 0.5;
+}
+
+.cta-photo {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  padding-top: 10px;
 }
 /*# sourceMappingURL=style.css.map */
