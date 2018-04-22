@@ -88,7 +88,7 @@ ul {
 }
 
 ::selection {
-  background: #2F9BF2;
+  background: #8E66EE;
   color: #ffffff;
 }
 
@@ -194,7 +194,8 @@ ul {
 #about {
   display: flex;
   align-items: center;
-  height: 89vh;
+  min-height: 88%;
+  height: auto;
 }
 
 #about .grid {
@@ -219,7 +220,7 @@ ul {
 
 #footer {
   padding-top: 5px;
-  min-height: 10vh;
+  min-height: 10%;
   font-size: 0.8rem;
   background-color: #F7F8FF;
   width: 100%;

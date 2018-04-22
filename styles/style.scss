@@ -115,7 +115,7 @@ ul {
 }
 
 ::selection {
-    background: $secondary;
+    background: $text-purple;
     color: $white;
 }
 
@@ -228,7 +228,8 @@ ul {
 #about {
     display: flex;
     align-items: center;
-    height: 89vh;
+    min-height: 88%;
+    height: auto;
     // @extend .padding;
     .grid {
         @include grid(1fr 1fr, 20px);
@@ -255,8 +256,8 @@ ul {
 
 // FOOTER CONTENT 
 #footer {
-    padding-top:5px;
-    min-height: 10vh;
+    padding-top: 5px;
+    min-height: 10%;
     font-size: 0.8rem;
     background-color: $light-grey;
     width: 100%;
