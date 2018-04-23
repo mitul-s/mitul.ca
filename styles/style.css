@@ -162,11 +162,13 @@ ul {
 
 .btn {
   font: inherit;
-  border: 2px solid #ffffff;
-  background-color: none;
-  padding: 10px;
-  border-radius: 5px;
-  width: 20%;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: 2px solid #8E66EE;
+  background-color: #8E66EE;
+  padding: 3px;
+  border-radius: 3px;
+  width: 15%;
   margin: 0 auto;
   transition: 150ms all;
 }
@@ -175,6 +177,10 @@ ul {
   cursor: pointer;
   background-color: #ffffff;
   color: #8E66EE;
+}
+
+.txt-sm {
+  font-size: 0.7rem;
 }
 
 .card {
@@ -214,7 +220,7 @@ ul {
 }
 
 .feats {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin: 0;
 }
 
