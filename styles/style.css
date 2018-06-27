@@ -88,7 +88,7 @@ ul {
 }
 
 ::selection {
-  background: #2F9BF2;
+  background: #8E66EE;
   color: #ffffff;
 }
 
@@ -162,11 +162,13 @@ ul {
 
 .btn {
   font: inherit;
-  border: 2px solid #ffffff;
-  background-color: none;
-  padding: 10px;
-  border-radius: 5px;
-  width: 20%;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: 2px solid #8E66EE;
+  background-color: #8E66EE;
+  padding: 3px;
+  border-radius: 3px;
+  width: 15%;
   margin: 0 auto;
   transition: 150ms all;
 }
@@ -175,6 +177,10 @@ ul {
   cursor: pointer;
   background-color: #ffffff;
   color: #8E66EE;
+}
+
+.txt-sm {
+  font-size: 0.7rem;
 }
 
 .card {
@@ -194,7 +200,8 @@ ul {
 #about {
   display: flex;
   align-items: center;
-  height: 89vh;
+  min-height: 88%;
+  height: auto;
 }
 
 #about .grid {
@@ -213,13 +220,13 @@ ul {
 }
 
 .feats {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin: 0;
 }
 
 #footer {
   padding-top: 5px;
-  min-height: 10vh;
+  min-height: 10%;
   font-size: 0.8rem;
   background-color: #F7F8FF;
   width: 100%;
@@ -267,7 +274,6 @@ ul {
 }
 
 .cta-photo {
-  text-transform: uppercase;
   font-size: 0.8em;
   padding-top: 10px;
 }

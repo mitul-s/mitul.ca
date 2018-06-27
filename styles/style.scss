@@ -115,7 +115,7 @@ ul {
 }
 
 ::selection {
-    background: $secondary;
+    background: $text-purple;
     color: $white;
 }
 
@@ -189,15 +189,19 @@ ul {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.50);
 }
 
+
+
 // Custom Items
 
 .btn {
     font: inherit;
-    border: 2px solid $white;
-    background-color: none;
-    padding: 10px;
-    border-radius: 5px;
-    width: 20%;
+    color: $white;
+    text-transform: uppercase;
+    border: 2px solid $text-purple;
+    background-color: $text-purple;
+    padding: 3px;
+    border-radius: 3px;
+    width: 15%;
     margin: 0 auto;
     transition: $transition;
     &:hover {
@@ -205,6 +209,10 @@ ul {
         background-color: $white;
         color: $text-purple;
     }
+}
+
+.txt-sm {
+    font-size: 0.7rem;
 }
 
 .card {
@@ -228,7 +236,8 @@ ul {
 #about {
     display: flex;
     align-items: center;
-    height: 89vh;
+    min-height: 88%;
+    height: auto;
     // @extend .padding;
     .grid {
         @include grid(1fr 1fr, 20px);
@@ -245,18 +254,16 @@ ul {
 }
 
 .feats {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     // line-height: 0.9;
     margin: 0;
 }
 
 
-
-
 // FOOTER CONTENT 
 #footer {
-    padding-top:5px;
-    min-height: 10vh;
+    padding-top: 5px;
+    min-height: 10%;
     font-size: 0.8rem;
     background-color: $light-grey;
     width: 100%;
@@ -301,7 +308,7 @@ ul {
 }
 
 .cta-photo {
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-size: 0.8em;
     padding-top: 10px;
 }
