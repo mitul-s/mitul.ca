@@ -1,3 +1,7 @@
+// DATE 
+let date = new Date();
+document.getElementById("date").innerHTML = date.getFullYear()
+
 // LAST FM API WITH Fetch
 
 console.log('hi there 🏄‍♂️');
@@ -37,4 +41,4 @@ photo.forEach(img =>
 
 function imgClick(e){
     mainImg.src = e.target.src;
-}
+} 
