@@ -1,6 +1,6 @@
 // DATE 
-let date = new Date();
-document.getElementById("date").innerHTML = date.getFullYear()
+// let date = new Date();
+// document.getElementById("date").innerHTML = date.getFullYear()
 
 // LAST FM API WITH Fetch
 
@@ -27,18 +27,12 @@ function getMusic() {
 
 getMusic();
 
-// var alert = document.getElementById('alert')
-// alert.addEventListener('click', function(){
-//     alert.style.display = "none";
-// })
+// const mainImg = document.getElementById('main-img');
+// const photo = document.querySelectorAll('.photos img');
 
+// photo.forEach(img => 
+//     img.addEventListener('click', imgClick));
 
-const mainImg = document.getElementById('main-img');
-const photo = document.querySelectorAll('.photos img');
-
-photo.forEach(img => 
-    img.addEventListener('click', imgClick));
-
-function imgClick(e){
-    mainImg.src = e.target.src;
-} 
+// function imgClick(e){
+//     mainImg.src = e.target.src;
+// } 
