@@ -5,8 +5,9 @@ import SectionHeader from "@/components/SectionHeader";
 const Current = () => {
     return (
       <>
-      <SectionHeader>Currently</SectionHeader>
+        <SectionHeader>Currently</SectionHeader>
       <Box bg="blueGray.900" rounded="4px" p={8}>
+
         <Grid gridTemplateColumns="1fr 1fr" gap={8}>
           <Box>
             <HStack spacing={4}>

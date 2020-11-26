@@ -11,36 +11,39 @@ export default function Home() {
     <>
       <Shell>
         <Flex mb={24} h="70vh" justifyContent="center" flexDirection="column">
-          <Heading size="3xl" mb={4} fontFamily="Prata">
+          <Heading size="3xl" mb={4} fontFamily="Rubik">
             Hi, my name is Mitul
           </Heading>
           <Text fontSize="xl">
-            An aspiring product manager, eager to join a rocketship.
+            Photographer, developer and eventually, a product manager. Nice to
+            meet you.
           </Text>
         </Flex>
-        <Current />
-        <Box mt={10}>
-          <SectionHeader>Experience</SectionHeader>
-          <Stack spacing={8}>
-            <Box>
-              <Box mb={4}>
-                <Heading size="lg" mb={2}>
-                  Soapbox
-                </Heading>
-                <Text color="trueGray.500">Jul 2019 - Mar 2020</Text>
+        <Box m="0 auto">
+          <Current />
+          <Box mt={10}>
+            <SectionHeader>Experience</SectionHeader>
+            <Stack spacing={8}>
+              <Box>
+                <Box mb={4}>
+                  <Heading size="lg" mb={2}>
+                    Soapbox
+                  </Heading>
+                  <Text color="trueGray.500">Jul 2019 - Mar 2020</Text>
+                </Box>
+                <Text>
+                  I worked at{" "}
+                  <Link href="https://soapboxhq.com" color="blue.400">
+                    Soapbox
+                  </Link>{" "}
+                  to help make meetings better for everyone.
+                </Text>
               </Box>
-              <Text>
-                I worked at{" "}
-                <Link href="https://soapboxhq.com" color="blue.400">
-                  Soapbox
-                </Link>{" "}
-                to help make meetings better for everyone.
-              </Text>
-            </Box>
-          </Stack>
-        </Box>
-        <Box mt={10}>
-          <Projects />
+            </Stack>
+          </Box>
+          <Box mt={10}>
+            <Projects />
+          </Box>
         </Box>
       </Shell>
       <Box bg="white" color="blueGray.900" w="full" h="20vh">
