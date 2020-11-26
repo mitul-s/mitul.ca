@@ -1,19 +1,13 @@
 import { Box, Grid, Heading, Text, HStack, Icon } from "@chakra-ui/react"
 import { MusicNotesSimple, Monitor, Bookmarks, GearSix } from "phosphor-react";
+import SectionHeader from "@/components/SectionHeader";
 
 const Current = () => {
     return (
-      <Box>
-        <Heading
-          textTransform="uppercase"
-          size="xs"
-          color="cyan.400"
-          letterSpacing="1.3px"
-          mb={5}
-        >
-          Currently
-        </Heading>
-        <Grid gridTemplateColumns="1fr 1fr" gap={4}>
+      <>
+      <SectionHeader>Currently</SectionHeader>
+      <Box bg="blueGray.900" rounded="4px" p={8}>
+        <Grid gridTemplateColumns="1fr 1fr" gap={8}>
           <Box>
             <HStack spacing={4}>
               <Icon fontSize="xl" as={MusicNotesSimple} />
@@ -52,6 +46,7 @@ const Current = () => {
           </Box>
         </Grid>
       </Box>
+      </>
     );
 }
 

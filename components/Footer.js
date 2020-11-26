@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text, HStack, Icon } from "@chakra-ui/react";
-import { TwitterLogo, InstagramLogo } from "phosphor-react";
+import { TwitterLogo, InstagramLogo, LinkedinLogo } from "phosphor-react";
 
 const Footer = () => {
   return (
@@ -7,9 +7,9 @@ const Footer = () => {
       <Flex w="full" justifyContent="space-between">
         <Text>Contact</Text>
         <HStack>
-          <Icon as={TwitterLogo}/>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
+          <Icon fontSize="lg" as={TwitterLogo}/>
+          <Icon fontSize="lg" as={InstagramLogo}/>
+          <Icon fontSize="lg" as={LinkedinLogo} />
         </HStack>
       </Flex>
     </Flex>

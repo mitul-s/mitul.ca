@@ -11,7 +11,7 @@ const Shell = ({ children }) => {
           m="0 auto"
           direction="column"
           px={8}
-          maxW="700px"
+          maxW="1250px" 
         >
           {children}
           <Footer />
