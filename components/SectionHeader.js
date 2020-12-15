@@ -5,8 +5,9 @@ export default function SectionHeader({ children, ...rest }) {
       <Heading
         textTransform="uppercase"
         size="xs"
-        color="cyan.400"
+        color="trueGray.400"
         letterSpacing="1.3px"
+        fontWeight="bold"
         my={5}
         {...rest}
       >

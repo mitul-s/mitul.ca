@@ -1,54 +1,78 @@
-import { Box, Grid, Heading, Text, HStack, Icon } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react"
+import { Box, Grid, Heading, Text, HStack, Icon, Stack } from "@chakra-ui/react"
 import { MusicNotesSimple, Monitor, Bookmarks, GearSix } from "phosphor-react";
 import SectionHeader from "@/components/SectionHeader";
 
-const Current = () => {
-    return (
-      <>
-        <SectionHeader>Currently</SectionHeader>
-      <Box bg="blueGray.900" rounded="4px" p={8}>
+const CurrentItem = ({ icon, title, caption, link }) => {
+  return (
+    <Box>
+      <HStack spacing={4}>
+        <Icon fontSize="xl" as={icon} />
+        <Box>
+          <Text fontWeight="bold" maxW="175px" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{title}</Text>
+          <Text fontSize="sm" color="trueGray.500">
+            {caption}
+          </Text>
+        </Box>
+      </HStack>
+    </Box>
+  );
+}
 
-        <Grid gridTemplateColumns="1fr 1fr" gap={8}>
-          <Box>
-            <HStack spacing={4}>
-              <Icon fontSize="xl" as={MusicNotesSimple} />
-              <Box>
-                <Text fontWeight="bold">Song Name</Text>
-                <Text color="blueGray.500">Artist Name</Text>
-              </Box>
-            </HStack>
-          </Box>
-          <Box>
-            <HStack spacing={4}>
-              <Icon fontSize="xl" as={Bookmarks} />
-              <Box>
-                <Text fontWeight="bold">Outliers</Text>
-                <Text color="blueGray.500">Malcolm Gladwell</Text>
-              </Box>
-            </HStack>
-          </Box>
-          <Box>
-            <HStack spacing={4}>
-              <Icon fontSize="xl" as={GearSix} />
-              <Box>
-                <Text fontWeight="bold">Paprback</Text>
-                <Text color="blueGray.500">A Goodreads alternative</Text>
-              </Box>
-            </HStack>
-          </Box>
-          <Box>
-            <HStack spacing={4}>
-              <Icon fontSize="xl" as={Monitor} />
-              <Box>
-                <Text fontWeight="bold">New Girl</Text>
-                <Text color="blueGray.500">Sitcom</Text>
-              </Box>
-            </HStack>
-          </Box>
-        </Grid>
-      </Box>
-      </>
-    );
+
+const Current = () => {
+  
+  const [data, setData] = useState("");
+  const [loading, setLoading] = useState('');
+  const [error, setError] = useState();
+  const username = "mitul-s";
+
+  useEffect(() => {
+    let ignore = false;
+    const getMusic = async () => {
+      const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${process.env.NEXT_PUBLIC_LASTFM_KEY}&format=json`;
+      try {
+        setLoading(true);
+        const res = await fetch(url);
+        const body = await res.json();
+        console.log(body);
+        if (!ignore) setData(body);
+       
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMusic();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  if(loading || !data) {
+    return <h1>Loading</h1>
+  }
+
+  return (
+    <>
+      <SectionHeader>Currently</SectionHeader>
+      <Stack spacing={8} direction="row">
+        <CurrentItem
+          icon={MusicNotesSimple}
+          title={data.recenttracks.track[0].name}
+          caption={data.recenttracks.track[0].artist["#text"]}
+        />
+        <CurrentItem
+          icon={Bookmarks}
+          title={"Range"}
+          caption={"David Epstein"}
+        />
+        <CurrentItem icon={GearSix} title={"Range"} caption={"Artist Name"} />
+      </Stack>
+    </>
+  );
 }
 
 export default Current;
