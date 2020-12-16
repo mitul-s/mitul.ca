@@ -9,16 +9,11 @@ const Navigation = () => {
           alignItems="center"
           justifyContent="space-between"
           w="full"
-          maxWidth="1250px"
+          maxWidth="700px"
           px={8}
           h="12vh"
           as="nav"
         >
-          {/* <IconButton
-            colorScheme="blueGray"
-            aria-label="Search database"
-            icon={<Horse weight="fill" />}
-          /> */}
           <Box></Box>
           <HStack spacing={2}>
             <NextLink href="/" passHref>
@@ -26,11 +21,11 @@ const Navigation = () => {
                 Home
               </Button>
             </NextLink>
-            {/* <NextLink href="/about" passHref>
-              <Button colorScheme="rose" as="a" variant="solid">
+            <NextLink href="/about" passHref>
+              <Button colorScheme="rose" as="a" variant="ghost">
                 Hire Me
               </Button>
-            </NextLink> */}
+            </NextLink>
           </HStack>
         </Flex>
       </Flex>

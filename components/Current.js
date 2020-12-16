@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react"
-import { Box, Grid, Heading, Text, HStack, Icon, Stack } from "@chakra-ui/react"
+import { Box, Grid, Heading, Text, HStack, Icon, Stack, Link } from "@chakra-ui/react"
 import { MusicNotesSimple, Monitor, Bookmarks, GearSix } from "phosphor-react";
-import SectionHeader from "@/components/SectionHeader";
+import Section from "@/components/Section";
 
 const CurrentItem = ({ icon, title, caption, link }) => {
   return (
-    <Box>
       <HStack spacing={4}>
         <Icon fontSize="xl" as={icon} />
         <Box>
-          <Text fontWeight="bold" maxW="175px" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{title}</Text>
-          <Text fontSize="sm" color="trueGray.500">
-            {caption}
-          </Text>
+          <Link href={link} _hover={{ color: "blueGray.500" }}>
+            <Text fontWeight="bold" maxW="175px" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{title}</Text>
+            <Text fontSize="sm" color="trueGray.500">
+              {caption}
+            </Text>
+          </Link>
         </Box>
       </HStack>
-    </Box>
   );
 }
 
@@ -56,13 +56,13 @@ const Current = () => {
   }
 
   return (
-    <>
-      <SectionHeader>Currently</SectionHeader>
+    <Section header="Currently">
       <Stack spacing={8} direction="row">
         <CurrentItem
           icon={MusicNotesSimple}
           title={data.recenttracks.track[0].name}
           caption={data.recenttracks.track[0].artist["#text"]}
+          link={data.recenttracks.track[0].url}
         />
         <CurrentItem
           icon={Bookmarks}
@@ -71,7 +71,7 @@ const Current = () => {
         />
         <CurrentItem icon={GearSix} title={"Range"} caption={"Artist Name"} />
       </Stack>
-    </>
+    </Section>
   );
 }
 

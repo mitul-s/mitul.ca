@@ -1,16 +1,16 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 
-export default function Item() {
+export default function Item({ date, description, link }) {
     return (
       <Box my={3}>
         <Text mb={1} fontSize="sm" color="trueGray.500">
-          May 2019 - Mar 2020
+          {date}
         </Text>
-        <Flex>
-          <Text mr={2} fontWeight="normal">
-            I helped people do things at Soapbox
+        <Box>
+          <Text>
+            {description}
           </Text>
-        </Flex>
+        </Box>
       </Box>
     );
 }
