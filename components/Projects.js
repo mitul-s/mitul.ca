@@ -1,55 +1,61 @@
-import { Heart } from "phosphor-react"
-import { Box, Stack, Heading, Text, HStack, Icon, Badge } from "@chakra-ui/react";
-import SectionHeader from "@/components/SectionHeader";
+import React, { useState, useEffect } from "react";
+import { Star, Lightning, Code } from "phosphor-react";
+import { Box, Stack, Flex, Tooltip, Link, Button, Heading, Text, HStack, Icon, Badge } from "@chakra-ui/react";
 
-const Projects = () => {
+const Project = ({ title, description, repo }) => {
+  const [data, setData] = useState(false);
+  const getStars = () => {
+    fetch(`https://api.github.com/repos/mitul-s/${repo}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  };
+
+  useEffect(() => {
+    getStars();
+  }, []);
+
   return (
-    <>
-      <SectionHeader>Projects</SectionHeader>
-      <Stack>
-        <Box
-          border="1px solid"
-          borderColor="trueGray.100"
-          py={8}
-          px={4}
-          borderRadius="4px"
+    <Box p={6} border="1px solid white">
+      <Flex justifyContent="space-between" alignItems="center" mb={3}>
+        <Heading size="md">{title}</Heading>
+        <Tooltip
+          label="Github Stargazers"
+          aria-label="Github Stargazers"
+          openDelay={600}
         >
-          <HStack spacing={5}>
-            <Box>
-              <Icon fontSize="3xl" as={Heart} />
-            </Box>
-            <Box>
-              <Heading fontSize="lg" mb={2}>
-                Paprback
-              </Heading>
-              <Text mb={2}>This is a goodreads alternative</Text>
-              <HStack>
-                <Badge>React</Badge>
-                <Badge>Chakra UI</Badge>
-                <Badge>Chakra UI</Badge>
-              </HStack>
-            </Box>
+          <HStack>
+            <Icon fontSize="xl" as={Star} />
+            <Text>{data.stargazers_count}</Text>
           </HStack>
-        </Box>
-        <Box
-          border="1px solid"
-          borderColor="trueGray.100"
-          p={8}
-          borderRadius="4px"
-        >
-          Hello
-        </Box>
-        <Box
-          border="1px solid"
-          borderColor="trueGray.100"
-          p={8}
-          borderRadius="4px"
-        >
-          Hello
-        </Box>
-      </Stack>
-    </>
+        </Tooltip>
+      </Flex>
+      <Text>{description}</Text>
+      {repo ? (
+        <HStack fontSize="sm" mt={3} color="trueGray.500">
+          <Link href={data.homepage} isExternal>
+            <Button
+              variant="link"
+              fontWeight="normal"
+              rightIcon={<Lightning />}
+            >
+              Demo
+            </Button>
+          </Link>
+          <Link href={data.svn_url} isExternal>
+            <Button variant="link" fontWeight="normal" rightIcon={<Code />}>
+              Code
+            </Button>
+          </Link>
+        </HStack>
+      ) : (
+        ""
+      )}
+    </Box>
   );
 };
 
-export default Projects;
+export default Project;
