@@ -71,7 +71,7 @@ const Current = () => {
           icon={Bookmarks}
           title={"Range"}
           caption={"David Epstein"}
-          link="https://beta.readng.co/book/range-by-david-epstein-zbmEW"
+          link="https://beta.readng.co/book/range-by-david-epstein-zbmEW?ref=mitul"
         />
         <CurrentItem icon={Monitor} title={"New Girl"} caption={"Sitcom"} />
       </Stack>

@@ -1,6 +1,6 @@
-import { Box, HStack, Flex, IconButton, Button, Heading } from "@chakra-ui/react"
+import { Box, HStack, Flex, Link, Button } from "@chakra-ui/react"
 import NextLink from "next/link"
-import { Horse, Heart, Cube } from "phosphor-react";
+import { ArrowRight, ArrowUpRight } from "phosphor-react";
 
 const Navigation = () => {
     return (
@@ -15,17 +15,17 @@ const Navigation = () => {
           as="nav"
         >
           <Box></Box>
-          <HStack spacing={2}>
-            <NextLink href="/" passHref>
-              <Button as="a" colorScheme="blueGray" variant="ghost">
-                Home
+          <HStack spacing={6}>
+            {/* <NextLink href="https://">
+              <Button as="a" colorScheme="blueGray" variant="link" rightIcon={<ArrowUpRight/>}>
+                Photography
               </Button>
-            </NextLink>
-            <NextLink href="/about" passHref>
-              <Button colorScheme="rose" as="a" variant="ghost">
-                Hire Me
+            </NextLink> */}
+            <Link href="mailto:mitulxshah@gmail.com?subject=Hi Mitul">
+              <Button colorScheme="blueGray" as="a" variant="link" rightIcon={<ArrowRight/>}>
+                Get in touch
               </Button>
-            </NextLink>
+            </Link>
           </HStack>
         </Flex>
       </Flex>
