@@ -3,7 +3,7 @@ import SectionHeader from "@/components/SectionHeader"
 
 export default function Section({ header, children, ...rest }) {
     return (
-        <Box my={4} {...rest}>
+        <Box my={4} {...rest} as="section">
             <SectionHeader>{header}</SectionHeader>
             <Box>
                 {children}

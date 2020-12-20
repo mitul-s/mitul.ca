@@ -22,6 +22,7 @@ const Project = ({ title, description, repo }) => {
     <Box p={6} border="1px solid white">
       <Flex justifyContent="space-between" alignItems="center" mb={3}>
         <Heading size="md">{title}</Heading>
+        {data.stargazers_count > 0 ?
         <Tooltip
           label="Github Stargazers"
           aria-label="Github Stargazers"
@@ -31,7 +32,7 @@ const Project = ({ title, description, repo }) => {
             <Icon fontSize="xl" as={Star} />
             <Text>{data.stargazers_count}</Text>
           </HStack>
-        </Tooltip>
+        </Tooltip> : '' }
       </Flex>
       <Text>{description}</Text>
       {repo ? (

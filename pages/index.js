@@ -1,47 +1,93 @@
-
 import Project from "@/components/Projects";
 import Current from "@/components/Current";
 import Item from "@/components/Item";
 import Shell from "@/components/Shell";
 import Section from "@/components/Section";
 import Photos from "@/components/Photos";
-import { ArrowRight } from "phosphor-react";
-import { Flex, Heading, Text, Stack, HStack, Button, Link } from "@chakra-ui/react";
+import {
+  PaperPlaneTilt,
+  ChatCircle,
+  TwitterLogo,
+  InstagramLogo,
+  Camera,
+  Aperture,
+  Circle,
+} from "phosphor-react";
+import {
+  Flex,
+  Heading,
+  Text,
+  Stack,
+  HStack,
+  Button,
+  Link,
+  Box,
+  ListItem,
+  ListIcon,
+  List,
+  useToast,
+} from "@chakra-ui/react";
 
+import { useClipboard } from "use-clipboard-copy";
 
 export default function Home() {
+  const toast = useToast();
+  const clipboard = useClipboard({
+    onSuccess() {
+      toast({
+        description: "Copied username to clipboard 🙂",
+        status: "success",
+        duration: "900",
+      });
+    },
+
+    onError() {
+      toast({
+        description: "Copied username to clipboard 🙂",
+        status: "error",
+        isClosable: true,
+      });
+    },
+  });
+
   return (
     <>
       <Shell>
         <Flex py={24} h="50vh" justifyContent="flex-end" flexDirection="column">
           <Heading mb={4}>Hi, my name is Mitul</Heading>
-          <Text fontSize="lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <Text fontSize="xl" mb={3}>
+            I’m still figuring out what my life story would look like here, but
+            for now, I’m happy to share that I’m a curious learner of all
+            things. A couple of things I spend a lot of time learning about:
+            investment psychology, Fornite + the metaverse, and photography. I’m
+            a firm believer in the ideologies of doing difficult things because
+            they are the most rewarding and seeking discomfort to support
+            personal growth.
+          </Text>
+          <Text fontSize="xl">
+            <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
+            for my next opportunity ideally as a UX Developer or an associate
+            product manager. The goal is to build great things with great
+            people, and I would love to chat if you can help me achieve that.
           </Text>
         </Flex>
         <Current />
         <Section header="Experience">
           <Item
             date="May 2019 - Mar 2020"
-            description="I helped people make meetings better at Soapbox"
+            description="Product Analyst at Soapbox to help make meetings better for everyone by running growth experiments"
           />
           <Item
             date="May 2018 - Aug 2018"
-            description="Supported launching 30-cities-in-1 day at Uber Eats as an Courier Operations Intern"
+            description="Operations Intern at Uber Eats to support launching 30-cities-in-1 day and lead competitive research"
           />
           <Item
             date="Jan 2018 - Apr 2018"
-            description="Built my foundational knowledge of product as an Intern at CIBC Digital"
+            description="Product Lead Intern at CIBC Digital to build my foundational knowledge of product and ship four consumer-facing features"
           />
           <Item
             date="May 2017 - Aug 2017"
-            description="Digital Strategy Intern @ Bank of Montreal"
+            description="Digital Strategy Intern at Bank of Montreal to learn about user research and make strong data driven decisions"
           />
         </Section>
         <Section header="Projects">
@@ -66,38 +112,90 @@ export default function Home() {
               photographing the Uber CEO, being paid to travel and working with
               brands I love.
             </Text>
+            <Box>
+              <List spacing={1}>
+                <Text>Some notable accomplishments I'm proud to share</Text>
+                <ListItem display="flex" alignItems="center">
+                  <ListIcon
+                    as={Circle}
+                    fontSize="xs"
+                    mb="-1px"
+                    color="trueGray.400"
+                  />
+                  Every Google Pixel has one of my photos as a default wallpaper
+                </ListItem>
+                <ListItem display="flex" alignItems="center">
+                  <ListIcon
+                    as={Circle}
+                    fontSize="xs"
+                    mb="-1px"
+                    color="trueGray.400"
+                  />
+                  Featured in the Metro News
+                </ListItem>
+              </List>
+            </Box>
             <Text>
-              Today, I’m more focused on improving my drone skills rather than
-              growing my online presence. You can learn a little more by
-              visiting my photography portfolio below.
+              Today, I’m more focused on improving my drone skills and becoming
+              a better artist rather than growing my online presence. You can
+              learn a little more by visiting my photography portfolio below.
             </Text>
             <HStack>
               <Link href="https://typicalmitul.com" isExternal>
-                <Button variant="link">Portfolio</Button>
+                <Button variant="link" leftIcon={<Camera />}>
+                  Portfolio
+                </Button>
               </Link>
               <Link href="https://typicalmitul.com" isExternal>
-                <Button variant="link">Instagram</Button>
+                <Button variant="link" leftIcon={<InstagramLogo />}>
+                  Instagram
+                </Button>
               </Link>
               <Link href="https://typicalmitul.com" isExternal>
-                <Button variant="link">500px</Button>
+                <Button variant="link" leftIcon={<Aperture />}>
+                  500px
+                </Button>
               </Link>
             </HStack>
-
             <Photos />
           </Stack>
         </Section>
         <Section header="Contact">
-          <Text mb={5}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </Text>
-          <Link>
-            <Button variant="link" rightIcon={<ArrowRight />}>
-              Let's chat
+          <Stack spacing={4} mb={7}>
+            <Text>
+              I love connecting with new people to learn from and am always more
+              than willing to help with questions you may have.
+            </Text>
+            <Text>
+              If you would like to work on a project together or hire me, don't
+              hesistate. I'd love to work with you.
+            </Text>
+            <Text>
+              Besides that, I enjoy talking about photography, abandoned
+              side-projects, stocks that could make us bazillionaires, the
+              psychology behind why we make poor decisions, or how Anthony
+              Fantano made a mistake by giving MBDTF a 6/10.
+            </Text>
+          </Stack>
+          <Stack align="flex-start">
+            <Link href="mailto:mitulxshah@gmail.com">
+              <Button variant="link" leftIcon={<PaperPlaneTilt />}>
+                Feel free to email me
+              </Button>
+            </Link>
+            <Button
+              variant="link"
+              leftIcon={<ChatCircle />}
+              onClick={() => clipboard.copy("mitul#0988")}
+            >
+              Chat on Discord – mitul#0988
             </Button>
-          </Link>
+            <Link href="https://twitter.com/typicalmitul" isExternal>
+              <Button variant="link" leftIcon={<TwitterLogo />}>
+                DM me on Twitter
+              </Button>
+            </Link>
+          </Stack>
         </Section>
       </Shell>
     </>
