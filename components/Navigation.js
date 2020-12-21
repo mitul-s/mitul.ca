@@ -1,6 +1,5 @@
 import { Box, HStack, Flex, Link, Button } from "@chakra-ui/react"
-import NextLink from "next/link"
-import { ArrowRight, ArrowUpRight, HandWaving } from "phosphor-react";
+import { ArrowRight } from "phosphor-react";
 
 const Navigation = () => {
     return (
