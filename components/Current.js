@@ -58,14 +58,18 @@ const Current = () => {
     return (<Center><Spinner/></Center>)
   }
 
+  if(error) {
+    <h1>Hm, there was an error.</h1>
+  }
+
   return (
     <Section header="Currently">
       <Stack spacing={8} direction={["column", null, "row"]}>
         <CurrentItem
           icon={MusicNotesSimple}
-          title={data.recenttracks.track[0].name}
-          caption={data.recenttracks.track[0].artist["#text"]}
-          link={data.recenttracks.track[0].url}
+          title={data.recenttracks ? data.recenttracks.track[0].name : 'Wishing Well'}
+          caption={data.recenttracks ? data.recenttracks.track[0].artist["#text"] : 'Juice Wrld'}
+          link={data.recenttracks ? data.recenttracks.track[0].url : 'https://www.last.fm/music/Juice+WRLD/_/Wishing+Well'}
           isDesktop={isDesktop}
         />
         <CurrentItem
