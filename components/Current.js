@@ -58,6 +58,10 @@ const Current = () => {
     return (<Center><Spinner/></Center>)
   }
 
+  if(error) {
+    <h1>Hm, there was an error.</h1>
+  }
+
   return (
     <Section header="Currently">
       <Stack spacing={8} direction={["column", null, "row"]}>
