@@ -1,0 +1,22 @@
+{
+  "name": "mitul.ca",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^1.0.3",
+    "@emotion/react": "^11.1.2",
+    "@emotion/styled": "^11.0.0",
+    "framer-motion": "^3.1.1",
+    "next": "10.0.2",
+    "next-seo": "^4.17.0",
+    "phosphor-react": "^1.1.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "use-clipboard-copy": "^0.1.2"
+  }
+}
