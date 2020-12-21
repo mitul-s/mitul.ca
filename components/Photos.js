@@ -7,7 +7,7 @@ const Photos = ({ children }) => {
       {
         Images.map(i => {
           return (
-            <Box minW="300px" objectFit="scale-down">
+            <Box minW="300px" objectFit="scale-down" key={i.id}>
               <Image src={i.src} />
             </Box>
           );

@@ -26,11 +26,13 @@ import {
   ListIcon,
   List,
   useToast,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 import { useClipboard } from "use-clipboard-copy";
 
 export default function Home() {
+  
   const toast = useToast();
   const clipboard = useClipboard({
     onSuccess() {
@@ -53,16 +55,20 @@ export default function Home() {
   return (
     <>
       <Shell>
-        <Flex py={24} h="50vh" justifyContent="flex-end" flexDirection="column">
+        <Flex
+          py={24}
+          h={["80vh", null, "50vh"]}
+          justifyContent="flex-end"
+          flexDirection="column"
+        >
           <Heading mb={4}>Hi, my name is Mitul</Heading>
           <Text fontSize="xl" mb={3}>
             I’m still figuring out what my life story would look like here, but
             for now, I’m happy to share that I’m a curious learner of all
-            things. A couple of things I spend a lot of time learning about:
-            investment psychology, Fornite + the metaverse, and photography. I’m
-            a firm believer in the ideologies of doing difficult things because
-            they are the most rewarding and seeking discomfort to support
-            personal growth.
+            things. I’m a firm believer in the ideologies of doing difficult
+            things because they are the most rewarding and seeking discomfort to
+            support personal growth. A couple of topics I'm super into: investment psychology, Fornite and the metaverse,
+            photography and binge watching David Dobrik vlogs.
           </Text>
           <Text fontSize="xl">
             <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
@@ -131,7 +137,27 @@ export default function Home() {
                     mb="-1px"
                     color="trueGray.400"
                   />
-                  Featured in the Metro News
+                  <Text>
+                    Featured in Toronto's{" "}
+                    <Link
+                      href="https://drive.google.com/file/d/0B-wYLuK2QlRwb1FmOThmUmYwekU/view?usp=sharing"
+                      textDecoration="underline"
+                      isExternal
+                    >
+                      Metro News newspaper
+                    </Link>{" "}
+                    as an artist
+                  </Text>
+                </ListItem>
+                <ListItem display="flex" alignItems="center">
+                  <ListIcon
+                    as={Circle}
+                    fontSize="xs"
+                    mb="-1px"
+                    color="trueGray.400"
+                  />
+                  I earned about 20K within six months of 2019 – this was beyond
+                  my wildest dreams
                 </ListItem>
               </List>
             </Box>
