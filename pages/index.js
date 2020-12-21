@@ -56,21 +56,22 @@ export default function Home() {
     <>
       <Shell>
         <Flex
-          py={24}
-          h={["80vh", null, "50vh"]}
+          py={[0, null, 24]}
+          h={["75vh", null, "50vh"]}
           justifyContent="flex-end"
           flexDirection="column"
         >
           <Heading mb={4}>Hi, my name is Mitul</Heading>
-          <Text fontSize="xl" mb={3}>
+          <Text fontSize={["lg", null, "xl"]} mb={3}>
             I’m still figuring out what my life story would look like here, but
             for now, I’m happy to share that I’m a curious learner of all
             things. I’m a firm believer in the ideologies of doing difficult
             things because they are the most rewarding and seeking discomfort to
-            support personal growth. A couple of topics I'm super into: investment psychology, Fornite and the metaverse,
-            photography and binge watching David Dobrik vlogs.
+            support personal growth. A couple of topics I'm super into:
+            investment psychology, Fornite and the metaverse, photography and
+            binge watching David Dobrik vlogs.
           </Text>
-          <Text fontSize="xl">
+          <Text fontSize={["lg", null, "xl"]}>
             <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
             for my next opportunity ideally as a UX Developer or an associate
             product manager. The goal is to build great things with great
