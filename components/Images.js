@@ -1,8 +1,8 @@
 
 const Images = [
   {
-    id: 1,
-    src: "./media/photos/2.webp",
+    id: 6,
+    src: "./media/photos/6.webp",
   },
   {
     id: 2,

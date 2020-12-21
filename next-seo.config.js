@@ -1,4 +1,4 @@
-const title = 'Mitul Shah | product & photography.'
+const title = 'Mitul Shah'
 
 const description = "Hi, my name is Mitul and I'm still figuring things out.";
 
@@ -14,7 +14,7 @@ const SEO = {
     description,
     images: [
       {
-        url: "/media/banner.png",
+        url: "https://mitul.ca/media/banner.png",
         alt: title,
         width: 1280,
         height: 720,

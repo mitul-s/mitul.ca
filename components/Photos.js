@@ -1,9 +1,10 @@
 import { Box, Image, HStack } from "@chakra-ui/react"
 import Images from "@/components/Images"
 
+
 const Photos = ({ children }) => {
     return (
-      <HStack overflowX="auto" flexWrap="nowrap">
+      <HStack overflowX="scroll" w="100%" flexWrap="nowrap">
       {
         Images.map(i => {
           return (

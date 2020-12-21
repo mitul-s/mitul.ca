@@ -1,4 +1,4 @@
-import { Box, HStack, Flex, Link, Button } from "@chakra-ui/react"
+import { Box, HStack, Flex, Text, Link, Button } from "@chakra-ui/react"
 import { ArrowRight } from "phosphor-react";
 
 const Navigation = () => {
@@ -15,11 +15,6 @@ const Navigation = () => {
         >
           <Box></Box>
           <HStack spacing={6}>
-            {/* <NextLink href="https://">
-              <Button as="a" colorScheme="blueGray" variant="link" rightIcon={<ArrowUpRight/>}>
-                Photography
-              </Button>
-            </NextLink> */}
             <Link href="mailto:mitulxshah@gmail.com?subject=Hi Mitul">
               <Button colorScheme="blueGray" as="a" variant="link" rightIcon={<ArrowRight/>}>
                 Get in touch

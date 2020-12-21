@@ -68,14 +68,16 @@ export default function Home() {
             things. I’m a firm believer in the ideologies of doing difficult
             things because they are the most rewarding and seeking discomfort to
             support personal growth. A couple of topics I'm super into:
-            investment psychology, Fornite and the metaverse, photography and
+            investment psychology, Fortnite and the metaverse, aerial photography and
             binge watching David Dobrik vlogs.
           </Text>
           <Text fontSize={["lg", null, "xl"]}>
             <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
-            for my next opportunity ideally as a UX Developer or an associate
-            product manager. The goal is to build great things with great
-            people, and I would love to chat if you can help me achieve that.
+            for my next opportunity ideally as a{" "}
+            <span style={{ fontWeight: "bold" }}>UX Developer</span> or an{" "}
+            <span style={{ fontWeight: "bold" }}>associate product manager</span>. The goal
+            is to build great things with great people, and I would love to chat
+            if you can help me achieve that.
           </Text>
         </Flex>
         <Current />
@@ -173,12 +175,12 @@ export default function Home() {
                   Portfolio
                 </Button>
               </Link>
-              <Link href="https://typicalmitul.com" isExternal>
+              <Link href="https://instagram.com/typicalmitul" isExternal>
                 <Button variant="link" leftIcon={<InstagramLogo />}>
                   Instagram
                 </Button>
               </Link>
-              <Link href="https://typicalmitul.com" isExternal>
+              <Link href="https://500px.com/typicalmitul" isExternal>
                 <Button variant="link" leftIcon={<Aperture />}>
                   500px
                 </Button>
