@@ -26,6 +26,8 @@ const Project = ({ title, description, repo }) => {
         <Tooltip
           label="Github Stargazers"
           aria-label="Github Stargazers"
+          closeOnClick={false}
+          closeOnMouseDown={false}
           openDelay={600}
         >
           <HStack>
