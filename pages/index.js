@@ -26,20 +26,18 @@ import {
   ListIcon,
   List,
   useToast,
-  useMediaQuery,
 } from "@chakra-ui/react";
 
 import { useClipboard } from "use-clipboard-copy";
 
 export default function Home() {
-  
   const toast = useToast();
   const clipboard = useClipboard({
     onSuccess() {
       toast({
         description: "Copied username to clipboard 🙂",
         status: "success",
-        duration: "900",
+        duration: "1000",
       });
     },
 
@@ -52,6 +50,8 @@ export default function Home() {
     },
   });
 
+
+
   return (
     <>
       <Shell>
@@ -61,23 +61,27 @@ export default function Home() {
           justifyContent="flex-end"
           flexDirection="column"
         >
-          <Heading mb={4}>Hi, my name is Mitul</Heading>
+          <Heading mb={4}>
+            Hi, my name is Mitul
+          </Heading>
           <Text fontSize={["lg", null, "xl"]} mb={3}>
             I’m still figuring out what my life story would look like here, but
             for now, I’m happy to share that I’m a curious learner of all
             things. I’m a firm believer in the ideologies of doing difficult
             things because they are the most rewarding and seeking discomfort to
             support personal growth. A couple of topics I'm super into:
-            investment psychology, Fortnite and the metaverse, aerial photography and
-            binge watching David Dobrik vlogs.
+            investment psychology, Fortnite and the metaverse, aerial
+            photography and binge watching David Dobrik vlogs.
           </Text>
           <Text fontSize={["lg", null, "xl"]}>
             <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
             for my next opportunity ideally as a{" "}
             <span style={{ fontWeight: "bold" }}>UX Developer</span> or an{" "}
-            <span style={{ fontWeight: "bold" }}>associate product manager</span>. The goal
-            is to build great things with great people, and I would love to chat
-            if you can help me achieve that.
+            <span style={{ fontWeight: "bold" }}>
+              associate product manager
+            </span>
+            . The goal is to build great things with great people, and I would
+            love to chat if you can help me achieve that.
           </Text>
         </Flex>
         <Current />
