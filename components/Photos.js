@@ -2,14 +2,19 @@ import { Box, Image, HStack } from "@chakra-ui/react"
 import Images from "@/components/Images"
 
 
-const Photos = ({ children }) => {
+const Photos = () => {
     return (
-      <HStack overflowX="scroll" w="100%" flexWrap="nowrap">
+      <HStack overflowX="scroll" w="100%" flexWrap="nowrap" sx={{ scrollSnapType: "x mandatory"}}>
       {
         Images.map(i => {
           return (
-            <Box minW="300px" objectFit="scale-down" key={i.id}>
-              <Image src={i.src} />
+            <Box
+              minW="300px"
+              objectFit="scale-down"
+              key={i.id}
+              sx={{ scrollSnapAlign: "center" }}
+            >
+              <Image src={i.src} alt={i.alt} />
             </Box>
           );
         })
