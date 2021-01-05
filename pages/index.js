@@ -85,7 +85,7 @@ export default function Home() {
             photography and binge watching David Dobrik vlogs.
           </Text>
         </Flex>
-        {/* <Current /> */}
+        <Current />
         <Section header="Experience">
           <Item
             date="May 2019 - Mar 2020"
