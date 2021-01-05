@@ -56,15 +56,25 @@ export default function Home() {
     <>
       <Shell>
         <Flex
-          py={[0, null, 24]}
+          // py={[0, null, 24]}
           h={["75vh", null, "50vh"]}
           justifyContent="flex-end"
           flexDirection="column"
         >
-          <Heading mb={4}>
-            Hi, my name is Mitul
-          </Heading>
-          <Text fontSize={["lg", null, "xl"]} mb={3}>
+          <Heading mb={4}>Hi, my name is Mitul</Heading>
+          <Text fontSize={["lg", null, "xl"]} mb={4} lineHeight="1.6">
+            Currently, I'm on the search for my next adventure, ideally as an
+            Associate Product Manager or Product Analyst. I'm passionate about
+            building a deep understanding of customers to design product
+            experiences that can only be defined as magic ✨ My goal is pretty
+            simple, build great things with great people. If we can work
+            together to achieve that,{" "}
+            <Link href="mailto:mitulxshah@gmail.com" textDecoration="underline" _hover={{ color: "teal.600"}}>
+              I'd love to chat 👋
+            </Link>
+            .
+          </Text>
+          <Text fontSize={["lg", null, "xl"]} lineHeight="1.6">
             I’m still figuring out what my life story would look like here, but
             for now, I’m happy to share that I’m a curious learner of all
             things. I’m a firm believer in the ideologies of doing difficult
@@ -72,16 +82,6 @@ export default function Home() {
             support personal growth. A couple of topics I'm super into:
             investment psychology, Fortnite and the metaverse, aerial
             photography and binge watching David Dobrik vlogs.
-          </Text>
-          <Text fontSize={["lg", null, "xl"]}>
-            <span style={{ fontWeight: "bold" }}>Currently</span>, I’m searching
-            for my next opportunity ideally as a{" "}
-            <span style={{ fontWeight: "bold" }}>UX Developer</span> or an{" "}
-            <span style={{ fontWeight: "bold" }}>
-              associate product manager
-            </span>
-            . The goal is to build great things with great people, and I would
-            love to chat if you can help me achieve that.
           </Text>
         </Flex>
         <Current />
