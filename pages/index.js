@@ -57,7 +57,8 @@ export default function Home() {
       <Shell>
         <Flex
           // py={[0, null, 24]}
-          h={["75vh", null, "50vh"]}
+          // h={["90vh", null, "50vh"]}
+          mt={24}
           justifyContent="flex-end"
           flexDirection="column"
         >
@@ -79,12 +80,12 @@ export default function Home() {
             for now, I’m happy to share that I’m a curious learner of all
             things. I’m a firm believer in the ideologies of doing difficult
             things because they are the most rewarding and seeking discomfort to
-            support personal growth. A couple of topics I'm super into:
+            support personal growth. Some things I'm super into:
             investment psychology, Fortnite and the metaverse, aerial
             photography and binge watching David Dobrik vlogs.
           </Text>
         </Flex>
-        <Current />
+        {/* <Current /> */}
         <Section header="Experience">
           <Item
             date="May 2019 - Mar 2020"

@@ -17,7 +17,7 @@ const Navigation = () => {
           <HStack spacing={6}>
             <Link href="mailto:mitulxshah@gmail.com?subject=Hi Mitul">
               <Button colorScheme="blueGray" as="a" variant="link">
-                👋
+                Contact
               </Button>
             </Link>
           </HStack>
