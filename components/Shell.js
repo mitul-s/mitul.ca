@@ -1,18 +1,26 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion"
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import styles from ".././styles/sidebar.module.css"
 
 
+
+
 const Shell = ({ children }) => {
 
   const MotionFlex = motion.custom(Flex);
+  const [isDesktop] = useMediaQuery("(min-width: 1080px)");
   
     return (
-      <Box m="0 auto" maxW="820px" className={styles.withSidebar}>
+      <Box
+        m="0 auto"
+        maxW={isDesktop ? "820px" : "700px"}
+        w="100%"
+        className={isDesktop ? styles.withSidebar : ""}
+      >
         <Box>
-          <Navigation className={styles.sidebar} />
+          <Navigation isDesktop={isDesktop} styles={styles.sidebar} />
           <MotionFlex
             as="main"
             // m="0 auto"
@@ -21,7 +29,7 @@ const Shell = ({ children }) => {
             exit={{ opacity: 0 }}
             initial="initial"
             animate="animate"
-            className={styles.notSidebar}
+            className={isDesktop ? styles.notSidebar : ""}
           >
             {children}
             <Footer />
