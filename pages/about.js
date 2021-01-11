@@ -5,7 +5,7 @@ import { Box, Flex } from "@chakra-ui/react"
 const about = () => {
     return (
       <Shell>
-        <Flex mt={24} minW="10000px" justifyContent="flex-end" flexDirection="column">
+        <Flex mt={24} minW="100çç00px" justifyContent="flex-end" flexDirection="column">
         HELLO
         </Flex>
       </Shell>
