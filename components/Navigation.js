@@ -1,26 +1,43 @@
-import { Box, HStack, Flex, Text, Link, Button } from "@chakra-ui/react"
-import { ArrowRight } from "phosphor-react";
+import { Box, Stack, Flex, Text, Link, Button } from "@chakra-ui/react"
+import NextLink from "next/link"
 
-const Navigation = () => {
+const Navigation = ({ ...rest }) => {
     return (
-      <Flex mb={[8, 12]} w="full" justifyContent="center">
+      <Flex
+        // mb={[8, 12]}
+        // w="full"
+        justifyContent="flex-end"
+        {...rest}
+      >
         <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          w="full"
-          maxWidth="700px"
+          alignItems="flex-end"
+          // height="24vh"
+          // justifyContent="space-between"
+          // w="full"
+          // maxWidth="700px"
           px={8}
-          h="12vh"
+          mt={24}
+          // h="12vh"
+          position="fixed"
           as="nav"
         >
-          <Box></Box>
-          <HStack spacing={6}>
+          <Stack spacing={3} alignItems="flex-end">
+            <NextLink href="/">
+              <Button colorScheme="blueGray" as="a" variant="link">
+                Home
+              </Button>
+            </NextLink>
+            <NextLink href="/about">
+              <Button colorScheme="blueGray" as="a" variant="link">
+                About
+              </Button>
+            </NextLink>
             <Link href="mailto:mitulxshah@gmail.com?subject=Hi Mitul">
               <Button colorScheme="blueGray" as="a" variant="link">
                 Contact
               </Button>
             </Link>
-          </HStack>
+          </Stack>
         </Flex>
       </Flex>
     );
