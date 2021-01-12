@@ -28,6 +28,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+import NextLink from "next/link"
+
 import { useClipboard } from "use-clipboard-copy";
 
 export default function Home() {
@@ -70,20 +72,36 @@ export default function Home() {
             experiences that can only be defined as magic ✨ My goal is pretty
             simple, build great things with great people. If we can work
             together to achieve that,{" "}
-            <Link href="mailto:mitulxshah@gmail.com" textDecoration="underline" _hover={{ color: "teal.600"}}>
+            <Link
+              href="mailto:mitulxshah@gmail.com"
+              textDecoration="underline"
+              _hover={{ color: "teal.600" }}
+            >
               I'd love to chat 👋
             </Link>
             .
           </Text>
-          <Text fontSize={["lg", null, "xl"]} lineHeight="1.6">
+          <Text fontSize={["lg", null, "xl"]} mb={4} lineHeight="1.6">
             I’m still figuring out what my life story would look like here, but
             for now, I’m happy to share that I’m a curious learner of all
             things. I’m a firm believer in the ideologies of doing difficult
             things because they are the most rewarding and seeking discomfort to
-            support personal growth. Some things I'm super into:
-            investment psychology, Fortnite and the metaverse, aerial
-            photography and binge watching David Dobrik vlogs.
+            support personal growth. Some things I'm super into: investment
+            psychology, Fortnite and the metaverse, aerial photography and binge
+            watching David Dobrik vlogs.
           </Text>
+          {/* <NextLink href="/about">
+            <Button
+              mt={4}
+              bg="transparent"
+              fontSize="sm"
+              borderRadius={0}
+              variant="link"
+              w="min-content"
+            >
+              More about me →
+            </Button>
+          </NextLink> */}
         </Flex>
         <Current />
         <Section header="Experience">

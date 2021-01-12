@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
 
 export default function Item({ date, description, link }) {
     return (
