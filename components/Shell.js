@@ -4,23 +4,19 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import styles from ".././styles/sidebar.module.css"
 
-
-
-
 const Shell = ({ children }) => {
 
   const MotionFlex = motion.custom(Flex);
-  const [isDesktop] = useMediaQuery("(min-width: 1080px)");
   
     return (
       <Box
         m="0 auto"
-        maxW={isDesktop ? "820px" : "700px"}
+        maxW={["700px", null, "820px"]}
         w="100%"
-        className={isDesktop ? styles.withSidebar : ""}
+        className={styles.withSidebar}
       >
         <Box>
-          <Navigation isDesktop={isDesktop} styles={styles.sidebar} />
+          <Navigation styles={styles.sidebar} />
           <MotionFlex
             as="main"
             // m="0 auto"
@@ -29,7 +25,7 @@ const Shell = ({ children }) => {
             exit={{ opacity: 0 }}
             initial="initial"
             animate="animate"
-            className={isDesktop ? styles.notSidebar : ""}
+            className={styles.notSidebar}
           >
             {children}
             <Footer />

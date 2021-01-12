@@ -10,18 +10,18 @@ const FooterIcon = ({ icon, link }) => (
 
 const NavLinks = ({ ...rest }) => (
   <Stack spacing={3} alignItems="flex-end" {...rest}>
-    <NextLink href="/">
-      <Button colorScheme="blueGray" as="a" variant="link">
+    {/* <NextLink href="/">
+      <Button colorScheme="trueGray" as="a" variant="link">
         Home
       </Button>
     </NextLink>
     <NextLink href="/about">
-      <Button colorScheme="blueGray" as="a" variant="link">
+      <Button colorScheme="trueGray" as="a" variant="link">
         About
       </Button>
-    </NextLink>
+    </NextLink> */}
     <Button
-      colorScheme="blueGray"
+      colorScheme="trueGray"
       as="a"
       variant="link"
       href="mailto:mitulxshah@gmail.com?subject=Hi Mitul"
@@ -32,53 +32,76 @@ const NavLinks = ({ ...rest }) => (
 );
 
 
+// const DesktopNav = ({ ...rest }) => {
+//   return (
+//     <Flex {...rest}>
+//       <Flex
+//         justifyContent="space-between"
+//         textAlign="right"
+//         px={8}
+//         mt={24}
+//         flexDirection="column"
+//         h="20vh"
+//         position="fixed"
+//         as="nav"
+//       >
+//         <Box>🏄‍♂️</Box>
+//         <NavLinks />
+//         <HStack>
+//           <FooterIcon
+//             icon={TwitterLogo}
+//             link="https://twitter.com/typicalmitul"
+//           />
+//           <FooterIcon
+//             icon={InstagramLogo}
+//             link="https://instagram.com/typicalmitul"
+//           />
+//           <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s" />
+//           <FooterIcon
+//             icon={LinkedinLogo}
+//             link="https://www.linkedin.com/in/heymitul/"
+//           />
+//         </HStack>
+//       </Flex>
+//     </Flex>
+//   );
+// };
 
-const MobileNav = () => (
-  <Flex px={8} h="10vh" alignItems="center" justifyContent="space-between">
-    <Box>🏄‍♂️</Box>
-    <NavLinks direction="row" />
+
+
+const Navigation = ({ styles }) => (
+  <Flex className={styles}>
+    <Flex
+      as="nav"
+      px={8}
+      h={["10vh", null, "20vh"]}
+      alignItems={["center", null, "flex-end"]}
+      justifyContent="space-between"
+      mt={[0, null, 24]}
+      position={["block", null, "fixed"]}
+      flexDirection={["row", null, "column"]}
+      w={["100%", null, "min-content"]}
+    >
+      <Box>🏄‍♂️</Box>
+      <NavLinks direction={["row", null, "column"]} />
+      <HStack display={["none", null, "flex"]}>
+        <FooterIcon
+          icon={TwitterLogo}
+          link="https://twitter.com/typicalmitul"
+        />
+        <FooterIcon
+          icon={InstagramLogo}
+          link="https://instagram.com/typicalmitul"
+        />
+        <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s" />
+        <FooterIcon
+          icon={LinkedinLogo}
+          link="https://www.linkedin.com/in/heymitul/"
+        />
+      </HStack>
+    </Flex>
   </Flex>
 );
 
-
-
-const DesktopNav = ({ ...rest }) => {
-    return (
-      <Flex {...rest}>
-        <Flex
-          justifyContent="space-between"
-          textAlign="right"
-          px={8}
-          mt={24}
-          flexDirection="column"
-          h="20vh"
-          position="fixed"
-          as="nav"
-        >
-          <Box>🏄‍♂️</Box>
-          <NavLinks />
-          <HStack>
-            <FooterIcon
-              icon={TwitterLogo}
-              link="https://twitter.com/typicalmitul"
-            />
-            <FooterIcon
-              icon={InstagramLogo}
-              link="https://instagram.com/typicalmitul"
-            />
-            <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s" />
-            <FooterIcon
-              icon={LinkedinLogo}
-              link="https://www.linkedin.com/in/heymitul/"
-            />
-          </HStack>
-        </Flex>
-      </Flex>
-    );
-}
-
-const Navigation = ({ isDesktop, styles, ...rest }) => {
-  return isDesktop ? <DesktopNav className={styles} {...rest} /> : <MobileNav />;
-};
 
 export default Navigation;
