@@ -1,15 +1,21 @@
 import { extendTheme } from "@chakra-ui/react";
+import { mode } from '@chakra-ui/theme-tools';
+
+const styles = {
+  global: (props) => ({
+    body: {
+      color: mode("#0D1013", "#f3f4f6")(props),
+      bg: mode("#fff", "#0D1013")(props),
+    },
+  }),
+};
 
 const theme = extendTheme({
-  styles: {
-    global: {
-      body: {
-        // bg: "blueGray.900",
-        bg: "#0D1013",
-        color: "coolGray.100",
-      },
-    },
+  config: {
+    initialColorMode: "dark",
+    useSystemColorMode: false,
   },
+  styles,
   fonts: {
     body: "Inter",
     heading: "HK Grotesk",

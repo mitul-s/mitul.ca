@@ -1,5 +1,5 @@
-import { Box, Stack, Flex, Icon, Text, Link, Button, HStack } from "@chakra-ui/react"
-import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo } from "phosphor-react";
+import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColorMode } from "@chakra-ui/react"
+import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo, Sun, Moon } from "phosphor-react";
 import NextLink from "next/link"
 
 const FooterIcon = ({ icon, link }) => (
@@ -8,8 +8,15 @@ const FooterIcon = ({ icon, link }) => (
   </Link>
 );
 
+const ToggleColorMode = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
+  return (
+    <IconButton bg="transparent" p={0} onClick={toggleColorMode} icon={colorMode === "light" ? <Moon /> : <Sun />} />
+  )
+}
+
 const NavLinks = ({ ...rest }) => (
-  <Stack spacing={3} alignItems="flex-end" {...rest}>
+  <Stack spacing={3} alignItems={["center", null, "flex-end"]} {...rest}>
     {/* <NextLink href="/">
       <Button colorScheme="trueGray" as="a" variant="link">
         Home
@@ -82,7 +89,8 @@ const Navigation = ({ styles }) => (
       flexDirection={["row", null, "column"]}
       w={["100%", null, "min-content"]}
     >
-      <Box>🏄‍♂️</Box>
+      {/* <Box>🏄‍♂️</Box> */}
+      <ToggleColorMode />
       <NavLinks direction={["row", null, "column"]} />
       <HStack display={["none", null, "flex"]}>
         <FooterIcon
