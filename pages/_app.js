@@ -3,6 +3,11 @@ import { Global, css } from "@emotion/react";
 import theme from "@/styles/theme.js"
 import { DefaultSeo } from "next-seo";
 import SEO from "../next-seo.config";
+import dynamic from "next/dynamic";
+
+const AnimatedCursor = dynamic(() => import("../node_modules/react-animated-cursor"), {
+  ssr: false,
+});
 
 const GlobalStyle = ({ children }) => {
 
@@ -37,6 +42,7 @@ function App({ Component, pageProps }) {
     <ChakraProvider theme={theme}>
       <GlobalStyle>
         <DefaultSeo {...SEO} />
+        <AnimatedCursor color='94, 234, 212' />
         <Component {...pageProps} />
       </GlobalStyle>
     </ChakraProvider>
