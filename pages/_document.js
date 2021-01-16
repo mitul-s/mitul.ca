@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import theme from "@/styles/theme.js";
 import { ColorModeScript } from '@chakra-ui/react';
 
 class MyDocument extends Document {
@@ -13,7 +14,7 @@ class MyDocument extends Document {
           <script async src="https://cdn.splitbee.io/sb.js"></script>
         </Head>
         <body>
-          <ColorModeScript initialColorMode="light" />
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
         </body>

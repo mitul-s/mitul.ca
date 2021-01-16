@@ -19,7 +19,7 @@ const Project = ({ title, description, repo }) => {
   }, []);
 
   return (
-    <Box p={6} border="1px solid white">
+    <Box p={6} border="1px solid" borderColorScheme="trueGray">
       <Flex justifyContent="space-between" alignItems="center" mb={3}>
         <Heading size="md">{title}</Heading>
         {data.stargazers_count > 0 ?
