@@ -1,21 +1,48 @@
 import { Flex, Link, HStack, Icon } from "@chakra-ui/react";
-import { TwitterLogo, InstagramLogo, GithubLogo } from "phosphor-react";
+import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo } from "phosphor-react";
 
 
-const FooterIcon = ({ icon, link }) => (
-    <Link href={link} isExternal>
-      <Icon fontSize="lg" as={icon} />
-    </Link>
-)
+const FooterIcon = ({ title, icon, link }) => (
+  <Link
+    href={link}
+    isExternal
+    data-splitbee-event={title}
+    data-splitbee-event-type="Social"
+  >
+    <Icon
+      fontSize="lg"
+      transition="150ms ease-in-out"
+      _hover={{ color: "cyan.600" }}
+      as={icon}
+    />
+  </Link>
+);
 
 const Footer = () => {
   return (
     <Flex h="12vh" alignItems="center">
       <Flex w="full" justifyContent="flex-end">
         <HStack>
-          <FooterIcon icon={TwitterLogo} link="https://twitter.com/typicalmitul" />
-          <FooterIcon icon={InstagramLogo} link="https://instagram.com/typicalmitul" />
-          <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s"/>
+          <FooterIcon
+            title="twitter"
+            icon={TwitterLogo}
+            link="https://twitter.com/typicalmitul"
+          />
+          <FooterIcon
+            title="instagram"
+            icon={InstagramLogo}
+            link="https://instagram.com/typicalmitul"
+          />
+          <FooterIcon
+            title="github"
+            icon={GithubLogo}
+            link="https://github.com/mitul-s"
+          />
+          <FooterIcon
+            title="linkedin"
+            icon={LinkedinLogo}
+            link="https://linkedin.com/in/heymitul"
+          />
         </HStack>
       </Flex>
     </Flex>

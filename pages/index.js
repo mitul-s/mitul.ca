@@ -39,7 +39,7 @@ export default function Home() {
       toast({
         description: "Copied username to clipboard 🙂",
         status: "success",
-        duration: "1000",
+        duration: "1500",
       });
     },
 

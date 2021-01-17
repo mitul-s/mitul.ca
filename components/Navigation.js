@@ -2,9 +2,19 @@ import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColo
 import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo, Sun, Moon } from "phosphor-react";
 import NextLink from "next/link"
 
-const FooterIcon = ({ icon, link }) => (
-  <Link href={link} isExternal>
-    <Icon fontSize="xl" transition="150ms ease-in-out" _hover={{ color: "cyan.600" }} as={icon} />
+const FooterIcon = ({ title, icon, link }) => (
+  <Link
+    href={link}
+    isExternal
+    data-splitbee-event={title}
+    data-splitbee-event-type="Social"
+  >
+    <Icon
+      fontSize="xl"
+      transition="150ms ease-in-out"
+      _hover={{ color: "cyan.600" }}
+      as={icon}
+    />
   </Link>
 );
 
@@ -22,7 +32,7 @@ const NavLinks = ({ ...rest }) => (
         Home
       </Button>
     </NextLink>
-    <NextLink href="/about">
+    <NextLink href="/">
       <Button colorScheme="trueGray" as="a" variant="link" disabled>
         About
         <Badge ml={2}>WIP</Badge>
@@ -58,15 +68,22 @@ const Navigation = ({ styles }) => (
       <NavLinks direction={["row", null, "column"]} />
       <HStack display={["none", null, "flex"]}>
         <FooterIcon
+          title="twitter"
           icon={TwitterLogo}
           link="https://twitter.com/typicalmitul"
         />
         <FooterIcon
+          title="instagram"
           icon={InstagramLogo}
           link="https://instagram.com/typicalmitul"
         />
-        <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s" />
         <FooterIcon
+          title="github"
+          icon={GithubLogo}
+          link="https://github.com/mitul-s"
+        />
+        <FooterIcon
+          title="linkedin"
           icon={LinkedinLogo}
           link="https://www.linkedin.com/in/heymitul/"
         />
