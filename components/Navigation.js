@@ -1,10 +1,10 @@
-import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColorMode } from "@chakra-ui/react"
+import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColorMode, Badge } from "@chakra-ui/react"
 import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo, Sun, Moon } from "phosphor-react";
 import NextLink from "next/link"
 
 const FooterIcon = ({ icon, link }) => (
   <Link href={link} isExternal>
-    <Icon fontSize="lg" as={icon} />
+    <Icon fontSize="xl" transition="150ms ease-in-out" _hover={{ color: "cyan.600" }} as={icon} />
   </Link>
 );
 
@@ -17,16 +17,17 @@ const ToggleColorMode = () => {
 
 const NavLinks = ({ ...rest }) => (
   <Stack spacing={3} alignItems={["center", null, "flex-end"]} {...rest}>
-    {/* <NextLink href="/">
+    <NextLink href="/">
       <Button colorScheme="trueGray" as="a" variant="link">
         Home
       </Button>
     </NextLink>
     <NextLink href="/about">
-      <Button colorScheme="trueGray" as="a" variant="link">
+      <Button colorScheme="trueGray" as="a" variant="link" disabled>
         About
+        <Badge ml={2}>WIP</Badge>
       </Button>
-    </NextLink> */}
+    </NextLink>
     <Button
       colorScheme="trueGray"
       as="a"
@@ -37,43 +38,6 @@ const NavLinks = ({ ...rest }) => (
     </Button>
   </Stack>
 );
-
-
-// const DesktopNav = ({ ...rest }) => {
-//   return (
-//     <Flex {...rest}>
-//       <Flex
-//         justifyContent="space-between"
-//         textAlign="right"
-//         px={8}
-//         mt={24}
-//         flexDirection="column"
-//         h="20vh"
-//         position="fixed"
-//         as="nav"
-//       >
-//         <Box>🏄‍♂️</Box>
-//         <NavLinks />
-//         <HStack>
-//           <FooterIcon
-//             icon={TwitterLogo}
-//             link="https://twitter.com/typicalmitul"
-//           />
-//           <FooterIcon
-//             icon={InstagramLogo}
-//             link="https://instagram.com/typicalmitul"
-//           />
-//           <FooterIcon icon={GithubLogo} link="https://github.com/mitul-s" />
-//           <FooterIcon
-//             icon={LinkedinLogo}
-//             link="https://www.linkedin.com/in/heymitul/"
-//           />
-//         </HStack>
-//       </Flex>
-//     </Flex>
-//   );
-// };
-
 
 
 const Navigation = ({ styles }) => (
