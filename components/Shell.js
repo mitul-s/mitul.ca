@@ -1,4 +1,4 @@
-import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion"
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
