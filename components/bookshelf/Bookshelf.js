@@ -7,7 +7,7 @@ import {
   Grid,
   Heading,
   Image,
-  SimpleGrid,
+  Skeleton,
   Stack,
   Text,
   useColorModeValue
@@ -17,37 +17,76 @@ import fetcher from "@/lib/fetcher";
 import Section from "../Section";
 import SectionHeader from "../SectionHeader";
 import bookshelf from "pages/bookshelf";
+import { Book } from "phosphor-react";
+
+
+const LoadingCard = () => (
+  <Box border="1px solid">
+    <Grid gridTemplateColumns={["1fr", null, "1.5fr 4fr"]}>
+      <Center p={4} borderRight="1px solid">
+        <Skeleton h="180px" w="125px" />
+      </Center>
+      <Box>
+        <Stack p={8}>
+          <Skeleton h="20px" w="200px" />
+          <Skeleton h="15px" w="150px" />
+          <Text color="trueGray.500">
+            Voluptate labore qui deserunt nisi voluptate sunt qui reprehenderit
+            ad minim nisi veniam aute. Consectetur cillum non cupidatat veniam.
+          </Text>
+        </Stack>
+        <Box p={4} px={8} borderTop="1px solid ">
+          <Button variant="link">Purchase</Button>
+        </Box>
+      </Box>
+    </Grid>
+  </Box>
+);
+
+const BookCard = ({ shadow, data  }) => {
+  return (
+      data ? (<Box border="1px solid">
+      <Grid gridTemplateColumns={["1fr", null, "1.5fr 4fr"]}>
+        <Center p={4} borderRight="1px solid">
+          <Image src={data?.reading[0].fields.Cover} boxShadow={shadow} />
+        </Center>
+        <Box>
+          <Stack p={8}>
+            <Heading fontSize="xl">{data?.reading[0].fields.title}</Heading>
+            <Text>Malcolm Gladwell</Text>
+            <Text color="trueGray.500">
+              Voluptate labore qui deserunt nisi voluptate sunt qui
+              reprehenderit ad minim nisi veniam aute. Consectetur cillum non
+              cupidatat veniam.
+            </Text>
+          </Stack>
+          <Box p={4} px={8} borderTop="1px solid ">
+            <Button variant="link">Purchase</Button>
+          </Box>
+        </Box>
+      </Grid>
+    </Box>) : <LoadingCard />
+  );
+}
 
 const CurrentlyReading = ({ shadow, data }) => {
   return (
     <Section>
       <SectionHeader>Currently Reading</SectionHeader>
-      <Box border="1px solid">
-        <Grid gridTemplateColumns={["1fr", null,"1.5fr 4fr"]}>
-          <Center p={4} borderRight="1px solid">
-            <Image
-              src={data?.reading[0].fields.Cover}
-              boxShadow={shadow}
-            />
-          </Center>
-          <Box>
-            <Stack p={8}>
-              <Heading fontSize="xl">{data?.reading[0].fields.title}</Heading>
-              <Text>Malcolm Gladwell</Text>
-              <Text color="trueGray.500">
-                Voluptate labore qui deserunt nisi voluptate sunt qui
-                reprehenderit ad minim nisi veniam aute. Consectetur cillum non
-                cupidatat veniam.
-              </Text>
-            </Stack>
-            <Box p={4} px={8} borderTop="1px solid ">
-              <Button variant="link">Purchase</Button>
-            </Box>
-          </Box>
-        </Grid>
-      </Box>
+      <BookCard shadow={shadow} data={data} />
     </Section>
   );
+}
+
+
+const Read = () => {
+  return (
+    <Section>
+      <SectionHeader>Read</SectionHeader>
+      <BookCard />
+    </Section>
+
+  )
 }
 
 
@@ -85,6 +124,7 @@ const Bookshelf = () => {
         </Box>
       </Box>
       <CurrentlyReading data={data} shadow={shadow} />
+      <Read />
     </Flex>
   );
 };

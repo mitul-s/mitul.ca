@@ -12,6 +12,7 @@ const getMinifiedRecord = (record) => {
         return;
     }
 
+
     return {
         id: record.id,
         fields: record.fields,
@@ -30,6 +31,8 @@ const getShelves = (records) => {
         toRead,
     }
 }
+
+
 
 
 
