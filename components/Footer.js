@@ -8,6 +8,7 @@ const FooterIcon = ({ title, icon, link }) => (
     isExternal
     data-splitbee-event={title}
     data-splitbee-event-type="Social"
+    aria-label={title}
   >
     <Icon
       fontSize="lg"

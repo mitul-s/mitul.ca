@@ -25,19 +25,22 @@ const ToggleColorMode = () => {
   )
 }
 
+const NavButton = ({ link, children, ...rest }) => (
+  <NextLink href={link}>
+    <Button colorScheme="trueGray" as="a" variant="link" {...rest}>
+      {children}
+    </Button>
+  </NextLink>
+);
+
 const NavLinks = ({ ...rest }) => (
-  <Stack spacing={3} alignItems={["center", null, "flex-end"]} {...rest}>
-    <NextLink href="/">
-      <Button colorScheme="trueGray" as="a" variant="link">
-        Home
-      </Button>
-    </NextLink>
-    <NextLink href="/">
-      <Button colorScheme="trueGray" as="a" variant="link" disabled>
-        About
-        <Badge ml={2}>WIP</Badge>
-      </Button>
-    </NextLink>
+  <Stack spacing={4} alignItems={["center", null, "flex-end"]} {...rest}>
+    <NavButton link="/">Home</NavButton>
+    <NavButton link="/about">About</NavButton>
+    <NavButton link="/" disabled>
+      Bookshelf
+      <Badge ml={2}>WIP</Badge>
+    </NavButton>
     <Button
       colorScheme="trueGray"
       as="a"
@@ -55,7 +58,7 @@ const Navigation = ({ styles }) => (
     <Flex
       as="nav"
       px={8}
-      h={["10vh", null, "20vh"]}
+      h={["10vh", null, "30vh"]}
       alignItems={["center", null, "flex-end"]}
       justifyContent="space-between"
       mt={[0, null, 24]}

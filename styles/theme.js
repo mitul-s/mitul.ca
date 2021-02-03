@@ -7,6 +7,9 @@ const styles = {
       color: mode("#0D1013", "#f3f4f6")(props),
       bg: mode("#fff", "#0D1013")(props),
     },
+    // p: {
+    //   lineHeight: 2.25
+    // }
   }),
 };
 
