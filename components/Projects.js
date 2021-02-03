@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Star, Lightning, Code } from "phosphor-react";
-import { Box, Stack, Flex, Tooltip, Link, Button, Heading, Text, HStack, Icon, Badge } from "@chakra-ui/react";
+import { Box, Flex, Tooltip, Link, Button, Heading, Text, HStack, Icon } from "@chakra-ui/react";
 
 const Project = ({ title, description, repo }) => {
   const [data, setData] = useState(false);
@@ -46,6 +46,7 @@ const Project = ({ title, description, repo }) => {
             <Button
               data-splitbee-event={`${title} - Demo`}
               data-splitbee-event-type="Projects"
+              color="trueGray.500"
               variant="link"
               fontWeight="normal"
               rightIcon={<Lightning />}
@@ -58,6 +59,7 @@ const Project = ({ title, description, repo }) => {
               data-splitbee-event={`${title} - Code`}
               data-splitbee-event-type="Projects"
               variant="link"
+              color="trueGray.500"
               fontWeight="normal"
               rightIcon={<Code />}
             >

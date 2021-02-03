@@ -26,11 +26,15 @@ import {
   ListIcon,
   List,
   useToast,
+  useColorMode,
 } from "@chakra-ui/react";
+
+import PortfolioImages from "@/components/Images";
 
 import NextLink from "next/link"
 
 import { useClipboard } from "use-clipboard-copy";
+import ActionButton from "@/components/core/ActionButton";
 
 export default function Home() {
   const toast = useToast();
@@ -53,7 +57,6 @@ export default function Home() {
   });
 
 
-
   return (
     <>
       <Shell>
@@ -65,43 +68,27 @@ export default function Home() {
           flexDirection="column"
         >
           <Heading mb={4}>Hi, my name is Mitul</Heading>
-          <Text fontSize={["lg", null, "xl"]} mb={4} lineHeight="1.6">
-            Currently, I'm on the search for my next adventure, ideally as an
-            Associate Product Manager or Product Analyst. I'm passionate about
-            building a deep understanding of customers to design product
-            experiences that can only be defined as magic ✨ My goal is pretty
-            simple, build great things with great people. If we can work
-            together to achieve that,{" "}
-            <Link
-              href="mailto:mitulxshah@gmail.com"
-              textDecoration="underline"
-              _hover={{ color: "teal.600" }}
-            >
-              I'd love to chat 👋
-            </Link>
-            .
-          </Text>
-          <Text fontSize={["lg", null, "xl"]} mb={4} lineHeight="1.6">
-            I’m still figuring out what my life story would look like here, but
-            for now, I’m happy to share that I’m a curious learner of all
-            things. I’m a firm believer in the ideologies of doing difficult
-            things because they are the most rewarding and seeking discomfort to
-            support personal growth. Some things I'm super into: investment
-            psychology, Fortnite and the metaverse, aerial photography and binge
-            watching David Dobrik vlogs.
-          </Text>
-          {/* <NextLink href="/about">
-            <Button
-              mt={4}
-              bg="transparent"
-              fontSize="sm"
-              borderRadius={0}
-              variant="link"
-              w="min-content"
-            >
-              More about me →
-            </Button>
-          </NextLink> */}
+          <Box lineHeight={10}>
+            <Text fontSize={["lg", null, "xl"]} mb={4}>
+              Currently, I'm on the search for my next adventure, ideally as an
+              Associate Product Manager or Product Analyst. I'm passionate about
+              building a deep understanding of customers to design product
+              experiences that can only be defined as magic ✨ My goal is pretty
+              simple, build great things with great people. If we can work
+              together to achieve that,{" "}
+              <Link
+                href="mailto:mitulxshah@gmail.com"
+                textDecoration="underline"
+                _hover={{ color: "teal.600" }}
+              >
+                I'd love to chat 👋
+              </Link>
+              .
+            </Text>
+          </Box>
+          <NextLink href="/about">
+            <ActionButton mt={3}>More about me →</ActionButton>
+          </NextLink>
         </Flex>
         <Current />
         <Section header="Experience">
@@ -209,7 +196,7 @@ export default function Home() {
                 </Button>
               </Link>
             </HStack>
-            <Photos />
+            <Photos images={PortfolioImages} />
           </Stack>
         </Section>
         <Section header="Contact">
@@ -217,10 +204,6 @@ export default function Home() {
             <Text>
               I love connecting with new people to learn from and am always more
               than willing to help with questions you may have.
-            </Text>
-            <Text>
-              If you would like to work on a project together or hire me, don't
-              hesistate. I'd love to work with you.
             </Text>
             <Text>
               Besides that, I enjoy talking about photography, abandoned
@@ -231,19 +214,28 @@ export default function Home() {
           </Stack>
           <Stack align="flex-start">
             <Link href="mailto:mitulxshah@gmail.com">
-              <Button variant="link" leftIcon={<PaperPlaneTilt />}>
+              <Button
+                variant="link"
+                color="trueGray.500"
+                leftIcon={<PaperPlaneTilt />}
+              >
                 Feel free to email me
               </Button>
             </Link>
             <Button
               variant="link"
+              color="trueGray.500"
               leftIcon={<ChatCircle />}
               onClick={() => clipboard.copy("mitul#0988")}
             >
               Chat on Discord – mitul#0988
             </Button>
             <Link href="https://twitter.com/typicalmitul" isExternal>
-              <Button variant="link" leftIcon={<TwitterLogo />}>
+              <Button
+                variant="link"
+                color="trueGray.500"
+                leftIcon={<TwitterLogo />}
+              >
                 DM me on Twitter
               </Button>
             </Link>

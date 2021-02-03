@@ -58,6 +58,7 @@ const Current = () => {
           link="https://beta.readng.co/book/range-by-david-epstein-zbmEW?ref=mitul"
         />
         <CurrentItem
+          link="https://www.netflix.com/title/70155618"
           icon={Monitor}
           title={"Gilmore Girls"}
           caption={"Sitcom"}

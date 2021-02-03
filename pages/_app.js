@@ -15,7 +15,6 @@ const GlobalStyle = ({ children }) => {
     <>
       <Global
         styles={css`
-          
           html {
             min-width: 360px;
             scroll-behavior: smooth;
@@ -27,6 +26,16 @@ const GlobalStyle = ({ children }) => {
             min-height: 100vh;
           }
 
+          ::-moz-selection {
+            /* Code for Firefox */
+            color: #f9fafb;
+            background: #14b8a6;
+          }
+
+          ::selection {
+            color: #f9fafb;
+            background: #14b8a6;
+          }
         `}
       />
       {children}
