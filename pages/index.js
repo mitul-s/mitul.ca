@@ -68,7 +68,7 @@ export default function Home() {
           flexDirection="column"
         >
           <Heading mb={4}>Hi, my name is Mitul</Heading>
-          <Box lineHeight={10}>
+          <Box lineHeight={9}>
             <Text fontSize={["lg", null, "xl"]} mb={4}>
               Currently, I'm on the search for my next adventure, ideally as an
               Associate Product Manager or Product Analyst. I'm passionate about
