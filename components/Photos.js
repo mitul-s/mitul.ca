@@ -10,7 +10,9 @@ const Photos = ({ images }) => {
         overflowX="scroll"
         w="100%"
         flexWrap="nowrap"
-        sx={{ scrollSnapType: "x proximity", scrollbarWidth: "none" }}
+        sx={{ scrollSnapType: "x proximity", scrollbarWidth: "none", '&::-webkit-scrollbar': {
+    background: "transparent", 
+} }}
       >
         {images?.map((i) => {
           return (
