@@ -20,6 +20,10 @@ const GlobalStyle = ({ children }) => {
             scroll-behavior: smooth;
           }
           
+          font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+            Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+            "Segoe UI Symbol";
+            
           @font-face {
             font-family: "Inter";
             font-style: normal;
