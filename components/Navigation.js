@@ -29,42 +29,41 @@ const ToggleColorMode = () => {
 const NavButton = ({ children, ...rest }) => {
   const { colorMode } = useColorMode()
   return (
-      <Button
-        // className="underline-animation"
-        colorScheme="blueGray"
-        // fontSize="md"
-        // fontWeight="bold"
-        sx={{
-          ":hover:after": {
-            transform: "scaleX(1)",
-            transformOrigin: "bottom left",
-          },
-        }}
-        as="a"
-        variant="link"
-        _hover={{
-          textDecoration: "none",
-          color: colorMode === "light" ? "blueGray.900" : "blueGray.50",
-        }}
-        _after={{
-          content: '""',
-          position: "absolute",
-          width: "100%",
-          transform: "scaleX(0)",
-          height: "1px",
-          bottom: 0,
-          left: 0,
-          borderRadius: 2,
-          backgroundColor:
-            colorMode === "light" ? "blueGray.900" : "blueGray.50",
-          marginBottom: "-5px",
-          transformOrigin: "bottom right",
-          transition: "transform 0.35s ease-out",
-        }}
-        {...rest}
-      >
-        {children}
-      </Button>
+    <Button
+      // className="underline-animation"
+      colorScheme="trueGray"
+      fontSize="lg"
+      fontWeight="400"
+      sx={{
+        ":hover:after": {
+          transform: "scaleX(1)",
+          transformOrigin: "bottom left",
+        },
+      }}
+      as="a"
+      variant="link"
+      _hover={{
+        textDecoration: "none",
+        color: colorMode === "light" ? "blueGray.900" : "blueGray.50",
+      }}
+      _after={{
+        content: '""',
+        position: "absolute",
+        width: "100%",
+        transform: "scaleX(0)",
+        height: "1px",
+        bottom: 0,
+        left: 0,
+        borderRadius: 2,
+        backgroundColor: colorMode === "light" ? "blueGray.900" : "blueGray.50",
+        marginBottom: "-5px",
+        transformOrigin: "bottom right",
+        transition: "transform 0.35s ease-out",
+      }}
+      {...rest}
+    >
+      {children}
+    </Button>
   );
     }
 

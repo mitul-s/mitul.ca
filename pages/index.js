@@ -179,12 +179,10 @@ export default function Home() {
               a better artist rather than growing my online presence. You can
               learn a little more by visiting my photography portfolio below.
             </Text>
+            <Link href="https://typicalmitul.com" isExternal>
+              <ActionButton>Vist my portfolio →</ActionButton>
+            </Link>
             <HStack>
-              <Link href="https://typicalmitul.com" isExternal>
-                <Button variant="link" leftIcon={<Camera />}>
-                  Portfolio
-                </Button>
-              </Link>
               <Link href="https://instagram.com/typicalmitul" isExternal>
                 <Button variant="link" leftIcon={<InstagramLogo />}>
                   Instagram
