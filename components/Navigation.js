@@ -25,30 +25,66 @@ const ToggleColorMode = () => {
   )
 }
 
-const NavButton = ({ link, children, ...rest }) => (
-  <NextLink href={link}>
-    <Button colorScheme="trueGray" as="a" variant="link" {...rest}>
-      {children}
-    </Button>
-  </NextLink>
-);
+
+const NavButton = ({ children, ...rest }) => {
+  const { colorMode } = useColorMode()
+  return (
+      <Button
+        // className="underline-animation"
+        colorScheme="blueGray"
+        // fontSize="md"
+        // fontWeight="bold"
+        sx={{
+          ":hover:after": {
+            transform: "scaleX(1)",
+            transformOrigin: "bottom left",
+          },
+        }}
+        as="a"
+        variant="link"
+        _hover={{
+          textDecoration: "none",
+          color: colorMode === "light" ? "blueGray.900" : "blueGray.50",
+        }}
+        _after={{
+          content: '""',
+          position: "absolute",
+          width: "100%",
+          transform: "scaleX(0)",
+          height: "1px",
+          bottom: 0,
+          left: 0,
+          borderRadius: 2,
+          backgroundColor:
+            colorMode === "light" ? "blueGray.900" : "blueGray.50",
+          marginBottom: "-5px",
+          transformOrigin: "bottom right",
+          transition: "transform 0.35s ease-out",
+        }}
+        {...rest}
+      >
+        {children}
+      </Button>
+  );
+    }
 
 const NavLinks = ({ ...rest }) => (
   <Stack spacing={4} alignItems={["center", null, "flex-end"]} {...rest}>
-    <NavButton link="/">Home</NavButton>
-    <NavButton link="/about">About</NavButton>
-    <NavButton link="/" disabled>
-      Bookshelf
-      <Badge ml={2}>WIP</Badge>
-    </NavButton>
-    <Button
-      colorScheme="trueGray"
-      as="a"
-      variant="link"
+    <NextLink href="/">
+      <NavButton>Home</NavButton>
+    </NextLink>
+    <NextLink href="/about">
+      <NavButton>About</NavButton>
+    </NextLink>
+      <NavButton disabled>
+        Bookshelf
+        <Badge ml={2}>WIP</Badge>
+      </NavButton>
+    <NavButton
       href="mailto:mitulxshah@gmail.com?subject=Hi Mitul"
     >
       Contact
-    </Button>
+    </NavButton>
   </Stack>
 );
 
