@@ -7,7 +7,7 @@ const ActionButton = ({ children, ...rest }) => {
     return (
       <Button
         bg="transparent"
-        fontSize="sm"
+        fontSize="md"
         borderRadius={0}
         variant="link"
         pl={0}
@@ -16,6 +16,8 @@ const ActionButton = ({ children, ...rest }) => {
         w="min-content"
         border="1px solid transparent"
         color="trueGray.500"
+        fontWeight="regular"
+        transition="0.35s ease-out"
         _hover={{
           color: colorMode === "light" ? "trueGray.900" : "trueGray.50",
           border: "1px solid",

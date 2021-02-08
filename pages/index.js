@@ -93,20 +93,28 @@ export default function Home() {
         <Current />
         <Section header="Experience">
           <Item
+            role="Product Analyst"
+            company="Soapbox"
             date="May 2019 - Mar 2020"
             description="Product Analyst at Soapbox to help make meetings better for everyone by running growth experiments"
+            description="Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up"
           />
           <Item
+            role="Operations Intern"
+            company="Uber"
             date="May 2018 - Aug 2018"
-            description="Operations Intern at Uber Eats to support launching 30-cities-in-1 day and lead competitive research"
+            description="Led competitive research for all of Canada and supported the launch of 30 cities in 1 day through building courier acquisition campaigns"
           />
           <Item
+            role="Product Lead Intern"
+            company="CIBC Digital"
             date="Jan 2018 - Apr 2018"
-            description="Product Lead Intern at CIBC Digital to build my foundational knowledge of product and ship four consumer-facing features"
+            description="Built my foundational knowledge of product and led development of three consumer-facing MVPs to impact over 10 million CIBC clients"
           />
           <Item
+            role="Strategy Intern"
+            company="Bank of Montreal"
             date="May 2017 - Aug 2017"
-            description="Digital Strategy Intern at Bank of Montreal to learn about user research and make strong data driven decisions"
           />
         </Section>
         <Section header="Projects">
@@ -180,7 +188,7 @@ export default function Home() {
               learn a little more by visiting my photography portfolio below.
             </Text>
             <Link href="https://typicalmitul.com" isExternal>
-              <ActionButton>Vist my portfolio →</ActionButton>
+              <ActionButton>Visit my portfolio →</ActionButton>
             </Link>
             <HStack>
               <Link href="https://instagram.com/typicalmitul" isExternal>
