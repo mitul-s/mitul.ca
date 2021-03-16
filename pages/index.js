@@ -31,10 +31,28 @@ import {
 
 import PortfolioImages from "@/components/Images";
 
-import NextLink from "next/link"
+import NextLink from "next/link";
 
 import { useClipboard } from "use-clipboard-copy";
 import ActionButton from "@/components/core/ActionButton";
+
+const SecondaryBtn = ({ children, icon, ...rest }) => {
+  const { colorMode } = useColorMode();
+  return (
+    <Button
+      variant="link"
+      color="trueGray.500"
+      fontWeight="500"
+      leftIcon={icon}
+      _hover={{
+        color: colorMode === "light" ? "blueGray.900" : "blueGray.50",
+      }}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
 
 export default function Home() {
   const toast = useToast();
@@ -49,13 +67,12 @@ export default function Home() {
 
     onError() {
       toast({
-        description: "Copied username to clipboard 🙂",
+        description: "Hm, couldn't copy the username..",
         status: "error",
         isClosable: true,
       });
     },
   });
-
 
   return (
     <>
@@ -121,7 +138,7 @@ export default function Home() {
           <Stack spacing={8}>
             <Project
               title="Paprback"
-              description="A showcase for your bookshelves. My first big project, built with React & Chakra UI, while working alongside a backend developer and designer. We got 600+ upvotes and 8 awards on Reddit."
+              description="A showcase for your bookshelves. My first big project, built with React & Chakra UI, while working alongside a backend developer and designer. We got 300+ sign ups, 1200+ visitors, 600+ upvotes and 8 awards on Reddit."
               repo="paprback.co"
             />
             <Project
@@ -192,14 +209,10 @@ export default function Home() {
             </Link>
             <HStack>
               <Link href="https://instagram.com/typicalmitul" isExternal>
-                <Button variant="link" leftIcon={<InstagramLogo />}>
-                  Instagram
-                </Button>
+                <SecondaryBtn icon={<InstagramLogo />}>Instagram</SecondaryBtn>
               </Link>
               <Link href="https://500px.com/typicalmitul" isExternal>
-                <Button variant="link" leftIcon={<Aperture />}>
-                  500px
-                </Button>
+                <SecondaryBtn icon={<Aperture />}>500px</SecondaryBtn>
               </Link>
             </HStack>
             <Photos images={PortfolioImages} />
@@ -218,32 +231,22 @@ export default function Home() {
               Fantano made a mistake by giving MBDTF a 6/10.
             </Text>
           </Stack>
-          <Stack align="flex-start">
-            <Link href="mailto:mitulxshah@gmail.com">
-              <Button
-                variant="link"
-                color="trueGray.500"
-                leftIcon={<PaperPlaneTilt />}
-              >
-                Feel free to email me
-              </Button>
+          <Stack align="flex-start" spacing={3}>
+            <Link href="mailto:mitulxshah@gmail.com" mb="-6px">
+              <SecondaryBtn icon={<PaperPlaneTilt />}>
+                Send an email
+              </SecondaryBtn>
             </Link>
-            <Button
-              variant="link"
-              color="trueGray.500"
-              leftIcon={<ChatCircle />}
+            <SecondaryBtn
+              icon={<ChatCircle />}
               onClick={() => clipboard.copy("mitul#0988")}
             >
               Chat on Discord – mitul#0988
-            </Button>
+            </SecondaryBtn>
             <Link href="https://twitter.com/typicalmitul" isExternal>
-              <Button
-                variant="link"
-                color="trueGray.500"
-                leftIcon={<TwitterLogo />}
-              >
+              <SecondaryBtn icon={<TwitterLogo />}>
                 DM me on Twitter
-              </Button>
+              </SecondaryBtn>
             </Link>
           </Stack>
         </Section>
