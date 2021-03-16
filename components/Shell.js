@@ -6,7 +6,7 @@ import styles from ".././styles/sidebar.module.css"
 
 const Shell = ({ children }) => {
 
-  const MotionFlex = motion.custom(Flex);
+  const MotionFlex = motion(Flex);
   
     return (
       <Box

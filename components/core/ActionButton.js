@@ -1,6 +1,7 @@
+import React from "react"
 import { Button, useColorMode } from "@chakra-ui/react" 
 
-const ActionButton = ({ children, ...rest }) => {
+const ActionButton = React.forwardRef((props, ref) => {
     
     const { colorMode } = useColorMode();
 
@@ -24,11 +25,12 @@ const ActionButton = ({ children, ...rest }) => {
           pr: 3,
           pl: 3,
         }}
-        {...rest}
+        {...props}
       >
-        {children}
+        {props.children}
       </Button>
     );
-}
+})
 
 export default ActionButton;
+

@@ -1,3 +1,4 @@
+import React from "react"
 import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColorMode, Badge } from "@chakra-ui/react"
 import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo, Sun, Moon } from "phosphor-react";
 import NextLink from "next/link"
@@ -21,12 +22,11 @@ const FooterIcon = ({ title, icon, link }) => (
 const ToggleColorMode = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <IconButton bg="transparent" p={0} onClick={toggleColorMode} icon={colorMode === "light" ? <Moon /> : <Sun />} />
+    <IconButton bg="transparent" order={["1", null, 0]} p={0} onClick={toggleColorMode} icon={colorMode === "light" ? <Moon /> : <Sun />} />
   )
 }
 
-
-const NavButton = ({ children, ...rest }) => {
+const NavButton = React.forwardRef((props, ref) => {
   const { colorMode } = useColorMode()
   return (
     <Button
@@ -60,12 +60,12 @@ const NavButton = ({ children, ...rest }) => {
         transformOrigin: "bottom right",
         transition: "transform 0.35s ease-out",
       }}
-      {...rest}
+      {...props}
     >
-      {children}
+      {props.children}
     </Button>
   );
-    }
+})
 
 const NavLinks = ({ ...rest }) => (
   <Stack spacing={4} alignItems={["center", null, "flex-end"]} {...rest}>
@@ -96,7 +96,7 @@ const Navigation = ({ styles }) => (
       h={["10vh", null, "30vh"]}
       alignItems={["center", null, "flex-end"]}
       justifyContent="space-between"
-      mt={[0, null, 24]}
+      mt={[2, null, 24]}
       position={["block", null, "fixed"]}
       flexDirection={["row", null, "column"]}
       w={["100%", null, "min-content"]}
