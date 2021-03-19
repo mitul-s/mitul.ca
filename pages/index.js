@@ -6,7 +6,7 @@ import Section from "@/components/Section";
 import Photos from "@/components/Photos";
 import {
   PaperPlaneTilt,
-  ChatCircle,
+  DiscordLogo,
   TwitterLogo,
   InstagramLogo,
   Camera,
@@ -232,13 +232,13 @@ export default function Home() {
             </Text>
           </Stack>
           <Stack align="flex-start" spacing={3}>
-            <Link href="mailto:mitulxshah@gmail.com" mb="-6px">
+            <Link href="mailto:mitulxshah@gmail.com" mb="-4px">
               <SecondaryBtn icon={<PaperPlaneTilt />}>
                 Send an email
               </SecondaryBtn>
             </Link>
             <SecondaryBtn
-              icon={<ChatCircle />}
+              icon={<DiscordLogo />}
               onClick={() => clipboard.copy("mitul#0988")}
             >
               Chat on Discord – mitul#0988
