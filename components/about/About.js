@@ -45,7 +45,7 @@ const AboutText = () => (
 
       <Text>
         In my free time, I’m usually editing or taking photos, binge-watching
-        vlogs by David Dobrik, playing video games, starting a side project
+        vlogs by Casey Neistat, playing video games, starting a side project
         (with hopes to not abandon it), or learning about investment psychology.
       </Text>
       <Text fontWeight="600">
