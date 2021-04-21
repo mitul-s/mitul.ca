@@ -11,8 +11,8 @@ const CurrentItem = ({ icon, title, caption, link }) => {
       <HStack spacing={4}>
         <Icon fontSize="xl" as={icon} />
         <Box>
-          <Link href={link} _hover={{ color: "blueGray.500" }} isExternal>
-            <Text fontWeight="bold" maxW={["320px", null, "150px"]} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{title}</Text>
+        <Link href={link} _hover={{ color: "blueGray.500" }} isExternal>
+            <Text fontWeight="regular" maxW={["320px", null, "150px"]} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" color="white">{title}</Text>
             <Text fontSize="sm" color="trueGray.500">
               {caption}
             </Text>

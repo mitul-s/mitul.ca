@@ -8,15 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.4.2",
+    "@chakra-ui/react": "^1.5.2",
     "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
     "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/image-url": "^0.140.22",
     "airtable": "^0.10.1",
     "framer-motion": "^3.10.6",
     "next": "^10.1.3",
-    "next-seo": "^4.23.0",
+    "next-seo": "^4.24.0",
     "phosphor-react": "^1.2.1",
     "react": "17.0.1",
     "react-animated-cursor": "^2.1.8",

@@ -42,7 +42,7 @@ const SecondaryBtn = ({ children, icon, ...rest }) => {
     <Button
       variant="link"
       color="trueGray.500"
-      fontWeight="500"
+      fontWeight="regular"
       leftIcon={icon}
       _hover={{
         color: colorMode === "light" ? "blueGray.900" : "blueGray.50",
@@ -137,13 +137,24 @@ export default function Home() {
         <Section header="Projects">
           <Stack spacing={8}>
             <Project
+              title="Annotate – WIP"
+              description="A Chrome extension to help annotate the web. I'm in the early stages of building this, and have journaled my progress through the link below."
+              demo={false}
+              journal={true}
+            />
+            <Project
               title="Paprback"
-              description="A showcase for your bookshelves. My first big project, built with React & Chakra UI, while working alongside a backend developer and designer. We got 300+ sign ups, 1200+ visitors, 600+ upvotes and 8 awards on Reddit."
+              description="Built a social platform to showcase your bookshelves using React Hooks, NextJS, and Chakra UI, while working alongside a backend developer and designer. We received 300+ sign ups, 1200+ visitors along with 600+ upvotes and 8 awards on Reddit."
               repo="paprback.co"
+              demo={true}
+              code={true}
             />
             <Project
               title="Are You Balding"
-              description="A small virality project that I’m still working on. Find out if you’re balding by completing a short but fun interactive quiz and receive solutions that help save your hair. "
+              description="Building a campaign with Framer Motion & React to support the acquisition funnel for online pharmacies.  Designed mockups and prototypes in Figma, and translated to code with advanced interactions & animations. It's a short, fun quiz to  find out if you're balding and what solutions would work best for you."
+              repo="areyoubalding.com"
+              demo={false}
+              code={true}
             />
           </Stack>
         </Section>
@@ -158,7 +169,9 @@ export default function Home() {
             </Text>
             <Box>
               <List spacing={1}>
-                <Text>Some notable accomplishments I'm proud to share</Text>
+                <Text fontWeight="bold">
+                  Some notable accomplishments I'm proud to share
+                </Text>
                 <ListItem display="flex" alignItems="center">
                   <ListIcon
                     as={Circle}
@@ -194,8 +207,8 @@ export default function Home() {
                     mb="-1px"
                     color="trueGray.400"
                   />
-                  I earned about 20K within six months of 2019 – this was beyond
-                  my wildest dreams
+                  Earned 20K within six months of 2019 – this was beyond my
+                  wildest dreams
                 </ListItem>
               </List>
             </Box>
@@ -204,14 +217,26 @@ export default function Home() {
               a better artist rather than growing my online presence. You can
               learn a little more by visiting my photography portfolio below.
             </Text>
-            <Link href="https://typicalmitul.com" isExternal>
+            <Link
+              href="https://typicalmitul.com"
+              isExternal
+              _hover={{ textDecoration: "none" }}
+            >
               <ActionButton>Visit my portfolio →</ActionButton>
             </Link>
             <HStack>
-              <Link href="https://instagram.com/typicalmitul" isExternal>
+              <Link
+                href="https://instagram.com/typicalmitul"
+                isExternal
+                _hover={{ textDecoration: "none" }}
+              >
                 <SecondaryBtn icon={<InstagramLogo />}>Instagram</SecondaryBtn>
               </Link>
-              <Link href="https://500px.com/typicalmitul" isExternal>
+              <Link
+                href="https://500px.com/typicalmitul"
+                isExternal
+                _hover={{ textDecoration: "none" }}
+              >
                 <SecondaryBtn icon={<Aperture />}>500px</SecondaryBtn>
               </Link>
             </HStack>
@@ -232,7 +257,11 @@ export default function Home() {
             </Text>
           </Stack>
           <Stack align="flex-start" spacing={3}>
-            <Link href="mailto:mitulxshah@gmail.com" mb="-4px">
+            <Link
+              href="mailto:mitulxshah@gmail.com"
+              mb="-4px"
+              _hover={{ textDecoration: "none" }}
+            >
               <SecondaryBtn icon={<PaperPlaneTilt />}>
                 Send an email
               </SecondaryBtn>
@@ -243,7 +272,11 @@ export default function Home() {
             >
               Chat on Discord – mitul#0988
             </SecondaryBtn>
-            <Link href="https://twitter.com/typicalmitul" isExternal>
+            <Link
+              href="https://twitter.com/typicalmitul"
+              _hover={{ textDecoration: "none" }}
+              isExternal
+            >
               <SecondaryBtn icon={<TwitterLogo />}>
                 DM me on Twitter
               </SecondaryBtn>

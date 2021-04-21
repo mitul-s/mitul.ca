@@ -2,11 +2,12 @@ import { Box, Link, Icon, Flex, HStack, Heading, Image, Text, Stack } from "@cha
 import Photos from "@/components/Photos"
 import {PersonalImages} from "@/components/Images";
 import { ArrowRight } from "phosphor-react"
+import Section from "@/components/Section";
 
 const AboutText = () => (
   <>
-    <Stack spacing={8} fontSize={["lg", null, "xl"]} mb={4} lineHeight={9}>
-      <Text mt={10}>
+    <Stack spacing={8} fontSize={["lg", null, "xl"]} mb={4} lineHeight={7} letterSpacing="-0.04px">
+      <Text mt={3}>
         I’m still figuring out what my life would look like here, but for now,
         I’m happy to share I’m a curious learner of all things. My passions are
         driven by finding the connections between art, human nature, and numbers
@@ -48,7 +49,7 @@ const AboutText = () => (
         vlogs by Casey Neistat, playing video games, starting a side project
         (with hopes to not abandon it), or learning about investment psychology.
       </Text>
-      <Text fontWeight="600">
+      <Text fontWeight="600" color="whiteAlpha.900">
         Currently, I’m on the search for my next role as an Associate Product
         Manager or Product Analyst – if you think I could be a fit on your team,{" "}
         <Link
@@ -69,9 +70,11 @@ const About = () => {
       <>
         <Flex mt={24} justifyContent="flex-end" flexDirection="column">
           <Stack spacing={4}>
-            <Heading mb={3}>A little about me</Heading>
             <Photos images={PersonalImages} />
-            <AboutText/>
+            <Section header="About">
+            <Heading>Mitul Shah</Heading>
+            </Section>
+            <AboutText />
             <Text>This website is still a work in progress, bear with me.</Text>
           </Stack>
         </Flex>

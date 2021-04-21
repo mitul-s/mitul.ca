@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Star, Lightning, Code } from "phosphor-react";
+import { Star, Lightning, Code, Note } from "phosphor-react";
 import { Box, Flex, Tooltip, Link, Button, Heading, Text, HStack, Icon } from "@chakra-ui/react";
 
-const Project = ({ title, description, repo }) => {
+const Project = ({ title, description, repo, demo, code, journal }) => {
   const [data, setData] = useState(false);
   const getStars = () => {
     fetch(`https://api.github.com/repos/mitul-s/${repo}`)
@@ -40,8 +40,8 @@ const Project = ({ title, description, repo }) => {
         )}
       </Flex>
       <Text>{description}</Text>
-      {repo ? (
-        <HStack fontSize="sm" mt={3} color="trueGray.500">
+      <HStack fontSize="sm" mt={3} color="trueGray.500">
+        {repo && demo ? (
           <Link href={data.homepage} isExternal>
             <Button
               data-splitbee-event={`${title} - Demo`}
@@ -54,6 +54,10 @@ const Project = ({ title, description, repo }) => {
               Demo
             </Button>
           </Link>
+        ) : (
+          ""
+        )}
+        {code ? (
           <Link href={data.svn_url} isExternal>
             <Button
               data-splitbee-event={`${title} - Code`}
@@ -66,10 +70,26 @@ const Project = ({ title, description, repo }) => {
               Code
             </Button>
           </Link>
-        </HStack>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+        {journal ? (
+          <Link href="https://futureland.tv/mitul/project-annotate" isExternal>
+            <Button
+              data-splitbee-event={`${title} - Journal`}
+              data-splitbee-event-type="Projects"
+              variant="link"
+              color="trueGray.500"
+              fontWeight="normal"
+              rightIcon={<Note />}
+            >
+              Journal
+            </Button>
+          </Link>
+        ) : (
+          ""
+        )}
+      </HStack>
     </Box>
   );
 };
