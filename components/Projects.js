@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Star, Lightning, Code, Note } from "phosphor-react";
-import { Box, Flex, Tooltip, Link, Button, Heading, Text, HStack, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Tooltip,
+  Link,
+  Button,
+  Heading,
+  Text,
+  HStack,
+  Icon,
+} from "@chakra-ui/react";
 
 const Project = ({ title, description, repo, demo, code, journal }) => {
   const [data, setData] = useState(false);

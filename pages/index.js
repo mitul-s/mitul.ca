@@ -95,8 +95,9 @@ export default function Home() {
               together to achieve that,{" "}
               <Link
                 href="mailto:mitulxshah@gmail.com"
-                textDecoration="underline"
-                _hover={{ color: "teal.600" }}
+                borderBottom="1px solid"
+                pb="3px"
+                _hover={{ color: "teal.500" }}
               >
                 I'd love to chat 👋
               </Link>
