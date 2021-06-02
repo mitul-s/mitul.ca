@@ -87,12 +87,8 @@ export default function Home() {
           <Heading mb={4}>Hi, my name is Mitul</Heading>
           <Box lineHeight={9}>
             <Text fontSize={["lg", null, "xl"]} mb={4}>
-              Currently, I'm on the search for my next adventure, ideally as an
-              Associate Product Manager or Product Analyst. I'm passionate about
-              building a deep understanding of customers to design product
-              experiences that can only be defined as magic ✨ My goal is pretty
-              simple, build great things with great people. If we can work
-              together to achieve that,{" "}
+              My goal is pretty simple, build great things with great people. If
+              we can work together to achieve that,{" "}
               <Link
                 href="mailto:mitulxshah@gmail.com"
                 borderBottom="1px solid"
@@ -111,10 +107,14 @@ export default function Home() {
         <Current />
         <Section header="Experience">
           <Item
+            role="UX Developer"
+            company="Composer"
+            date="June 2021 - Present"
+          />
+          <Item
             role="Product Analyst"
             company="Soapbox"
             date="May 2019 - Mar 2020"
-            description="Product Analyst at Soapbox to help make meetings better for everyone by running growth experiments"
             description="Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up"
           />
           <Item
