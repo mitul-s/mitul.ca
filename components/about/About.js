@@ -49,17 +49,6 @@ const AboutText = () => (
         vlogs by Casey Neistat, playing video games, starting a side project
         (with hopes to not abandon it), or learning about investment psychology.
       </Text>
-      <Text fontWeight="600">
-        Currently, I’m on the search for my next role as an Associate Product
-        Manager or Product Analyst – if you think I could be a fit on your team,{" "}
-        <Link
-          href="mailto:mitulxshah@gmail.com"
-          textDecoration="underline"
-          _hover={{ color: "teal.600" }}
-        >
-          I'd love to chat 👋
-        </Link>
-      </Text>
     </Stack>
   </>
 );
