@@ -1,28 +1,36 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Box, Flex, Button, Grid, Heading, HStack, Icon } from "@chakra-ui/react";
 import { motion } from "framer-motion"
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import styles from ".././styles/sidebar.module.css"
+import { HouseSimple, Sun } from "phosphor-react";
+
+
 
 const Shell = ({ children }) => {
 
   return (
+    <>
+    {/* <Nav /> */}
+    {/* <Navigation styles={styles.nav} /> */}
     <Box className={styles.grid}>
-      <Navigation styles={styles.nav} />
-      <Box className={styles.main} as="main" maxWidth="65ch" margin="0 auto">
+      <Box as="main">
         {children}
         <Footer />
       </Box>
     </Box>
+    </>
   );
 }
 
 export default Shell;
 
 
-
+{
+  /* <Navigation styles={styles.nav} /> */
+}
     // return (
     //   <Box
     //     m="0 auto"
