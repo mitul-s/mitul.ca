@@ -8,7 +8,7 @@ export default function SectionHeader({ children, ...rest }) {
         color="trueGray.400"
         letterSpacing="1.3px"
         fontWeight="bold"
-        mb={6}
+        mb={8}
         {...rest}
       >
         {children}

@@ -81,6 +81,7 @@ export default function Home() {
           // py={[0, null, 24]}
           // h={["90vh", null, "50vh"]}
           mt={24}
+          mb={8}
           justifyContent="flex-end"
           flexDirection="column"
         >
@@ -106,34 +107,36 @@ export default function Home() {
         </Flex>
         <Current />
         <Section header="Experience">
-          <Item
-            role="UX Developer"
-            company="Composer"
-            date="June 2021 - Present"
-          />
-          <Item
-            role="Product Analyst"
-            company="Soapbox"
-            date="May 2019 - Mar 2020"
-            description="Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up"
-          />
-          <Item
-            role="Operations Intern"
-            company="Uber"
-            date="May 2018 - Aug 2018"
-            description="Led competitive research for all of Canada and supported the launch of 30 cities in 1 day through building courier acquisition campaigns"
-          />
-          <Item
-            role="Product Lead Intern"
-            company="CIBC Digital"
-            date="Jan 2018 - Apr 2018"
-            description="Built my foundational knowledge of product and led development of three consumer-facing MVPs to impact over 10 million CIBC clients"
-          />
-          <Item
-            role="Strategy Intern"
-            company="Bank of Montreal"
-            date="May 2017 - Aug 2017"
-          />
+          <Stack spacing={8}>
+            <Item
+              role="UX Developer"
+              company="Composer"
+              date="June 2021 - Present"
+            />
+            <Item
+              role="Product Analyst"
+              company="Soapbox"
+              date="May 2019 - Mar 2020"
+              description="Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up"
+            />
+            <Item
+              role="Operations Intern"
+              company="Uber"
+              date="May 2018 - Aug 2018"
+              description="Led competitive research for all of Canada and supported the launch of 30 cities in 1 day through building courier acquisition campaigns"
+            />
+            <Item
+              role="Product Lead Intern"
+              company="CIBC Digital"
+              date="Jan 2018 - Apr 2018"
+              description="Built my foundational knowledge of product and led development of three consumer-facing MVPs to impact over 10 million CIBC clients"
+            />
+            <Item
+              role="Strategy Intern"
+              company="Bank of Montreal"
+              date="May 2017 - Aug 2017"
+            />
+          </Stack>
         </Section>
         <Section header="Projects">
           <Stack spacing={8}>
