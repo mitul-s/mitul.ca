@@ -89,44 +89,44 @@ const NavLinks = ({ ...rest }) => (
 
 
 const Navigation = ({ styles }) => (
-  <Flex className={styles}>
-    <Flex
-      as="nav"
-      px={8}
-      h={["10vh", null, "30vh"]}
-      alignItems={["center", null, "flex-end"]}
-      justifyContent="space-between"
-      mt={[2, null, 24]}
-      position={["block", null, "fixed"]}
-      flexDirection={["row", null, "column"]}
-      w={["100%", null, "min-content"]}
-    >
-      {/* <Box>🏄‍♂️</Box> */}
-      <ToggleColorMode />
-      <NavLinks direction={["row", null, "column"]} />
-      <HStack display={["none", null, "flex"]}>
-        <FooterIcon
-          title="twitter"
-          icon={TwitterLogo}
-          link="https://twitter.com/typicalmitul"
-        />
-        <FooterIcon
-          title="instagram"
-          icon={InstagramLogo}
-          link="https://instagram.com/typicalmitul"
-        />
-        <FooterIcon
-          title="github"
-          icon={GithubLogo}
-          link="https://github.com/mitul-s"
-        />
-        <FooterIcon
-          title="linkedin"
-          icon={LinkedinLogo}
-          link="https://www.linkedin.com/in/heymitul/"
-        />
-      </HStack>
-    </Flex>
+  <Flex
+    className={styles}
+    as="nav"
+    h={["10vh", null, "30vh"]}
+    alignItems={["center", null, "flex-end"]}
+    justifyContent="space-between"
+    mt={[2, null, 24]}
+    position={["block", null, "fixed"]}
+    flexDirection={["row", null, "column"]}
+    w={["100%", null, "min-content"]}
+    maxWidth="65ch"
+    m="0 auto"
+  >
+    {/* <Box>🏄‍♂️</Box> */}
+    <ToggleColorMode />
+    <NavLinks direction={["row", null, "column"]} />
+    <HStack display={["none", null, "flex"]}>
+      <FooterIcon
+        title="twitter"
+        icon={TwitterLogo}
+        link="https://twitter.com/typicalmitul"
+      />
+      <FooterIcon
+        title="instagram"
+        icon={InstagramLogo}
+        link="https://instagram.com/typicalmitul"
+      />
+      <FooterIcon
+        title="github"
+        icon={GithubLogo}
+        link="https://github.com/mitul-s"
+      />
+      <FooterIcon
+        title="linkedin"
+        icon={LinkedinLogo}
+        link="https://www.linkedin.com/in/heymitul/"
+      />
+    </HStack>
   </Flex>
 );
 

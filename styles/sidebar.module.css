@@ -1,23 +1,58 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr min(60ch, calc(100% - 64px)) 1fr;
+  grid-column-gap: 32px;
+  grid-template-rows: auto;
+  grid-template-areas: "nav main .";
+}
+
+.nav {
+  grid-area: nav;
+  padding-left:  32px;
+  padding-right: 32px;
+}
+
+.main > * {
+  grid-column: 2;
+}
+
+.main {
+  grid-area: main;
+}
+
+@media screen and (min-width: 48em) {
+  .grid {
+    display: block;
+  }
+  
+  .main, .nav {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  
+}
+
+
 /* ↓ targets the intermediary wrapper */
-.withSidebar > * {
+/* .withSidebar > * {
   display: flex;
   flex-wrap: wrap;
   margin: -0.5rem;
-}
+} */
 
-.withSidebar > * > * {
-  /* ↓ applies to both elements */
+/* ↓ applies to both elements */
+/* .withSidebar > * > * {
   margin: 0.5rem;
-}
+} */
 
-.sidebar {
+/* .sidebar {
   flex-basis: 10rem;
   flex-grow: 1;
   justify-content: flex-end;
-}
+} */
 
-.notSidebar {
-  /* ↓ grow from nothing */
+/* ↓ grow from nothing */
+/* .notSidebar {
   flex-basis: 0;
   flex-grow: 999;
   min-width: calc(50% - 1rem);
@@ -31,4 +66,4 @@
   .sidebar { 
     justify-content: space-between;
   }
-}
+} */
