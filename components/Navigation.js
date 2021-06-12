@@ -22,8 +22,14 @@ const FooterIcon = ({ title, icon, link }) => (
 const ToggleColorMode = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <IconButton bg="transparent" order={["1", null, 0]} p={0} onClick={toggleColorMode} icon={colorMode === "light" ? <Moon /> : <Sun />} />
-  )
+    <IconButton
+      bg={colorMode === "light" ? "trueGray.100" : "trueGray.900"}
+      order={["1", null, 0]}
+      p={0}
+      onClick={toggleColorMode}
+      icon={colorMode === "light" ? <Moon /> : <Sun />}
+    />
+  );
 }
 
 const NavButton = React.forwardRef((props, ref) => {
