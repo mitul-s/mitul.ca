@@ -8,17 +8,25 @@ import fetcher from "@/lib/fetcher";
 
 const CurrentItem = ({ icon, title, caption, link }) => {
   return (
-      <HStack spacing={4}>
-        <Icon fontSize="xl" as={icon} />
-        <Box>
-        <Link href={link} _hover={{ color: "blueGray.500" }} isExternal>
-            <Text fontWeight="regular" maxW={["320px", null, "150px"]} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{title}</Text>
-            <Text fontSize="sm" color="trueGray.500">
-              {caption}
-            </Text>
-          </Link>
-        </Box>
-      </HStack>
+    <HStack spacing={4}>
+      <Icon fontSize="xl" as={icon} />
+      <Box>
+        <Link href={link} _hover={{ color: "teal.500" }} isExternal>
+          <Text
+            fontWeight="regular"
+            maxW={["320px", null, "150px"]}
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            {title}
+          </Text>
+          <Text fontSize="sm" color="trueGray.500">
+            {caption}
+          </Text>
+        </Link>
+      </Box>
+    </HStack>
   );
 }
 
@@ -29,7 +37,12 @@ const Current = () => {
   
   return (
     <Section header="Currently">
-      <Stack spacing={8} direction={["column", null, "row"]}>
+      <Stack
+        spacing={8}
+        direction={["column", null, "row"]}
+        justifyContent="space-between"
+        flexShrink="0"
+      >
         {data?.link ? (
           <CurrentItem
             icon={MusicNotesSimple}
