@@ -17,7 +17,7 @@ import { Box, Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react"
 
 export default function Item({ role, company, date, description, link }) {
 return (
-      <Stack mt={8} spacing={3}>
+      <Stack spacing={3}>
         <Heading fontSize="xl" fontWeight="bold">
           {role}
         </Heading>
