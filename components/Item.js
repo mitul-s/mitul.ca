@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react";
 
 // export default function Item({ date, description, link }) {
 //     return (
@@ -16,21 +16,22 @@ import { Box, Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react"
 // }
 
 export default function Item({ role, company, date, description, link }) {
-return (
-      <Stack spacing={3}>
-        <Heading fontSize="xl" fontWeight="bold">
-          {role}
-        </Heading>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Text fontSize="md" fontWeight="500" color="trueGray.400">
-            {company}
-          </Text>
-          <Text fontSize="md" color="trueGray.400">
-            {date}
-          </Text>
-        </Flex>
-        <Text>{description}</Text>
-        <Divider />
-      </Stack>
+  return (
+    <Stack spacing={4}>
+      <Heading fontSize="xl" fontWeight="bold">
+        {role}
+      </Heading>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Text fontSize="md" fontWeight="500" color="trueGray.400">
+          {company}
+        </Text>
+        <Text fontSize="md" color="trueGray.400">
+          {date}
+        </Text>
+      </Flex>
+      {description ? <Text>{description}</Text> : ""}
+      {/* <Text>{description}</Text> */}
+      <Divider />
+    </Stack>
   );
 }
