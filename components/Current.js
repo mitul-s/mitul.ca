@@ -1,10 +1,17 @@
-import { Box, Center, Text, HStack, Icon, Stack, Link, Skeleton } from "@chakra-ui/react"
+import {
+  Box,
+  Center,
+  Text,
+  HStack,
+  Icon,
+  Stack,
+  Link,
+  Skeleton,
+} from "@chakra-ui/react";
 import { MusicNotesSimple, Monitor, Bookmarks } from "phosphor-react";
 import Section from "@/components/Section";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
-
-
 
 const CurrentItem = ({ icon, title, caption, link }) => {
   return (
@@ -28,13 +35,11 @@ const CurrentItem = ({ icon, title, caption, link }) => {
       </Box>
     </HStack>
   );
-}
-
+};
 
 const Current = () => {
-  
-  const { data } = useSWR('/api/nowplaying', fetcher);
-  
+  const { data } = useSWR("/api/nowplaying", fetcher);
+
   return (
     <Section header="Currently">
       <Stack
@@ -79,6 +84,6 @@ const Current = () => {
       </Stack>
     </Section>
   );
-}
+};
 
 export default Current;

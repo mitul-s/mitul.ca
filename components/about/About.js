@@ -1,12 +1,27 @@
-import { Box, Link, Icon, Flex, HStack, Heading, Image, Text, Stack } from "@chakra-ui/react"
-import Photos from "@/components/Photos"
-import {PersonalImages} from "@/components/Images";
-import { ArrowRight } from "phosphor-react"
+import {
+  Box,
+  Link,
+  Icon,
+  Flex,
+  HStack,
+  Heading,
+  Text,
+  Stack,
+} from "@chakra-ui/react";
+import Photos from "@/components/Photos";
+import { PersonalImages } from "@/components/Images";
+import { ArrowRight } from "phosphor-react";
 import Section from "@/components/Section";
 
 const AboutText = () => (
   <>
-    <Stack spacing={8} fontSize={["lg", null, "xl"]} mb={4} lineHeight={7} letterSpacing="-0.04px">
+    <Stack
+      spacing={8}
+      fontSize={["lg", null, "xl"]}
+      mb={4}
+      lineHeight={7}
+      letterSpacing="-0.04px"
+    >
       <Text mt={3}>
         I’m still figuring out what my life would look like here, but for now,
         I’m happy to share I’m a curious learner of all things. My passions are
@@ -53,22 +68,21 @@ const AboutText = () => (
   </>
 );
 
-
 const About = () => {
-    return (
-      <>
-        <Flex mt={24} justifyContent="flex-end" flexDirection="column">
-          <Stack spacing={4}>
-            <Photos images={PersonalImages} />
-            <Section header="About">
+  return (
+    <>
+      <Flex mt={24} justifyContent="flex-end" flexDirection="column">
+        <Stack spacing={4}>
+          <Photos images={PersonalImages} />
+          <Section header="About">
             <Heading>Mitul Shah</Heading>
-            </Section>
-            <AboutText />
-            <Text>This website is still a work in progress, bear with me.</Text>
-          </Stack>
-        </Flex>
-      </>
-    );
-}
+          </Section>
+          <AboutText />
+          <Text>This website is still a work in progress, bear with me.</Text>
+        </Stack>
+      </Flex>
+    </>
+  );
+};
 
 export default About;

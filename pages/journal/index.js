@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Box, Heading, Flex, Text, Stack, Divider } from "@chakra-ui/react";
 import imageUrlBuilder from "@sanity/image-url";
@@ -46,9 +48,8 @@ export default function Journal({ posts }) {
   );
 }
 
-
 export function Journals({ p }) {
-console.log(p)
+  console.log(p);
   return (
     <Stack>
       <NextLink href={`/journal/${p.slug.current}`}>
@@ -61,8 +62,7 @@ console.log(p)
   );
 }
 
-
-export const getServerSideProps = async pageContext => {
+export const getServerSideProps = async (pageContext) => {
   const query = encodeURIComponent(`*[ _type == "post" ]`);
   const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/production?query=${query}`;
 

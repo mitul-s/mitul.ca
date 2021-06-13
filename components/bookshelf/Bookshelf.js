@@ -10,15 +10,14 @@ import {
   Skeleton,
   Stack,
   Text,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
 import Section from "../Section";
 import SectionHeader from "../SectionHeader";
-import bookshelf from "pages/bookshelf";
-import { Book } from "phosphor-react";
-
+// import bookshelf from "pages/bookshelf";
+// import { Book } from "phosphor-react";
 
 const LoadingCard = () => (
   <Box border="1px solid">
@@ -43,9 +42,9 @@ const LoadingCard = () => (
   </Box>
 );
 
-const BookCard = ({ shadow, data  }) => {
-  return (
-      data ? (<Box border="1px solid">
+const BookCard = ({ shadow, data }) => {
+  return data ? (
+    <Box border="1px solid">
       <Grid gridTemplateColumns={["1fr", null, "1.5fr 4fr"]}>
         <Center p={4} borderRight="1px solid">
           <Image src={data?.reading[0].fields.Cover} boxShadow={shadow} />
@@ -65,9 +64,11 @@ const BookCard = ({ shadow, data  }) => {
           </Box>
         </Box>
       </Grid>
-    </Box>) : <LoadingCard />
+    </Box>
+  ) : (
+    <LoadingCard />
   );
-}
+};
 
 const CurrentlyReading = ({ shadow, data }) => {
   return (
@@ -76,8 +77,7 @@ const CurrentlyReading = ({ shadow, data }) => {
       <BookCard shadow={shadow} data={data} />
     </Section>
   );
-}
-
+};
 
 const Read = () => {
   return (
@@ -85,17 +85,15 @@ const Read = () => {
       <SectionHeader>Read</SectionHeader>
       <BookCard />
     </Section>
-
-  )
-}
-
+  );
+};
 
 const Bookshelf = () => {
   const { data } = useSWR("/api/getbooks", fetcher);
 
   const shadow = useColorModeValue(
     "0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);",
-    "0px 0px 1px rgba(40, 41, 61, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.32);",
+    "0px 0px 1px rgba(40, 41, 61, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.32);"
   );
 
   return (
@@ -109,7 +107,7 @@ const Bookshelf = () => {
           2021 GOAL
         </Heading>
         <Flex flexDirection="column">
-          <Text>Here's how I'm doing for the year.</Text>
+          <Text>Here&apos;s how I&apos;m doing for the year.</Text>
         </Flex>
         <Box>
           <Badge my={3}>{data?.completed.length} / 20 books read</Badge>

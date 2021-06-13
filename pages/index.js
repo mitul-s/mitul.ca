@@ -9,7 +9,6 @@ import {
   DiscordLogo,
   TwitterLogo,
   InstagramLogo,
-  Camera,
   Aperture,
   Circle,
 } from "phosphor-react";
@@ -96,7 +95,7 @@ export default function Home() {
                 pb="3px"
                 _hover={{ color: "teal.500" }}
               >
-                I'd love to chat 👋
+                I&apos;d love to chat 👋
               </Link>
               .
             </Text>
@@ -174,7 +173,7 @@ export default function Home() {
             <Box>
               <List spacing={1}>
                 <Text fontWeight="bold">
-                  Some notable accomplishments I'm proud to share
+                  Some notable accomplishments I&apos;m proud to share
                 </Text>
                 <ListItem display="flex" alignItems="center">
                   <ListIcon
@@ -193,7 +192,7 @@ export default function Home() {
                     color="trueGray.400"
                   />
                   <Text>
-                    Featured in Toronto's{" "}
+                    Featured in Toronto&apos;s{" "}
                     <Link
                       href="https://drive.google.com/file/d/0B-wYLuK2QlRwb1FmOThmUmYwekU/view?usp=sharing"
                       textDecoration="underline"
