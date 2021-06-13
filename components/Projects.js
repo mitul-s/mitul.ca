@@ -30,7 +30,7 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
 
   return (
     <Box p={6} border="1px solid" borderColor="trueGray">
-      <Flex justifyContent="space-between" alignItems="center" mb={3}>
+      <Flex justifyContent="space-between" alignItems="center" mb={4}>
         <Heading size="md">{title}</Heading>
         {data.stargazers_count > 0 ? (
           <Tooltip
@@ -50,7 +50,7 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
         )}
       </Flex>
       <Text>{description}</Text>
-      <HStack fontSize="sm" mt={3} color="trueGray.500">
+      <HStack fontSize="sm" mt={4} color="trueGray.500">
         {repo && demo ? (
           <Link href={data.homepage} isExternal>
             <Button
