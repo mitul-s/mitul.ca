@@ -1,7 +1,26 @@
-import React from "react"
-import { Box, Stack, Flex, Icon, Text, Link, Button, IconButton, HStack, useColorMode, Badge } from "@chakra-ui/react"
-import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo, Sun, Moon } from "phosphor-react";
-import NextLink from "next/link"
+import React from "react";
+import {
+  Box,
+  Stack,
+  Flex,
+  Icon,
+  Text,
+  Link,
+  Button,
+  IconButton,
+  HStack,
+  useColorMode,
+  Badge,
+} from "@chakra-ui/react";
+import {
+  TwitterLogo,
+  InstagramLogo,
+  GithubLogo,
+  LinkedinLogo,
+  Sun,
+  Moon,
+} from "phosphor-react";
+import NextLink from "next/link";
 
 const FooterIcon = ({ title, icon, link }) => (
   <Link
@@ -20,7 +39,7 @@ const FooterIcon = ({ title, icon, link }) => (
 );
 
 const ToggleColorMode = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <IconButton
       bg={colorMode === "light" ? "trueGray.100" : "trueGray.900"}
@@ -30,10 +49,10 @@ const ToggleColorMode = () => {
       icon={colorMode === "light" ? <Moon /> : <Sun />}
     />
   );
-}
+};
 
 const NavButton = React.forwardRef((props, ref) => {
-  const { colorMode } = useColorMode()
+  const { colorMode } = useColorMode();
   return (
     <Button
       // className="underline-animation"
@@ -71,7 +90,7 @@ const NavButton = React.forwardRef((props, ref) => {
       {props.children}
     </Button>
   );
-})
+});
 
 const NavLinks = ({ ...rest }) => (
   <Stack spacing={4} alignItems={["center", null, "flex-end"]} {...rest}>
@@ -81,18 +100,15 @@ const NavLinks = ({ ...rest }) => (
     <NextLink href="/about">
       <NavButton>About</NavButton>
     </NextLink>
-      <NavButton disabled>
-        Bookshelf
-        <Badge ml={2}>WIP</Badge>
-      </NavButton>
-    <NavButton
-      href="mailto:mitulxshah@gmail.com?subject=Hi Mitul"
-    >
+    <NavButton disabled>
+      Bookshelf
+      <Badge ml={2}>WIP</Badge>
+    </NavButton>
+    <NavButton href="mailto:mitulxshah@gmail.com?subject=Hi Mitul">
       Contact
     </NavButton>
   </Stack>
 );
-
 
 const Navigation = ({ styles }) => (
   <Flex
@@ -101,12 +117,15 @@ const Navigation = ({ styles }) => (
     h={["10vh", null, "30vh"]}
     alignItems={["center", null, "flex-end"]}
     justifyContent="space-between"
-    mt={[2, null, 24]}
-    position={["block", null, "fixed"]}
+    ml={48}
+    // mt={[2, null, 24]}
+    // position={["block", null, "fixed"]}
+    position="fixed"
+    mt={24}
     flexDirection={["row", null, "column"]}
-    w={["100%", null, "min-content"]}
-    maxWidth="65ch"
-    m="0 auto"
+    w="min-content"
+    // maxWidth="65ch"
+    // m="0 auto"
   >
     {/* <Box>🏄‍♂️</Box> */}
     <ToggleColorMode />
@@ -135,6 +154,5 @@ const Navigation = ({ styles }) => (
     </HStack>
   </Flex>
 );
-
 
 export default Navigation;
