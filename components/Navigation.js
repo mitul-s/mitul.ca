@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/display-name */
 import React from "react";
 import {
+  Box,
   Stack,
   Flex,
   Icon,
+  Text,
   Link,
   Button,
   IconButton,
@@ -51,7 +51,6 @@ const ToggleColorMode = () => {
   );
 };
 
-// eslint-disable-next-line react/display-name
 const NavButton = React.forwardRef((props, ref) => {
   const { colorMode } = useColorMode();
   return (

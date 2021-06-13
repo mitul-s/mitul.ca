@@ -1,4 +1,12 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Button,
+  Grid,
+  Heading,
+  HStack,
+  Icon,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
