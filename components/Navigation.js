@@ -111,48 +111,58 @@ const NavLinks = ({ ...rest }) => (
 );
 
 const Navigation = ({ styles }) => (
-  <Flex
-    className={styles}
-    as="nav"
-    h={["10vh", null, "30vh"]}
-    alignItems={["center", null, "flex-end"]}
-    justifyContent="space-between"
-    ml={48}
-    // mt={[2, null, 24]}
-    // position={["block", null, "fixed"]}
-    position="fixed"
-    mt={24}
-    flexDirection={["row", null, "column"]}
-    w="min-content"
-    // maxWidth="65ch"
-    // m="0 auto"
-  >
-    {/* <Box>🏄‍♂️</Box> */}
-    <ToggleColorMode />
-    <NavLinks direction={["row", null, "column"]} />
-    <HStack display={["none", null, "flex"]}>
-      <FooterIcon
-        title="twitter"
-        icon={TwitterLogo}
-        link="https://twitter.com/typicalmitul"
-      />
-      <FooterIcon
-        title="instagram"
-        icon={InstagramLogo}
-        link="https://instagram.com/typicalmitul"
-      />
-      <FooterIcon
-        title="github"
-        icon={GithubLogo}
-        link="https://github.com/mitul-s"
-      />
-      <FooterIcon
-        title="linkedin"
-        icon={LinkedinLogo}
-        link="https://www.linkedin.com/in/heymitul/"
-      />
-    </HStack>
-  </Flex>
+  <Box m="0 auto">
+    <Box
+      display={["none", "none", "none", "flex"]}
+      mt={24}
+      w="auto"
+      position="fixed"
+      alignItems="flex-end"
+      justifyContent="space-between"
+      flexDirection="column"
+      h="30vh"
+    >
+      <ToggleColorMode />
+      <NavLinks direction={["row", null, "column"]} />
+      <HStack display={["none", null, "flex"]}>
+        <FooterIcon
+          title="twitter"
+          icon={TwitterLogo}
+          link="https://twitter.com/typicalmitul"
+        />
+        <FooterIcon
+          title="instagram"
+          icon={InstagramLogo}
+          link="https://instagram.com/typicalmitul"
+        />
+        <FooterIcon
+          title="github"
+          icon={GithubLogo}
+          link="https://github.com/mitul-s"
+        />
+        <FooterIcon
+          title="linkedin"
+          icon={LinkedinLogo}
+          link="https://www.linkedin.com/in/heymitul/"
+        />
+      </HStack>
+    </Box>
+  </Box>
 );
 
 export default Navigation;
+
+
+    // className={styles}
+    // display={["none", "none", "flex"]}
+    // as="nav"
+    // h={["10vh", null, "30vh"]}
+    // alignItems={["center", null, "flex-end"]}
+    // justifyContent="space-between"
+    // ml={48}
+    // // mt={[2, null, 24]}
+    // // position={["block", null, "fixed"]}
+    // position="fixed"
+    // mt={24}
+    // flexDirection={["row", null, "column"]}
+    // w="min-content"
