@@ -9,12 +9,15 @@ import {
   Circle,
   Tooltip,
   Divider,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import styles from ".././styles/sidebar.module.css";
-import { HouseSimple, Sun } from "phosphor-react";
+import { HouseSimple, InstagramLogo, Sun, TwitterLogo, List } from "phosphor-react";
 
 const NavBtn = ({ children }) => {
   return (
@@ -67,26 +70,11 @@ const Nav = () => {
         className={styles.navBlur}
       >
         <HStack spacing={3} alignItems="center" justifyContent="center">
+          <NavBtn>Home</NavBtn>
           <NavBtn>About</NavBtn>
-          <NavBtn>Journal</NavBtn>
           <Box height="25px">
-            <Divider orientation="vertical" />
+            <Divider colorScheme="blackAlpha" orientation="vertical" />
           </Box>
-          <Button
-            bgColor="#F15223"
-            w={0}
-            rounded="full"
-            shadow="lg"
-            border="1px solid transparent"
-            role="group"
-            _hover={{
-              border: "1px",
-              borderColor: "#F15223",
-              bgColor: "rgb(241, 82, 35, 0.7)",
-            }}
-          >
-            <Icon as={HouseSimple} />
-          </Button>
           <Tooltip
             label="Change theme"
             fontSize="xs"
@@ -95,11 +83,12 @@ const Nav = () => {
             bgColor="black"
             color="white"
             rounded="sm"
-            closeDelay={200}
+            // closeDelay={200}
             // openDelay={300}
             // mb={2}
           >
             <Circle
+              as="button"
               bgColor="trueGray.800"
               size="40px"
               rounded="full"
@@ -112,12 +101,70 @@ const Nav = () => {
                 bgColor: "white",
                 color: "black",
                 border: "1px solid",
-                borderColor: "black"
+                borderColor: "trueGray.800",
               }}
             >
               <Icon as={Sun} />
             </Circle>
           </Tooltip>
+          <Popover trigger="hover">
+            <PopoverTrigger>
+              <Button
+                bgColor="#F15223"
+                w={0}
+                rounded="full"
+                shadow="lg"
+                border="1px solid transparent"
+                role="group"
+                _hover={{
+                  border: "1px",
+                  borderColor: "#F15223",
+                  bgColor: "rgb(241, 82, 1, 0.5)",
+                  transform: "rotate(90deg)",
+                }}
+              >
+                <Icon as={List} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              width="50px"
+              rounded="full"
+              height="auto"
+              mb={2}
+              px={3}
+              py={1}
+              bgColor="rgba(13, 16, 19, 0.5 )"
+            >
+              <Flex
+                direction="column"
+                justifyContent="space-between"
+                alignItems="center"
+                height="18vh"
+              >
+                <Circle
+                  size="40px"
+                  bgColor="rgba(13, 16, 19, 1)"
+                  borderWidth="0.3px"
+                >
+                  <Icon as={TwitterLogo} />
+                </Circle>
+                <Circle
+                  size="40px"
+                  bgColor="rgba(13, 16, 19, 1)"
+                  borderWidth="0.3px"
+                >
+                  <Icon as={InstagramLogo} />
+                </Circle>
+                <Circle
+                  size="40px"
+                  bgColor="rgba(13, 16, 19, 1)"
+                  borderWidth="0.3px"
+                >
+                  <Icon as={TwitterLogo} />
+                </Circle>
+              </Flex>
+            </PopoverContent>
+          </Popover>
         </HStack>
       </Box>
     </Box>
