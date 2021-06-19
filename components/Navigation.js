@@ -326,14 +326,18 @@ const Nav = () => {
                 alignItems="center"
                 height={40}
               >
-                <NextLink href="https://github.com/mitul-s">
-                  <SocialButton icon={TwitterLogo} />
-                </NextLink>
-                <NextLink href="https://github.com/mitul-s">
-                  <SocialButton icon={InstagramLogo} />
-                </NextLink>
- 
-                <SocialButton icon={GithubLogo} link="https://github.com/mitul-s" />
+                <SocialButton
+                  icon={TwitterLogo}
+                  link="https://twitter.com/typicalmitul"
+                />
+                <SocialButton
+                  icon={InstagramLogo}
+                  link="https://instagram.com/typicalmitul"
+                />
+                <SocialButton
+                  icon={GithubLogo}
+                  link="https://github.com/mitul-s"
+                />
               </Flex>
             </PopoverContent>
           </Popover>
