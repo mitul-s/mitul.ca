@@ -1,6 +1,10 @@
 import { Flex, Link, HStack, Icon } from "@chakra-ui/react";
-import { TwitterLogo, InstagramLogo, GithubLogo, LinkedinLogo } from "phosphor-react";
-
+import {
+  TwitterLogo,
+  InstagramLogo,
+  GithubLogo,
+  LinkedinLogo,
+} from "phosphor-react";
 
 const FooterIcon = ({ title, icon, link }) => (
   <Link

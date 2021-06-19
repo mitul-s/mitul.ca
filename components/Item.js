@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react";
+import { Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react";
 
 // export default function Item({ date, description, link }) {
 //     return (
@@ -30,7 +30,6 @@ export default function Item({ role, company, date, description, link }) {
         </Text>
       </Flex>
       {description ? <Text>{description}</Text> : ""}
-      {/* <Text>{description}</Text> */}
       <Divider />
     </Stack>
   );
