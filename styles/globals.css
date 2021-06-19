@@ -32,16 +32,3 @@ html {
   color: #f9fafb;
   background: #14b8a6;
 }
-
-*:focus {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-}
-*:active {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-}
