@@ -37,7 +37,6 @@ const SocialButton = ({ title, icon, link }) => {
       as="a"
       href={link}
       data-splitbee-event={title}
-      data-splitbee-event-type="Social"
       target="_blank"
       size="40px"
       bgColor={
@@ -59,7 +58,11 @@ const SocialPopover = () => {
   const { colorMode } = useColorMode();
   return (
     <Popover closeOnBlur={true} returnFocusOnClose={false}>
-      <PopoverTrigger>
+      <PopoverTrigger
+        _focus={{
+          outline: "none",
+        }}
+      >
         <IconButton
           bgColor="indigo.600"
           color="whiteAlpha.900"
@@ -73,6 +76,9 @@ const SocialPopover = () => {
             bgColor: "indigo.700",
             transform: "rotate(90deg)",
           }}
+          _focus={{
+            outline: "none",
+          }}
         />
       </PopoverTrigger>
       <PopoverContent
@@ -81,6 +87,9 @@ const SocialPopover = () => {
         height="auto"
         mb={2}
         bg="none"
+        _focus={{
+          outline: "none",
+        }}
       >
         <Flex
           direction="column"
@@ -98,22 +107,22 @@ const SocialPopover = () => {
           className={styles.navBlur}
         >
           <SocialButton
-            title="Twitter"
+            title="twitter"
             icon={TwitterLogo}
             link="https://twitter.com/typicalmitul"
           />
           <SocialButton
-            title="Instagram"
+            title="instagram"
             icon={InstagramLogo}
             link="https://instagram.com/typicalmitul"
           />
           <SocialButton
-            title="GitHub"
+            title="github"
             icon={GithubLogo}
             link="https://github.com/mitul-s"
           />
           <SocialButton
-            title="Linkedin"
+            title="linkedin"
             icon={LinkedinLogo}
             link="https://linkedin.com/in/heymitul"
           />
