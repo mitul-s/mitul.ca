@@ -10,6 +10,12 @@ import {
   IconButton,
   HStack,
   useColorMode,
+  Divider,
+  Tooltip,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Circle,
   Badge,
 } from "@chakra-ui/react";
 import {
@@ -17,9 +23,11 @@ import {
   InstagramLogo,
   GithubLogo,
   LinkedinLogo,
+  List,
   Sun,
   Moon,
 } from "phosphor-react";
+import styles from ".././styles/sidebar.module.css";
 import NextLink from "next/link";
 
 const FooterIcon = ({ title, icon, link }) => (
@@ -150,19 +158,191 @@ const Navigation = ({ styles }) => (
   </Box>
 );
 
-export default Navigation;
+
+const SocialButton = ({ icon, link }) => {
+  const { colorMode } = useColorMode();
+  return (
+    <Circle
+      as="a"
+      href={link}
+      target="_blank"
+      size="40px"
+      bgColor={
+        colorMode === "light"
+          ? "rgba(245, 245, 245, 0.45)"
+          : "rgba(13, 16, 19, 0.45)"
+      }
+      transitionDuration="250ms"
+      _hover={{
+        borderColor: `${colorMode === "light" ? "black" : "white"}`,
+      }}
+      borderWidth="0.3px"
+    >
+      <Icon as={icon} />
+    </Circle>
+  );
+};
 
 
-    // className={styles}
-    // display={["none", "none", "flex"]}
-    // as="nav"
-    // h={["10vh", null, "30vh"]}
-    // alignItems={["center", null, "flex-end"]}
-    // justifyContent="space-between"
-    // ml={48}
-    // // mt={[2, null, 24]}
-    // // position={["block", null, "fixed"]}
-    // position="fixed"
-    // mt={24}
-    // flexDirection={["row", null, "column"]}
-    // w="min-content"
+const ToggleThemeBtn = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <Tooltip
+      label="Change theme"
+      fontSize="xs"
+      letterSpacing={1}
+      placement="top"
+      bgColor="black"
+      color="white"
+      rounded="sm"
+    >
+      <IconButton
+        bg={colorMode === "light" ? "trueGray.100" : "trueGray.900"}
+        // size="40px"
+        rounded="full"
+        transitionDuration="200ms"
+        borderWidth="0.3px"
+        onClick={toggleColorMode}
+        icon={colorMode === "light" ? <Moon /> : <Sun />}
+        _hover={{
+          bgColor: `${colorMode === "light" ? "rgb(245, 245, 245, 0.5)" : "rgb(38, 38, 38, 0.5)"}`,
+          transform: "rotate(90deg)",
+          border: "1px solid",
+          borderColor: "whiteAlpha.800",
+        }}
+      />
+    </Tooltip>
+  );
+}
+
+
+
+
+
+const NavBtn = React.forwardRef((props, ref) => {
+  const { colorMode } = useColorMode();
+  return (
+    <Button
+      as="a"
+      bgColor={
+        colorMode === "light" ? "rgb(245, 245, 245, 1)" : "rgba(13, 16, 19, 1)"
+      }
+      color={colorMode === "light" ? "black" : "white"}
+      // border="1px solid transparent"
+      w={28}
+      rounded="3xl"
+      borderWidth="0.3px"
+      fontSize="md"
+      fontWeight="regular"
+      letterSpacing={0.5}
+      _hover={{
+        // bgColor: "#000",
+        borderColor: `${colorMode === 'light' ? "black" : "whiteAlpha.800"}`,
+      }}
+      sx={{
+        fontSmooth: "antialiased",
+      }}
+      {...props}
+    >
+      {props.children}
+    </Button>
+  );
+});
+
+const Nav = () => {
+  const { colorMode } = useColorMode();
+  return (
+    <Box
+      position="fixed"
+      bottom="12"
+      width="min(60ch, calc(100% - 64px))"
+      // m="0 auto"
+      rounded="full"
+      zIndex="99"
+      w="fit-content"
+      borderWidth="1px"
+      // py={4}
+      sx={{
+        left: "50%",
+        transform: "translateX(-50%)",
+      }}
+    >
+      <Box
+        w="fit-content"
+        m="0 auto"
+        p={2}
+        rounded="full"
+        bgColor={
+          colorMode === "light"
+            ? "rgba(245, 245, 245, 0.45)"
+            : "rgba(13, 16, 19, 0.45)"
+        }
+        className={styles.navBlur}
+      >
+        <HStack spacing={3} alignItems="center" justifyContent="center">
+          <NextLink href="/">
+            <NavBtn>Home</NavBtn>
+          </NextLink>
+          <NextLink href="/about">
+            <NavBtn>About</NavBtn>
+          </NextLink>
+          <Box height="25px">
+            <Divider colorScheme="blackAlpha" orientation="vertical" />
+          </Box>
+          <ToggleThemeBtn />
+          <Popover>
+            <PopoverTrigger>
+              <IconButton
+                bgColor="#F15223"
+                rounded="full"
+                borderColor="#F15223"
+                borderWidth="0.3px"
+                icon={<List />}
+                _hover={{
+                  border: "1px",
+                  borderColor: "#F15223",
+                  bgColor: "rgb(241, 82, 1, 0.5)",
+                  transform: "rotate(90deg)",
+                }}
+              />
+            </PopoverTrigger>
+            <PopoverContent
+              width="50px"
+              rounded="full"
+              height="auto"
+              mb={2}
+              px={3}
+              py={1}
+              bgColor={
+                colorMode === "light"
+                  ? "rgba(245, 245, 245, 0.45)"
+                  : "rgba(13, 16, 19, 0.45)"
+              }
+              className={styles.navBlur}
+            >
+              <Flex
+                direction="column"
+                justifyContent="space-between"
+                alignItems="center"
+                height={40}
+              >
+                <NextLink href="https://github.com/mitul-s">
+                  <SocialButton icon={TwitterLogo} />
+                </NextLink>
+                <NextLink href="https://github.com/mitul-s">
+                  <SocialButton icon={InstagramLogo} />
+                </NextLink>
+ 
+                <SocialButton icon={GithubLogo} link="https://github.com/mitul-s" />
+              </Flex>
+            </PopoverContent>
+          </Popover>
+        </HStack>
+      </Box>
+    </Box>
+  );
+};
+
+
+
+export default Nav;
