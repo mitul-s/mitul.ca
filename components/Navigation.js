@@ -96,7 +96,7 @@ const SocialPopover = () => {
           justifyContent="space-between"
           alignItems="center"
           rounded="full"
-          height={48}
+          height={52}
           px={3}
           py={1}
           bgColor={
@@ -208,23 +208,20 @@ const Nav = () => {
   return (
     <Box
       position="fixed"
-      bottom="12"
+      bottom="6"
       width="min(60ch, calc(100% - 64px))"
-      // m="0 auto"
       rounded="full"
       zIndex="99"
       w="fit-content"
       borderWidth="1px"
-      // py={4}
-      sx={{
-        left: "50%",
-        transform: "translateX(-50%)",
-      }}
+      left="50%"
+      transform="translateX(-50%)"
     >
       <Box
         w="fit-content"
         m="0 auto"
-        p={2}
+        py={2}
+        px={3}
         rounded="full"
         bgColor={
           colorMode === "light"
