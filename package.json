@@ -13,7 +13,6 @@
     "@emotion/styled": "^11.3.0",
     "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/image-url": "^0.140.22",
-    "airtable": "^0.10.1",
     "framer-motion": "^3.10.6",
     "next": "^11.0.0",
     "next-seo": "^4.24.0",
