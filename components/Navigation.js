@@ -29,6 +29,7 @@ import {
 } from "phosphor-react";
 import styles from ".././styles/sidebar.module.css";
 import NextLink from "next/link";
+import useSound from "use-sound";
 
 const SocialButton = ({ title, icon, link }) => {
   const { colorMode } = useColorMode();
@@ -135,6 +136,7 @@ const SocialPopover = () => {
 
 const ToggleThemeBtn = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [playSound] = useSound("/media/sounds/switch-on.mp3");
   return (
     <Tooltip
       label="Change theme"
@@ -154,7 +156,7 @@ const ToggleThemeBtn = () => {
         rounded="full"
         transitionDuration="200ms"
         borderWidth="0.3px"
-        onClick={toggleColorMode}
+        onClick={()=> {toggleColorMode(); playSound();}}
         icon={colorMode === "light" ? <Moon /> : <Sun />}
         _hover={{
           borderColor: `${colorMode === "light" ? "black" : "whiteAlpha.800"}`,
