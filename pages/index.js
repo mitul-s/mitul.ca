@@ -246,7 +246,7 @@ export default function Home() {
             </HStack>
           </Stack>
         </Section>
-        <Photos images={PortfolioImages} />
+        <Photos images={PortfolioImages} mt={-8} mb={8} />
         <Section header="Contact">
           <Stack spacing={4} mb={7}>
             <Text>
