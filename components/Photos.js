@@ -36,7 +36,9 @@ const Photos = ({ images, ...restProps }) => {
                 !width && !i.landscape
                   ? "240px"
                   : width && i.landscape
-                  ? "820px"
+                  ? "620px"
+                  : width && !i.landscape 
+                  ? "320px"
                   : "539px"
               }
               objectFit="contain"
