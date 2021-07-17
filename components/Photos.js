@@ -19,9 +19,10 @@ const Photos = ({ images }) => {
             <Box
               minW="300px"
               objectFit="scale-down"
-              marginLeft="15px"
               key={i.id}
-              _first={{ marginLeft: "35ch" }}
+              marginLeft={3}
+              _first={{ marginLeft: "calc(50vw - 30ch)" }}
+              _last={{ marginRight: "calc(50vw - 30ch)" }}
               sx={{
                 scrollSnapAlign: "start",
                 background: "rgba( 255, 255, 255, 0.00 )",
