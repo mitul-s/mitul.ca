@@ -57,6 +57,7 @@ const SocialButton = ({ title, icon, link }) => {
 
 const SocialPopover = () => {
   const { colorMode } = useColorMode();
+  const [playSound] = useSound("/media/sounds/page-change.mp3");
   return (
     <Popover closeOnBlur={true} returnFocusOnClose={false}>
       <PopoverTrigger
@@ -75,10 +76,13 @@ const SocialPopover = () => {
             border: "1px",
             borderColor: "indigo.600",
             bgColor: "indigo.700",
-            transform: "rotate(90deg)",
+            // transform: "rotate(90deg)",
           }}
           _focus={{
             outline: "none",
+          }}
+          onClick={() => {
+            playSound();
           }}
         />
       </PopoverTrigger>
@@ -193,7 +197,8 @@ const NavBtn = React.forwardRef((props, ref) => {
       fontWeight="regular"
       letterSpacing={0.5}
       _hover={{
-        borderColor: `${colorMode === 'light' ? "black" : "whiteAlpha.800"}`,
+        borderColor: `${colorMode === "light" ? "black" : "whiteAlpha.800"}`,
+        cursor: "pointer",
       }}
       sx={{
         fontSmooth: "antialiased",
