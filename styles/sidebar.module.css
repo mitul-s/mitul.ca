@@ -9,9 +9,13 @@
   grid-column: 2;
 }
 
-.full-bleed {
+.wrapper > * {
+  grid-column: 2;
+}
+
+.fullBleed {
   width: 100%;
-  grid-column: 1 / 4;
+  grid-column: 1 / -1;
 }
 
 .navBlur {
