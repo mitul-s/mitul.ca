@@ -1,17 +1,17 @@
 import { Box, Image, HStack } from "@chakra-ui/react";
 import styles from "@/styles/sidebar.module.css";
 
-const Photos = ({ images }) => {
+const Photos = ({ images, ...restProps }) => {
   return (
     <HStack
-      mt={-8}
-      mb={8}
       width="100vw"
       flexWrap="nowrap"
       className={styles.fullBleed}
+      {...restProps}
     >
       <Box
         display="flex"
+        alignItems="center"
         margin="0 auto"
         width="fit-content"
         overflowX="scroll"
@@ -28,7 +28,8 @@ const Photos = ({ images }) => {
             <Box
               key={i.id}
               minW="240px"
-              objectFit="scale-down"
+              height="100%"
+              objectFit="contain"
               marginRight={4}
               sx={{
                 // scrollSnapAlign: "start end",
