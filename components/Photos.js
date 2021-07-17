@@ -35,6 +35,7 @@ const Photos = ({ images, ...restProps }) => {
               minWidth={!width && !i.landscape ? "240px" : width && i.landscape ? "820px" : "539px"}
               objectFit="contain"
               transition="all 250ms ease-in-out"
+              cursor="pointer"
               marginRight={4}
               onClick={(i) => toggleWidth(i)}
               sx={{
