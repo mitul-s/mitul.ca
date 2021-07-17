@@ -71,14 +71,14 @@ const AboutText = () => (
 const About = () => {
   return (
     <>
-      <Flex mt={24} justifyContent="flex-end" flexDirection="column">
+      <Photos images={PersonalImages} mt={24} mb={8} />
+      <Flex justifyContent="flex-end" flexDirection="column">
         <Stack spacing={4}>
-          <Photos images={PersonalImages} />
           <Section header="About">
-            <Heading>Mitul Shah</Heading>
+            <Heading mb={4}>Mitul Shah</Heading>
+            <AboutText />
+            <Text>This website is still a work in progress, bear with me.</Text>
           </Section>
-          <AboutText />
-          <Text>This website is still a work in progress, bear with me.</Text>
         </Stack>
       </Flex>
     </>
