@@ -1,66 +1,32 @@
-.grid {
-  display: grid;
-  grid-template-columns: 1fr min(60ch, calc(100% - 64px)) 1fr;
-  grid-column-gap: 32px;
-  /* grid-template-areas: "nav main ."; */
-}
-
-.grid > * {
+.wrapper > * {
   grid-column: 2;
 }
 
-.full-bleed {
+.fullBleed {
   width: 100%;
-  grid-column: 1 / 4;
+  grid-column: 1 / -1;
 }
 
 .navBlur {
   backdrop-filter: blur(2px) contrast(0.99);
 }
 
-/* @media screen and (min-width: 48em) {
-  .grid {
-    display: block;
-  }
-  
-  .main, .nav {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-   */
-/* } */
-
-/* ↓ targets the intermediary wrapper */
-/* .withSidebar > * {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -0.5rem;
-} */
-
-/* ↓ applies to both elements */
-/* .withSidebar > * > * {
-  margin: 0.5rem;
-} */
-
-/* .sidebar {
-  flex-basis: 10rem;
-  flex-grow: 1;
-  justify-content: flex-end;
-} */
-
-/* ↓ grow from nothing */
-/* .notSidebar {
-  flex-basis: 0;
-  flex-grow: 999;
-  min-width: calc(50% - 1rem);
+.marginHandle:first-child {
+  margin-left: 32px;
 }
 
-@media (max-width: 768px) {
-  .withSidebar > * {
-    display: block;
+.marginHandle:last-child {
+  margin-right: 32px;  
+}
+
+@media screen and (min-width: 50rem) {
+  .marginHandle:first-child {
+    margin-left: calc(50vw - 30ch);
   }
 
-  .sidebar { 
-    justify-content: space-between;
+  .marginHandle:last-child {
+    
+    margin-right: calc(50vw - 30ch);
   }
-} */
+}
+

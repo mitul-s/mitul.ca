@@ -36,6 +36,7 @@ export const PersonalImages = [
     id: 2,
     src: "./media/photos/about/2.jpg",
     alt: "Sunrise in front of the frozen Chicago skyline",
+    landscape: true,
   },
   {
     id: 3,
@@ -51,6 +52,7 @@ export const PersonalImages = [
     id: 5,
     src: "./media/photos/about/5.jpg",
     alt: "Sitting on a rock overlooking the edge of the Pacific Coast",
+    landscape: true,
   },
 ];
 
