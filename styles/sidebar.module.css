@@ -10,3 +10,23 @@
 .navBlur {
   backdrop-filter: blur(2px) contrast(0.99);
 }
+
+.marginHandle:first-child {
+  margin-left: 32px;
+}
+
+.marginHandle:last-child {
+  margin-right: 32px;  
+}
+
+@media screen and (min-width: 50rem) {
+  .marginHandle:first-child {
+    margin-left: calc(50vw - 30ch);
+  }
+
+  .marginHandle:last-child {
+    
+    margin-right: calc(50vw - 30ch);
+  }
+}
+
