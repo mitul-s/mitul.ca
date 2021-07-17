@@ -4,8 +4,8 @@ import styles from "@/styles/sidebar.module.css";
 const Photos = ({ images }) => {
   return (
     <HStack
-      mt={-6}
-      mb={12}
+      mt={-8}
+      mb={8}
       width="100vw"
       flexWrap="nowrap"
       className={styles.fullBleed}
@@ -17,7 +17,6 @@ const Photos = ({ images }) => {
         overflowX="scroll"
         paddingY={4}
         sx={{
-          // scrollSnapType: "x",
           scrollbarWidth: "none",
           "&::-webkit-scrollbar": {
             display: "none",
@@ -27,21 +26,19 @@ const Photos = ({ images }) => {
         {images?.map((i) => {
           return (
             <Box
+              key={i.id}
               minW="240px"
               objectFit="scale-down"
-              key={i.id}
               marginRight={4}
-              _first={{ marginLeft: "calc(50vw - 30ch)" }}
-              _last={{ marginRight: "calc(50vw - 30ch)" }}
               sx={{
                 // scrollSnapAlign: "start end",
                 background: "rgba( 255, 255, 255, 0.15 )",
-                boxShadow: "0 8px 14px rgb(0 0 0 / 30%)",
-                backdropFilter: "blur(6.5px)",
-                webkitBackdropFilter: "blur( 6.5px )",
+                boxShadow: "0 5px 12px rgb(0 0 0 / 20%)",
+                backdropFilter: "blur(0.5px)",
                 borderRadius: "2px",
                 border: "1px solid rgba( 255, 255, 255, 0.20 )",
               }}
+              className={styles.marginHandle}
             >
               <Image src={i.src} alt={i.alt} />
             </Box>
