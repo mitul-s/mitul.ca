@@ -18,6 +18,7 @@ const Photos = ({ images, ...restProps }) => {
         overflowX="scroll"
         paddingY={4}
         sx={{
+          scrollSnapType: "x",
           scrollbarWidth: "none",
           "&::-webkit-scrollbar": {
             display: "none",
@@ -31,14 +32,13 @@ const Photos = ({ images, ...restProps }) => {
           return (
             <Box
               key={i.id}
-              minW={width ? "500px" : "240px"}
-              height="100%"
+              minWidth={!width && !i.landscape ? "240px" : width && i.landscape ? "820px" : "539px"}
               objectFit="contain"
-              transition="all 250ms cubic-bezier(0.4, 0, 0.2, 1);"
+              transition="all 250ms ease-in-out"
               marginRight={4}
               onClick={(i) => toggleWidth(i)}
               sx={{
-                // scrollSnapAlign: "start end",
+                scrollSnapAlign: "inherit",
                 background: "rgba( 255, 255, 255, 0.15 )",
                 boxShadow: "0 5px 12px rgb(0 0 0 / 30%)",
                 backdropFilter: "blur(0.5px)",
@@ -46,7 +46,7 @@ const Photos = ({ images, ...restProps }) => {
                 border: "1px solid rgba( 255, 255, 255, 0.20 )",
               }}
               _hover={{
-                background:
+                backgroundColor:
                   colorMode === "dark"
                     ? "rgba(245, 245, 245, 1)"
                     : "rgba(13, 16, 19, 1)",
