@@ -4,6 +4,7 @@ import Item from "@/components/Item";
 import Shell from "@/components/Shell";
 import Section from "@/components/Section";
 import Photos from "@/components/Photos";
+import styles from "@/styles/sidebar.module.css";
 import {
   PaperPlaneTilt,
   DiscordLogo,
@@ -243,9 +244,9 @@ export default function Home() {
                 <SecondaryBtn icon={<Aperture />}>500px</SecondaryBtn>
               </Link>
             </HStack>
-            <Photos images={PortfolioImages} />
           </Stack>
         </Section>
+        <Photos images={PortfolioImages} />
         <Section header="Contact">
           <Stack spacing={4} mb={7}>
             <Text>
