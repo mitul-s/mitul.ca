@@ -27,15 +27,22 @@ const Photos = ({ images, ...restProps }) => {
       >
         {images?.map((i) => {
           const [width, setWidth] = useState(false);
-          const toggleWidth = () => { width ? setWidth(false) : setWidth(true) };
+          const toggleWidth = () => {width ? setWidth(false) : setWidth(true);};
           const { colorMode } = useColorMode();
           return (
             <Box
               key={i.id}
-              minWidth={!width && !i.landscape ? "240px" : width && i.landscape ? "820px" : "539px"}
+              minWidth={
+                !width && !i.landscape
+                  ? "240px"
+                  : width && i.landscape
+                  ? "820px"
+                  : "539px"
+              }
               objectFit="contain"
-              transition="all 250ms ease-in-out"
+              transition="all 250ms ease 0ms"
               cursor="pointer"
+              overflow="auto"
               marginRight={4}
               onClick={(i) => toggleWidth(i)}
               sx={{
@@ -54,7 +61,7 @@ const Photos = ({ images, ...restProps }) => {
               }}
               className={`${styles.marginHandle} link`}
             >
-              <Image src={i.src} alt={i.alt} />
+              <Image src={i.src} alt={i.alt} draggable="false" />
             </Box>
           );
         })}
