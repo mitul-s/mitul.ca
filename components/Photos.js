@@ -3,36 +3,44 @@ import styles from "@/styles/sidebar.module.css";
 
 const Photos = ({ images }) => {
   return (
-    <HStack width="100vw" flexWrap="nowrap" className={styles.fullBleed}>
+    <HStack
+      mt={-6}
+      mb={12}
+      width="100vw"
+      flexWrap="nowrap"
+      className={styles.fullBleed}
+    >
       <Box
         display="flex"
         margin="0 auto"
         width="fit-content"
         overflowX="scroll"
+        paddingY={4}
         sx={{
           // scrollSnapType: "x",
           scrollbarWidth: "none",
           "&::-webkit-scrollbar": {
-            background: "transparent",
+            display: "none",
           },
         }}
       >
         {images?.map((i) => {
           return (
             <Box
-              minW="300px"
+              minW="240px"
               objectFit="scale-down"
               key={i.id}
-              marginLeft={3}
+              marginRight={4}
               _first={{ marginLeft: "calc(50vw - 30ch)" }}
               _last={{ marginRight: "calc(50vw - 30ch)" }}
               sx={{
                 // scrollSnapAlign: "start end",
-                background: "rgba( 255, 255, 255, 0.00 )",
-                boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.08 );",
-                backdropFilter: "blur( 0.5px );",
+                background: "rgba( 255, 255, 255, 0.15 )",
+                boxShadow: "0 8px 14px rgb(0 0 0 / 30%)",
+                backdropFilter: "blur(6.5px)",
+                webkitBackdropFilter: "blur( 6.5px )",
                 borderRadius: "2px",
-                border: "1px solid rgba( 255, 255, 255, 0.18 );",
+                border: "1px solid rgba( 255, 255, 255, 0.20 )",
               }}
             >
               <Image src={i.src} alt={i.alt} />
