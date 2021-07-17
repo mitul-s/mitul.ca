@@ -3,16 +3,19 @@ import styles from "@/styles/sidebar.module.css";
 
 const Photos = ({ images }) => {
   return (
-    <HStack
-      width="100vw"
-      flexWrap="nowrap"
-      className={styles.fullBleed}
-    >
+    <HStack width="100vw" flexWrap="nowrap" className={styles.fullBleed}>
       <Box
         display="flex"
         margin="0 auto"
         width="fit-content"
-        overflowY="scroll"
+        overflowX="scroll"
+        sx={{
+          // scrollSnapType: "x",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": {
+            background: "transparent",
+          },
+        }}
       >
         {images?.map((i) => {
           return (
@@ -24,7 +27,7 @@ const Photos = ({ images }) => {
               _first={{ marginLeft: "calc(50vw - 30ch)" }}
               _last={{ marginRight: "calc(50vw - 30ch)" }}
               sx={{
-                scrollSnapAlign: "start",
+                // scrollSnapAlign: "start end",
                 background: "rgba( 255, 255, 255, 0.00 )",
                 boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.08 );",
                 backdropFilter: "blur( 0.5px );",
