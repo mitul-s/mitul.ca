@@ -2,7 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import "../styles/globals.css";
 import theme from "@/styles/theme.js";
 import { DefaultSeo } from "next-seo";
-import SEO from "../next-seo.config";
+import SEO from "../../next-seo.config";
 import dynamic from "next/dynamic";
 
 // const AnimatedCursor = dynamic(
