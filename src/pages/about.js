@@ -1,11 +1,17 @@
 import About from "@/components/about/About";
 import Shell from "@/components/Shell";
+import Head from "next/head";
 
 const about = () => {
   return (
-    <Shell>
-      <About />
-    </Shell>
+    <>
+      <Head>
+        <title>About / Mitul Shah</title>
+      </Head>
+      <Shell>
+        <About />
+      </Shell>
+    </>
   );
 };
 
