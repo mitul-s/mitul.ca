@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 import Nav from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import styles from "@/styles/sidebar.module.css"
+import styles from "@/styles/wrapper.module.css";
 
 const Shell = ({ children }) => {
   return (

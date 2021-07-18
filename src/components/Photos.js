@@ -1,5 +1,5 @@
 import { Box, Image, HStack, useColorMode } from "@chakra-ui/react";
-import styles from "@/styles/sidebar.module.css";
+import styles from "@/styles/wrapper.module.css";
 import { useState } from "react";
 
 const Photos = ({ images, ...restProps }) => {
