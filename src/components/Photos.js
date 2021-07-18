@@ -1,5 +1,5 @@
 import { Box, Image, HStack, useColorMode } from "@chakra-ui/react";
-import styles from "@/styles/sidebar.module.css";
+import styles from "@/styles/wrapper.module.css";
 import { useState } from "react";
 
 const Photos = ({ images, ...restProps }) => {
@@ -61,7 +61,7 @@ const Photos = ({ images, ...restProps }) => {
                     ? "rgba(245, 245, 245, 1)"
                     : "rgba(13, 16, 19, 1)",
               }}
-              className={`${styles.marginHandle} link`}
+              className={`${styles.marginHandle}`}
             >
               <Image src={i.src} alt={i.alt} draggable="false" />
             </Box>

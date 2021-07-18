@@ -71,15 +71,15 @@ const Current = () => {
 
         <CurrentItem
           icon={Bookmarks}
-          title={"Range: Why Generalists Triumph in a Specialized World"}
+          title={"Atomic Design"}
           caption={"David Epstein"}
-          link="https://beta.readng.co/book/range-by-david-epstein-zbmEW?ref=mitul"
+          link="https://atomicdesign.bradfrost.com?ref=mitul.ca"
         />
         <CurrentItem
-          link="https://www.netflix.com/title/70155618"
+          link="https://g.co/kgs/xnuhdk"
           icon={Monitor}
-          title={"Gilmore Girls"}
-          caption={"Sitcom"}
+          title={"Never Have I Ever"}
+          caption={"Drama"}
         />
       </Stack>
     </Section>

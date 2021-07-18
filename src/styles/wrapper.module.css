@@ -25,7 +25,6 @@
   }
 
   .marginHandle:last-child {
-    
     margin-right: calc(50vw - 30ch);
   }
 }

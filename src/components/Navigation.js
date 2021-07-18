@@ -27,7 +27,7 @@ import {
   Sun,
   Moon,
 } from "phosphor-react";
-import styles from ".././styles/sidebar.module.css";
+import styles from "@/styles/wrapper.module.css";
 import NextLink from "next/link";
 import useSound from "use-sound";
 

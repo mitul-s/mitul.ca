@@ -4,7 +4,6 @@ import Item from "@/components/Item";
 import Shell from "@/components/Shell";
 import Section from "@/components/Section";
 import Photos from "@/components/Photos";
-import styles from "@/styles/sidebar.module.css";
 import {
   PaperPlaneTilt,
   DiscordLogo,
@@ -142,20 +141,20 @@ export default function Home() {
           <Stack spacing={8}>
             <Project
               title="Annotate – WIP"
-              description="A Chrome extension to help annotate the web. I'm in the early stages of building this, and have journaled my progress through the link below."
+              description="A browser extension to augment the internet experience; annotate, save and share. This is a work in progress, learn more through my journal link below."
               demo={false}
               journal={true}
             />
             <Project
               title="Paprback"
-              description="Built a social platform to showcase your bookshelves using React Hooks, NextJS, and Chakra UI, while working alongside a backend developer and designer. We received 300+ sign ups, 1200+ visitors along with 600+ upvotes and 8 awards on Reddit."
+              description="Built a platform to showcase your bookshelves using React Hooks, NextJS, and Chakra UI, while working alongside a backend developer and designer. We received 300+ sign ups, 1200+ visitors along with 600+ upvotes and 8 awards on Reddit."
               repo="paprback.co"
               demo={true}
               code={true}
             />
             <Project
               title="Are You Balding"
-              description="Building a campaign with Framer Motion & React to support the acquisition funnel for online pharmacies.  Designed mockups and prototypes in Figma, and translated to code with advanced interactions & animations. It's a short, fun quiz to  find out if you're balding and what solutions would work best for you."
+              description="Built a campaign to find out if you're balding with Framer Motion & React to support the acquisition funnel for online pharmacies.  Designed mockups and prototypes in Figma, and translated to code with advanced interactions & animations."
               repo="areyoubalding.com"
               demo={false}
               code={true}
