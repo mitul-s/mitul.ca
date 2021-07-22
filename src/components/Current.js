@@ -72,8 +72,8 @@ const Current = () => {
         <CurrentItem
           icon={Bookmarks}
           title={"Atomic Design"}
-          caption={"David Epstein"}
-          link="https://atomicdesign.bradfrost.com?ref=mitul.ca"
+          caption={"Brad Frost"}
+          link="https://atomicdesign.bradfrost.com/?ref=mitul.ca"
         />
         <CurrentItem
           link="https://g.co/kgs/xnuhdk"
