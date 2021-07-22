@@ -1,4 +1,5 @@
-import { Flex, Heading, Divider, Stack, Text } from "@chakra-ui/react";
+import { Flex, Heading, Divider, Stack, Text, Link } from "@chakra-ui/react";
+import { ArrowSquareOut } from "phosphor-react";
 
 // export default function Item({ date, description, link }) {
 //     return (
@@ -22,9 +23,29 @@ export default function Item({ role, company, date, description, link }) {
         {role}
       </Heading>
       <Flex alignItems="center" justifyContent="space-between">
-        <Text fontSize="md" fontWeight="500" color="trueGray.400">
-          {company}
-        </Text>
+        {link ? (
+          <Link
+            href={link}
+            isExternal
+            fontSize="md"
+            color="trueGray.400"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              gap: 3,
+            }}
+            data-splitbee-event={company}
+            data-splitbee-event-type="Work"
+          >
+            {company}
+            <ArrowSquareOut />
+          </Link>
+        ) : (
+          <Text fontSize="md" color="trueGray.400">
+            {company}
+          </Text>
+        )}
         <Text fontSize="md" color="trueGray.400">
           {date}
         </Text>

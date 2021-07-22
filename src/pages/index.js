@@ -111,6 +111,7 @@ export default function Home() {
               role="UX Developer"
               company="Composer"
               date="June 2021 - Present"
+              link="https://investcomposer.com/?ref=mitul.ca"
             />
             <Item
               role="Product Analyst"
