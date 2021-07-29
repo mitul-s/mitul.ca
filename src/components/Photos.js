@@ -11,6 +11,7 @@ const Photos = ({ images, ...restProps }) => {
       className={styles.fullBleed}
       {...restProps}
     >
+    <ScrollContainer className="scroll-container" style={{ cursor: "grabbing "}}>
       <Box
         display="flex"
         alignItems="center"
@@ -45,6 +46,7 @@ const Photos = ({ images, ...restProps }) => {
               objectFit="contain"
               transition="all 250ms ease 0ms"
               cursor="pointer"
+              _active={{ cursor: "grabbing"}}
               overflow="auto"
               marginRight={4}
               onClick={(i) => toggleWidth(i)}
@@ -62,13 +64,14 @@ const Photos = ({ images, ...restProps }) => {
                     ? "rgba(245, 245, 245, 1)"
                     : "rgba(13, 16, 19, 1)",
               }}
-              className={`${styles.marginHandle}`}
+              className={styles.marginHandle}
             >
               <Image src={i.src} alt={i.alt} draggable="false" />
             </Box>
           );
         })}
       </Box>
+      </ScrollContainer>
     </HStack>
   );
 };
