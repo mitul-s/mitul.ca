@@ -11,67 +11,22 @@ const Photos = ({ images, ...restProps }) => {
       className={styles.fullBleed}
       {...restProps}
     >
-    <ScrollContainer className="scroll-container">
-      <Box
-        display="flex"
-        alignItems="center"
-        margin="0 auto"
-        width="fit-content"
-        overflowX="scroll"
-        paddingY={4}
-        sx={{
-          scrollSnapType: "x",
-          scrollbarWidth: "none",
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
-        }}
-      >
-<<<<<<< Updated upstream:components/Photos.js
-        {images?.map((i) => {
-          const [width, setWidth] = useState(false);
-          const toggleWidth = () => {width ? setWidth(false) : setWidth(true);};
-          const { colorMode } = useColorMode();
-          return (
-            <Box
-              key={i.id}
-              minWidth={
-                !width && !i.landscape
-                  ? "240px"
-                  : width && i.landscape
-                  ? "620px"
-                  : width && !i.landscape 
-                  ? "320px"
-                  : "539px"
-              }
-              objectFit="contain"
-              transition="all 250ms ease 0ms"
-              cursor="pointer"
-              overflow="auto"
-              marginRight={4}
-              onClick={(i) => toggleWidth(i)}
-              sx={{
-                scrollSnapAlign: "inherit",
-                background: "rgba( 255, 255, 255, 0.15 )",
-                boxShadow: "0 5px 12px rgb(0 0 0 / 30%)",
-                backdropFilter: "blur(0.5px)",
-                borderRadius: "2px",
-                border: "1px solid rgba( 255, 255, 255, 0.20 )",
-              }}
-              _hover={{
-                backgroundColor:
-                  colorMode === "dark"
-                    ? "rgba(245, 245, 245, 1)"
-                    : "rgba(13, 16, 19, 1)",
-              }}
-              className={`${styles.marginHandle} link`}
-            >
-              <Image src={i.src} alt={i.alt} draggable="false" />
-            </Box>
-          );
-        })}
-=======
-        
+      <ScrollContainer className="scroll-container" style={{ cursor: "grabbing"}}>
+        <Box
+          display="flex"
+          alignItems="center"
+          margin="0 auto"
+          width="fit-content"
+          overflowX="scroll"
+          paddingY={4}
+          sx={{
+            scrollSnapType: "x",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
           {images?.map((i) => {
             const [width, setWidth] = useState(false);
             const toggleWidth = () => {
@@ -92,7 +47,8 @@ const Photos = ({ images, ...restProps }) => {
                 }
                 objectFit="contain"
                 transition="all 250ms ease 0ms"
-                cursor="pointer"
+                cursor="grab"
+                _active={{ cursor: "grabbing" }}
                 overflow="auto"
                 marginRight={4}
                 onClick={(i) => toggleWidth(i)}
@@ -110,15 +66,14 @@ const Photos = ({ images, ...restProps }) => {
                       ? "rgba(245, 245, 245, 1)"
                       : "rgba(13, 16, 19, 1)",
                 }}
-                className={`${styles.marginHandle}`}
+                className={styles.marginHandle}
               >
                 <Image src={i.src} alt={i.alt} draggable="false" />
               </Box>
             );
           })}
->>>>>>> Stashed changes:src/components/Photos.js
-      </Box>
-        </ScrollContainer>
+        </Box>
+      </ScrollContainer>
     </HStack>
   );
 };
