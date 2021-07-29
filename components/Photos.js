@@ -47,7 +47,7 @@ const Photos = ({ images, ...restProps }) => {
                 }
                 objectFit="contain"
                 transition="all 250ms ease 0ms"
-                cursor="grab"
+                cursor="pointer"
                 _active={{ cursor: "grabbing" }}
                 overflow="auto"
                 marginRight={4}
