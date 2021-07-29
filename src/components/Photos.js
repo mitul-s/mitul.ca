@@ -1,6 +1,7 @@
 import { Box, Image, HStack, useColorMode } from "@chakra-ui/react";
 import styles from "@/styles/wrapper.module.css";
 import { useState } from "react";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 const Photos = ({ images, ...restProps }) => {
   return (
