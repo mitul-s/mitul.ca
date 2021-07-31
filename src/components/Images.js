@@ -27,11 +27,11 @@ export const PortfolioImages = [
 ];
 
 export const PersonalImages = [
-  {
-    id: 1,
-    src: "./media/photos/about/1.jpg",
-    alt: "Standing in front of New York Skyline sunset",
-  },
+  // {
+  //   id: 1,
+  //   src: "./media/photos/about/1.jpg",
+  //   alt: "Standing in front of New York Skyline sunset",
+  // },
   {
     id: 2,
     src: "./media/photos/about/2.jpg",
