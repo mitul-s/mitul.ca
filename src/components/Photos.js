@@ -11,7 +11,7 @@ const Photos = ({ images, ...restProps }) => {
       className={styles.fullBleed}
       {...restProps}
     >
-    <ScrollContainer className="scroll-container" style={{ cursor: "grabbing "}}>
+    <ScrollContainer className="scroll-container" hideScrollbars={false} style={{ cursor: "grabbing" }}>
       <Box
         display="flex"
         alignItems="center"

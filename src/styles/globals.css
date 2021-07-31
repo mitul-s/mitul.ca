@@ -43,3 +43,11 @@ html {
     -webkit-tap-highlight-color: transparent;
     outline: none;
 }
+
+.indiana-scroll-container {
+  scrollbar-width: none;
+}
+
+.indiana-scroll-container::-webkit-scrollbar {
+  display: none;
+}
