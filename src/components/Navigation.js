@@ -213,45 +213,51 @@ const NavBtn = React.forwardRef((props, ref) => {
 const Nav = () => {
   const { colorMode } = useColorMode();
   return (
-    <Box
-      position="fixed"
-      bottom="6"
-      width="min(60ch, calc(100% - 64px))"
-      rounded="full"
-      zIndex="99"
-      w="fit-content"
-      borderWidth="1px"
-      left="50%"
-      transform="translateX(-50%)"
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      position="relative"
+      h="100%"
+      w="100%"
     >
       <Box
-        w="fit-content"
-        m="0 auto"
-        py={2}
-        px={3}
+        position="fixed"
+        bottom="6"
+        width="min(60ch, calc(100% - 64px))"
         rounded="full"
-        bgColor={
-          colorMode === "light"
-            ? "rgba(245, 245, 245, 0.45)"
-            : "rgba(13, 16, 19, 0.45)"
-        }
-        className={styles.navBlur}
+        zIndex="99"
+        w="fit-content"
+        borderWidth="1px"
       >
-        <HStack spacing={3} alignItems="center" justifyContent="center">
-          <NextLink href="/">
-            <NavBtn>Home</NavBtn>
-          </NextLink>
-          <NextLink href="/about">
-            <NavBtn>About</NavBtn>
-          </NextLink>
-          <Box height="25px">
-            <Divider colorScheme="blackAlpha" orientation="vertical" />
-          </Box>
-          <ToggleThemeBtn />
-          <SocialPopover />
-        </HStack>
+        <Box
+          w="fit-content"
+          m="0 auto"
+          py={2}
+          px={3}
+          rounded="full"
+          bgColor={
+            colorMode === "light"
+              ? "rgba(245, 245, 245, 0.45)"
+              : "rgba(13, 16, 19, 0.45)"
+          }
+          className={styles.navBlur}
+        >
+          <HStack spacing={3} alignItems="center" justifyContent="center">
+            <NextLink href="/">
+              <NavBtn>Home</NavBtn>
+            </NextLink>
+            <NextLink href="/about">
+              <NavBtn>About</NavBtn>
+            </NextLink>
+            <Box height="25px">
+              <Divider colorScheme="blackAlpha" orientation="vertical" />
+            </Box>
+            <ToggleThemeBtn />
+            <SocialPopover />
+          </HStack>
+        </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 
