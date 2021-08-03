@@ -42,7 +42,18 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
       <Text>{description}</Text>
       <HStack fontSize="sm" mt={3} color="trueGray.500">
         {repo && demo ? (
-          <Link href={data.homepage} isExternal>
+          <Link
+            href={data.homepage}
+            px={1.5}
+            py={1}
+            marginLeft={-1.5}
+            borderRadius="3px"
+            transition="150ms all"
+            _hover={{
+              background: "gray.900",
+            }}
+            isExternal
+          >
             <Button
               data-splitbee-event={`${title} - Demo`}
               data-splitbee-event-type="Projects"
@@ -50,6 +61,9 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
               variant="link"
               fontWeight="normal"
               rightIcon={<Lightning />}
+              _hover={{
+                textDecoration: "none",
+              }}
             >
               Demo
             </Button>
@@ -58,7 +72,18 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
           ""
         )}
         {code ? (
-          <Link href={data.svn_url} isExternal>
+          <Link
+            href={data.svn_url}
+            isExternal
+            px={1.5}
+            py={1}
+            marginLeft={-1.5}
+            borderRadius="3px"
+            transition="150ms all"
+            _hover={{
+              background: "gray.900",
+            }}
+          >
             <Button
               data-splitbee-event={`${title} - Code`}
               data-splitbee-event-type="Projects"
@@ -66,6 +91,9 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
               color="trueGray.500"
               fontWeight="normal"
               rightIcon={<Code />}
+              _hover={{
+                textDecoration: "none",
+              }}
             >
               Code
             </Button>
@@ -74,7 +102,18 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
           ""
         )}
         {journal ? (
-          <Link href="https://futureland.tv/mitul/project-annotate" isExternal>
+          <Link
+            href="https://futureland.tv/mitul/project-annotate"
+            isExternal
+            px={1.5}
+            py={1}
+            marginLeft={-1.5}
+            borderRadius="3px"
+            transition="150ms all"
+            _hover={{
+              background: "gray.900",
+            }}
+          >
             <Button
               data-splitbee-event={`${title} - Journal`}
               data-splitbee-event-type="Projects"
@@ -82,6 +121,9 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
               color="trueGray.500"
               fontWeight="normal"
               rightIcon={<Note />}
+              _hover={{
+                textDecoration: "none",
+              }}
             >
               Journal
             </Button>
