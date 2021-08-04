@@ -35,6 +35,23 @@ const theme = extendTheme({
     "5xl": "36px",
     "6xl": "48px",
   },
+  components: {
+    Link: {
+      variants: {
+        "ghost-sm": ({ colorMode }) => ({
+          paddingY: 1,
+          paddingX: 1.5,
+          borderRadius: "3px",
+          color: "trueGray.500",
+          transition: "250ms all cubic-bezier(0.4, 0, 0.2, 1);",
+          _hover: {
+            bg: colorMode === "dark" ? "gray.900" : "gray.100",
+            textDecoration: "none",
+          },
+        }),
+      },
+    },
+  },
   colors: {
     black: "#000",
     white: "#fff",
