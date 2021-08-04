@@ -222,7 +222,7 @@ export default function Home() {
               learn a little more by visiting my photography portfolio below.
             </Text>
             <Link
-              href="https://typicalmitul.com"
+              href="https://typicalmitul.com/?ref=mitul.ca"
               isExternal
               _hover={{ textDecoration: "none" }}
             >
