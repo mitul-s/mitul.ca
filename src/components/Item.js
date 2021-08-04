@@ -1,54 +1,37 @@
-import { Flex, Heading, Divider, Stack, Text, Link } from "@chakra-ui/react";
-import { ArrowSquareOut } from "phosphor-react";
-
-// export default function Item({ date, description, link }) {
-//     return (
-//       <Box my={3}>
-//         <Text mb={1} fontSize="sm" color="trueGray.500">
-//           {date}
-//         </Text>
-//         <Box>
-//           <Text>
-//             {description}
-//           </Text>
-//         </Box>
-//       </Box>
-//     );
-// }
+import { Flex, Heading, Divider, Stack, Text, Link, useColorMode } from "@chakra-ui/react";
+import { ArrowUpRight } from "phosphor-react";
 
 export default function Item({ role, company, date, description, link }) {
+  const { colorMode } = useColorMode();
   return (
     <Stack spacing={4}>
       <Heading fontSize="xl" fontWeight="bold">
         {role}
       </Heading>
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        color="trueGray.500"
+        fontSize="md"
+      >
         {link ? (
           <Link
-            href={link}
-            isExternal
-            fontSize="md"
-            color="trueGray.400"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              gap: 3,
-            }}
             data-splitbee-event={company}
             data-splitbee-event-type="Work"
+            href={link}
+            variant="ghost-sm"
+            marginLeft={-1.5}
+            isExternal
           >
-            {company}
-            <ArrowSquareOut />
+            <Flex alignItems="center" justifyContent="center" fontSize="md">
+              <Text marginRight={1}>{company}</Text>
+              <ArrowUpRight />
+            </Flex>
           </Link>
         ) : (
-          <Text fontSize="md" color="trueGray.400">
-            {company}
-          </Text>
+          <Text>{company}</Text>
         )}
-        <Text fontSize="md" color="trueGray.400">
-          {date}
-        </Text>
+        <Text>{date}</Text>
       </Flex>
       {description ? <Text>{description}</Text> : ""}
       <Divider />
