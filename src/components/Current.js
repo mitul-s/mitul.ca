@@ -18,7 +18,7 @@ const CurrentItem = ({ icon, title, caption, link }) => {
     <HStack spacing={4}>
       <Icon fontSize="xl" as={icon} />
       <Box>
-        <Link href={link} _hover={{ color: "teal.500" }} isExternal>
+        <Link href={link} _hover={{ color: "cyan.600" }} isExternal>
           <Text
             fontWeight="regular"
             maxW={["320px", null, "150px"]}

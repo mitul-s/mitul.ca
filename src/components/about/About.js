@@ -52,7 +52,7 @@ const AboutText = () => (
         <Link
           href="https://linkedin.com/in/heymitul"
           textDecoration="underline"
-          _hover={{ color: "teal.600" }}
+          _hover={{ color: "cyan.600" }}
           isExternal
         >
           LinkedIn.
