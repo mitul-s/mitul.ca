@@ -50,51 +50,54 @@ const Project = ({ title, description, repo, demo, code, journal }) => {
         )}
       </Flex>
       <Text>{description}</Text>
-      <HStack fontSize="sm" mt={4} color="trueGray.500">
+      <HStack fontSize="md" mt={4} color="trueGray.500">
         {repo && demo ? (
-          <Link href={data.homepage} isExternal>
-            <Button
-              data-splitbee-event={`${title} - Demo`}
-              data-splitbee-event-type="Projects"
-              color="trueGray.500"
-              variant="link"
-              fontWeight="normal"
-              rightIcon={<Lightning />}
-            >
-              Demo
-            </Button>
+          <Link
+            data-splitbee-event={`${title} - Demo`}
+            data-splitbee-event-type="Projects"
+            href={data.homepage}
+            variant="ghost-sm"
+            marginLeft={-1.5}
+            isExternal
+          >
+            <Flex alignItems="center" justifyContent="center">
+              <Text marginRight={1}>Demo</Text>
+              <Lightning />
+            </Flex>
           </Link>
         ) : (
           ""
         )}
         {code ? (
-          <Link href={data.svn_url} isExternal>
-            <Button
-              data-splitbee-event={`${title} - Code`}
-              data-splitbee-event-type="Projects"
-              variant="link"
-              color="trueGray.500"
-              fontWeight="normal"
-              rightIcon={<Code />}
-            >
-              Code
-            </Button>
+          <Link
+            data-splitbee-event={`${title} - Code`}
+            data-splitbee-event-type="Projects"
+            href={data.svn_url}
+            variant="ghost-sm"
+            marginLeft={-1.5}
+            isExternal
+          >
+            <Flex alignItems="center" justifyContent="center">
+              <Text marginRight={1}>Code</Text>
+              <Code />
+            </Flex>
           </Link>
         ) : (
           ""
         )}
         {journal ? (
-          <Link href="https://futureland.tv/mitul/project-annotate" isExternal>
-            <Button
-              data-splitbee-event={`${title} - Journal`}
-              data-splitbee-event-type="Projects"
-              variant="link"
-              color="trueGray.500"
-              fontWeight="normal"
-              rightIcon={<Note />}
-            >
-              Journal
-            </Button>
+          <Link
+            data-splitbee-event={`${title} - Journal`}
+            data-splitbee-event-type="Projects"
+            href="https://futureland.tv/mitul/project-annotate"
+            variant="ghost-sm"
+            marginLeft={-1.5}
+            isExternal
+          >
+            <Flex alignItems="center" justifyContent="center">
+              <Text marginRight={1}>Journal</Text>
+              <Note />
+            </Flex>
           </Link>
         ) : (
           ""

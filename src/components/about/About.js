@@ -50,9 +50,11 @@ const AboutText = () => (
         specifically including product roles in banking and operations at Uber.
         You can learn a little more on my{" "}
         <Link
+          data-splitbee-event="linkedin"
+          data-splitbee-event-type="Social"
           href="https://linkedin.com/in/heymitul"
           textDecoration="underline"
-          _hover={{ color: "teal.600" }}
+          _hover={{ color: "cyan.600" }}
           isExternal
         >
           LinkedIn.
@@ -77,7 +79,21 @@ const About = () => {
           <Section header="About">
             <Heading mb={4}>Mitul Shah</Heading>
             <AboutText />
-            <Text>This website is still a work in progress, bear with me.</Text>
+            <Text>
+              This is website is always a work in progress - feel free to check
+              it out on{" "}
+              <Link
+                data-splitbee-event="github"
+                data-splitbee-event-type="Social"
+                href="https://github.com/mitul-s/mitul.ca"
+                textDecoration="underline"
+                _hover={{ color: "cyan.600" }}
+                isExternal
+              >
+                GitHub
+              </Link>
+              .
+            </Text>
           </Section>
         </Stack>
       </Flex>

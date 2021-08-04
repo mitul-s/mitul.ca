@@ -93,7 +93,7 @@ export default function Home() {
                 href="mailto:mitulxshah@gmail.com"
                 borderBottom="1px solid"
                 pb="3px"
-                _hover={{ color: "teal.500" }}
+                _hover={{ color: "cyan.600" }}
               >
                 I&apos;d love to chat 👋
               </Link>
@@ -111,7 +111,7 @@ export default function Home() {
               role="UX Developer"
               company="Composer"
               date="June 2021 - Present"
-              link="https://investcomposer.com/"
+              link="https://investcomposer.com/?ref=mitul.ca"
             />
             <Item
               role="Product Analyst"
@@ -222,7 +222,7 @@ export default function Home() {
               learn a little more by visiting my photography portfolio below.
             </Text>
             <Link
-              href="https://typicalmitul.com"
+              href="https://typicalmitul.com/?ref=mitul.ca"
               isExternal
               _hover={{ textDecoration: "none" }}
             >
@@ -231,17 +231,25 @@ export default function Home() {
             <HStack>
               <Link
                 href="https://instagram.com/typicalmitul"
+                variant="ghost-sm"
+                marginLeft={-1.5}
                 isExternal
-                _hover={{ textDecoration: "none" }}
               >
-                <SecondaryBtn icon={<InstagramLogo />}>Instagram</SecondaryBtn>
+                <Flex alignItems="center" justifyContent="center" fontSize="md">
+                  <Text marginRight={1}>Instagram</Text>
+                  <InstagramLogo />
+                </Flex>
               </Link>
               <Link
                 href="https://500px.com/typicalmitul"
+                variant="ghost-sm"
+                marginLeft={-1.5}
                 isExternal
-                _hover={{ textDecoration: "none" }}
               >
-                <SecondaryBtn icon={<Aperture />}>500px</SecondaryBtn>
+                <Flex alignItems="center" justifyContent="center" fontSize="md">
+                  <Text marginRight={1}>500px</Text>
+                  <Aperture />
+                </Flex>
               </Link>
             </HStack>
           </Stack>
