@@ -1,4 +1,5 @@
 import { Box, Image, HStack, useColorMode } from "@chakra-ui/react";
+import NextImage from "next/image";
 import styles from "@/styles/wrapper.module.css";
 import { useState } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -28,18 +29,18 @@ const Photos = ({ images, ...restProps }) => {
         }}
       >
         {images?.map((i) => {
-          const [width, setWidth] = useState(false);
-          const toggleWidth = () => {width ? setWidth(false) : setWidth(true);};
+          const [isExpanded, setIsExpanded] = useState(false);
+          const toggleWidth = () => {isExpanded ? setIsExpanded(false) : setIsExpanded(true);};
           const { colorMode } = useColorMode();
           return (
             <Box
               key={i.id}
               minWidth={
-                !width && !i.landscape
+                !isExpanded && !i.landscape
                   ? "240px"
-                  : width && i.landscape
+                  : isExpanded && i.landscape
                   ? "620px"
-                  : width && !i.landscape 
+                  : isExpanded && !i.landscape 
                   ? "320px"
                   : "539px"
               }
@@ -65,8 +66,18 @@ const Photos = ({ images, ...restProps }) => {
                     : "rgba(13, 16, 19, 1)",
               }}
               className={styles.marginHandle}
+              height={isExpanded && !i.landscape ? "480px" : isExpanded & i.landscape ? "416px" : "360px"}
             >
-              <Image src={i.src} alt={i.alt} draggable="false" />
+              {/* <Image src={i.src} alt={i.alt} draggable="false" /> */}
+              <NextImage
+                src={`/${i.src}`}
+                alt={i.alt}
+                // placeholder="blur"
+                priority
+                draggable="false"
+                layout="fill"
+                objectFit="cover"
+              />
             </Box>
           );
         })}
