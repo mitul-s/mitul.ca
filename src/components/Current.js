@@ -5,6 +5,7 @@ import {
   HStack,
   Icon,
   Stack,
+  Button,
   Link,
   Skeleton,
 } from "@chakra-ui/react";
@@ -39,6 +40,12 @@ const CurrentItem = ({ icon, title, caption, link }) => {
 
 const Current = () => {
   const { data } = useSWR("/api/nowplaying", fetcher);
+  const { data: books } = useSWR("/api/books", fetcher);
+  const currentlyReading = books?.books.map((book) => {
+    return {title: book.book.title,
+            author: book.book.authors[0].name};
+  })
+  const book = currentlyReading?.at(-1);
 
   return (
     <Section header="Currently">
@@ -71,8 +78,8 @@ const Current = () => {
 
         <CurrentItem
           icon={Bookmarks}
-          title={"Atomic Design"}
-          caption={"Brad Frost"}
+          title={book?.title}
+          caption={book?.author}
           link="https://atomicdesign.bradfrost.com/?ref=mitul.ca"
         />
         <CurrentItem
