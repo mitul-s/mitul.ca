@@ -52,8 +52,6 @@ const CurrentItemSkeleton = ({ icon }) => (
 const Current = () => {
   const { data } = useSWR("/api/nowplaying", fetcher);
   const { data: book } = useSWR("/api/books", fetcher);
-  // const data = false;
-  // const book = false;
 
   return (
     <Section header="Currently">
@@ -64,7 +62,7 @@ const Current = () => {
         // flexShrink="0"
         flex="1"
       >
-        {data ? (
+        {data?.link ? (
           <CurrentItem
             icon={MusicNotesSimple}
             title={data ? data.title : "Wishing Well"}
@@ -79,15 +77,15 @@ const Current = () => {
           <CurrentItemSkeleton icon={MusicNotesSimple} />
         )}
 
-        {book ? (
+        {book?.slug ? (
           <CurrentItem
             icon={Bookmarks}
-            title={book?.title}
-            caption={book?.author}
+            title={book ? book.title : "The Midnight Library"}
+            caption={book ? book.author : "Matt Haig"}
             link={
               book?.slug
                 ? `https://literal.club/ms/book/${book?.slug}?ref=mitul.ca`
-                : "https://literal.club/ms/?ref=mitul.ca"
+                : "https://literal.club/ms/book/the-midnight-library-mrpx0?ref=mitul.ca"
             }
           />
         ) : (
