@@ -35,45 +35,35 @@ export const getShelves = async () => {
       },
       body: JSON.stringify({
         query: `
-        query myReadingStates {
-  myReadingStates {
-    ...ReadingStateParts   # find fragments below
-    book {
-      ...BookParts   # find fragments below
-    }
-  }
+          query myReadingStates {
+            myReadingStates {
+              ...ReadingStateParts # find fragments below
+              book {
+                ...BookParts # find fragments below
+              }
+            }
+          }
 
-}
+          fragment ReadingStateParts on ReadingState {
+            id
+            status
+            bookId
+            profileId
+            createdAt
+          }
 
-  fragment ReadingStateParts on ReadingState {
-  id
-  status
-  bookId
-  profileId
-  createdAt
-}
-
-
-fragment BookParts on Book {
-  id
-  slug
-  title
-  subtitle
-  description
-  isbn10
-  isbn13
-  language
-  pageCount
-  publishedDate
-  publisher
-  cover
-  authors {
-    id
-    name
-  }
-  gradientColors
-}
-
+          fragment BookParts on Book {
+            id
+            slug
+            title
+            subtitle
+            description
+            cover
+            authors {
+              id
+              name
+            }
+          }
             `,
       }),
     });
