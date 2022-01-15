@@ -5,7 +5,6 @@ import {
   HStack,
   Icon,
   Stack,
-  Button,
   Link,
   Skeleton,
 } from "@chakra-ui/react";
@@ -23,7 +22,6 @@ const CurrentItem = ({ icon, title, caption, link }) => {
           <Text
             fontWeight="regular"
             maxW={["320px", null, "150px"]}
-            minW="120px"
             whiteSpace="nowrap"
             overflow="hidden"
             textOverflow="ellipsis"
@@ -39,21 +37,8 @@ const CurrentItem = ({ icon, title, caption, link }) => {
   );
 };
 
-const CurrentItemSkeleton = ({ icon }) => (
-  <HStack>
-    <Icon fontSize="xl" as={icon} mr={2} />
-    <Center flexDirection="column" minWidth="120px">
-      <Skeleton size="sm" h={6} mb={1} minWidth="120px" />
-      <Skeleton size="sm" h={3} minWidth="120px" />
-    </Center>
-  </HStack>
-);
-
 const Current = () => {
   const { data } = useSWR("/api/nowplaying", fetcher);
-  const { data: book } = useSWR("/api/books", fetcher);
-  // const data = false;
-  // const book = false;
 
   return (
     <Section header="Currently">
@@ -61,10 +46,9 @@ const Current = () => {
         spacing={8}
         direction={["column", null, "row"]}
         justifyContent="space-between"
-        // flexShrink="0"
-        flex="1"
+        flexShrink="0"
       >
-        {data ? (
+        {data?.link ? (
           <CurrentItem
             icon={MusicNotesSimple}
             title={data ? data.title : "Wishing Well"}
@@ -76,28 +60,26 @@ const Current = () => {
             }
           />
         ) : (
-          <CurrentItemSkeleton icon={MusicNotesSimple} />
+          <HStack>
+            <Icon fontSize="xl" as={MusicNotesSimple} mr={2} />
+            <Center flexDirection="column" w="150px">
+              <Skeleton size="sm" h={5} mb={1} w="150px" />
+              <Skeleton size="sm" h={2} w="150px" />
+            </Center>
+          </HStack>
         )}
 
-        {book ? (
-          <CurrentItem
-            icon={Bookmarks}
-            title={book?.title}
-            caption={book?.author}
-            link={
-              book?.slug
-                ? `https://literal.club/ms/book/${book?.slug}?ref=mitul.ca`
-                : "https://literal.club/ms/?ref=mitul.ca"
-            }
-          />
-        ) : (
-          <CurrentItemSkeleton icon={Bookmarks} />
-        )}
+        <CurrentItem
+          icon={Bookmarks}
+          title={"Atomic Design"}
+          caption={"Brad Frost"} 
+          link="https://atomicdesign.bradfrost.com/?ref=mitul.ca"
+        />
         <CurrentItem
           link="https://g.co/kgs/xnuhdk"
           icon={Monitor}
-          title={"The Good Place"}
-          caption={"Comedy"}
+          title={"Never Have I Ever"}
+          caption={"Drama"}
         />
       </Stack>
     </Section>
