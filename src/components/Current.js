@@ -23,6 +23,7 @@ const CurrentItem = ({ icon, title, caption, link }) => {
           <Text
             fontWeight="regular"
             maxW={["320px", null, "150px"]}
+            minW="120px"
             whiteSpace="nowrap"
             overflow="hidden"
             textOverflow="ellipsis"
@@ -37,6 +38,16 @@ const CurrentItem = ({ icon, title, caption, link }) => {
     </HStack>
   );
 };
+
+const CurrentItemSkeleton = ({ icon }) => (
+  <HStack>
+    <Icon fontSize="xl" as={icon} mr={2} />
+    <Center flexDirection="column" minWidth="120px">
+      <Skeleton size="sm" h={6} mb={1} minWidth="120px" />
+      <Skeleton size="sm" h={3} minWidth="120px" />
+    </Center>
+  </HStack>
+);
 
 const Current = () => {
   const { data } = useSWR("/api/nowplaying", fetcher);
@@ -65,13 +76,7 @@ const Current = () => {
             }
           />
         ) : (
-          <HStack>
-            <Icon fontSize="xl" as={MusicNotesSimple} mr={2} />
-            <Center flexDirection="column" minWidth="120px">
-              <Skeleton size="sm" h={5} mb={1} minWidth="120px" />
-              <Skeleton size="sm" h={2} minWidth="120px" />
-            </Center>
-          </HStack>
+          <CurrentItemSkeleton icon={MusicNotesSimple} />
         )}
 
         {book ? (
@@ -86,13 +91,7 @@ const Current = () => {
             }
           />
         ) : (
-          <HStack>
-            <Icon fontSize="xl" as={Bookmarks} mr={2} />
-            <Center flexDirection="column" minWidth="120px">
-              <Skeleton size="sm" h={5} mb={1} minWidth="120px" />
-              <Skeleton size="sm" h={2} minWidth="120px" />
-            </Center>
-          </HStack>
+          <CurrentItemSkeleton icon={Bookmarks} />
         )}
         <CurrentItem
           link="https://g.co/kgs/xnuhdk"
