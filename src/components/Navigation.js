@@ -212,6 +212,7 @@ const NavBtn = React.forwardRef((props, ref) => {
 
 const Nav = () => {
   const { colorMode } = useColorMode();
+  const [playSound] = useSound("/media/sounds/page_switching.mp3");
   return (
     <Flex
       alignItems="center"
@@ -244,10 +245,22 @@ const Nav = () => {
         >
           <HStack spacing={3} alignItems="center" justifyContent="center">
             <NextLink href="/">
-              <NavBtn>Home</NavBtn>
+              <NavBtn
+                onClick={() => {
+                  playSound();
+                }}
+              >
+                Home
+              </NavBtn>
             </NextLink>
             <NextLink href="/about">
-              <NavBtn>About</NavBtn>
+              <NavBtn
+                onClick={() => {
+                  playSound();
+                }}
+              >
+                About
+              </NavBtn>
             </NextLink>
             <Box height="25px">
               <Divider colorScheme="blackAlpha" orientation="vertical" />
