@@ -40,12 +40,9 @@ const CurrentItem = ({ icon, title, caption, link }) => {
 
 const Current = () => {
   const { data } = useSWR("/api/nowplaying", fetcher);
-  const { data: books } = useSWR("/api/books", fetcher);
-  const currentlyReading = books?.books.map((book) => {
-    return {title: book.book.title,
-            author: book.book.authors[0].name};
-  })
-  const book = currentlyReading?.at(-1);
+  const { data: book } = useSWR("/api/books", fetcher);
+  // const data = false;
+  // const book = false;
 
   return (
     <Section header="Currently">
@@ -53,9 +50,10 @@ const Current = () => {
         spacing={8}
         direction={["column", null, "row"]}
         justifyContent="space-between"
-        flexShrink="0"
+        // flexShrink="0"
+        flex="1"
       >
-        {data?.link ? (
+        {data ? (
           <CurrentItem
             icon={MusicNotesSimple}
             title={data ? data.title : "Wishing Well"}
@@ -69,24 +67,38 @@ const Current = () => {
         ) : (
           <HStack>
             <Icon fontSize="xl" as={MusicNotesSimple} mr={2} />
-            <Center flexDirection="column" w="150px">
-              <Skeleton size="sm" h={5} mb={1} w="150px" />
-              <Skeleton size="sm" h={2} w="150px" />
+            <Center flexDirection="column" minWidth="120px">
+              <Skeleton size="sm" h={5} mb={1} minWidth="120px" />
+              <Skeleton size="sm" h={2} minWidth="120px" />
             </Center>
           </HStack>
         )}
 
-        <CurrentItem
-          icon={Bookmarks}
-          title={book?.title}
-          caption={book?.author}
-          link="https://atomicdesign.bradfrost.com/?ref=mitul.ca"
-        />
+        {book ? (
+          <CurrentItem
+            icon={Bookmarks}
+            title={book?.title}
+            caption={book?.author}
+            link={
+              book?.slug
+                ? `https://literal.club/ms/book/${book?.slug}?ref=mitul.ca`
+                : "https://literal.club/ms/?ref=mitul.ca"
+            }
+          />
+        ) : (
+          <HStack>
+            <Icon fontSize="xl" as={Bookmarks} mr={2} />
+            <Center flexDirection="column" minWidth="120px">
+              <Skeleton size="sm" h={5} mb={1} minWidth="120px" />
+              <Skeleton size="sm" h={2} minWidth="120px" />
+            </Center>
+          </HStack>
+        )}
         <CurrentItem
           link="https://g.co/kgs/xnuhdk"
           icon={Monitor}
-          title={"Never Have I Ever"}
-          caption={"Drama"}
+          title={"The Good Place"}
+          caption={"Comedy"}
         />
       </Stack>
     </Section>
