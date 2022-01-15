@@ -14,9 +14,11 @@ export default async (_, res) => {
     };
   });
 
-  const title = latestBooks.at(-1).title;
-  const author = latestBooks.at(-1).author;
-  const slug = latestBooks.at(-1).slug;
+  const latestBook = latestBooks[latestBooks.length - 1];
+
+  const title = latestBook.title;
+  const author = latestBook.author;
+  const slug = latestBook.slug;
   
   res.setHeader(
     "Cache-Control",
