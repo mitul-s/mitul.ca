@@ -111,8 +111,7 @@ export default function Home() {
               role="UX Developer"
               company="Composer"
               date="June 2021 - Present"
-              link="https://composer.trade/?ref=mitul.ca"
-              description="Building the next step in democratizing investing, with lots of CSS, a ClojureScript based design system and a few musical puns along the way"
+              link="https://investcomposer.com/?ref=mitul.ca"
             />
             <Item
               role="Product Analyst"
