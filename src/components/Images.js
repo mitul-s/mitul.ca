@@ -33,6 +33,11 @@ export const PersonalImages = [
   //   alt: "Standing in front of New York Skyline sunset",
   // },
   {
+    id: 1,
+    src: "./media/photos/about/3.jpg",
+    alt: "Golden Gate Bridge in San Franscisco",
+  },
+  {
     id: 2,
     src: "./media/photos/about/2.jpg",
     alt: "Sunrise in front of the frozen Chicago skyline",
@@ -40,16 +45,11 @@ export const PersonalImages = [
   },
   {
     id: 3,
-    src: "./media/photos/about/3.jpg",
-    alt: "Golden Gate Bridge in San Franscisco",
-  },
-  {
-    id: 4,
     src: "./media/photos/about/4.jpg",
     alt: "Sun shining on me in the middle of Vancouver",
   },
   {
-    id: 5,
+    id: 4,
     src: "./media/photos/about/5.jpg",
     alt: "Sitting on a rock overlooking the edge of the Pacific Coast",
     landscape: true,
