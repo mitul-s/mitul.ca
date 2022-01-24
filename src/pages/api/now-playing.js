@@ -17,7 +17,7 @@ export default async (_, res) => {
     const mostRecentSong = songs.items[0];
     const isPlaying = mostRecentSong.is_playing;
     const title = mostRecentSong.track.name;
-    const artist = mostRecentSong.track.artists.map((_artist) => _artist.name).join(", ");
+    const artist = mostRecentSong.track.artists.map((_artist) => _artist.name).shift();
     const songUrl = mostRecentSong.track.external_urls.spotify;
 
 
