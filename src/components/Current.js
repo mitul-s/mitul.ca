@@ -50,7 +50,7 @@ const CurrentItemSkeleton = ({ icon }) => (
 );
 
 const Current = () => {
-  const { data } = useSWR("/api/nowplaying", fetcher);
+  const { data: song } = useSWR("/api/now-playing", fetcher);
   const { data: book } = useSWR("/api/books", fetcher);
 
   return (
@@ -62,16 +62,12 @@ const Current = () => {
         // flexShrink="0"
         flex="1"
       >
-        {data?.link ? (
+        {song ? (
           <CurrentItem
             icon={MusicNotesSimple}
-            title={data ? data.title : "Wishing Well"}
-            caption={data ? data.caption : "Juice Wrld"}
-            link={
-              data
-                ? data.link
-                : "https://www.last.fm/music/Juice+WRLD/_/Wishing+Well"
-            }
+            title={song?.title}
+            caption={song?.artist}
+            link={song?.songUrl}
           />
         ) : (
           <CurrentItemSkeleton icon={MusicNotesSimple} />
