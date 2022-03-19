@@ -141,12 +141,12 @@ export default function Home() {
         </Section>
         <Section header="Projects">
           <Stack spacing={8}>
-            <Project
+            {/* <Project
               title="Annotate – WIP"
               description="A browser extension to augment the internet experience; annotate, save and share. This is a work in progress, learn more through my journal link below."
               demo={false}
               journal={true}
-            />
+            /> */}
             <Project
               title="Paprback"
               description="Built a platform to showcase your bookshelves using React Hooks, NextJS, and Chakra UI, while working alongside a backend developer and designer. We received 300+ sign ups, 1200+ visitors along with 600+ upvotes and 8 awards on Reddit."
