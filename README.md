@@ -14,6 +14,7 @@ If you have any questions, suggestions, think it's the ~~worst~~ best website ev
 * [Chakra UI](https://chakra-ui.com/)
 
 ### Getting Started
+_Note: I do have an .env.example file, but it could take awhile to get those keys. You could delete all the code related to those endpoints if it makes things easier._
 
 ```bash
 $ git clone https://github.com/mitul-s/$ mitul.ca.git
