@@ -108,9 +108,16 @@ export default function Home() {
         <Section header="Experience">
           <Stack spacing={8}>
             <Item
+              role="Design Engineer"
+              company="Compound"
+              date="December 2022 - September 2023"
+              link="https://withcompound.com/?ref=mitul.ca"
+              description="Financial planning for tech employees. Built lots of financial charts, rebuilt a global navigation and worked on improving UX for advisors to thrive in supporting clients."
+            />
+            <Item
               role="UX Developer"
               company="Composer"
-              date="June 2021 - Present"
+              date="June 2021 - November 2022"
               link="https://composer.trade/?ref=mitul.ca"
               description="Building the next step in democratizing investing, with lots of CSS, a ClojureScript based design system and a few musical puns along the way"
             />
@@ -132,11 +139,6 @@ export default function Home() {
               date="Jan 2018 - Apr 2018"
               description="Built my foundational knowledge of product and led development of three consumer-facing MVPs to impact over 10 million CIBC clients"
             />
-            <Item
-              role="Strategy Intern"
-              company="Bank of Montreal"
-              date="May 2017 - Aug 2017"
-            />
           </Stack>
         </Section>
         <Section header="Projects">
@@ -147,6 +149,13 @@ export default function Home() {
               demo={false}
               journal={true}
             /> */}
+            <Project
+              title="Places to Read"
+              description="A microsite of community submitted parks around the world that are ideal places to sit down and enjoy a book. Built with NextJS and Tailwind CSS."
+              repo="placestoread"
+              demo={true}
+              code={true}
+            />
             <Project
               title="Paprback"
               description="Built a platform to showcase your bookshelves using React Hooks, NextJS, and Chakra UI, while working alongside a backend developer and designer. We received 300+ sign ups, 1200+ visitors along with 600+ upvotes and 8 awards on Reddit."
@@ -205,16 +214,6 @@ export default function Home() {
                     as an artist
                   </Text>
                 </ListItem>
-                <ListItem display="flex" alignItems="center">
-                  <ListIcon
-                    as={Circle}
-                    fontSize="xs"
-                    mb="-1px"
-                    color="trueGray.400"
-                  />
-                  Earned 20K within six months of 2019 – this was beyond my
-                  wildest dreams
-                </ListItem>
               </List>
             </Box>
             <Text>
@@ -264,9 +263,8 @@ export default function Home() {
             </Text>
             <Text>
               Besides that, I enjoy talking about photography, abandoned
-              side-projects, stocks that could make us bazillionaires, the
-              psychology behind why we make poor decisions, or how Anthony
-              Fantano made a mistake by giving MBDTF a 6/10.
+              side-projects, stocks that could make us bazillionaires, or how
+              Anthony Fantano made a mistake by giving MBDTF a 6/10.
             </Text>
           </Stack>
           <Stack align="flex-start" spacing={3}>
