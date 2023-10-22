@@ -1,5 +1,4 @@
-import { ArrowUpRight, Star } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Item from "@/components/item";
 import Link from "next/link";
 import { Accordion, AccordionItem } from "@/components/collapsible";
@@ -31,7 +30,7 @@ const getAccessToken = async () => {
   return response.data.login.token;
 };
 
-export const getShelves = async () => {
+const getShelves = async () => {
   const access_token = await getAccessToken();
 
   const response = await fetch(LITERAL_ENDPOINT, {
@@ -120,7 +119,7 @@ const getSpotifyAccessToken = async () => {
 
 const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played`;
 
-export const getRecentTracks = async () => {
+const getRecentTracks = async () => {
   const { access_token } = await getSpotifyAccessToken();
 
   const response = fetch(RECENTLY_PLAYED_ENDPOINT, {
@@ -150,7 +149,13 @@ export const getRecentTracks = async () => {
   };
 };
 
-const ExternalLink = ({ href, children }) => {
+const ExternalLink = ({
+  href,
+  children,
+}: {
+  href?: string;
+  children: React.ReactNode;
+}) => {
   return (
     <a
       className="hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative"

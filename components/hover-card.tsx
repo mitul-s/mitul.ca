@@ -1,7 +1,13 @@
 "use client";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
-const HoverCard = ({ children, song, ...props }) => {
+const HoverCard = ({
+  children,
+  song,
+}: {
+  children: React.ReactNode;
+  song: string;
+}) => {
   return (
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
