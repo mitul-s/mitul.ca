@@ -9,30 +9,25 @@ import React from "react";
 const LITERAL_ENDPOINT = `https://literal.club/graphql/`;
 
 const getAccessToken = async () => {
-  const response = await fetch(
-    LITERAL_ENDPOINT,
-
-    {
-      next: { revalidate: 1000 },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
+  const response = await fetch(LITERAL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
             mutation login($email: String!, $password: String!) {
                 login(email: $email, password: $password) {
                     token
                 }
             }
         `,
-        variables: {
-          email: process.env.LITERAL_EMAIL,
-          password: process.env.LITERAL_PASSWORD,
-        },
-      }),
-    }
-  ).then((res) => res.json());
+      variables: {
+        email: process.env.LITERAL_USER_EMAIL,
+        password: process.env.LITERAL_USER_PASSWORD,
+      },
+    }),
+  }).then((res) => res.json());
   return response.data.login.token;
 };
 
