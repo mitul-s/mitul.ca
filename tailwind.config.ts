@@ -5,7 +5,7 @@ function generateScale(name: string) {
     let id = i + 1;
     return [
       [id, `var(--${name}-${id})`],
-      [`a${id}`, `var(--${name}A${id})`],
+      [`a${id}`, `var(--${name}A-${id})`],
     ];
   }).flat();
 
@@ -29,6 +29,7 @@ const config: Config = {
     },
     borderRadius: {
       sm: "1px",
+      md: "2px",
       full: "9999px",
     },
     extend: {

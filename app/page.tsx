@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import HoverCard from "@/components/hover-card";
 import React from "react";
+import { cx } from "class-variance-authority";
 
 const LITERAL_ENDPOINT = `https://literal.club/graphql/`;
 
@@ -132,6 +133,7 @@ const getRecentTracks = async () => {
   const songs = await response.then((res) => res.json());
 
   const mostRecentSong = songs.items[0];
+  const coverArt = mostRecentSong.track.album.images[0].url;
   const previewUrl = mostRecentSong.track.preview_url;
   const title = mostRecentSong.track.name;
   const artist = mostRecentSong.track.artists
@@ -141,24 +143,33 @@ const getRecentTracks = async () => {
     )
     .shift();
   const songUrl = mostRecentSong.track.external_urls.spotify;
-  return {
+
+  const track = {
     previewUrl,
     title,
     artist,
     songUrl,
+    coverArt,
   };
+
+  return track;
 };
 
 const ExternalLink = ({
   href,
+  className,
   children,
 }: {
   href?: string;
+  className: string;
   children: React.ReactNode;
 }) => {
   return (
     <a
-      className="hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative"
+      className={cx(
+        "hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative",
+        className
+      )}
       target="_blank"
       href={href ?? ""}
     >
@@ -320,11 +331,13 @@ const Currently = async () => {
 
   return (
     <Item heading="Currently">
-      <HoverCard song={track.previewUrl}>
+      <HoverCard {...track}>
         <p>
           Listening to{" "}
-          <ExternalLink href={track.songUrl}>{track.title}</ExternalLink> by{" "}
-          {track.artist}
+          <ExternalLink href={track.songUrl} className="bg-accent/20">
+            {track.title}
+          </ExternalLink>{" "}
+          by {track.artist}
         </p>
       </HoverCard>
       <p>
