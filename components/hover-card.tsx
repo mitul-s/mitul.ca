@@ -10,12 +10,24 @@ const HoverCard = ({
   ...props
 }: {
   children: React.ReactNode;
-  song: string;
+  song?: string;
 }) => {
   console.log(props);
-  const { title, artist, coverArt, previewUrl, songUrl } = props;
+  const {
+    title,
+    artist,
+    coverArt,
+    previewUrl,
+    songUrl,
+  }: {
+    title?: string;
+    artist?: string;
+    coverArt?: string;
+    previewUrl?: string;
+    songUrl?: string;
+  } = props;
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [audio, setAudio] = React.useState<HTMLAudioElement>(null);
+  const [audio, setAudio] = React.useState<HTMLAudioElement | null>(null);
   React.useEffect(() => {
     const audio = new Audio(previewUrl);
     setAudio(audio);
@@ -23,10 +35,10 @@ const HoverCard = ({
 
   const handlePlay = () => {
     if (isPlaying) {
-      audio.pause();
+      audio?.pause();
       setIsPlaying(false);
     } else {
-      audio.play();
+      audio?.play();
       setIsPlaying(true);
     }
   };
@@ -40,7 +52,7 @@ const HoverCard = ({
         <HoverCardPrimitive.Content className="w-40 h-fit bg-[#0f0f0f] shadow-sm text-gray-12 rounded-[4px] pt-1 pb-1.5 px-1 border border-gray-12">
           <div className="aspect-square border rounded-[3px] overflow-hidden relative">
             <Image
-              src={coverArt}
+              src={coverArt ?? ""}
               fill
               className="object-cover object-center "
               alt="Song cover"
