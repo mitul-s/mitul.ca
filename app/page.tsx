@@ -161,7 +161,7 @@ const ExternalLink = ({
   children,
 }: {
   href?: string;
-  className: string;
+  className?: string;
   children: React.ReactNode;
 }) => {
   return (
