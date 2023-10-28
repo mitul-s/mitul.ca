@@ -7,6 +7,16 @@ const nextConfig = {
         port: "",
         hostname: "i.scdn.co",
       },
+      {
+        protocol: "https",
+        port: "",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        port: "",
+        hostname: "source.unsplash.com",
+      },
     ],
   },
 };

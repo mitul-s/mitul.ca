@@ -1,10 +1,14 @@
+import React from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Item from "@/components/item";
 import Link from "next/link";
+import Image from "next/image";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import HoverCard from "@/components/hover-card";
-import React from "react";
+import Contact from "@/components/contact-link";
+import { experiences } from "@/content";
 import { cx } from "class-variance-authority";
+import { link } from "@/utils";
 
 const LITERAL_ENDPOINT = `https://literal.club/graphql/`;
 
@@ -155,26 +159,82 @@ const getRecentTracks = async () => {
   return track;
 };
 
-const ExternalLink = ({
+const LinkPrimitive = ({
   href,
+  external,
   className,
+  variant = "default",
+  popover,
   children,
 }: {
-  href?: string;
+  href: string;
+  external?: boolean;
   className?: string;
+  variant?: "default" | "route";
+  popover?: boolean;
   children: React.ReactNode;
 }) => {
+  const Component = external ? "a" : Link;
   return (
-    <a
-      className={cx(
-        "hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative",
-        className
-      )}
-      target="_blank"
-      href={href ?? ""}
+    <Component
+      className={cx(link({ variant: variant, popover: popover }), className)}
+      target={external ? "_blank" : undefined}
+      href={href}
     >
       {children}
-    </a>
+    </Component>
+  );
+};
+
+const Photo = () => (
+  <div className="relative w-60 h-80 shrink-0 rounded-sm overflow-hidden border border-gray-12">
+    <Image
+      src="https://source.unsplash.com/random"
+      objectFit="cover"
+      objectPosition="center"
+      fill
+      alt=""
+    />
+  </div>
+);
+
+const Photography = () => {
+  return (
+    <div>
+      <div className="flex justify-between w-[calc(100vw-120px)] gap-x-12 ">
+        <div className="max-w-md p-4">
+          <h2 className="font-medium text-gray-11 mb-2">Photography</h2>
+          <p className="mb-4">
+            Consectetur excepteur laborum qui proident nostrud veniam dolor
+            exercitation labore nostrud.
+          </p>
+          <p>
+            Mollit amet eiusmod mollit dolor anim. Officia sit ex dolor quis
+            ullamco aliqua esse. Qui magna ipsum dolore anim id eu.
+          </p>
+          <br />
+          <p>
+            Ullamco eiusmod dolor nulla dolore dolor culpa anim incididunt
+            labore in sit. Dolore officia esse deserunt do fugiat tempor amet
+            quis. Cupidatat id nostrud dolore id.
+          </p>
+          <a
+            href="https://typicalmitul.com/"
+            target="_blank"
+            className={link({ variant: "route" })}
+          >
+            See my porfolio →
+          </a>
+        </div>
+        <div className="flex gap-x-2 overflow-x-auto border-x border-gray-12 px-2">
+          <Photo />
+          <Photo />
+          <Photo />
+          <Photo />
+          <Photo />
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -191,10 +251,7 @@ const Items = () => {
       <div className="space-y-2 mt-4">
         <p>
           At the intersection of brand{" "}
-          <a
-            className="hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative"
-            href=""
-          >
+          <a className={link()} href="">
             awareness
           </a>
           , technical understanding, and visual reductiveness, useful software
@@ -205,10 +262,7 @@ const Items = () => {
           design that we are able to refine, polish, engineer, and successfully
           launch great products.
         </p>
-        <Link
-          href="/about"
-          className="text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5 mt-12 inline-block"
-        >
+        <Link href="/about" className={link({ variant: "route" })}>
           Learn a bit more →
         </Link>
       </div>
@@ -243,31 +297,20 @@ const Experience = () => {
   return (
     <Item heading="Experience">
       <Accordion className="flex flex-col w-[calc(100%+16px)] -mx-2">
-        {roles.map((role) => (
+        {experiences.map((role) => (
           <React.Fragment key={role.company}>
             <AccordionItem
               role={role.role}
               company={role.company}
               range={role.range}
-              description="Officia aliquip fugiat sunt. Ad sint est cupidatat commodo ea voluptate anim. Ut non ex do sint magna sit deserunt amet voluptate elit consequat non."
+              description={role.description}
+              skills={role.skills}
             />
             <div className="last:hidden h-px bg-gray-12 w-[calc(100%-16px)] mx-auto" />
           </React.Fragment>
         ))}
       </Accordion>
     </Item>
-  );
-};
-const Contact = () => {
-  return (
-    <div className="p-4">
-      <h2 className="font-medium text-gray-11 mb-2">Get in touch</h2>
-      <p>
-        Officia aliquip fugiat sunt. Ad sint est cupidatat commodo ea voluptate
-        anim. Ut non ex do sint magna sit deserunt amet voluptate elit consequat
-        non.
-      </p>
-    </div>
   );
 };
 
@@ -277,9 +320,9 @@ const Projects = () => {
       <ul className="flex flex-col gap-y-6">
         <li>
           <p>
-            <ExternalLink href="https://placestoread.xyz">
+            <LinkPrimitive href="https://placestoread.xyz" external>
               Places to Read
-            </ExternalLink>{" "}
+            </LinkPrimitive>{" "}
             is dolor ad voluptate adipisicing. Voluptate duis pariatur eiusmod.
             Cupidatat non sint minim do. Ipsum nisi cillum commodo. Nulla aliqua
             cupidatat amet.
@@ -301,9 +344,10 @@ const Projects = () => {
         </li>
         <li>
           <p>
-            <ExternalLink>Are You Balding?</ExternalLink> is dolor ad voluptate
-            adipisicing. Voluptate duis pariatur eiusmod. Cupidatat non sint
-            minim do. Ipsum nisi cillum commodo. Nulla aliqua cupidatat amet.
+            <LinkPrimitive external>Are You Balding?</LinkPrimitive> is dolor ad
+            voluptate adipisicing. Voluptate duis pariatur eiusmod. Cupidatat
+            non sint minim do. Ipsum nisi cillum commodo. Nulla aliqua cupidatat
+            amet.
           </p>
           <div className="flex items-center gap-x-4 mt-3">
             <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
@@ -331,20 +375,21 @@ const Currently = async () => {
 
   return (
     <Item heading="Currently">
-      <HoverCard {...track}>
-        <p>
-          Listening to{" "}
-          <ExternalLink href={track.songUrl} className="bg-accent/20">
-            {track.title}
-          </ExternalLink>{" "}
-          by {track.artist}
-        </p>
-      </HoverCard>
       <p>
-        Slowly reading{" "}
-        <ExternalLink href={`https://literal.club/ms/book/${reading.slug}`}>
+        Here's what I'm up to. Right now, I'm listening to{" "}
+        <HoverCard {...track}>
+          <LinkPrimitive href={track.songUrl} external popover>
+            {track.title}
+          </LinkPrimitive>
+        </HoverCard>{" "}
+        by {track.artist}. Throughout the day, I'm trying to finish reading{" "}
+        <LinkPrimitive
+          href={`https://literal.club/ms/book/${reading.slug}`}
+          external
+          popover
+        >
           {reading.title}
-        </ExternalLink>{" "}
+        </LinkPrimitive>{" "}
         by {reading.author}
       </p>
     </Item>
@@ -360,18 +405,24 @@ interface Book {
 export default async function Home() {
   return (
     <div
-      className="max-w-[450px]"
+      // className="max-w-[450px]"
       // className="grid auto-cols-fr"
       // style={{
       //   gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
       //   gridTemplateRows: "repeat(auto-fill, minmax(200px, 1fr))",
       // }}
+      className="flex justify-between"
     >
-      <Items />
-      <Experience />
-      <Projects />
-      <Currently />
-      <Contact />
+      <div className="max-w-[450px]">
+        <Items />
+        <Currently />
+        <Experience />
+        <Projects />
+        <Photography />
+      </div>
+      <aside className="max-w-[450px] text-right">
+        <Contact />
+      </aside>
     </div>
   );
 }

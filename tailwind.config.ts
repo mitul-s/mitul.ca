@@ -47,14 +47,38 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "slide-up-and-fade": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(1rem)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-down-and-fade": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-1rem)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-up-and-fade":
+          "slide-up-and-fade 0.25s cubic-bezier(0.16, 0, 0.13, 1)",
+        "slide-down-and-fade":
+          "slide-down-and-fade 0.25s cubic-bezier(0.16, 0, 0.13, 1)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 
 export default config;

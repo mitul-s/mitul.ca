@@ -6,11 +6,13 @@ const AccordionItem = ({
   company,
   description,
   range,
+  skills,
 }: {
   role: string;
   company: string;
   description: string;
   range: string;
+  skills?: string[];
 }) => {
   return (
     <AccordionPrimitive.Item value={company}>
@@ -22,7 +24,18 @@ const AccordionItem = ({
         </span>
       </AccordionPrimitive.Trigger>
       <AccordionPrimitive.Content className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-        <p className="px-2 py-2">{description}</p>
+        <div className="flex flex-col gap-y-2 px-2 py-3">
+          <p>{description}</p>
+          <div className="flex gap-x-1.5">
+            {skills?.map((skill) => {
+              return (
+                <div className="rounded-sm text-gray-10 text-sm py-0.5">
+                  {skill}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </AccordionPrimitive.Content>
     </AccordionPrimitive.Item>
   );
