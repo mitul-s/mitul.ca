@@ -16,6 +16,7 @@ const link = cva([], {
   },
   defaultVariants: {
     variant: "default",
+    popover: false,
   },
 });
 

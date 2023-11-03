@@ -6,9 +6,8 @@ import Image from "next/image";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import HoverCard from "@/components/hover-card";
 import Contact from "@/components/contact-link";
-import { experiences } from "@/content";
-import { cx } from "class-variance-authority";
-import { link } from "@/utils";
+import { experiences, photos } from "@/content";
+import LinkPrimitive, { link } from "@/components/link-primitive";
 
 const LITERAL_ENDPOINT = `https://literal.club/graphql/`;
 
@@ -159,41 +158,15 @@ const getRecentTracks = async () => {
   return track;
 };
 
-const LinkPrimitive = ({
-  href,
-  external,
-  className,
-  variant = "default",
-  popover,
-  children,
-}: {
-  href: string;
-  external?: boolean;
-  className?: string;
-  variant?: "default" | "route";
-  popover?: boolean;
-  children: React.ReactNode;
-}) => {
-  const Component = external ? "a" : Link;
-  return (
-    <Component
-      className={cx(link({ variant: variant, popover: popover }), className)}
-      target={external ? "_blank" : undefined}
-      href={href}
-    >
-      {children}
-    </Component>
-  );
-};
-
-const Photo = () => (
+const Photo = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative w-60 h-80 shrink-0 rounded-sm overflow-hidden border border-gray-12">
     <Image
-      src="https://source.unsplash.com/random"
+      src={src}
       objectFit="cover"
       objectPosition="center"
       fill
-      alt=""
+      alt={alt}
+      quality={45}
     />
   </div>
 );
@@ -201,37 +174,36 @@ const Photo = () => (
 const Photography = () => {
   return (
     <div>
-      <div className="flex justify-between w-[calc(100vw-120px)] gap-x-12 ">
-        <div className="max-w-md p-4">
-          <h2 className="font-medium text-gray-11 mb-2">Photography</h2>
-          <p className="mb-4">
-            Consectetur excepteur laborum qui proident nostrud veniam dolor
-            exercitation labore nostrud.
-          </p>
-          <p>
-            Mollit amet eiusmod mollit dolor anim. Officia sit ex dolor quis
-            ullamco aliqua esse. Qui magna ipsum dolore anim id eu.
-          </p>
-          <br />
-          <p>
-            Ullamco eiusmod dolor nulla dolore dolor culpa anim incididunt
-            labore in sit. Dolore officia esse deserunt do fugiat tempor amet
-            quis. Cupidatat id nostrud dolore id.
-          </p>
-          <a
-            href="https://typicalmitul.com/"
-            target="_blank"
-            className={link({ variant: "route" })}
-          >
-            See my porfolio →
-          </a>
-        </div>
+      <div className="md:flex justify-between w-[calc(100vw-120px)] gap-x-12">
+        <Item heading="Photography" className="max-w-[450px]">
+          <div className="flex flex-col gap-y-1.5">
+            <p>
+              I've built up my craft as a photographer over a number of years
+              and thrived in turning into an indepedent business.
+            </p>
+            <p>
+              This allowed me to achieve goals I never thought I could including
+              photographing the Uber CEO, being paid to travel and working with
+              brands I love.
+            </p>
+            <p>
+              Today, my focus is primarily music photography where I capture my
+              favourite artists at concerts or festivals. You can learn a little
+              more by visiting my portfolio below.
+            </p>
+            <a
+              href="https://typicalmitul.com/"
+              target="_blank"
+              className={link({ variant: "route" })}
+            >
+              See my portfolio →
+            </a>
+          </div>
+        </Item>
         <div className="flex gap-x-2 overflow-x-auto border-x border-gray-12 px-2">
-          <Photo />
-          <Photo />
-          <Photo />
-          <Photo />
-          <Photo />
+          {photos.map((photo) => (
+            <Photo key={photo.src} src={photo.src} alt={photo.alt} />
+          ))}
         </div>
       </div>
     </div>
@@ -240,60 +212,37 @@ const Photography = () => {
 
 const Items = () => {
   return (
-    <div className="p-4">
+    <Item>
       <h1 className="font-medium flex items-center gap-x-1.5">
         <span className="rounded-full bg-accent w-2 h-2 inline-block"></span>
         Mitul Shah
       </h1>
       <p className="text-gray-9 mt-1">
-        Photographer, design engineer, all around nice guy.
+        Photographer, design engineer, and some other cool stuff.
       </p>
       <div className="space-y-2 mt-4">
         <p>
-          At the intersection of brand{" "}
+          At the middle of it all is{" "}
           <a className={link()} href="">
-            awareness
-          </a>
-          , technical understanding, and visual reductiveness, useful software
-          is built and maintained.
+            portfolio
+          </a>{" "}
+          esse incididunt eu sit aute reprehenderit pariatur irure magna labore
+          sunt do amet fugiat.
         </p>
         <p>
-          Crafting thoughtful interfaces takes time, and it is only through slow
-          design that we are able to refine, polish, engineer, and successfully
-          launch great products.
+          Building cool things, taking photos and lorem ipsuming. Esse
+          incididunt eu sit aute reprehenderit pariatur irure magna labore sunt
+          do amet fugiat.
         </p>
         <Link href="/about" className={link({ variant: "route" })}>
           Learn a bit more →
         </Link>
       </div>
-    </div>
+    </Item>
   );
 };
 
 const Experience = () => {
-  const roles = [
-    {
-      role: "Software Engineer",
-      company: "Compound",
-      range: "2022 – 2023",
-    },
-    {
-      role: "UX Engineer",
-      company: "Composer",
-      range: "2022 – 2023",
-    },
-    {
-      role: "Product Analyst",
-      company: "Hypercontext",
-      range: "2019 – 2020",
-    },
-    {
-      role: "Operations Intern",
-      company: "Uber",
-      range: "2018",
-    },
-  ];
-
   return (
     <Item heading="Experience">
       <Accordion className="flex flex-col w-[calc(100%+16px)] -mx-2">
@@ -306,7 +255,7 @@ const Experience = () => {
               description={role.description}
               skills={role.skills}
             />
-            <div className="last:hidden h-px bg-gray-12 w-[calc(100%-16px)] mx-auto" />
+            <div className="h-px bg-gray-12 w-[calc(100%-16px)] mx-auto" />
           </React.Fragment>
         ))}
       </Accordion>
@@ -323,18 +272,25 @@ const Projects = () => {
             <LinkPrimitive href="https://placestoread.xyz" external>
               Places to Read
             </LinkPrimitive>{" "}
-            is dolor ad voluptate adipisicing. Voluptate duis pariatur eiusmod.
-            Cupidatat non sint minim do. Ipsum nisi cillum commodo. Nulla aliqua
-            cupidatat amet.
+            is a microsite to discover community submitted parks around the
+            world where you can sit down, chill and enjoy reading a book.
           </p>
           <div className="flex items-center gap-x-4 mt-2">
-            <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
+            <a
+              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
+              href="https://placestoread.xyz"
+              target="_blank"
+            >
               Live{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
             </a>
-            <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
+            <a
+              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
+              href="https://github.com/mitul-s/placestoread"
+              target="_blank"
+            >
               Code{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
@@ -344,10 +300,11 @@ const Projects = () => {
         </li>
         <li>
           <p>
-            <LinkPrimitive external>Are You Balding?</LinkPrimitive> is dolor ad
-            voluptate adipisicing. Voluptate duis pariatur eiusmod. Cupidatat
-            non sint minim do. Ipsum nisi cillum commodo. Nulla aliqua cupidatat
-            amet.
+            <LinkPrimitive href="https://areyoubalding.com" external>
+              Are You Balding?
+            </LinkPrimitive>{" "}
+            is a fun, short online quiz to find out if you're suffering early
+            male pattern baldness.
           </p>
           <div className="flex items-center gap-x-4 mt-3">
             <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
@@ -411,16 +368,16 @@ export default async function Home() {
       //   gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
       //   gridTemplateRows: "repeat(auto-fill, minmax(200px, 1fr))",
       // }}
-      className="flex justify-between"
+      className="md:flex justify-between"
     >
-      <div className="max-w-[450px]">
+      <div className="max-w-[450px] flex flex-col gap-y-6">
         <Items />
         <Currently />
         <Experience />
         <Projects />
         <Photography />
       </div>
-      <aside className="max-w-[450px] text-right">
+      <aside className="max-w-[450px] md:text-right">
         <Contact />
       </aside>
     </div>

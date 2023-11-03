@@ -1,4 +1,5 @@
 import Item from "@/components/item";
+import { bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { cva } from "class-variance-authority";
 import Image from "next/image";
@@ -30,14 +31,18 @@ const bucketItem = cva([], {
   },
 });
 
+const BucketItem = ({ item, status }: { item: string; status?: string }) => {
+  console.log(status);
+  return <div>{item}</div>;
+};
+
 const BucketList = () => {
   return (
     <div>
       <h2 className="mb-2 font-medium text-gray-11">Bucket List</h2>
-      <div>yo</div>
-      <div className="">Travel the world</div>
-      <div className="line-through text-gray-11">Travel to Iceland</div>
-      <div>yo</div>
+      {bucketList.map((item) => {
+        return <BucketItem key={item.item} item={item.item} />;
+      })}
     </div>
   );
 };
@@ -69,18 +74,18 @@ const About = () => {
           consectetur. Laboris amet do mollit exercitation eu officia nostrud
           pariatur excepteur.
         </p>
-        <div className="grid-cols-2 grid gap-x-8">
-          <div>
-            <h2 className="font-medium text-gray-11 mb-2">Mantras</h2>
-            <ul>
-              <li>Seek discomfort</li>
-              <li>Do difficult things as they are the most rewarding</li>
-              <li>Something</li>
-              <li>Something</li>
-            </ul>
-          </div>
-          <BucketList />
+
+        <div>
+          <h2 className="font-medium text-gray-11 mb-2">Mantras</h2>
+          <ul>
+            <li>Seek discomfort</li>
+            <li>Do difficult things as they are the most rewarding</li>
+            <li>Something</li>
+            <li>Something</li>
+          </ul>
         </div>
+
+        <BucketList />
       </div>
       <div className="flex flex-col gap-y-2">
         <div className="relative w-80 h-96">

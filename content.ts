@@ -30,3 +30,33 @@ export const experiences = [
       "Led competitive research for Canada and supported the launch of 30 cities in 1 day through building courier acquisition campaigns",
   },
 ];
+
+export const Status = {
+  progress: "progress",
+  completed: "completed",
+} as const;
+
+export const photos = [
+  {
+    src: "/images/daniel.jpg",
+    alt: "",
+  },
+  {
+    src: "/images/maggie.jpg",
+    alt: "",
+  },
+  {
+    src: "/images/toronto.jpg",
+    alt: "",
+  },
+  {
+    src: "/images/nyc.jpg",
+    alt: "",
+  },
+];
+
+export const bucketList = [
+  {
+    item: "Travel the world",
+  },
+];
