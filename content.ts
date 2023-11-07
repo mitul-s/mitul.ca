@@ -53,6 +53,14 @@ export const photos = [
     src: "/images/nyc.jpg",
     alt: "",
   },
+  {
+    src: "/images/banff-2.jpg",
+    alt: "",
+  },
+  {
+    src: "/images/banff.jpg",
+    alt: "",
+  },
 ];
 
 export const bucketList = [

@@ -135,6 +135,19 @@ const getRecentTracks = async () => {
 
   const songs = await response.then((res) => res.json());
 
+  if (songs.item === null) {
+    return {
+      isPlaying: false,
+      previewUrl: "",
+      title: "",
+      artist: "",
+      songUrl: "",
+      coverArt: "",
+    };
+  }
+
+  console.log(songs);
+  const isPlaying = songs.is_playing;
   const mostRecentSong = songs.items[0];
   const coverArt = mostRecentSong.track.album.images[0].url;
   const previewUrl = mostRecentSong.track.preview_url;
@@ -148,6 +161,7 @@ const getRecentTracks = async () => {
   const songUrl = mostRecentSong.track.external_urls.spotify;
 
   const track = {
+    isPlaying,
     previewUrl,
     title,
     artist,
@@ -334,12 +348,17 @@ const Currently = async () => {
     <Item heading="Currently">
       <p>
         Here's what I'm up to. Right now, I'm listening to{" "}
-        <HoverCard {...track}>
-          <LinkPrimitive href={track.songUrl} external popover>
-            {track.title}
-          </LinkPrimitive>
-        </HoverCard>{" "}
-        by {track.artist}. Throughout the day, I'm trying to finish reading{" "}
+        {track.isPlaying && (
+          <>
+            <HoverCard {...track}>
+              <LinkPrimitive href={track.songUrl} external popover>
+                {track.title}
+              </LinkPrimitive>
+            </HoverCard>
+            by {track.artist}
+          </>
+        )}
+        Throughout the day, I'm trying to finish reading{" "}
         <LinkPrimitive
           href={`https://literal.club/ms/book/${reading.slug}`}
           external
