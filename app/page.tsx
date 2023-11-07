@@ -146,7 +146,6 @@ const getRecentTracks = async () => {
     };
   }
 
-  console.log(songs);
   const isPlaying = songs.is_playing;
   const mostRecentSong = songs.items[0];
   const coverArt = mostRecentSong.track.album.images[0].url;
