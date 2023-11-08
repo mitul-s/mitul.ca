@@ -1,27 +1,35 @@
 {
-  "name": "mitul.ca",
+  "name": "nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.5.2",
-    "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.3.0",
-    "@sanity/block-content-to-react": "^2.0.7",
-    "@sanity/image-url": "^0.140.22",
-    "framer-motion": "^3.10.6",
-    "next": "12",
-    "next-seo": "^4.24.0",
-    "phosphor-react": "^1.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-indiana-drag-scroll": "^2.0.1",
-    "swr": "^0.4.2",
-    "use-clipboard-copy": "^0.1.2",
-    "use-sound": "^4.0.1"
+    "@phosphor-icons/react": "^2.0.13",
+    "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-collapsible": "^1.0.3",
+    "@radix-ui/react-hover-card": "^1.0.7",
+    "@vercel/analytics": "^1.1.1",
+    "class-variance-authority": "^0.7.0",
+    "next": "^13.5.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "^13.5.6",
+    "postcss": "^8",
+    "tailwindcss": "^3",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5"
   }
 }
