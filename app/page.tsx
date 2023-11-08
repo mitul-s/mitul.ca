@@ -9,6 +9,7 @@ import { experiences, photos } from "@/content";
 import LinkPrimitive, { link } from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
+import Filter from "bad-words";
 
 export const dynamic = "force-dynamic";
 
@@ -188,10 +189,11 @@ const Projects = () => {
 const Currently = async () => {
   const { reading } = await getShelves();
   const { data: song } = await getLastPlayed();
+  const filter = new Filter();
 
   const recent = song.is_playing ? song.item : song.items[0].track;
   const track = {
-    title: recent.name,
+    title: filter.clean(recent.name),
     artist: recent.artists
       .map((_artist: { name: string }) => _artist.name)
       .shift(),

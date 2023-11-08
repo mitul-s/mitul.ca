@@ -15,12 +15,14 @@
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-hover-card": "^1.0.7",
     "@vercel/analytics": "^1.1.1",
+    "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
     "next": "^13.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/bad-words": "^3.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
