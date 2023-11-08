@@ -88,7 +88,7 @@ export default function Home() {
           <Box lineHeight={9}>
             <Text fontSize={["lg", null, "xl"]} mb={4}>
               My goal is pretty simple, build great things with great people. If
-              we can work together to achieve that,{" "}
+              we can work together to do that,{" "}
               <Link
                 href="mailto:mitulxshah@gmail.com"
                 borderBottom="1px solid"
