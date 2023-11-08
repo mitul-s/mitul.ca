@@ -8,10 +8,6 @@ const NOW_PLAYING_ENDPOINT =
 const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played`;
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
-/**
- * Get access token from Spotify API.
- * @returns Access token.
- */
 const getAccessToken = async () => {
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
@@ -30,10 +26,6 @@ const getAccessToken = async () => {
   return data.access_token as string;
 };
 
-/**
- * Get the current song playing on Spotify.
- * @returns The current song playing on Spotify.
- */
 const getNowPlaying = async () => {
   const accessToken = await getAccessToken();
 
@@ -47,18 +39,20 @@ const getNowPlaying = async () => {
   });
 
   if (response.status === 204) {
-    return {
-      status: response.status,
-    };
+    return getLastPlayed();
   }
 
   try {
     const song = await response.json();
 
-    return {
-      status: response.status,
-      data: song,
-    };
+    if (song.is_playing) {
+      return {
+        status: response.status,
+        data: song,
+      };
+    } else {
+      return getLastPlayed();
+    }
   } catch {
     return {
       status: response.status,
@@ -98,4 +92,4 @@ const getLastPlayed = async () => {
   }
 };
 
-export default getLastPlayed;
+export default getNowPlaying;

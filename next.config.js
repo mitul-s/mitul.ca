@@ -17,6 +17,11 @@ const nextConfig = {
         port: "",
         hostname: "source.unsplash.com",
       },
+      {
+        protocol: "https",
+        port: "",
+        hostname: "assets.literal.club",
+      },
     ],
   },
 };

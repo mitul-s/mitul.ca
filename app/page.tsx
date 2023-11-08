@@ -1,15 +1,16 @@
 import React from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Item from "@/components/item";
-import Link from "next/link";
 import Image from "next/image";
 import { Accordion, AccordionItem } from "@/components/collapsible";
-import HoverCard from "@/components/hover-card";
+import { MusicCard, ReadingCard } from "@/components/hover-card";
 import Contact from "@/components/contact-link";
 import { experiences, photos } from "@/content";
 import LinkPrimitive, { link } from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
+
+export const dynamic = "force-dynamic";
 
 const Photo = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative w-60 h-80 shrink-0 rounded-sm overflow-hidden border border-gray-12">
@@ -88,9 +89,9 @@ const Items = () => {
           </LinkPrimitive>
           . Building great things with great people.
         </p>
-        <Link href="/about" className={link({ variant: "route" })}>
+        {/* <Link href="/about" className={link({ variant: "route" })}>
           Learn a bit more →
-        </Link>
+        </Link> */}
       </div>
     </Item>
   );
@@ -157,17 +158,21 @@ const Projects = () => {
             <LinkPrimitive href="https://areyoubalding.com" external>
               Are You Balding?
             </LinkPrimitive>{" "}
-            is a fun, short online quiz to find out if you're suffering early
-            male pattern baldness.
+            is a (wip) fun, short online quiz to find out if you're suffering
+            early male pattern baldness. Use the results to find the right
+            products to buy.
           </p>
           <div className="flex items-center gap-x-4 mt-3">
-            <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
+            {/* <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
               Live{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
-            </a>
-            <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
+            </a> */}
+            <a
+              href="https://github.com/mitul-s/areyoubalding-v2"
+              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
+            >
               Code{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
@@ -182,35 +187,38 @@ const Projects = () => {
 
 const Currently = async () => {
   const { reading } = await getShelves();
-  const data = await getLastPlayed();
-  const mostRecentSong = await data.data.items[0];
+  const { data: song } = await getLastPlayed();
+
+  const recent = song.is_playing ? song.item : song.items[0].track;
   const track = {
-    title: mostRecentSong.track.name,
-    artist: mostRecentSong.track.artists
+    title: recent.name,
+    artist: recent.artists
       .map((_artist: { name: string }) => _artist.name)
       .shift(),
-    songUrl: mostRecentSong.track.external_urls.spotify,
-    coverArt: mostRecentSong.track.album.images[0].url,
-    previewUrl: mostRecentSong.track.preview_url,
+    songUrl: recent.external_urls.spotify,
+    coverArt: recent.album.images[0].url,
+    previewUrl: recent.preview_url,
   };
 
   return (
     <Item heading="Currently">
       <p>
-        I'm listening to{" "}
-        <HoverCard {...track}>
+        Listening to{" "}
+        <MusicCard {...track}>
           <LinkPrimitive href={track.songUrl} external popover>
             {track.title}
           </LinkPrimitive>
-        </HoverCard>{" "}
-        by {track.artist} and I'm trying to finish reading{" "}
-        <LinkPrimitive
-          href={`https://literal.club/ms/book/${reading.slug}`}
-          external
-          popover
-        >
-          {reading.title}
-        </LinkPrimitive>{" "}
+        </MusicCard>{" "}
+        by {track.artist} and slowly reading{" "}
+        <ReadingCard {...reading}>
+          <LinkPrimitive
+            href={`https://literal.club/ms/book/${reading.slug}`}
+            external
+            popover
+          >
+            {reading.title}
+          </LinkPrimitive>
+        </ReadingCard>{" "}
         by {reading.author}.
       </p>
     </Item>

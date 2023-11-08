@@ -50,9 +50,7 @@ const Contact = () => {
         <ContactItem icon={<Copy />}>
           <ContactCopyItem title="Email" copy="mitulxshah@gmail.com" />
         </ContactItem>
-        <ContactItem icon={<Copy />}>
-          <ContactCopyItem title="Discord" copy="@typicalmitul" />
-        </ContactItem>
+
         <ContactItem icon={<ArrowUpRight />}>
           <a href="https://twitter.com/typicalmitul" target="_blank">
             Twitter
@@ -61,6 +59,14 @@ const Contact = () => {
         <ContactItem icon={<ArrowUpRight />}>
           <a href="https://instagram.com/typicalmitul" target="_blank">
             Instagram
+          </a>
+        </ContactItem>
+        <ContactItem icon={<Copy />}>
+          <ContactCopyItem title="Discord" copy="@typicalmitul" />
+        </ContactItem>
+        <ContactItem icon={<ArrowUpRight />}>
+          <a href="https://github.com/mitul-s" target="_blank">
+            GitHub
           </a>
         </ContactItem>
         <ContactItem icon={<ArrowUpRight />}>

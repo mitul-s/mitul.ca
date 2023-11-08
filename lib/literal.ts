@@ -2,6 +2,7 @@ interface Book {
   slug: string;
   title: string;
   authors: { name: string }[];
+  cover: string;
 }
 
 const LITERAL_ENDPOINT = `https://literal.club/graphql/`;
@@ -86,6 +87,7 @@ export const getShelves = async () => {
       slug: book.slug,
       title: book.title,
       author: book.authors[0].name,
+      cover: book.cover,
     }))[0];
 
   return {
