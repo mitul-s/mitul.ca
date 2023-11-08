@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 
 const bucketItem = cva([], {
   variants: {
-    variant: {
+    status: {
+      none: "",
       completed: ["line-through", "text-gray-11"],
-      "in-progress": [
+      progress: [
         "before:content-['']",
         "before:w-1",
         "before:h-1",
@@ -31,9 +32,14 @@ const bucketItem = cva([], {
   },
 });
 
-const BucketItem = ({ item, status }: { item: string; status?: string }) => {
-  console.log(status);
-  return <div>{item}</div>;
+const BucketItem = ({
+  item,
+  status,
+}: {
+  item: string;
+  status: keyof typeof Status;
+}) => {
+  return <div className={bucketItem({ status: Status[status] })}> {item}</div>;
 };
 
 const BucketList = () => {
@@ -41,7 +47,9 @@ const BucketList = () => {
     <div>
       <h2 className="mb-2 font-medium text-gray-11">Bucket List</h2>
       {bucketList.map((item) => {
-        return <BucketItem key={item.item} item={item.item} />;
+        return (
+          <BucketItem key={item.item} item={item.item} status={item.status} />
+        );
       })}
     </div>
   );
@@ -51,41 +59,51 @@ const About = () => {
   return (
     <div className="flex justify-between">
       <div className="max-w-[450px]">
-        <Link
-          href="/"
-          className="block bg-accent text-gray-12 w-fit rounded-sm p-0.5 mb-4 hover:bg-accent/50 transition duration-100"
-        >
-          <ArrowLeft size={16} className="shrink-0" />
-        </Link>
-        <h2 className="font-medium text-gray-11 mb-2">
-          I'm still figuring it out.
-        </h2>
-        <p className="mb-4">
-          Exercitation culpa consectetur cillum in voluptate aliqua aliqua Lorem
-          incididunt adipisicing magna excepteur. Reprehenderit voluptate qui
-          magna. Quis non esse qui laborum. Sint veniam non cupidatat aliqua
-          consectetur. Laboris amet do mollit exercitation eu officia nostrud
-          pariatur excepteur.
-        </p>
-        <p className="mb-4">
-          Exercitation culpa consectetur cillum in voluptate aliqua aliqua Lorem
-          incididunt adipisicing magna excepteur. Reprehenderit voluptate qui
-          magna. Quis non esse qui laborum. Sint veniam non cupidatat aliqua
-          consectetur. Laboris amet do mollit exercitation eu officia nostrud
-          pariatur excepteur.
-        </p>
+        <Item>
+          <Link
+            href="/"
+            className="block bg-accent text-gray-12 w-fit rounded-sm p-0.5 mb-4 hover:bg-accent/50 transition duration-100"
+          >
+            <ArrowLeft size={16} className="shrink-0" />
+          </Link>
+          <h2 className="font-medium text-gray-11 mb-2">
+            I'm still figuring it out.
+          </h2>
+          <p className="mb-4">
+            Exercitation culpa consectetur cillum in voluptate aliqua aliqua
+            Lorem incididunt adipisicing magna excepteur. Reprehenderit
+            voluptate qui magna. Quis non esse qui laborum. Sint veniam non
+            cupidatat aliqua consectetur. Laboris amet do mollit exercitation eu
+            officia nostrud pariatur excepteur.
+          </p>
+          <p className="mb-4">
+            Exercitation culpa consectetur cillum in voluptate aliqua aliqua
+            Lorem incididunt adipisicing magna excepteur. Reprehenderit
+            voluptate qui magna. Quis non esse qui laborum. Sint veniam non
+            cupidatat aliqua consectetur. Laboris amet do mollit exercitation eu
+            officia nostrud pariatur excepteur.
+          </p>
+        </Item>
 
-        <div>
-          <h2 className="font-medium text-gray-11 mb-2">Mantras</h2>
+        <Item heading="Beliefs">
           <ul>
             <li>Seek discomfort</li>
             <li>Do difficult things as they are the most rewarding</li>
             <li>Something</li>
             <li>Something</li>
           </ul>
-        </div>
-
-        <BucketList />
+        </Item>
+        <Item heading="Bucket List">
+          {bucketList.map((item) => {
+            return (
+              <BucketItem
+                key={item.item}
+                item={item.item}
+                status={item.status}
+              />
+            );
+          })}
+        </Item>
       </div>
       <div className="flex flex-col gap-y-2">
         <div className="relative w-80 h-96">
