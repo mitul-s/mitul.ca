@@ -26,7 +26,10 @@ export const metadata: Metadata = {
   },
   description: "Design engineer, photographer, and a bit more.",
   openGraph: {
+    title: "Mitul Shah",
+    description: "Design engineer, photographer, and a bit more.",
     images: "/og.png",
+    url: "https://mitul.ca",
   },
 };
 
