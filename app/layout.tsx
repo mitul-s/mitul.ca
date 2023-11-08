@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     default: "Mitul Shah",
   },
   description: "Design engineer, photographer, and a bit more.",
+  openGraph: {
+    images: "/og.png",
+  },
 };
 
 export default function RootLayout({
