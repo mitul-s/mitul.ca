@@ -32,6 +32,7 @@ export const experiences = [
 ];
 
 export const Status = {
+  none: "none",
   progress: "progress",
   completed: "completed",
 } as const;
@@ -66,5 +67,19 @@ export const photos = [
 export const bucketList = [
   {
     item: "Travel the world",
+    status: Status.progress,
   },
+  {
+    item: "Run a marathon",
+    status: Status.completed,
+  },
+  {
+    item: "Visit Iceland",
+    status: Status.none,
+  },
+];
+
+export const mantras = [
+  "Seek discomfort",
+  "Do difficult things as they are the most rewarding",
 ];
