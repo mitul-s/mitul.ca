@@ -1,61 +1,101 @@
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
+const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
-const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
+const BASIC = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+const NOW_PLAYING_ENDPOINT =
+  "https://api.spotify.com/v1/me/player/currently-playing";
+const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played`;
+const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
-const getSpotifyAccessToken = async () => {
+/**
+ * Get access token from Spotify API.
+ * @returns Access token.
+ */
+const getAccessToken = async () => {
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
-      Authorization: `Basic ${basic}`,
+      Authorization: `Basic ${BASIC}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: refresh_token ?? "",
-    }).toString(),
+      refresh_token: REFRESH_TOKEN ?? "",
+    }),
   });
 
-  return response.json();
+  const data = await response.json();
+
+  return data.access_token as string;
 };
 
-const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played`;
+/**
+ * Get the current song playing on Spotify.
+ * @returns The current song playing on Spotify.
+ */
+const getNowPlaying = async () => {
+  const accessToken = await getAccessToken();
 
-export const getRecentTracks = async () => {
-  const { access_token } = await getSpotifyAccessToken();
-
-  const response = fetch(RECENTLY_PLAYED_ENDPOINT, {
+  const response = await fetch(NOW_PLAYING_ENDPOINT, {
     headers: {
-      Authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: {
+      revalidate: 60,
     },
   });
 
-  if (!response) throw new Error("Something went wrong");
+  if (response.status === 204) {
+    return {
+      status: response.status,
+    };
+  }
 
-  const songs = await response.then((res) => res.json());
-  console.log(songs);
+  try {
+    const song = await response.json();
 
-  const mostRecentSong = songs.items[0];
-  const coverArt = mostRecentSong.track.album.images[0].url;
-  const previewUrl = mostRecentSong.track.preview_url;
-  const title = mostRecentSong.track.name;
-  const artist = mostRecentSong.track.artists
-    .map(
-      (_artist: { name: string; external_urls: { spotify: string } }) =>
-        _artist.name
-    )
-    .shift();
-  const songUrl = mostRecentSong.track.external_urls.spotify;
-
-  const track = {
-    previewUrl,
-    title,
-    artist,
-    songUrl,
-    coverArt,
-  };
-
-  return track;
+    return {
+      status: response.status,
+      data: song,
+    };
+  } catch {
+    return {
+      status: response.status,
+    };
+  }
 };
+
+const getLastPlayed = async () => {
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: {
+      revalidate: 60,
+    },
+  });
+
+  if (response.status === 204) {
+    return {
+      status: response.status,
+    };
+  }
+
+  try {
+    const song = await response.json();
+
+    return {
+      status: response.status,
+      data: song,
+    };
+  } catch {
+    return {
+      status: response.status,
+    };
+  }
+};
+
+export default getLastPlayed;

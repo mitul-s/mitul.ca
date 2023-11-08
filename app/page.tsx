@@ -8,18 +8,18 @@ import HoverCard from "@/components/hover-card";
 import Contact from "@/components/contact-link";
 import { experiences, photos } from "@/content";
 import LinkPrimitive, { link } from "@/components/link-primitive";
-import { getRecentTracks } from "@/lib/spotify";
 import { getShelves } from "@/lib/literal";
+import getLastPlayed from "@/lib/spotify";
 
 const Photo = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative w-60 h-80 shrink-0 rounded-sm overflow-hidden border border-gray-12">
     <Image
       src={src}
-      objectFit="cover"
-      objectPosition="center"
+      className="object-cover w-full h-full object-center"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       fill
       alt={alt}
-      quality={45}
+      quality={25}
     />
   </div>
 );
@@ -27,8 +27,8 @@ const Photo = ({ src, alt }: { src: string; alt: string }) => (
 const Photography = () => {
   return (
     <div>
-      <div className="md:flex justify-between w-[calc(100vw-120px)] gap-x-12">
-        <Item heading="Photography" className="max-w-[450px]">
+      <div className="md:flex justify-between w-[calc(100vw-95px)] gap-x-12">
+        <Item heading="Photography" className="max-w-[450px] shrink-0">
           <div className="flex flex-col gap-y-1.5">
             <p>
               I've built up my craft as a photographer over a number of years
@@ -180,32 +180,69 @@ const Projects = () => {
   );
 };
 
-// const Currently = async () => {
-//   const { reading } = await getShelves();
-//   const track = await getRecentTracks();
+const Currently = async () => {
+  const { reading } = await getShelves();
+  const data = await getLastPlayed();
+  const mostRecentSong = await data.data.items[0];
+  const track = {
+    title: mostRecentSong.track.name,
+    artist: mostRecentSong.track.artists
+      .map((_artist: { name: string }) => _artist.name)
+      .shift(),
+    songUrl: mostRecentSong.track.external_urls.spotify,
+    coverArt: mostRecentSong.track.album.images[0].url,
+    previewUrl: mostRecentSong.track.preview_url,
+  };
 
-//   return (
-//     <Item heading="Currently">
-//       <p>
-//         I'm listening to{" "}
-//         <HoverCard {...track}>
-//           <LinkPrimitive href={track.songUrl} external popover>
-//             {track.title}
-//           </LinkPrimitive>
-//         </HoverCard>{" "}
-//         by {track.artist} and I'm trying to finish reading{" "}
-//         <LinkPrimitive
-//           href={`https://literal.club/ms/book/${reading.slug}`}
-//           external
-//           popover
-//         >
-//           {reading.title}
-//         </LinkPrimitive>{" "}
-//         by {reading.author}.
-//       </p>
-//     </Item>
-//   );
-// };
+  return (
+    <Item heading="Currently">
+      <p>
+        I'm listening to{" "}
+        <HoverCard {...track}>
+          <LinkPrimitive href={track.songUrl} external popover>
+            {track.title}
+          </LinkPrimitive>
+        </HoverCard>{" "}
+        by {track.artist} and I'm trying to finish reading{" "}
+        <LinkPrimitive
+          href={`https://literal.club/ms/book/${reading.slug}`}
+          external
+          popover
+        >
+          {reading.title}
+        </LinkPrimitive>{" "}
+        by {reading.author}.
+      </p>
+    </Item>
+  );
+};
+
+const Footer = async () => {
+  const data = await fetch(
+    "https://api.github.com/repos/mitul-s/mitul.ca/commits",
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+      },
+    }
+  ).then((res) => res.json());
+
+  const lastCommit = data.map((commit: any) => commit.commit.committer.date)[0];
+  const formatDate = new Date(lastCommit).toLocaleDateString();
+  return (
+    <Item>
+      <p className="text-sm text-gray-11 max-w-xs md:mt-0 mt-12">
+        This website has recently been revamped and is constant a work in
+        progress. Last updated on{" "}
+        <LinkPrimitive href="https://github.com/mitul-s/mitul.ca" external>
+          {formatDate}
+        </LinkPrimitive>
+        .
+      </p>
+    </Item>
+  );
+};
 
 export default async function Home() {
   return (
@@ -218,12 +255,13 @@ export default async function Home() {
       // }}
       className="md:flex justify-between"
     >
-      <div className="max-w-[450px] flex flex-col gap-y-3">
+      <div className="max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
-        {/* <Currently /> */}
+        <Currently />
         <Experience />
         <Projects />
         <Photography />
+        <Footer />
       </div>
       <aside className="max-w-[450px] md:text-right">
         <Contact />
