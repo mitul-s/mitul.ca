@@ -46,7 +46,7 @@ export const ContactItem = ({
 const Contact = () => {
   return (
     <Item>
-      <div className="flex md:flex-col gap-x-6 md:items-end mt-12 md:mt-0">
+      <div className="flex flex-wrap md:flex-col md:gap-y-0 gap-y-2 gap-x-6 md:items-end mt-12 md:mt-0">
         <ContactItem icon={<Copy />}>
           <ContactCopyItem title="Email" copy="mitulxshah@gmail.com" />
         </ContactItem>

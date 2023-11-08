@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cx(monument.className, "p-12")}
+        className={cx(monument.className, "p-4 py-10 md:p-12")}
         style={{
           backgroundImage:
             "linear-gradient(to right, #000, rgba(0, 0, 0, 0.80)), url(/noise.svg), linear-gradient(#B3FC03 1px, transparent 1px), linear-gradient(to right, #B3FC03 1px, #000 1px)",

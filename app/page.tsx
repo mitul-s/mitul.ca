@@ -28,8 +28,8 @@ const Photo = ({ src, alt }: { src: string; alt: string }) => (
 const Photography = () => {
   return (
     <div>
-      <div className="md:flex justify-between w-[calc(100vw-95px)] gap-x-12">
-        <Item heading="Photography" className="max-w-[450px] shrink-0">
+      <div className="md:flex justify-between md:w-[calc(100vw-95px)] gap-x-12">
+        <Item heading="Photography" className="md:max-w-[450px] shrink-0">
           <div className="flex flex-col gap-y-1.5">
             <p>
               I've built up my craft as a photographer over a number of years
@@ -236,8 +236,14 @@ const Footer = async () => {
     }
   ).then((res) => res.json());
 
-  const lastCommit = data.map((commit: any) => commit.commit.committer.date)[0];
-  const formatDate = new Date(lastCommit).toLocaleDateString();
+  // hack lazy way to bypass rate limit without going through auth
+  // to add proper stuff later!
+  const lastCommit = !data.message
+    ? data.map((commit: any) => commit.commit.committer.date)[0]
+    : "";
+  const formatDate = lastCommit
+    ? new Date(lastCommit).toLocaleDateString()
+    : "2023/11/07";
   return (
     <Item>
       <p className="text-sm text-gray-11 max-w-xs md:mt-0 mt-12">
@@ -263,7 +269,7 @@ export default async function Home() {
       // }}
       className="md:flex justify-between"
     >
-      <div className="max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
+      <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
         <Currently />
         <Experience />
@@ -271,7 +277,7 @@ export default async function Home() {
         <Photography />
         <Footer />
       </div>
-      <aside className="max-w-[450px] md:text-right">
+      <aside className="md:max-w-[450px] md:text-right">
         <Contact />
       </aside>
     </div>
