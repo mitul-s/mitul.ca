@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { cva, cx } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
-export const link = cva(["w-fit"], {
+export const link = cva(["flex", "items-center", "gap-x-0.5", "w-fit"], {
   variants: {
     variant: {
       route: [
-        "text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5 inline-block",
+        "text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5",
       ],
       default: [
         "hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex",
@@ -39,7 +40,7 @@ const LinkPrimitive = ({
   const Component = external ? "a" : Link;
   return (
     <Component
-      className={cx(link({ variant: variant, popover: popover }), className)}
+      className={cn(link({ variant: variant, popover: popover }), className)}
       target={external ? "_blank" : undefined}
       href={href}
     >

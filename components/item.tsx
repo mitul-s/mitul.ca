@@ -1,4 +1,4 @@
-import { cx } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 const Item = ({
   heading,
@@ -10,8 +10,8 @@ const Item = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className={cx("p-1 md:p-4", className)}>
-      {heading && <h2 className="font-medium text-gray-11 mb-2">{heading}</h2>}
+    <div className={cn("p-1 md:p-4", className)}>
+      {heading && <h2 className="mb-2 font-medium text-gray-11">{heading}</h2>}
       {children}
     </div>
   );

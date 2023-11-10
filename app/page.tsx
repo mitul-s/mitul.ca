@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
+import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Item from "@/components/item";
 import Image from "next/image";
 import { Accordion, AccordionItem } from "@/components/collapsible";
@@ -10,7 +10,7 @@ import LinkPrimitive, { link } from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
 import Filter from "bad-words";
-import { cx } from "class-variance-authority";
+import ScrollArea from "@/components/scroll-area";
 
 export const dynamic = "force-dynamic";
 
@@ -55,21 +55,25 @@ const Photography = () => {
             artists at concerts or festivals. You can learn a little more by
             visiting my portfolio below.
           </p>
-          <a
+          <LinkPrimitive
+            external
             href="https://typicalmitul.com/"
-            target="_blank"
-            className={cx(link({ variant: "route" }), "my-2")}
+            variant="route"
+            className="my-2"
           >
-            Visit my portfolio →
-          </a>
+            Visit my portfolio
+            <ArrowRight size={12} />
+          </LinkPrimitive>
         </div>
       </Item>
-      <div className="relative mx-3 md:w-[calc(100%+100px)] before:absolute before:h-full before:w-px before:bg-gray-12 before:top-0 before:-left-2 after:absolute after:h-full after:w-px after:bg-gray-12 after:top-0 after:-right-2">
-        <div className="flex w-full overflow-x-auto gap-x-2">
-          {photos.map((photo) => (
-            <Photo key={photo.src} src={photo.src} alt={photo.alt} />
-          ))}
-        </div>
+      <div>
+        <ScrollArea className="relative mx-3 md:w-[calc(100%+100px)] before:absolute before:h-full before:w-px before:bg-gray-12 before:top-0 before:-left-2 after:absolute after:h-full after:w-px after:bg-gray-12 after:top-0 after:-right-2">
+          <div className="flex w-full h-full gap-x-2">
+            {photos.map((photo) => (
+              <Photo key={photo.src} src={photo.src} alt={photo.alt} />
+            ))}
+          </div>
+        </ScrollArea>
       </div>
     </>
   );
@@ -85,7 +89,7 @@ const Items = () => {
       <p className="mt-1 text-gray-9">
         Photographer, design engineer, and a bit more.
       </p>
-      <div className="mt-4 space-y-2">
+      <div className="flex flex-col mt-4 gap-y-2">
         <p>
           Crafting memorable interfaces with a deep attention to detail. I
           dedicate most my time to continuous learning and refining my skillset.
@@ -100,9 +104,10 @@ const Items = () => {
           </LinkPrimitive>
           . Building great things with great people.
         </p>
-        {/* <Link href="/about" className={link({ variant: "route" })}>
-          Learn a bit more →
-        </Link> */}
+        <LinkPrimitive href="/about" variant="route" className="mt-2">
+          Learn a bit more
+          <ArrowRight size={12} />
+        </LinkPrimitive>
       </div>
     </Item>
   );
