@@ -20,7 +20,7 @@ const Photography = () => {
         <div className="flex flex-col gap-y-1.5">
           <p>
             I've built up my craft as a photographer over a number of years and
-            thrived in turning into an indepedent business.
+            thrived in turning it into an indepedent business.
           </p>
           <span>
             <span className="font-medium">Notable achievements include</span>

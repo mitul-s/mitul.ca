@@ -130,10 +130,12 @@ const About = () => {
         <Photo
           src={"/images/me-2.jpg"}
           alt="A cinematic photo of me standing in the Monteal metro"
+          priority
         />
         <Photo
           src={"/images/me-4.jpg"}
           alt="A photo of myself walking down a road in rainy British Columbia"
+          priority
         />
       </div>
     </div>
