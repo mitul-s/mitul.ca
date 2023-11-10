@@ -24,7 +24,7 @@ const AccordionItem = ({
         </span>
       </AccordionPrimitive.Trigger>
       <AccordionPrimitive.Content className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-        <div className="flex flex-col gap-y-2 px-2 py-3">
+        <div className="flex flex-col px-2 py-3 gap-y-2">
           <p>{description}</p>
           <div className="flex gap-x-1.5">
             {skills?.map((skill) => {

@@ -1,36 +1,22 @@
 import React from "react";
 import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
-import Item from "@/components/item";
-import Image from "next/image";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import { MusicCard, ReadingCard } from "@/components/hover-card";
 import Contact from "@/components/contact-link";
 import { experiences, photos } from "@/content";
-import LinkPrimitive, { link } from "@/components/link-primitive";
+import LinkPrimitive from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
 import Filter from "bad-words";
-import ScrollArea from "@/components/scroll-area";
+import Gallery from "@/components/gallery";
+import Section from "@/components/section";
 
 export const dynamic = "force-dynamic";
-
-const Photo = ({ src, alt }: { src: string; alt: string }) => (
-  <div className="relative overflow-hidden border rounded-sm w-60 h-80 shrink-0 border-gray-12 first:ml-1 last:mr-1">
-    <Image
-      src={src}
-      className="object-cover object-center w-full h-full"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      fill
-      alt={alt}
-      quality={25}
-    />
-  </div>
-);
 
 const Photography = () => {
   return (
     <>
-      <Item heading="Photography" className="shrink-0">
+      <Section heading="Photography" className="shrink-0">
         <div className="flex flex-col gap-y-1.5">
           <p>
             I've built up my craft as a photographer over a number of years and
@@ -65,23 +51,15 @@ const Photography = () => {
             <ArrowRight size={12} />
           </LinkPrimitive>
         </div>
-      </Item>
-      <div>
-        <ScrollArea className="relative mx-3 md:w-[calc(100%+100px)] before:absolute before:h-full before:w-px before:bg-gray-12 before:top-0 before:-left-2 after:absolute after:h-full after:w-px after:bg-gray-12 after:top-0 after:-right-2">
-          <div className="flex w-full h-full gap-x-2">
-            {photos.map((photo) => (
-              <Photo key={photo.src} src={photo.src} alt={photo.alt} />
-            ))}
-          </div>
-        </ScrollArea>
-      </div>
+      </Section>
+      <Gallery photos={photos} />
     </>
   );
 };
 
 const Items = () => {
   return (
-    <Item>
+    <Section>
       <h1 className="font-medium flex items-center gap-x-1.5">
         <span className="inline-block w-2 h-2 rounded-full bg-accent"></span>
         Mitul Shah
@@ -104,18 +82,18 @@ const Items = () => {
           </LinkPrimitive>
           . Building great things with great people.
         </p>
-        {/* <LinkPrimitive href="/about" variant="route" className="mt-2">
+        <LinkPrimitive href="/about" variant="route" className="mt-2">
           Learn a bit more
           <ArrowRight size={12} />
-        </LinkPrimitive> */}
+        </LinkPrimitive>
       </div>
-    </Item>
+    </Section>
   );
 };
 
 const Experience = () => {
   return (
-    <Item heading="Experience">
+    <Section heading="Experience">
       <Accordion className="flex flex-col w-[calc(100%+16px)] -mx-2">
         {experiences.map((role) => (
           <React.Fragment key={role.company}>
@@ -130,13 +108,13 @@ const Experience = () => {
           </React.Fragment>
         ))}
       </Accordion>
-    </Item>
+    </Section>
   );
 };
 
 const Projects = () => {
   return (
-    <Item heading="Projects">
+    <Section heading="Projects">
       <ul className="flex flex-col gap-y-6">
         <li>
           <p>
@@ -197,7 +175,7 @@ const Projects = () => {
           </div>
         </li>
       </ul>
-    </Item>
+    </Section>
   );
 };
 
@@ -218,7 +196,7 @@ const Currently = async () => {
   };
 
   return (
-    <Item heading="Currently">
+    <Section heading="Currently">
       <p>
         Listening to{" "}
         <MusicCard {...track}>
@@ -238,7 +216,7 @@ const Currently = async () => {
         </ReadingCard>{" "}
         by {reading.author}.
       </p>
-    </Item>
+    </Section>
   );
 };
 
@@ -262,7 +240,7 @@ const Footer = async () => {
     ? new Date(lastCommit).toLocaleDateString()
     : "2023/11/07";
   return (
-    <Item>
+    <Section>
       <p className="max-w-xs mt-12 text-sm text-gray-11 md:mt-0">
         This website has recently been revamped and is constant a work in
         progress. Last updated on{" "}
@@ -271,7 +249,7 @@ const Footer = async () => {
         </LinkPrimitive>
         .
       </p>
-    </Item>
+    </Section>
   );
 };
 

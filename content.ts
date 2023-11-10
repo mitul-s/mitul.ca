@@ -40,19 +40,19 @@ export const Status = {
 export const photos = [
   {
     src: "/images/daniel.jpg",
-    alt: "",
+    alt: "R&B artist Daniel Caesar performing at the Scotiabank Arena in Toronto, Canada",
   },
   {
     src: "/images/maggie.jpg",
-    alt: "",
+    alt: "Indie artist Maggie Rogers performing at the Budweiser Stage in Toronto, Canada",
   },
   {
     src: "/images/toronto.jpg",
-    alt: "",
+    alt: "A photo of the CN Tower in Toronto above the clouds with blue skies behind it",
   },
   {
     src: "/images/nyc.jpg",
-    alt: "",
+    alt: "A classic photo of the New York City skyline taken at dusk from the Top of the Rock",
   },
   {
     src: "/images/banff-2.jpg",
@@ -129,11 +129,19 @@ export const bucketList = [
     item: "Roadtrip with strangers",
     status: Status.completed,
   },
+  {
+    item: "Host a photo gallery",
+    status: Status.none,
+  },
+  {
+    item: "Be on a float for the NYC Halloween parade",
+    status: Status.none,
+  },
 ];
 
 export const beliefs = [
   "Seek discomfort",
   "Do difficult things as they are the most rewarding",
-  "Live life like Ferris",
+  "Save Ferris",
   "Anything is possible with discipline",
 ];

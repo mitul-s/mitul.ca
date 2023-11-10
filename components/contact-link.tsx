@@ -1,6 +1,6 @@
 "use client";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
-import Item from "./item";
+import Section from "@/components/section";
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { Copy } from "@phosphor-icons/react/dist/ssr/Copy";
@@ -45,7 +45,7 @@ export const ContactItem = ({
 
 const Contact = () => {
   return (
-    <Item>
+    <Section>
       <div className="flex flex-wrap mt-12 md:flex-col md:gap-y-0 gap-y-2 gap-x-6 md:items-end md:mt-0">
         <ContactItem icon={<Copy />}>
           <ContactCopyItem title="Email" copy="mitulxshah@gmail.com" />
@@ -75,7 +75,7 @@ const Contact = () => {
           </a>
         </ContactItem>
       </div>
-    </Item>
+    </Section>
   );
 };
 
