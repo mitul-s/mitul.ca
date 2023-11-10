@@ -5,7 +5,7 @@ export const link = cva(["w-fit"], {
   variants: {
     variant: {
       route: [
-        "text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5 mt-4 inline-block",
+        "text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5 inline-block",
       ],
       default: [
         "hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex",

@@ -10,14 +10,15 @@ import LinkPrimitive, { link } from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
 import Filter from "bad-words";
+import { cx } from "class-variance-authority";
 
 export const dynamic = "force-dynamic";
 
 const Photo = ({ src, alt }: { src: string; alt: string }) => (
-  <div className="relative w-60 h-80 shrink-0 rounded-sm overflow-hidden border border-gray-12">
+  <div className="relative overflow-hidden border rounded-sm w-60 h-80 shrink-0 border-gray-12 first:ml-1 last:mr-1">
     <Image
       src={src}
-      className="object-cover w-full h-full object-center"
+      className="object-cover object-center w-full h-full"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       fill
       alt={alt}
@@ -28,40 +29,49 @@ const Photo = ({ src, alt }: { src: string; alt: string }) => (
 
 const Photography = () => {
   return (
-    <div>
-      <div className="md:flex justify-between md:w-[calc(100vw-95px)] gap-x-12">
-        <Item heading="Photography" className="md:max-w-[450px] shrink-0">
-          <div className="flex flex-col gap-y-1.5">
-            <p>
-              I've built up my craft as a photographer over a number of years
-              and thrived in turning into an indepedent business.
-            </p>
-            <p>
-              Notable achievements include being a personal photographer for the
-              Uber CEO, being paid to travel and having a photo as a wallpaper
-              in every Google device.
-            </p>
-            <p>
-              Today, my focus is on music photography where I capture my
-              favourite artists at concerts or festivals. You can learn a little
-              more by visiting my portfolio below.
-            </p>
-            <a
-              href="https://typicalmitul.com/"
-              target="_blank"
-              className={link({ variant: "route" })}
-            >
-              See my portfolio →
-            </a>
-          </div>
-        </Item>
-        <div className="flex gap-x-2 overflow-x-auto border-x border-gray-12 px-2">
+    <>
+      <Item heading="Photography" className="shrink-0">
+        <div className="flex flex-col gap-y-1.5">
+          <p>
+            I've built up my craft as a photographer over a number of years and
+            thrived in turning into an indepedent business.
+          </p>
+          <span>
+            <span className="font-medium">Notable achievements include</span>
+            <ul>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                being a personal photographer for the Uber CEO
+              </li>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                featured in local Toronto newspapers
+              </li>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                having a photo as a wallpaper in every Google device
+              </li>
+            </ul>
+          </span>
+          <p>
+            Today, my focus is on music photography where I capture my favourite
+            artists at concerts or festivals. You can learn a little more by
+            visiting my portfolio below.
+          </p>
+          <a
+            href="https://typicalmitul.com/"
+            target="_blank"
+            className={cx(link({ variant: "route" }), "my-2")}
+          >
+            Visit my portfolio →
+          </a>
+        </div>
+      </Item>
+      <div className="relative mx-3 md:w-[calc(100%+100px)] before:absolute before:h-full before:w-px before:bg-gray-12 before:top-0 before:-left-2 after:absolute after:h-full after:w-px after:bg-gray-12 after:top-0 after:-right-2">
+        <div className="flex w-full overflow-x-auto gap-x-2">
           {photos.map((photo) => (
             <Photo key={photo.src} src={photo.src} alt={photo.alt} />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -69,13 +79,13 @@ const Items = () => {
   return (
     <Item>
       <h1 className="font-medium flex items-center gap-x-1.5">
-        <span className="rounded-full bg-accent w-2 h-2 inline-block"></span>
+        <span className="inline-block w-2 h-2 rounded-full bg-accent"></span>
         Mitul Shah
       </h1>
-      <p className="text-gray-9 mt-1">
+      <p className="mt-1 text-gray-9">
         Photographer, design engineer, and a bit more.
       </p>
-      <div className="space-y-2 mt-4">
+      <div className="mt-4 space-y-2">
         <p>
           Crafting memorable interfaces with a deep attention to detail. I
           dedicate most my time to continuous learning and refining my skillset.
@@ -131,7 +141,7 @@ const Projects = () => {
             is a microsite to discover community submitted parks around the
             world where you can sit down, chill and enjoy reading a book.
           </p>
-          <div className="flex items-center gap-x-4 mt-2">
+          <div className="flex items-center mt-2 gap-x-4">
             <a
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
               href="https://placestoread.xyz"
@@ -163,7 +173,7 @@ const Projects = () => {
             early male pattern baldness. Use the results to find the right
             products to buy.
           </p>
-          <div className="flex items-center gap-x-4 mt-3">
+          <div className="flex items-center mt-3 gap-x-4">
             {/* <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
               Live{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
@@ -248,7 +258,7 @@ const Footer = async () => {
     : "2023/11/07";
   return (
     <Item>
-      <p className="text-sm text-gray-11 max-w-xs md:mt-0 mt-12">
+      <p className="max-w-xs mt-12 text-sm text-gray-11 md:mt-0">
         This website has recently been revamped and is constant a work in
         progress. Last updated on{" "}
         <LinkPrimitive href="https://github.com/mitul-s/mitul.ca" external>
@@ -269,7 +279,7 @@ export default async function Home() {
       //   gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
       //   gridTemplateRows: "repeat(auto-fill, minmax(200px, 1fr))",
       // }}
-      className="md:flex justify-between"
+      className="justify-between md:flex"
     >
       <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
