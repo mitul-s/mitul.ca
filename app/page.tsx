@@ -104,10 +104,10 @@ const Items = () => {
           </LinkPrimitive>
           . Building great things with great people.
         </p>
-        <LinkPrimitive href="/about" variant="route" className="mt-2">
+        {/* <LinkPrimitive href="/about" variant="route" className="mt-2">
           Learn a bit more
           <ArrowRight size={12} />
-        </LinkPrimitive>
+        </LinkPrimitive> */}
       </div>
     </Item>
   );
