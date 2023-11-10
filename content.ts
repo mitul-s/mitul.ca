@@ -71,15 +71,69 @@ export const bucketList = [
   },
   {
     item: "Run a marathon",
-    status: Status.completed,
+    status: Status.none,
   },
   {
     item: "Visit Iceland",
     status: Status.none,
   },
+  {
+    item: "Do a backflip in every contintent",
+    status: Status.none,
+  },
+  {
+    item: "Go skydiving",
+    status: Status.completed,
+  },
+  {
+    item: "Solo backpack across Europe",
+    status: Status.completed,
+  },
+  {
+    item: "Photograph an artist at the MSG",
+    status: Status.none,
+  },
+  {
+    item: "Meet Dr. Phil and convince him he's my dad",
+    status: Status.none,
+  },
+  {
+    item: "Open a restaurant",
+    status: Status.none,
+  },
+  {
+    item: "Drive across North America",
+    status: Status.none,
+  },
+  {
+    item: "Live in New York City",
+    status: Status.none,
+  },
+  {
+    item: "Do a month+ long hike",
+    status: Status.none,
+  },
+  {
+    item: "Go on tour with an artist",
+    status: Status.none,
+  },
+  {
+    item: "Climb a large mountain",
+    status: Status.completed,
+  },
+  {
+    item: "Help my parents retire",
+    status: Status.progress,
+  },
+  {
+    item: "Roadtrip with strangers",
+    status: Status.completed,
+  },
 ];
 
-export const mantras = [
+export const beliefs = [
   "Seek discomfort",
   "Do difficult things as they are the most rewarding",
+  "Live life like Ferris",
+  "Anything is possible with discipline",
 ];

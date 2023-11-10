@@ -1,5 +1,5 @@
 import Item from "@/components/item";
-import { bucketList, Status } from "@/content";
+import { beliefs, bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { cva } from "class-variance-authority";
 import Image from "next/image";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "About",
 };
 
-const bucketItem = cva([], {
+const bucketItem = cva(["self-start"], {
   variants: {
     status: {
       none: "",
@@ -39,20 +39,7 @@ const BucketItem = ({
   item: string;
   status: keyof typeof Status;
 }) => {
-  return <div className={bucketItem({ status: Status[status] })}> {item}</div>;
-};
-
-const BucketList = () => {
-  return (
-    <div>
-      <h2 className="mb-2 font-medium text-gray-11">Bucket List</h2>
-      {bucketList.map((item) => {
-        return (
-          <BucketItem key={item.item} item={item.item} status={item.status} />
-        );
-      })}
-    </div>
-  );
+  return <li className={bucketItem({ status: Status[status] })}>{item}</li>;
 };
 
 const About = () => {
@@ -66,7 +53,7 @@ const About = () => {
           >
             <ArrowLeft size={16} className="shrink-0" />
           </Link>
-          <h2 className="font-medium text-gray-11 mb-2">
+          <h2 className="mb-2 font-medium text-gray-11">
             I'm still figuring it out.
           </h2>
           <p className="mb-4">
@@ -76,7 +63,7 @@ const About = () => {
             cupidatat aliqua consectetur. Laboris amet do mollit exercitation eu
             officia nostrud pariatur excepteur.
           </p>
-          <p className="mb-4">
+          <p>
             Exercitation culpa consectetur cillum in voluptate aliqua aliqua
             Lorem incididunt adipisicing magna excepteur. Reprehenderit
             voluptate qui magna. Quis non esse qui laborum. Sint veniam non
@@ -84,25 +71,25 @@ const About = () => {
             officia nostrud pariatur excepteur.
           </p>
         </Item>
-
         <Item heading="Beliefs">
-          <ul>
-            <li>Seek discomfort</li>
-            <li>Do difficult things as they are the most rewarding</li>
-            <li>Something</li>
-            <li>Something</li>
+          <ul className="flex flex-col gap-y-1">
+            {beliefs.map((belief) => {
+              return <li key={belief}>{belief}</li>;
+            })}
           </ul>
         </Item>
         <Item heading="Bucket List">
-          {bucketList.map((item) => {
-            return (
-              <BucketItem
-                key={item.item}
-                item={item.item}
-                status={item.status}
-              />
-            );
-          })}
+          <ul className="flex flex-col gap-y-1">
+            {bucketList.map((item) => {
+              return (
+                <BucketItem
+                  key={item.item}
+                  item={item.item}
+                  status={item.status}
+                />
+              );
+            })}
+          </ul>
         </Item>
       </div>
       <div className="flex flex-col gap-y-2">
@@ -111,7 +98,7 @@ const About = () => {
             src="https://images.unsplash.com/photo-1698321170423-5fd260db1ba2?auto=format&fit=crop&q=80&w=2787&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt={""}
             fill
-            className="object-cover object-center rounded-sm border border-gray-11"
+            className="object-cover object-center border rounded-sm border-gray-11"
           />
         </div>
         <div className="relative w-80 h-96">
@@ -119,7 +106,7 @@ const About = () => {
             src="https://images.unsplash.com/photo-1698321170423-5fd260db1ba2?auto=format&fit=crop&q=80&w=2787&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt={""}
             fill
-            className="object-cover object-center rounded-sm border border-gray-11"
+            className="object-cover object-center border rounded-sm border-gray-11"
           />
         </div>
       </div>
