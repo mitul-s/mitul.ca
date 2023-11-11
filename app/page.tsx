@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import { MusicCard, ReadingCard } from "@/components/hover-card";
@@ -10,6 +10,7 @@ import getLastPlayed from "@/lib/spotify";
 import Filter from "bad-words";
 import Gallery from "@/components/gallery";
 import Section from "@/components/section";
+import Skeleton from "@/components/skeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -196,7 +197,7 @@ const Currently = async () => {
   };
 
   return (
-    <Section heading="Currently">
+    <>
       <p>
         Listening to{" "}
         <MusicCard {...track}>
@@ -216,11 +217,26 @@ const Currently = async () => {
         </ReadingCard>{" "}
         by {reading.author}.
       </p>
+    </>
+  );
+};
+
+const Footer = () => {
+  return (
+    <Section>
+      <div className="max-w-xs mt-12 text-sm text-gray-11 md:mt-0">
+        This website has recently been revamped and is constant a work in
+        progress. Last updated on{" "}
+        <Suspense fallback={<Skeleton className="inline-flex w-24 h-4" />}>
+          <FooterDate />
+        </Suspense>
+        .
+      </div>
     </Section>
   );
 };
 
-const Footer = async () => {
+const FooterDate = async () => {
   const data = await fetch(
     "https://api.github.com/repos/mitul-s/mitul.ca/commits",
     {
@@ -240,20 +256,13 @@ const Footer = async () => {
     ? new Date(lastCommit).toLocaleDateString()
     : "2023/11/07";
   return (
-    <Section>
-      <p className="max-w-xs mt-12 text-sm text-gray-11 md:mt-0">
-        This website has recently been revamped and is constant a work in
-        progress. Last updated on{" "}
-        <LinkPrimitive href="https://github.com/mitul-s/mitul.ca" external>
-          {formatDate}
-        </LinkPrimitive>
-        .
-      </p>
-    </Section>
+    <LinkPrimitive href="https://github.com/mitul-s/mitul.ca" external>
+      {formatDate}
+    </LinkPrimitive>
   );
 };
 
-export default async function Home() {
+export default function Home() {
   return (
     <div
       // className="max-w-[450px]"
@@ -266,7 +275,20 @@ export default async function Home() {
     >
       <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
-        <Currently />
+        <Section heading="Currently">
+          <Suspense
+            fallback={
+              <div className="flex flex-wrap items-center gap-x-1">
+                Listening to <Skeleton className="inline-flex w-24 h-4" /> by{" "}
+                <Skeleton className="inline-flex w-24 h-4" /> and slowly reading{" "}
+                <Skeleton className="inline-flex w-24 h-4" /> by{" "}
+                <Skeleton className="inline-flex w-24 h-4" />.
+              </div>
+            }
+          >
+            <Currently />
+          </Suspense>
+        </Section>
         <Experience />
         <Projects />
         <Photography />
