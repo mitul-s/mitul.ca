@@ -44,7 +44,7 @@ export default function RootLayout({
         className={cn(monument.className, "p-4 py-10 md:p-12")}
         style={{
           backgroundImage:
-            "linear-gradient(to right, #101010, rgba(16, 16, 16, 0.80)), url(/noise.svg), linear-gradient(#B3FC03 1px, transparent 1px), linear-gradient(to right, #B3FC03 1px, #000 1px)",
+            "linear-gradient(to right, #101010, rgba(0, 0, 0, 0.83)), url(/noise.svg), linear-gradient(#B3FC03 1px, transparent 1px), linear-gradient(to right, #B3FC03 1px, #000 1px)",
           backgroundSize: "auto, auto, 20px 20px, 20px 20px",
         }}
       >
