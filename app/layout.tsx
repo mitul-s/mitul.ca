@@ -22,7 +22,7 @@ const monument = localFont({
 export const metadata: Metadata = {
   title: {
     template: "%s / Mitul Shah",
-    default: "Mitul Shah",
+    default: "Mitul Shah / @typicalmitul",
   },
   description: "Design engineer, photographer, and a bit more.",
   openGraph: {
