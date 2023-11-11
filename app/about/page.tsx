@@ -87,10 +87,13 @@ const About = () => {
               >
                 design engineer
               </LinkPrimitive>{" "}
-              based in Toronto, Canada. Learning to code has felt like a
-              superpower for me, it allows me to bring any idea I can imagine to
-              life. I love creating and focusing on the little things that
-              enhance our experiences as we dive into the abyss of the web.
+              based in Toronto, Canada.
+            </p>
+            <p>
+              Learning to code has felt like a superpower for me, it allows me
+              to bring any idea I can imagine to life. I love creating and
+              focusing on the little things that enhance our experiences as we
+              dive into the abyss of the web.
             </p>
             <p>
               Apart from all of that, a strong sense of curiosity about the
