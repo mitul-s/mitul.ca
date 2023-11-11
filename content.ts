@@ -4,7 +4,7 @@ export const experiences = [
     role: "Software Engineer",
     range: "2022 - 2023",
     description:
-      "Built a number of dynamic financial charting components, rebuilt the global navigation and worked on improving UX for advisors to thrive in supporting clients",
+      "Built dynamic financial charting components, rebuilt the app global navigation and worked on improving UX for advisors to thrive in supporting clients",
     skills: ["React", "TypeScript", "Redux", "CSS-in-JS", "Next.js"],
   },
   {

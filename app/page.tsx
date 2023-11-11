@@ -150,10 +150,13 @@ const Projects = () => {
         </li>
         <li>
           <p>
-            <LinkPrimitive href="https://areyoubalding.com" external>
+            <LinkPrimitive
+              href="https://github.com/mitul-s/areyoubalding-v2"
+              external
+            >
               Are You Balding?
             </LinkPrimitive>{" "}
-            is a (wip) fun, short online quiz to find out if you're suffering
+            [WIP] is a fun, short online quiz to find out if you're suffering
             early male pattern baldness. Use the results to find the right
             products to buy.
           </p>
