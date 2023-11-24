@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     images: "/og.png",
     url: "https://mitul.ca",
   },
+  alternates: {
+    canonical: "https://mitul.ca",
+  },
 };
 
 export default function RootLayout({
