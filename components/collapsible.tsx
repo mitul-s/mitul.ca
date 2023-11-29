@@ -1,6 +1,8 @@
 "use client";
 import { CaretDown } from "@phosphor-icons/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import useSound from "use-sound";
+// import triggerSound from "../public/sounds/trigger.mp3";
 
 const AccordionItem = ({
   role,
@@ -19,6 +21,9 @@ const AccordionItem = ({
   const shortRange = range.includes(" - ")
     ? range.split(" - ")[1].trim()
     : range?.trim() || "";
+
+  const [play] = useSound("/sounds/trigger.mp3");
+
   return (
     <AccordionPrimitive.Item value={company}>
       <AccordionPrimitive.Trigger
@@ -26,6 +31,7 @@ const AccordionItem = ({
         style={{
           gridTemplateColumns: "min-content 125px 1fr min-content",
         }}
+        onClick={play}
       >
         <CaretDown
           size={11}
