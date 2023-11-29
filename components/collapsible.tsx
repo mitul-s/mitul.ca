@@ -1,8 +1,9 @@
 "use client";
 import { CaretDown } from "@phosphor-icons/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+
+//@ts-ignore
 import useSound from "use-sound";
-// import triggerSound from "../public/sounds/trigger.mp3";
 
 const AccordionItem = ({
   role,
