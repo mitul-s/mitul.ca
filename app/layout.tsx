@@ -1,9 +1,8 @@
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Suspense } from "react";
-import { PHProvider, PostHogPageview } from "./providers";
 
 const monument = localFont({
   src: [
@@ -44,14 +43,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Suspense>
-        <PostHogPageview />
-      </Suspense>
-      <PHProvider>
-        <body className={cn(monument.className, "p-4 py-10 md:p-12 bg")}>
-          {children}
-        </body>
-      </PHProvider>
+      <body className={cn(monument.className, "p-4 py-10 md:p-12 bg")}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
