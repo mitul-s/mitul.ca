@@ -26,7 +26,7 @@ export const ReadingCard = ({
             target="_blank"
             className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
           >
-            <Books className="shrink-0" />
+            <Books className="shrink-0" aria-hidden={true} />
             See on Literal
           </a>
         </div>
@@ -85,7 +85,7 @@ export const MusicCard = ({
             target="_blank"
             className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
           >
-            <SpotifyLogo className="shrink-0" />
+            <SpotifyLogo className="shrink-0" aria-hidden={true} />
             Listen on Spotify
           </a>
         </div>

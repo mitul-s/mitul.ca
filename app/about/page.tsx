@@ -54,6 +54,7 @@ const About = () => {
         <Link
           href="/"
           className="block bg-accent text-gray-12 w-fit rounded-sm p-0.5 hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
+          aria-label="Back"
         >
           <ArrowLeft size={16} className="shrink-0" />
         </Link>

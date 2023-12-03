@@ -49,7 +49,7 @@ const Photography = () => {
             className="my-2"
           >
             Visit my portfolio
-            <ArrowRight size={12} />
+            <ArrowRight size={12} aria-hidden={true} />
           </LinkPrimitive>
         </div>
       </Section>
@@ -85,7 +85,7 @@ const Items = () => {
         </p>
         <LinkPrimitive href="/about" variant="route" className="mt-2">
           Learn a bit more
-          <ArrowRight size={12} />
+          <ArrowRight size={12} aria-hidden={true} />
         </LinkPrimitive>
       </div>
     </Section>
@@ -132,7 +132,10 @@ const Projects = () => {
               target="_blank"
             >
               Live{" "}
-              <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
+              <span
+                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm"
+                aria-hidden={true}
+              >
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
             </a>
@@ -142,7 +145,10 @@ const Projects = () => {
               target="_blank"
             >
               Code{" "}
-              <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
+              <span
+                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm"
+                aria-hidden={true}
+              >
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
             </a>
@@ -172,7 +178,10 @@ const Projects = () => {
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
             >
               Code{" "}
-              <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
+              <span
+                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm"
+                aria-hidden={true}
+              >
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
             </a>

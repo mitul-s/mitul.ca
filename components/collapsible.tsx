@@ -37,6 +37,7 @@ const AccordionItem = ({
         <CaretDown
           size={11}
           className="text-gray-10 group-data-[state=open]:-rotate-90 transition-transform duration-150 mr-2 group-hover:text-gray-12 group-focus-visible:text-gray-12 group-data-[state=open]:text-gray-1 -translate-y-px"
+          aria-hidden={true}
         />
 
         <span>{role}</span>
