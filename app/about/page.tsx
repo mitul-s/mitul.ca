@@ -49,7 +49,7 @@ const BucketItem = ({
 
 const About = () => {
   return (
-    <div className="justify-between md:flex">
+    <div className="justify-between md:flex animate-in fade-in duration-700">
       <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Link
           href="/"
