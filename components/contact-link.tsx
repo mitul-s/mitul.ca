@@ -9,7 +9,13 @@ import { cn } from "@/lib/utils";
 //@ts-ignore
 import useSound from "use-sound";
 
-const ContactCopyItem = ({ title, copy }: { title: string; copy: string }) => {
+export const ContactCopyItem = ({
+  title,
+  copy,
+}: {
+  title: string;
+  copy: string;
+}) => {
   const [play] = useSound("/sounds/copy.mp3");
   const [copied, setCopied] = React.useState(false);
   const handleCopy = (text: string) => {

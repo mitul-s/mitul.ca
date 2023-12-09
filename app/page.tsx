@@ -1,8 +1,15 @@
 import React, { Suspense } from "react";
-import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Copy,
+} from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import { MusicCard, ReadingCard } from "@/components/hover-card";
-import Contact from "@/components/contact-link";
+import Contact, {
+  ContactCopyItem,
+  ContactItem,
+} from "@/components/contact-link";
 import { experiences, photos } from "@/content";
 import LinkPrimitive from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
@@ -81,12 +88,17 @@ const Items = () => {
           >
             doing what I can't
           </LinkPrimitive>
-          . Building great things with great people.
+          . On the search for my next role, open to chat.
         </p>
-        <LinkPrimitive href="/about" variant="route" className="mt-2">
-          Learn a bit more
-          <ArrowRight size={12} aria-hidden={true} />
-        </LinkPrimitive>
+        <div className="flex gap-x-6 mt-2 items-center">
+          <LinkPrimitive href="/about" variant="route">
+            Learn a bit more
+            <ArrowRight size={12} aria-hidden={true} />
+          </LinkPrimitive>
+          <ContactItem icon={<Copy />} className="text-sm">
+            <ContactCopyItem title="Email me" copy="mitulxshah@gmail.com" />
+          </ContactItem>
+        </div>
       </div>
     </Section>
   );
