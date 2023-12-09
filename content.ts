@@ -94,10 +94,6 @@ export const bucketList = [
     status: Status.none,
   },
   {
-    item: "Meet Dr. Phil and convince him he's my dad",
-    status: Status.none,
-  },
-  {
     item: "Open a restaurant",
     status: Status.none,
   },
