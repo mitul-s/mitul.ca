@@ -13,7 +13,7 @@ export const link = cva(["flex", "items-center", "gap-x-0.5", "w-fit"], {
       ],
     },
     popover: {
-      true: ["bg-accent/20"],
+      true: ["bg-accent/20 mt-0.5"],
     },
   },
   defaultVariants: {
