@@ -52,3 +52,7 @@ body {
     linear-gradient(to right, #b3fc03 1px, #000 1px);
   background-size: auto, auto, 20px 20px, 20px 20px;
 }
+
+.accordion-grid-cols {
+  grid-template-columns: min-content 125px 1fr min-content;
+}

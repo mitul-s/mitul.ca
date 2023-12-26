@@ -28,10 +28,7 @@ const AccordionItem = ({
   return (
     <AccordionPrimitive.Item value={company}>
       <AccordionPrimitive.Trigger
-        className="py-1 grid grid-cols-4 px-2 focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-transparent focus-visible:ring-accent/20 focus-visible:text-gray-12 hover:bg-accent hover:text-gray-12 rounded-sm w-full justify-items-start items-center group data-[state=open]:bg-accent/20 data-[state=open]:text-gray-1 whitespace-nowrap"
-        style={{
-          gridTemplateColumns: "min-content 125px 1fr min-content",
-        }}
+        className="py-1 grid grid-cols-4 px-2 focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-transparent focus-visible:ring-accent/20 focus-visible:text-gray-12 hover:bg-accent hover:text-gray-12 rounded-sm w-full justify-items-start items-center group data-[state=open]:bg-accent/20 data-[state=open]:text-gray-1 whitespace-nowrap accordion-grid-cols"
         onClick={play}
       >
         <CaretDown

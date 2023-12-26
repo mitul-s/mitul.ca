@@ -17,7 +17,6 @@ const Gallery = ({
             key={photo.src}
             src={photo.src}
             alt={photo.alt}
-            priority
             className="first:ml-1 last:mr-1"
           />
         ))}
