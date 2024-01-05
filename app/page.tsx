@@ -169,6 +169,43 @@ const Projects = () => {
         <li>
           <p>
             <LinkPrimitive
+              href="https://typicalmitul.com/montreal-in-motion"
+              external
+            >
+              Montreal in Motion
+            </LinkPrimitive>{" "}
+            is a documentation of the brutalist and distinctly designed metro
+            stations. The project uses CSS 3D transforms and noise to mirror the
+            architecutral character of the spaces.
+          </p>
+          <div className="flex items-center mt-3 gap-x-4">
+            <a
+              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
+              href="https://typicalmitul.com/montreal-in-motion"
+              target="_blank"
+            >
+              Live{" "}
+              <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
+                <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
+              </span>
+            </a>
+            <a
+              href="https://github.com/mitul-s/typicalmitul.com"
+              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
+            >
+              Code{" "}
+              <span
+                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm"
+                aria-hidden={true}
+              >
+                <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
+              </span>
+            </a>
+          </div>
+        </li>
+        {/* <li>
+          <p>
+            <LinkPrimitive
               href="https://github.com/mitul-s/areyoubalding-v2"
               external
             >
@@ -179,12 +216,12 @@ const Projects = () => {
             products to buy.
           </p>
           <div className="flex items-center mt-3 gap-x-4">
-            {/* <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
+            <a className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm">
               Live{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
               </span>
-            </a> */}
+            </a>
             <a
               href="https://github.com/mitul-s/areyoubalding-v2"
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
@@ -198,7 +235,7 @@ const Projects = () => {
               </span>
             </a>
           </div>
-        </li>
+        </li> */}
       </ul>
     </Section>
   );

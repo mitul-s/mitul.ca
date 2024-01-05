@@ -53,18 +53,15 @@ const About = () => {
       <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Link
           href="/"
-          className="block bg-accent text-gray-12 w-fit rounded-sm p-0.5 hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
+          className="flex gap-x-1 bg-accent text-gray-12 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
           aria-label="Back"
         >
           <ArrowLeft size={16} className="shrink-0" />
+          <span className="text-sm font-medium">Index</span>
         </Link>
         <div className="my-1 md:my-4 lg:hidden">
           <Gallery
             photos={[
-              {
-                src: "/images/me-2.jpg",
-                alt: "A cinematic photo of me standing in the Monteal metro",
-              },
               {
                 src: "/images/me-1.jpg",
                 alt: "Photo of myself standing in front of a lake and mountain peak",
