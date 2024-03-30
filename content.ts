@@ -1,18 +1,18 @@
 export const experiences = [
   {
     company: "Compound",
-    role: "Software Engineer",
+    role: "Design Engineer",
     range: "2022 - 2023",
     description:
-      "Built dynamic financial charting components, rebuilt the app global navigation and worked on improving UX for advisors to thrive in supporting clients",
+      "Built charting components for managing financials, rebuilt the app navigation and worked on improving UX for advisors to thrive in supporting clients",
     skills: ["React", "TypeScript", "Redux", "CSS-in-JS", "Next.js"],
   },
   {
     company: "Composer",
-    role: "UX Engineer",
+    role: "Design Engineer",
     range: "2021 - 2022",
     description:
-      "As an early employee, I built out over 90% of the application UI and a global, scalable and accessible component library",
+      "As an early employee, I built out over 90% of the application UI and a scalable and accessible component library",
     skills: ["React", "ClojureScript", "TailwindCSS", "Contentful", "Next.js"],
   },
   {
