@@ -88,7 +88,7 @@ const Items = () => {
           >
             doing what I can't
           </LinkPrimitive>
-          . On the search for my next role, open to chat.
+          .
         </p>
         <div className="flex gap-x-6 mt-2 items-center">
           <LinkPrimitive href="/about" variant="route">
