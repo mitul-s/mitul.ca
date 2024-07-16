@@ -247,8 +247,19 @@ const Currently = async () => {
   const filter = new Filter();
 
   const recent = song.is_playing ? song.item : song.items[0].track;
+
+  if (!recent) return (
+    <>
+      <p>
+        Listening to a podcast or something else.
+      </p>
+    </>
+  )
+
+  const isLatin = (text: string) => /^[\u0000-\u007F]*$/.test(text);
+  
   const track = {
-    title: filter.clean(recent.name),
+    title: isLatin(recent.name) ? filter.clean(recent.name || '') : recent.name || '',
     artist: recent.artists
       .map((_artist: { name: string }) => _artist.name)
       .shift(),
