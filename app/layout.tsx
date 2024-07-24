@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(monument.className, "p-4 py-10 md:p-12 bg")}>
+      <body className={cn(monument.className)}>
         {children}
         <Analytics />
       </body>
