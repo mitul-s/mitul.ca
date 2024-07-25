@@ -1,6 +1,6 @@
 ---
 title: 'A post has been made'
-status: 'draft'
+status: 'published'
 author:
   name: 'Mitul Shah'
   picture: 'https://avatars.githubusercontent.com/u/19615826?v=4'
