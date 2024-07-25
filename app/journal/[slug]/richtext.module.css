@@ -1,0 +1,3 @@
+.richtext blockquote {
+  @apply border-l-2 border-gray-6 p-4 bg-gray-2 rounded-sm leading-relaxed flex flex-col gap-y-3;
+}
