@@ -23,6 +23,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 }
 
 async function getData(params: { slug: string }) {
+  console.log(params);
   const post = getDocumentBySlug("posts", params.slug, [
     "title",
     "publishedAt",
