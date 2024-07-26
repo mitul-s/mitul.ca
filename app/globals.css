@@ -54,5 +54,5 @@ body {
 }
 
 .accordion-grid-cols {
-  grid-template-columns: min-content 125px 1fr min-content;
+  grid-template-columns: min-content 125px 1fr min-content min-content;
 }

@@ -116,6 +116,7 @@ const Experience = () => {
               range={role.range}
               description={role.description}
               skills={role.skills}
+              link={role.link}
             />
             <div className="h-px bg-gray-12 w-[calc(100%-16px)] mx-auto" />
           </React.Fragment>

@@ -1,14 +1,16 @@
 export const experiences = [
   {
     company: "Compound",
-    role: "Design Engineer",
+    role: "Software Engineer",
+    link: "https://compoundplanning.com",
     range: "2022 - 2023",
     description:
-      "Built charting components for managing financials, rebuilt the app navigation and worked on improving UX for advisors to thrive in supporting clients",
+      "Built charting components, rebuilt the app navigation and worked on improving UX for advisors to thrive in supporting clients",
     skills: ["React", "TypeScript", "Redux", "CSS-in-JS", "Next.js"],
   },
   {
     company: "Composer",
+    link: "https://composer.trade",
     role: "Design Engineer",
     range: "2021 - 2022",
     description:
@@ -70,10 +72,6 @@ export const bucketList = [
     status: Status.progress,
   },
   {
-    item: "Run a marathon",
-    status: Status.none,
-  },
-  {
     item: "Visit Iceland",
     status: Status.none,
   },
@@ -127,17 +125,12 @@ export const bucketList = [
   },
   {
     item: "Host a photo gallery",
-    status: Status.none,
-  },
-  {
-    item: "Be on a float for the NYC Halloween parade",
-    status: Status.none,
+    status: Status.progress,
   },
 ];
 
 export const beliefs = [
   "Seek discomfort",
   "Do difficult things as they are the most rewarding",
-  "Save Ferris",
   "Anything is possible with discipline",
 ];
