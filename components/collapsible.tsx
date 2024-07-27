@@ -57,7 +57,7 @@ const AccordionItem = ({
               target="_blank"
             >
               <span
-                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm border border-[transparent] hover:border-gray-12 "
+                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm border border-[transparent] hover:border-gray-12"
                 aria-hidden={true}
               >
                 <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
