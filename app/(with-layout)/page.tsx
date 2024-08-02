@@ -261,9 +261,8 @@ const Currently = async () => {
 
   return (
     <>
-      <p>
-        <Mood />
-        Listening to{" "}
+      <p className="first-letter:uppercase">
+        <Mood />{" "}
         <MusicCard {...track}>
           <LinkPrimitive href={track.songUrl} external popover>
             {track.title}
@@ -335,7 +334,8 @@ export default function Home() {
           <Suspense
             fallback={
               <div className="flex flex-wrap items-center gap-x-1">
-                Listening to <Skeleton className="inline-flex w-24 h-4" /> by{" "}
+                <Skeleton className="inline-flex w-24 h-4" /> listening to{" "}
+                <Skeleton className="inline-flex w-24 h-4" /> by{" "}
                 <Skeleton className="inline-flex w-24 h-4" /> and slowly reading{" "}
                 <Skeleton className="inline-flex w-24 h-4" /> by{" "}
                 <Skeleton className="inline-flex w-24 h-4" />.

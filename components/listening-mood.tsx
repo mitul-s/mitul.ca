@@ -10,5 +10,5 @@ async function getMood() {
 
 export const Mood = async () => {
   const { mood } = await getMood();
-  return <div>{mood}</div>;
+  return <span>{mood}</span>;
 };

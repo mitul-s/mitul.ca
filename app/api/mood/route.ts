@@ -18,10 +18,10 @@ export async function GET() {
   }
 
   const { data } = await getTopTracks();
-
-  const trackIDs = data.items.map((track) => track.id);
+  const trackIDs = data.items.map((track: { id: string }) => track.id);
   const { data: features } = await getSeveralTracksFeatures(trackIDs);
   const trackDescriptions = stripObjProps(features.audio_features);
+
   const currentMood = await getListeningMood(
     trackDescriptions.map((obj) => JSON.stringify(obj)).join(",")
   );
@@ -33,7 +33,7 @@ export async function GET() {
   return NextResponse.json({ mood: currentMood, cached: false });
 }
 
-function stripObjProps(arr) {
+function stripObjProps(arr: any[]) {
   return arr.map((item) =>
     pick(item, [
       "danceability",
