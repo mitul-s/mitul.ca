@@ -18,7 +18,6 @@ import Filter from "bad-words";
 import Gallery from "@/components/gallery";
 import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
-import { Mood } from "@/components/listening-mood";
 
 export const dynamic = "force-dynamic";
 
@@ -261,8 +260,8 @@ const Currently = async () => {
 
   return (
     <>
-      <p className="first-letter:uppercase">
-        <Mood />{" "}
+      <p>
+        Listening to{" "}
         <MusicCard {...track}>
           <LinkPrimitive href={track.songUrl} external popover>
             {track.title}
@@ -334,8 +333,7 @@ export default function Home() {
           <Suspense
             fallback={
               <div className="flex flex-wrap items-center gap-x-1">
-                <Skeleton className="inline-flex w-24 h-4" /> listening to{" "}
-                <Skeleton className="inline-flex w-24 h-4" /> by{" "}
+                Listening to <Skeleton className="inline-flex w-24 h-4" /> by{" "}
                 <Skeleton className="inline-flex w-24 h-4" /> and slowly reading{" "}
                 <Skeleton className="inline-flex w-24 h-4" /> by{" "}
                 <Skeleton className="inline-flex w-24 h-4" />.
