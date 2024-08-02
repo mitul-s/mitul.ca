@@ -92,4 +92,74 @@ const getLastPlayed = async () => {
   }
 };
 
+export const getTopTracks = async () => {
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(
+    `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      next: {
+        revalidate: 60,
+      },
+    }
+  );
+
+  if (response.status === 204) {
+    return {
+      status: response.status,
+    };
+  }
+
+  try {
+    const song = await response.json();
+
+    return {
+      status: response.status,
+      data: song,
+    };
+  } catch {
+    return {
+      status: response.status,
+    };
+  }
+};
+
+export const getSeveralTracksFeatures = async (trackIDs: string[]) => {
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(
+    `https://api.spotify.com/v1/audio-features?ids=${trackIDs.join(",")}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      next: {
+        revalidate: 60,
+      },
+    }
+  );
+
+  if (response.status === 204) {
+    return {
+      status: response.status,
+    };
+  }
+
+  try {
+    const song = await response.json();
+
+    return {
+      status: response.status,
+      data: song,
+    };
+  } catch {
+    return {
+      status: response.status,
+    };
+  }
+};
+
 export default getNowPlaying;
