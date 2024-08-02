@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import redis from "@/lib/redis";
 import ms from "ms";
-import { getNewMoodFromOpenAI } from "@/lib/openai";
+import getListeningMood from "@/lib/ai";
+import { getSeveralTracksFeatures, getTopTracks } from "@/lib/spotify";
+import { pick } from "@/lib/utils";
 
 export async function GET() {
   const mood = await redis.get("mood");
@@ -15,12 +17,34 @@ export async function GET() {
     return NextResponse.json({ mood: mood, cached: true });
   }
 
-  // If no cached mood or it's older than 5 hours, call OpenAI API
-  const currentMood = await getNewMoodFromOpenAI();
+  const { data } = await getTopTracks();
+
+  const trackIDs = data.items.map((track) => track.id);
+  const { data: features } = await getSeveralTracksFeatures(trackIDs);
+  const trackDescriptions = stripObjProps(features.audio_features);
+  const currentMood = await getListeningMood(
+    trackDescriptions.map((obj) => JSON.stringify(obj)).join(",")
+  );
 
   // Cache the new mood and timestamp
   await redis.set("mood", currentMood);
   await redis.set("timestamp", now.toString());
 
   return NextResponse.json({ mood: currentMood, cached: false });
+}
+
+function stripObjProps(arr) {
+  return arr.map((item) =>
+    pick(item, [
+      "danceability",
+      "energy",
+      "loudness",
+      "speechiness",
+      "acousticness",
+      "instrumentalness",
+      "liveness",
+      "valence",
+      "tempo",
+    ])
+  );
 }
