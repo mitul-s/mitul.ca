@@ -18,6 +18,7 @@ import Filter from "bad-words";
 import Gallery from "@/components/gallery";
 import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
+import { Mood } from "@/components/listening-mood";
 
 export const dynamic = "force-dynamic";
 
@@ -261,6 +262,7 @@ const Currently = async () => {
   return (
     <>
       <p>
+        <Mood />
         Listening to{" "}
         <MusicCard {...track}>
           <LinkPrimitive href={track.songUrl} external popover>
