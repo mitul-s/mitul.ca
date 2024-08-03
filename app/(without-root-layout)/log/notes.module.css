@@ -1,0 +1,151 @@
+/* 
+.scene {
+  background: linear-gradient(45deg, #4a3622, #6b5136);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.desk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4KICA8ZmlsdGVyIGlkPSJub2lzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiAvPgogIDwvZmlsdGVyPgogIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjA1IiAvPgo8L3N2Zz4=");
+  opacity: 0.7;
+}
+*/
+
+.scene {
+  background-color: #f6f8fa;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+}
+
+/* .scene:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  mix-blend-mode: blend;
+  background-image: url("https://images.rawpixel.com/image_png_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtczExNy1hay0wMjM2LTAxXzMucG5n.png");
+} */
+
+.matContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  /* box-shadow: 10px 10px 10px #1d2d5233, 0 0 10px 1px #1e2d520f; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2),
+    0 16px 32px rgba(0, 0, 0, 0.2);
+  background-color: #0a4a31;
+  /* margin-top: 40px; */
+}
+
+.matContainer:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1.5px #fff6;
+}
+
+.matGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 2vmin 2vmin;
+  background-position: center;
+  border-radius: 6px;
+  margin: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.matGrid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 10vmin 10vmin;
+  background-position: center;
+}
+
+.matTexture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    url(/noise.svg);
+  opacity: 0.75;
+  mix-blend-mode: overlay;
+}
+
+.diagonalLines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      45deg,
+      transparent 49.5%,
+      rgba(255, 255, 255, 0.2) 49.5%,
+      rgba(255, 255, 255, 0.2) 50.5%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49.5%,
+      rgba(255, 255, 255, 0.2) 49.5%,
+      rgba(255, 255, 255, 0.2) 50.5%,
+      transparent 50.5%
+    );
+  background-size: 10vmin 10vmin;
+  background-position: center;
+}
+
+.clip {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  transform: rotate(-8deg);
+}
