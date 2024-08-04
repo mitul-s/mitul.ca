@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^0.0.35",
     "@ai-sdk/openai": "^0.0.40",
     "@phosphor-icons/react": "^2.0.13",
     "@radix-ui/colors": "^3.0.0",

@@ -1,14 +1,13 @@
-import { openai } from "@ai-sdk/openai";
+// import { openai } from "@ai-sdk/openai";
+import { anthropic } from "@ai-sdk/anthropic";
 import { generateText } from "ai";
 
 const getListeningMood = async (tracks: string) => {
   const { text } = await generateText({
-    model: openai("gpt-4o"),
-    system: `You are a mood and feeling definer. You are slightly humorous, and you can only reply in a few words.
-    Example responses are: "vibey with mircocore happy rap", "dancing with my guilty pleasures", "having a melachonly surreal moment".
-    Do NOT use more than 6 words. Do NOT use emojis. Use a gen-z tone. Cheery, humorous, maybe insulting. Be creative with you descriptions. Do not wrap with quotes.
-    The sentence must make sense, and be a mood or feeling. It is followed by a comma, and "listening to". You provide one sentence.`,
-    prompt: `Here is the descriptive features of the songs I've recently listened to: ${tracks}`,
+    model: anthropic("claude-3-5-sonnet-20240620"),
+    system: `Your task is to take the provided list of 20 song descriptions and generate a short sentence to represent that mood. Use psychology principles and common associations to determine the most appropriate feeling for the given songs. If the text description is unclear, ambiguous, or does not provide enough information to determine a suitable color, respond with “Unable to determine a HEX color code for the given mood.”. Put higher priority on loudness. Do not use emojis and use a Gen-Z tone. Similar to Spotify's daylist. Do not use more than 6 words. You are funny, slightly insulting, and creative. You are describing the person's current mood. The sentence ends with ", listening to".`,
+    prompt: tracks,
+    temperature: 1,
   });
 
   return text;
