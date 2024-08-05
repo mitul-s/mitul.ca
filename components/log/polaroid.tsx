@@ -4,14 +4,22 @@ import styles from "./log.module.css";
 const Polaroid = ({ children }) => {
   return (
     <div
-      className={cn("bg-gray-1 w-fit p-4 absolute", styles.polaroid)}
+      className={cn(
+        "p-1 pb-8 bg-white shadow-sm rounded-md transition-all duration-300 hover:scale-110 hover:rotate-3 ease-out hover:shadow-md absolute z-10",
+        styles.polaroid
+      )}
+      draggable={false}
       style={{
         transform: `rotate(-${Math.floor(Math.random() * 100)}deg)`,
         top: `${Math.floor(Math.random() * 100)}%`,
         left: `${Math.floor(Math.random() * 100)}%`,
       }}
     >
-      {children}
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/b/bf/Tobey_Maguire_as_Spider-Man.jpg"
+        className="max-w-full h-auto"
+        draggable={false}
+      />
     </div>
   );
 };

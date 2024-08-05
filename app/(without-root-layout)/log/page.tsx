@@ -3,6 +3,10 @@ import { cn } from "@/lib/utils";
 import Note from "@/components/log/note";
 import styles from "./notes.module.css";
 import Polaroid from "@/components/log/polaroid";
+import Form from "@/components/log/form";
+import { sql } from "@vercel/postgres";
+import { Suspense } from "react";
+import Popover from "@/components/log/cta";
 
 const notes = [
   "I'm so happy to be here!",
@@ -34,18 +38,15 @@ const Page = () => {
           />
           <div className={cn(` text-[black] `, styles.matGrid)}>
             <div className={styles.diagonalLines} />
-            {notes.map((note, i) => (
-              <Note key={i}>{note}</Note>
-            ))}
-            <Polaroid>
-              <img
-                src={
-                  "https://framerusercontent.com/images/9Zvz5Q2YFp7Q5QZ4K3O5g9K7Z.webp"
-                }
-                className={styles.clip}
-              />
-            </Polaroid>
+
+            <Polaroid />
+            <Polaroid />
+            <Polaroid />
             <div className="w-full h-full flex items-center justify-center flex-col">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Form />
+                <GuestbookEntries />
+              </Suspense>
               {/* <div className="bg-gray-1 rounded-[10px] h-96 w-96 z-10">
                 <form>
                   <textarea
@@ -63,6 +64,8 @@ const Page = () => {
               >
                 Leave a note
               </button> */}
+
+              <Popover />
             </div>
           </div>
         </div>
@@ -70,5 +73,30 @@ const Page = () => {
     </div>
   );
 };
+
+async function GuestbookEntries() {
+  const { rows } =
+    await sql`SELECT * from "guestbook" ORDER BY last_modified DESC;`;
+
+  return rows.map((entry) => (
+    <div
+      key={entry.id}
+      className="flex flex-col space-y-1 mb-4 bg-gray-1 border border-[blue] p-4 rounded-md absolute"
+      style={{
+        transform: `rotate(-${Math.floor(Math.random() * 100)}deg)`,
+        top: `${Math.floor(Math.random() * 100)}%`,
+        left: `${Math.floor(Math.random() * 100)}%`,
+      }}
+    >
+      <div className="w-full text-sm break-words">
+        <span className="text-neutral-600 dark:text-neutral-400 mr-1">
+          {entry.created_by}:
+        </span>
+
+        {entry.body}
+      </div>
+    </div>
+  ));
+}
 
 export default Page;
