@@ -39,10 +39,6 @@
 } */
 
 .matContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
   border-radius: 10px;
   backdrop-filter: blur(10px);
   /* box-shadow: 10px 10px 10px #1d2d5233, 0 0 10px 1px #1e2d520f; */
@@ -114,6 +110,7 @@
     url(/noise.svg);
   opacity: 0.75;
   mix-blend-mode: overlay;
+  pointer-events: none;
 }
 
 .diagonalLines {
@@ -138,6 +135,7 @@
     );
   background-size: 10vmin 10vmin;
   background-position: center;
+  pointer-events: none;
 }
 
 .clip {
@@ -148,4 +146,10 @@
   bottom: 0;
   width: 60px;
   transform: rotate(-8deg);
+}
+
+.homeBtn {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset,
+    inset 0 1px 0 0 #ffffff52;
 }

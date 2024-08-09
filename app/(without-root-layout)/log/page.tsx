@@ -7,6 +7,8 @@ import Form from "@/components/log/form";
 import { sql } from "@vercel/postgres";
 import { Suspense } from "react";
 import Popover from "@/components/log/cta";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import Link from "next/link";
 
 const notes = [
   "I'm so happy to be here!",
@@ -18,18 +20,61 @@ const notes = [
   "I love my job",
 ];
 
-const kalam = Kalam({
-  subsets: ["latin"],
-  weight: "400",
-});
+// const kalam = Kalam({
+//   subsets: ["latin"],
+//   weight: "400",
+// });
 
 const Page = () => {
   return (
-    <div className={cn("relative h-screen", kalam.className)}>
-      <div className={styles.scene}>
+    <div className={cn("h-screen p-6 bg-gray-1")}>
+      <div
+        id="mat-container"
+        className={cn(
+          "relative w-full h-full overflow-hidden",
+          styles.matContainer
+        )}
+      >
+        <div className="z-10">
+          <div id="mat-texture" className={styles.matTexture} />
+          <div id="mat-grid" className={styles.matGrid}>
+            <div id="diagonal-lines" className={styles.diagonalLines} />
+          </div>
+        </div>
+        <main className="relative z-20 h-full w-full">
+          <Polaroid />
+          <Polaroid />
+          <Polaroid />
+          <Link
+            href="/"
+            className={cn(
+              "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit m-4",
+              styles.homeBtn
+            )}
+          >
+            <ArrowLeft width={16} height={16} />
+            take me home
+          </Link>
+          <div
+            className={cn(
+              "z-50 absolute bottom-10 left-1/2 -translate-x-1/2 rounded-[6px] bg-[#027582] hover:bg-[#027582]/90 transition text-[1.5rem] py-2 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
+              styles.homeBtn
+            )}
+          >
+            <Popover />
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+{
+  /* <div className={styles.scene}>
         <div className={styles.desk}></div>
-        <div className={styles.matContainer}>
+        <div className={}>
           <div className={styles.matTexture} />
+
           <img
             src={
               "https://framerusercontent.com/images/bWUJuSLJ7pk4qFBIsCwxS4lilE.webp"
@@ -38,41 +83,26 @@ const Page = () => {
           />
           <div className={cn(` text-[black] `, styles.matGrid)}>
             <div className={styles.diagonalLines} />
+            
 
-            <Polaroid />
-            <Polaroid />
-            <Polaroid />
-            <div className="w-full h-full flex items-center justify-center flex-col">
-              <Suspense fallback={<div>Loading...</div>}>
-                <Form />
-                <GuestbookEntries />
-              </Suspense>
-              {/* <div className="bg-gray-1 rounded-[10px] h-96 w-96 z-10">
-                <form>
-                  <textarea
-                    className="w-full h-full bg-gray-1 rounded-[10px] p-4"
-                    placeholder="Write a note..."
-                  ></textarea>
-                  <button className="bg-gray-4 p-2">Write away</button>
-                </form>
-              </div> */}
-              {/* <button
-                className={cn(
-                  "text-[2rem] text-gray-1 bg-[#065736] z-10 py-1.5 px-6 font-medium border-gray-1 border-opacity-5 border rounded-full",
-                  styles.leaveNoteButton
-                )}
-              >
-                Leave a note
-              </button> */}
-
+            <Link
+              href="/"
+              className={cn(
+                "mr-auto z-10 rounded-full bg-[#027582] px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit",
+                styles.homeBtn
+              )}
+            >
+              <ArrowLeft width={16} height={16} />
+              take me home
+            </Link>
+            <div className="mt-auto mx-auto w-fit z-10 justify-self-center">
               <Popover />
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </div> */
+}
 
 async function GuestbookEntries() {
   const { rows } =

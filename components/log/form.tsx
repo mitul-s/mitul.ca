@@ -27,7 +27,7 @@ export default function Form() {
         name="created_by"
         placeholder="peterparker"
         required
-        className="pl-4 pr-32 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full border-neutral-300 rounded-md bg-gray-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+        className="px-2 py-1.5 w-full bg-gray-3 rounded-[4px] focus:ring-blue-500 focus:border-blue-500 block border-neutral-300 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
       />
       <input
         aria-label="Your message"
@@ -38,7 +38,6 @@ export default function Form() {
         required
         className="pl-4 pr-32 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full border-neutral-300 rounded-md bg-gray-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
       />
-      <Signature ref={$svg} />
       <button
         className="flex items-center justify-center absolute right-1 top-1 px-2 py-1 font-medium h-8 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded w-16"
         disabled={pending}
