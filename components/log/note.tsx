@@ -2,19 +2,44 @@
 
 import { cn } from "@/lib/utils";
 import styles from "./log.module.css";
+import { motion } from "framer-motion";
 
-const Note = ({ children }) => {
+const Note = ({
+  name,
+  content,
+  signature,
+}: {
+  name: string;
+  content: string;
+  signature: string;
+}) => {
+  console.log(signature);
   return (
-    <div
-      className={cn("bg-gray-1 w-fit p-4 absolute", styles.note)}
+    <motion.div
+      drag
+      className={cn(
+        "bg-gray-1 text-gray-12 w-fit !max-w-[170px] p-2 absolute",
+        styles.note
+      )}
       style={{
-        transform: `rotate(-${Math.floor(Math.random() * 100)}deg)`,
+        rotate: `${Math.floor(Math.random() * 100)}deg`,
         top: `${Math.floor(Math.random() * 100)}%`,
         left: `${Math.floor(Math.random() * 100)}%`,
       }}
     >
-      {children}
-    </div>
+      <div className="border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden">
+        <div
+          className="object-contain"
+          dangerouslySetInnerHTML={{ __html: signature }}
+        ></div>
+      </div>
+      <div className="w-full text-sm break-words mt-1.5">
+        <span className="text-gray-11 text-[14px] mr-1 font-semibold">
+          {name}
+        </span>
+        <div className="text-[16px] font-medium">{content}</div>
+      </div>
+    </motion.div>
   );
 };
 
