@@ -37,6 +37,13 @@ const Page = () => {
           <Polaroid />
           <Polaroid />
           <Polaroid />
+          <Sticker>
+            <img
+              className="w-40"
+              src="/images/spiderman.png"
+              draggable={false}
+            />
+          </Sticker>
           {Array.from({ length: 2 }).map((_, i) => (
             <>
               <Sticker>
