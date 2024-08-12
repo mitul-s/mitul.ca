@@ -1,8 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getRandomRotation } from "@/lib/utils";
 import styles from "./log.module.css";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const Note = ({
   name,
@@ -21,16 +22,27 @@ const Note = ({
         styles.note
       )}
       style={{
-        rotate: `${Math.floor(Math.random() * 100)}deg`,
+        rotate: `${getRandomRotation()}deg`,
         top: `${Math.floor(Math.random() * 100)}%`,
         left: `${Math.floor(Math.random() * 100)}%`,
       }}
     >
       {signature ? (
-        <div className="border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden">
+        <div
+          className={cn(
+            "border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden relative"
+          )}
+        >
           <div
-            className="object-contain"
+            className="object-contain z-10"
             dangerouslySetInnerHTML={{ __html: signature }}
+          />
+          <Image
+            src="/images/33.jpeg"
+            className="absolute object-cover"
+            fill
+            draggable={false}
+            alt=""
           />
         </div>
       ) : null}

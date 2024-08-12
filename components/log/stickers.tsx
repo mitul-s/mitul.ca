@@ -1,5 +1,6 @@
 "use client";
 
+import { getRandomRotation } from "@/lib/utils";
 import Drag from "./drag";
 
 const NextWordmark = () => {
@@ -57,7 +58,7 @@ const Sticker = ({ children }: { children: React.ReactNode }) => {
     <Drag
       className="absolute"
       animate={{
-        rotate: `${Math.floor(Math.random() * 100)}deg`,
+        rotate: `${getRandomRotation()}deg`,
         x: `${Math.floor(Math.random() * 100)}%`,
         y: `${Math.floor(Math.random() * 100)}%`,
       }}

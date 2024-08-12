@@ -1,7 +1,6 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, getRandomRotation } from "@/lib/utils";
 import styles from "./log.module.css";
-import { motion } from "framer-motion";
 import React from "react";
 import Drag from "./drag";
 
@@ -9,7 +8,7 @@ const Polaroid = () => {
   return (
     <Drag
       animate={{
-        rotate: `${Math.floor(Math.random() * 100)}deg`,
+        rotate: `${getRandomRotation()}deg`,
         x: `${Math.floor(Math.random() * 100)}%`,
         y: `${Math.floor(Math.random() * 100)}%`,
       }}
