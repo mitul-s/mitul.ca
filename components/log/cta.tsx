@@ -37,7 +37,6 @@ export default function ToolbarExpandable() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   const handleCreatedByChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormInfo({
@@ -65,6 +64,7 @@ export default function ToolbarExpandable() {
       ...prev,
       signature: svgelm.outerHTML,
     }));
+    return svgelm.outerHTML;
   };
 
   const stepConent = (step: number, svgRef: React.RefObject<SignatureRef>) => {
@@ -147,6 +147,7 @@ export default function ToolbarExpandable() {
       const result = await validateAndSaveEntry(formData, true);
       console.log("validating step 1", result);
       if (!result.success) {
+        //@ts-ignore
         setErrors(result.errors);
         setLoading(false);
         return false;
@@ -181,7 +182,18 @@ export default function ToolbarExpandable() {
     }
 
     if (step === 2) {
-      handleSVGCapture();
+      setLoading(true);
+      const s = handleSVGCapture();
+      if (!s) {
+        setLoading(false);
+        return;
+      }
+      const formData = new FormData();
+      formData.append("created_by", formInfo.created_by);
+      formData.append("entry", formInfo.entry);
+      formData.append("signature", s);
+      await handleSubmit(formData);
+      console.log("submitting", formData);
       return;
     }
 
@@ -195,6 +207,7 @@ export default function ToolbarExpandable() {
 
     const result = await validateAndSaveEntry(formData);
     if (!result.success) {
+      //@ts-ignore
       setErrors(result.errors);
       setLoading(false);
       return;
@@ -203,7 +216,6 @@ export default function ToolbarExpandable() {
     setStep(3);
     setIsOpen(false);
     setLoading(false);
-    setSubmitted(true);
     formRef.current?.reset();
   };
 
@@ -226,22 +238,7 @@ export default function ToolbarExpandable() {
     >
       <MotionConfig transition={transition}>
         <div className="h-full w-full" ref={ref}>
-          <form
-            // style={{ opacity: !pending ? 1 : 0.7 }}
-            ref={formRef}
-            action={handleSubmit}
-            // action={async (formData) => {
-            //   formData.append("created_by", formInfo.created_by);
-            //   formData.append("entry", formInfo.entry);
-            //   formData.append("signature", formInfo.signature);
-            //   console.log("formdata", formData);
-
-            //   await saveGuestbookEntry("", formData);
-            //   console.log("submitted");
-
-            //   formRef.current?.reset();
-            // }}
-          >
+          <form ref={formRef}>
             <div className="overflow-hidden w-full">
               <AnimatePresence initial={false} mode="sync">
                 {isOpen ? (
@@ -345,11 +342,11 @@ export default function ToolbarExpandable() {
                 "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] lowercase",
                 loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
               )}
-              type={step === 2 ? "submit" : "button"}
-              disabled={pending || loading || submitted}
+              type="button"
+              disabled={pending || loading}
               onClick={handleClick}
             >
-              {isOpen ? buttonText : "write me a note"}
+              {isOpen || step === 3 ? buttonText : "write me a note"}
             </button>
           </form>
         </div>
