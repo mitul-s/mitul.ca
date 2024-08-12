@@ -1,10 +1,10 @@
 "use client";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
-import Section from "@/components/section";
+
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { Copy } from "@phosphor-icons/react/dist/ssr/Copy";
+import Section from "@/components/section";
 import { cn } from "@/lib/utils";
+import { ArrowUpRight, Copy } from "@phosphor-icons/react/dist/ssr/index";
 
 //@ts-ignore
 import useSound from "use-sound";

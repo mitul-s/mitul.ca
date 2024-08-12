@@ -3,6 +3,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Copy,
+  ScribbleLoop,
 } from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import { MusicCard, ReadingCard } from "@/components/hover-card";
@@ -19,6 +20,7 @@ import Gallery from "@/components/gallery";
 import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
 import { Mood } from "@/components/listening-mood";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -96,8 +98,11 @@ const Items = () => {
             Learn a bit more
             <ArrowRight size={12} aria-hidden={true} />
           </LinkPrimitive>
-          <ContactItem icon={<Copy />} className="text-sm">
+          {/* <ContactItem icon={<Copy />} className="text-sm">
             <ContactCopyItem title="Email me" copy="mitulxshah@gmail.com" />
+          </ContactItem> */}
+          <ContactItem icon={<ScribbleLoop />}>
+            <Link href="/log">Sign the visitor's log</Link>
           </ContactItem>
         </div>
       </div>

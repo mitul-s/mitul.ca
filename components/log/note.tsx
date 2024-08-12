@@ -13,7 +13,6 @@ const Note = ({
   content: string;
   signature: string;
 }) => {
-  console.log(signature);
   return (
     <motion.div
       drag
@@ -27,17 +26,19 @@ const Note = ({
         left: `${Math.floor(Math.random() * 100)}%`,
       }}
     >
-      <div className="border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden">
-        <div
-          className="object-contain"
-          dangerouslySetInnerHTML={{ __html: signature }}
-        ></div>
-      </div>
+      {signature ? (
+        <div className="border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden">
+          <div
+            className="object-contain"
+            dangerouslySetInnerHTML={{ __html: signature }}
+          />
+        </div>
+      ) : null}
       <div className="w-full text-sm break-words mt-1.5">
         <span className="text-gray-11 text-[14px] mr-1 font-semibold">
           {name}
         </span>
-        <div className="text-[16px] font-medium">{content}</div>
+        <div className="text-[16px] font-medium leading-tight">{content}</div>
       </div>
     </motion.div>
   );

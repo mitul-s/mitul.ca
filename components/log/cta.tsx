@@ -2,26 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { saveGuestbookEntry } from "@/app/actions";
 import useMeasure from "react-use-measure";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
 import Signature, { SignatureRef } from "@uiw/react-signature";
 import styles from "../../app/(without-root-layout)/log/notes.module.css";
-// import * as z from "zod";
+import { ArrowClockwise } from "@phosphor-icons/react";
+import { validateAndSaveEntry } from "@/app/(without-root-layout)/log/actions";
 
 const transition = {
   type: "spring",
   bounce: 0.1,
   duration: 0.25,
 };
-
-// const formSchema = z.object({
-//   created_by: z.string().min(1, "Name is required"),
-//   entry: z.string().min(1, "Entry is required"),
-//   signature: z.string().optional(),
-// });
 
 export default function ToolbarExpandable() {
   const [step, setStep] = useState<number>(0);
@@ -40,7 +34,10 @@ export default function ToolbarExpandable() {
   const formRef = useRef<HTMLFormElement>(null);
   const $svg = useRef<SignatureRef>(null);
   const { pending } = useFormStatus();
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleCreatedByChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormInfo({
@@ -70,38 +67,6 @@ export default function ToolbarExpandable() {
     }));
   };
 
-  // const handleSVGCapture = () => {
-  //   if ($svg.current && $svg.current.svg) {
-  //     const svgElement = $svg.current.svg.cloneNode(true) as SVGSVGElement;
-  //     const clientWidth = $svg.current.svg.clientWidth;
-  //     const clientHeight = $svg.current.svg.clientHeight;
-
-  //     svgElement.removeAttribute("style");
-  //     svgElement.setAttribute("width", `${clientWidth}px`);
-  //     svgElement.setAttribute("height", `${clientHeight}px`);
-  //     svgElement.setAttribute("viewBox", `0 0 ${clientWidth} ${clientHeight}`);
-
-  //     const svgString = new XMLSerializer().serializeToString(svgElement);
-  //     const svgBlob = new Blob([svgString], {
-  //       type: "image/svg+xml;charset=utf-8",
-  //     });
-  //     const svgUrl = URL.createObjectURL(svgBlob);
-
-  //     setFormInfo({
-  //       ...formInfo,
-  //       signature: svgUrl,
-  //     });
-  //   }
-  // };
-
-  const handleClearSignature = () => {
-    $svg.current?.clear();
-    setFormInfo((prev) => ({
-      ...prev,
-      signature: "",
-    }));
-  };
-
   const stepConent = (step: number, svgRef: React.RefObject<SignatureRef>) => {
     switch (step) {
       case 1:
@@ -120,7 +85,10 @@ export default function ToolbarExpandable() {
                   autoComplete="off"
                   autoCorrect="off"
                   autoFocus
-                  className="bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9  text-[16px] outline-none text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-gray-9"
+                  className={cn(
+                    "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-none text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
+                    styles.input
+                  )}
                   onChange={handleCreatedByChange}
                   value={formInfo.created_by}
                 />
@@ -137,7 +105,10 @@ export default function ToolbarExpandable() {
                   required
                   autoComplete="off"
                   autoCorrect="off"
-                  className="bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9  text-[16px] outline-none text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-gray-9"
+                  className={cn(
+                    "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-none text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
+                    styles.input
+                  )}
                   onChange={handleEntryChange}
                   value={formInfo.entry}
                 />
@@ -147,10 +118,17 @@ export default function ToolbarExpandable() {
         );
       case 2:
         return (
-          <div>
-            <Signature className="rounded-[6px]" ref={svgRef} />
+          <div className="rounded-[6px] overflow-hidden bg-gray-1 p-0.5 flex flex-col relative">
+            <Signature ref={svgRef} />
             <input type="hidden" value={formInfo.signature} />
-            <button onClick={() => svgRef.current?.clear()}>Clear</button>
+            <button
+              aria-label="clear signature"
+              className=" rounded-[4px] text-gray-11 font-medium self-end absolute bottom-1 left-1 bg-gray-6 p-1 group hover:bg-gray-8 hover:text-gray-12 transition duration-200"
+              type="button"
+              onClick={() => svgRef.current?.clear()}
+            >
+              <ArrowClockwise className="group-hover:rotate-180 transition duration-200 " />
+            </button>
           </div>
         );
       default:
@@ -158,7 +136,30 @@ export default function ToolbarExpandable() {
     }
   };
 
-  const handleClick = () => {
+  const validateStep = async (currentStep: number) => {
+    setLoading(true);
+    if (currentStep === 1) {
+      const formData = new FormData();
+      formData.append("created_by", formInfo.created_by);
+      formData.append("entry", formInfo.entry);
+      console.log("validating step 1", formData);
+
+      const result = await validateAndSaveEntry(formData, true);
+      console.log("validating step 1", result);
+      if (!result.success) {
+        setErrors(result.errors);
+        setLoading(false);
+        return false;
+      }
+      setErrors(null);
+      setLoading(false);
+      return true;
+    }
+    setLoading(false);
+    return true;
+  };
+
+  const handleClick = async () => {
     if (step === 3) {
       return;
     }
@@ -174,19 +175,41 @@ export default function ToolbarExpandable() {
       return;
     }
 
+    if (step === 1) {
+      const isValid = await validateStep(step);
+      if (!isValid) return;
+    }
+
     if (step === 2) {
       handleSVGCapture();
-      setIsOpen(false);
-      setStep(3);
       return;
     }
 
     setStep((prev) => prev + 1);
   };
 
-  // useClickOutside(ref, () => {
-  //   setIsOpen(false);
-  // });
+  const handleSubmit = async (formData: FormData) => {
+    formData.append("created_by", formInfo.created_by);
+    formData.append("entry", formInfo.entry);
+    formData.append("signature", formInfo.signature);
+
+    const result = await validateAndSaveEntry(formData);
+    if (!result.success) {
+      setErrors(result.errors);
+      setLoading(false);
+      return;
+    }
+
+    setStep(3);
+    setIsOpen(false);
+    setLoading(false);
+    setSubmitted(true);
+    formRef.current?.reset();
+  };
+
+  useClickOutside(ref, () => {
+    setIsOpen(false);
+  });
 
   useEffect(() => {
     if (!widthContainer || maxWidth > 0) return;
@@ -206,17 +229,18 @@ export default function ToolbarExpandable() {
           <form
             // style={{ opacity: !pending ? 1 : 0.7 }}
             ref={formRef}
-            action={async (formData) => {
-              formData.append("created_by", formInfo.created_by);
-              formData.append("entry", formInfo.entry);
-              formData.append("signature", formInfo.signature);
-              console.log("formdata", formData);
+            action={handleSubmit}
+            // action={async (formData) => {
+            //   formData.append("created_by", formInfo.created_by);
+            //   formData.append("entry", formInfo.entry);
+            //   formData.append("signature", formInfo.signature);
+            //   console.log("formdata", formData);
 
-              await saveGuestbookEntry("", formData);
-              console.log("submitted");
+            //   await saveGuestbookEntry("", formData);
+            //   console.log("submitted");
 
-              formRef.current?.reset();
-            }}
+            //   formRef.current?.reset();
+            // }}
           >
             <div className="overflow-hidden w-full">
               <AnimatePresence initial={false} mode="sync">
@@ -246,7 +270,12 @@ export default function ToolbarExpandable() {
                           <AnimatePresence>
                             {step === 1 && (
                               <motion.div
-                                className="absolute -top-20  w-full left-0 bg-[#101B1D] text-[1rem] rounded-[6px] shadow-lg px-4 py-2 font-medium text-center transition"
+                                className={cn(
+                                  "absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-[6px] shadow-lg px-4 py-2 font-medium text-center transition",
+                                  errors
+                                    ? "ring-2 ring-[red]/60"
+                                    : "text-gray-1"
+                                )}
                                 style={{
                                   textWrap: "balance",
                                 }}
@@ -260,8 +289,24 @@ export default function ToolbarExpandable() {
                                   },
                                 }}
                               >
-                                {`tnx for visiting! leave ur name and a note if u
+                                <AnimatePresence mode="wait" initial={false}>
+                                  <motion.p
+                                    key={
+                                      errors?.created_by || errors?.entry
+                                        ? "error"
+                                        : "default"
+                                    }
+                                    transition={{ duration: 0.05 }}
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                  >
+                                    {errors?.created_by || errors?.entry
+                                      ? errors?.created_by || errors?.entry
+                                      : `tnx for visiting! leave ur name and a note if u
                                 want... <3`}
+                                  </motion.p>
+                                </AnimatePresence>
                               </motion.div>
                             )}
                             {step === 2 && (
@@ -297,13 +342,14 @@ export default function ToolbarExpandable() {
               ref={menuRef}
               aria-label={"notes"}
               className={cn(
-                "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] lowercase"
+                "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] lowercase",
+                loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
               )}
-              type={step === 3 ? "submit" : "button"}
-              disabled={pending}
+              type={step === 2 ? "submit" : "button"}
+              disabled={pending || loading || submitted}
               onClick={handleClick}
             >
-              {buttonText}
+              {isOpen ? buttonText : "write me a note"}
             </button>
           </form>
         </div>
