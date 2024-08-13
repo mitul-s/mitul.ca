@@ -313,7 +313,7 @@ export default function ToolbarExpandable() {
               ref={menuRef}
               aria-label={"notes"}
               className={cn(
-                "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] lowercase",
+                "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center transition focus-visible:ring-2 active:scale-[0.98] lowercase",
                 loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
               )}
               type="button"

@@ -18,7 +18,7 @@ const Note = ({
     <motion.div
       drag
       className={cn(
-        "bg-gray-1 text-gray-12 w-fit !max-w-[170px] p-2 absolute",
+        "bg-gray-1 text-gray-12 w-fit !max-w-[170px] px-1.5 pt-1.5 pb-2 absolute",
         styles.note
       )}
       style={{
@@ -30,7 +30,7 @@ const Note = ({
       {signature ? (
         <div
           className={cn(
-            "border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden relative"
+            "border border-gray-6 bg-gray-3 rounded-[4px] flex items-center justify-center overflow-hidden relative"
           )}
         >
           <div

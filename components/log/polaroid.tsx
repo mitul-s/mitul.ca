@@ -15,7 +15,7 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
         y: `${Math.floor(Math.random() * 100)}%`,
       }}
       className={cn(
-        "p-1 pb-8 bg-white shadow-sm rounded-md transition-all duration-300 hover:scale-110 hover:rotate-3 ease-out hover:shadow-md absolute z-10",
+        "p-1 pb-8 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute z-10",
         styles.polaroid
       )}
     >
