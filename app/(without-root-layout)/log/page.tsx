@@ -34,9 +34,9 @@ const Page = () => {
           </div>
 
           <GuestbookEntries />
-          <Polaroid />
-          <Polaroid />
-          <Polaroid />
+          <Polaroid src="/images/banff-2.jpg" alt="toronto" />
+          <Polaroid src="/images/toronto.jpg" alt="toronto" />
+          <Polaroid src="/images/nyc.jpg" alt="toronto" />
           <Sticker>
             <img
               className="w-40"
@@ -44,16 +44,13 @@ const Page = () => {
               draggable={false}
             />
           </Sticker>
-          {Array.from({ length: 2 }).map((_, i) => (
-            <>
-              <Sticker>
-                <VercelLogo />
-              </Sticker>
-              <Sticker>
-                <NextWordmark />
-              </Sticker>
-            </>
-          ))}
+          <Sticker>
+            <VercelLogo />
+          </Sticker>
+          <Sticker>
+            <NextWordmark />
+          </Sticker>
+
           <Link
             href="/"
             className={cn(

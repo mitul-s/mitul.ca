@@ -3,8 +3,9 @@ import { cn, getRandomRotation } from "@/lib/utils";
 import styles from "./log.module.css";
 import React from "react";
 import Drag from "./drag";
+import Image from "next/image";
 
-const Polaroid = () => {
+const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <Drag
       animate={{
@@ -17,11 +18,15 @@ const Polaroid = () => {
         styles.polaroid
       )}
     >
-      <img
-        src="https://upload.wikimedia.org/wikipedia/en/b/bf/Tobey_Maguire_as_Spider-Man.jpg"
-        className="max-w-full h-auto"
-        draggable={false}
-      />
+      <div className=" mb-8 overflow-hidden relative">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="max-w-full h-fit object-contain"
+          draggable={false}
+        />
+      </div>
     </Drag>
   );
 };
