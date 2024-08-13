@@ -33,3 +33,11 @@ export async function approveGuestbookEntry(id: string) {
 
   revalidatePath("/");
 }
+
+export async function declineGuestbookEntry(id: string) {
+  await sql`
+    DELETE FROM "guestbook" WHERE id = ${id};
+  `;
+
+  revalidatePath("/");
+}

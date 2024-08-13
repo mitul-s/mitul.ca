@@ -87,7 +87,7 @@
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 10000;
-  animation: window-shadow 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite
+  animation: window-shadow 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite
     alternate;
   border-radius: 10px;
   user-select: none;
@@ -103,7 +103,7 @@
     opacity: 0.3;
   }
   100% {
-    transform: translate(30px, 5px) scale(1.05);
+    transform: translate(30px, 5px);
     opacity: 0.2;
   }
 }
