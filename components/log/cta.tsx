@@ -92,7 +92,7 @@ export default function ToolbarExpandable() {
         );
       case 2:
         return (
-          <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative">
+          <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative h-36 sm:h-auto">
             <Signature ref={svgRef} />
             <input type="hidden" value={formInfo.signature} />
             <button
@@ -197,134 +197,136 @@ export default function ToolbarExpandable() {
   }, [widthContainer, maxWidth]);
 
   return (
-    <div
-      className={cn(
-        "z-50 absolute bottom-10 left-1/2 -translate-x-1/2 rounded-6 bg-[#F3622A] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
-        styles.homeBtn
-      )}
-    >
-      <MotionConfig transition={transition}>
-        <div className="h-full w-full" ref={ref}>
-          <form ref={formRef}>
-            <div className="overflow-hidden w-full">
-              <AnimatePresence initial={false} mode="sync">
-                {isOpen ? (
-                  <motion.div
-                    key="content"
-                    initial={{ height: 0 }}
-                    animate={{ height: heightContent || 0 }}
-                    exit={{ height: 0 }}
-                    style={{
-                      width: maxWidth,
-                    }}
-                  >
-                    <div ref={contentRef} className="w-full">
-                      <motion.div
-                        key={"notes"}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: isOpen ? 1 : 0 }}
-                        exit={{ opacity: 0 }}
-                      >
-                        <div
-                          className={cn(
-                            "px-2 pt-2 text-sm",
-                            isOpen ? "block" : "hidden"
-                          )}
+    <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-50">
+      <div
+        className={cn(
+          "rounded-6 bg-[#F3622A] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
+          styles.homeBtn
+        )}
+      >
+        <MotionConfig transition={transition}>
+          <div className="h-full w-full" ref={ref}>
+            <form ref={formRef}>
+              <div className="overflow-hidden w-full">
+                <AnimatePresence initial={false} mode="sync">
+                  {isOpen ? (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0 }}
+                      animate={{ height: heightContent || 0 }}
+                      exit={{ height: 0 }}
+                      style={{
+                        width: maxWidth,
+                      }}
+                    >
+                      <div ref={contentRef} className="w-full">
+                        <motion.div
+                          key={"notes"}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: isOpen ? 1 : 0 }}
+                          exit={{ opacity: 0 }}
                         >
-                          <AnimatePresence>
-                            {step === 1 && (
-                              <motion.div
-                                className={cn(
-                                  "absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition",
-                                  errors
-                                    ? "ring-2 ring-[red]/60"
-                                    : "text-gray-1"
-                                )}
-                                style={{
-                                  textWrap: "balance",
-                                }}
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{
-                                  opacity: 0,
-                                  y: -20,
-                                  transition: {
-                                    duration: 0.1,
-                                  },
-                                }}
-                                transition={{
-                                  type: "spring",
-                                  duration: 0.05,
-                                  friction: 20,
-                                  bounce: 0.02,
-                                  restDelta: "0.01",
-                                }}
-                              >
-                                <AnimatePresence mode="wait" initial={false}>
-                                  <motion.p
-                                    key={
-                                      errors?.created_by || errors?.entry
-                                        ? "error"
-                                        : "default"
-                                    }
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    transition={{ duration: 0.05 }}
-                                  >
-                                    {errors?.created_by || errors?.entry
-                                      ? errors?.created_by || errors?.entry
-                                      : `tnx for visiting! leave ur name and a note if u
+                          <div
+                            className={cn(
+                              "px-2 pt-2 text-sm",
+                              isOpen ? "block" : "hidden"
+                            )}
+                          >
+                            <AnimatePresence>
+                              {step === 1 && (
+                                <motion.div
+                                  className={cn(
+                                    "absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition",
+                                    errors
+                                      ? "ring-2 ring-[red]/60"
+                                      : "text-gray-1"
+                                  )}
+                                  style={{
+                                    textWrap: "balance",
+                                  }}
+                                  initial={{ opacity: 0, y: -20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{
+                                    opacity: 0,
+                                    y: -20,
+                                    transition: {
+                                      duration: 0.1,
+                                    },
+                                  }}
+                                  transition={{
+                                    type: "spring",
+                                    duration: 0.05,
+                                    friction: 20,
+                                    bounce: 0.02,
+                                    restDelta: "0.01",
+                                  }}
+                                >
+                                  <AnimatePresence mode="wait" initial={false}>
+                                    <motion.p
+                                      key={
+                                        errors?.created_by || errors?.entry
+                                          ? "error"
+                                          : "default"
+                                      }
+                                      initial={{ opacity: 0, y: -10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: 10 }}
+                                      transition={{ duration: 0.05 }}
+                                    >
+                                      {errors?.created_by || errors?.entry
+                                        ? errors?.created_by || errors?.entry
+                                        : `tnx for visiting! leave ur name and a note if u
                                 want... <3`}
-                                  </motion.p>
-                                </AnimatePresence>
-                              </motion.div>
-                            )}
-                            {step === 2 && (
-                              <motion.div
-                                className="absolute -top-12 w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition"
-                                style={{
-                                  textWrap: "balance",
-                                }}
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{
-                                  opacity: 0,
-                                  y: -20,
-                                  transition: {
-                                    duration: 0.1,
-                                  },
-                                }}
-                              >
-                                {`why not a little drawing as well!`}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                          {stepConent(step, $svg)}
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-            </div>
+                                    </motion.p>
+                                  </AnimatePresence>
+                                </motion.div>
+                              )}
+                              {step === 2 && (
+                                <motion.div
+                                  className="absolute -top-12 w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition"
+                                  style={{
+                                    textWrap: "balance",
+                                  }}
+                                  initial={{ opacity: 0, y: -20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{
+                                    opacity: 0,
+                                    y: -20,
+                                    transition: {
+                                      duration: 0.1,
+                                    },
+                                  }}
+                                >
+                                  {`why not a little drawing as well!`}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                            {stepConent(step, $svg)}
+                          </div>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </div>
 
-            <button
-              ref={menuRef}
-              aria-label={"notes"}
-              className={cn(
-                "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center transition focus-visible:ring-2 active:scale-[0.98] lowercase",
-                loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-              )}
-              type="button"
-              disabled={pending || loading}
-              onClick={handleClick}
-            >
-              {isOpen || step === 3 ? buttonText : "write me a note"}
-            </button>
-          </form>
-        </div>
-      </MotionConfig>
+              <button
+                ref={menuRef}
+                aria-label={"notes"}
+                className={cn(
+                  "relative flex py-4 w-full shrink-0 scale-100 select-none appearance-none items-center justify-center transition focus-visible:ring-2 active:scale-[0.98] lowercase",
+                  loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+                )}
+                type="button"
+                disabled={pending || loading}
+                onClick={handleClick}
+              >
+                {isOpen || step === 3 ? buttonText : "write me a note"}
+              </button>
+            </form>
+          </div>
+        </MotionConfig>
+      </div>
     </div>
   );
 }

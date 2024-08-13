@@ -10,7 +10,7 @@ import { VercelLogo, Sticker, NextWordmark } from "@/components/log/stickers";
 
 const Page = () => {
   return (
-    <div className={cn("h-screen p-1 sm:p-6 bg-gray-1")}>
+    <div className={cn("h-[calc(100svh-8px)] p-1 sm:p-6 bg-gray-1")}>
       <div
         id="mat-container"
         className={cn(
@@ -54,7 +54,7 @@ const Page = () => {
           <Link
             href="/"
             className={cn(
-              "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit absolute top-10 left-10",
+              "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit z-50 absolute top-4 left-4 sm:top-10 sm:left-10",
               styles.homeBtn
             )}
           >
