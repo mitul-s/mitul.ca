@@ -7,9 +7,10 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
 import Signature, { SignatureRef } from "@uiw/react-signature";
-import styles from "../../app/(without-root-layout)/log/notes.module.css";
+import styles from "./log.module.css";
 import { ArrowClockwise } from "@phosphor-icons/react";
 import { validateAndSaveEntry } from "@/app/(without-root-layout)/log/actions";
+import Field from "./field";
 
 const transition = {
   type: "spring",
@@ -27,6 +28,8 @@ export default function ToolbarExpandable() {
     entry: "",
     signature: "",
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
   const buttonText = ["Write me a note", "Next", "Submit", "Thanks!"][step];
 
@@ -35,8 +38,6 @@ export default function ToolbarExpandable() {
   const $svg = useRef<SignatureRef>(null);
   const { pending } = useFormStatus();
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
   const handleCreatedByChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormInfo({
@@ -71,59 +72,32 @@ export default function ToolbarExpandable() {
     switch (step) {
       case 1:
         return (
-          <div>
-            <fieldset className="flex flex-col gap-y-4 p-2">
-              <div className="flex flex-col gap-y-1">
-                <label className="font-medium text-[14px]">
-                  ur name, handle, something
-                </label>
-                <input
-                  type="text"
-                  name="created_by"
-                  placeholder="peterparker"
-                  required
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoFocus
-                  className={cn(
-                    "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-none text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
-                    styles.input
-                  )}
-                  onChange={handleCreatedByChange}
-                  value={formInfo.created_by}
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <label className="font-medium text-[14px]">
-                  a sweet likkle note
-                </label>
-                <input
-                  aria-label="Your message"
-                  placeholder="ur the coolest"
-                  name="entry"
-                  type="text"
-                  required
-                  autoComplete="off"
-                  autoCorrect="off"
-                  className={cn(
-                    "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-none text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
-                    styles.input
-                  )}
-                  onChange={handleEntryChange}
-                  value={formInfo.entry}
-                />
-              </div>
-            </fieldset>
-          </div>
+          <fieldset className="flex flex-col gap-y-4 p-2">
+            <Field
+              label="ur name, handle, something"
+              value={formInfo.created_by}
+              name="created_by"
+              placeholder="peterparker"
+              onChange={handleCreatedByChange}
+              autoFocus
+            />
+            <Field
+              label="a sweet likkle note"
+              value={formInfo.entry}
+              name="entry"
+              placeholder="ur the coolest"
+              onChange={handleEntryChange}
+            />
+          </fieldset>
         );
       case 2:
         return (
-          <div className="rounded-[6px] overflow-hidden bg-gray-1 p-0.5 flex flex-col relative">
+          <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative">
             <Signature ref={svgRef} />
             <input type="hidden" value={formInfo.signature} />
             <button
               aria-label="clear signature"
-              className=" rounded-[4px] text-gray-11 font-medium self-end absolute bottom-1 left-1 bg-gray-6 p-1 group hover:bg-gray-8 hover:text-gray-12 transition duration-200"
+              className="rounded-[4px] text-gray-11 font-medium self-end absolute bottom-1 left-1 bg-gray-6 p-1 group hover:bg-gray-8 hover:text-gray-12 transition duration-200"
               type="button"
               onClick={() => svgRef.current?.clear()}
             >
@@ -142,10 +116,9 @@ export default function ToolbarExpandable() {
       const formData = new FormData();
       formData.append("created_by", formInfo.created_by);
       formData.append("entry", formInfo.entry);
-      console.log("validating step 1", formData);
 
       const result = await validateAndSaveEntry(formData, true);
-      console.log("validating step 1", result);
+
       if (!result.success) {
         //@ts-ignore
         setErrors(result.errors);
@@ -193,7 +166,6 @@ export default function ToolbarExpandable() {
       formData.append("entry", formInfo.entry);
       formData.append("signature", s);
       await handleSubmit(formData);
-      console.log("submitting", formData);
       return;
     }
 
@@ -201,10 +173,6 @@ export default function ToolbarExpandable() {
   };
 
   const handleSubmit = async (formData: FormData) => {
-    formData.append("created_by", formInfo.created_by);
-    formData.append("entry", formInfo.entry);
-    formData.append("signature", formInfo.signature);
-
     const result = await validateAndSaveEntry(formData);
     if (!result.success) {
       //@ts-ignore
@@ -225,14 +193,13 @@ export default function ToolbarExpandable() {
 
   useEffect(() => {
     if (!widthContainer || maxWidth > 0) return;
-
     setMaxWidth(widthContainer);
   }, [widthContainer, maxWidth]);
 
   return (
     <div
       className={cn(
-        "z-50 absolute bottom-10 left-1/2 -translate-x-1/2 rounded-[6px] bg-[#F3622A] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
+        "z-50 absolute bottom-10 left-1/2 -translate-x-1/2 rounded-6 bg-[#F3622A] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
         styles.homeBtn
       )}
     >
@@ -268,7 +235,7 @@ export default function ToolbarExpandable() {
                             {step === 1 && (
                               <motion.div
                                 className={cn(
-                                  "absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-[6px] shadow-lg px-4 py-2 font-medium text-center transition",
+                                  "absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition",
                                   errors
                                     ? "ring-2 ring-[red]/60"
                                     : "text-gray-1"
@@ -285,6 +252,13 @@ export default function ToolbarExpandable() {
                                     duration: 0.1,
                                   },
                                 }}
+                                transition={{
+                                  type: "spring",
+                                  duration: 0.05,
+                                  friction: 20,
+                                  bounce: 0.02,
+                                  restDelta: "0.01",
+                                }}
                               >
                                 <AnimatePresence mode="wait" initial={false}>
                                   <motion.p
@@ -293,10 +267,10 @@ export default function ToolbarExpandable() {
                                         ? "error"
                                         : "default"
                                     }
-                                    transition={{ duration: 0.05 }}
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
+                                    transition={{ duration: 0.05 }}
                                   >
                                     {errors?.created_by || errors?.entry
                                       ? errors?.created_by || errors?.entry
@@ -308,7 +282,7 @@ export default function ToolbarExpandable() {
                             )}
                             {step === 2 && (
                               <motion.div
-                                className="absolute -top-12 w-full left-0 bg-[#101B1D] text-[1rem] rounded-[6px] shadow-lg px-4 py-2 font-medium text-center transition"
+                                className="absolute -top-12 w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition"
                                 style={{
                                   textWrap: "balance",
                                 }}

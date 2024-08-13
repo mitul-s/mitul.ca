@@ -39,7 +39,7 @@ const Page = () => {
           <Polaroid src="/images/nyc.jpg" alt="toronto" />
           <Sticker>
             <img
-              className="w-40"
+              className="w-36"
               src="/images/spiderman.png"
               draggable={false}
             />

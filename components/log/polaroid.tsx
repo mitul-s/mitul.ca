@@ -1,4 +1,5 @@
 "use client";
+
 import { cn, getRandomRotation } from "@/lib/utils";
 import styles from "./log.module.css";
 import React from "react";
@@ -18,13 +19,15 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
         styles.polaroid
       )}
     >
-      <div className=" mb-8 overflow-hidden relative">
+      <div className="h-full overflow-hidden relative">
         <Image
           src={src}
           alt={alt}
-          fill
+          layout="fill"
+          sizes="(max-width: 768px) 20vw, 35vw"
           className="max-w-full h-fit object-contain"
           draggable={false}
+          quality={5}
         />
       </div>
     </Drag>
