@@ -170,6 +170,7 @@
   font-weight: 600;
   font-size: 1.25vmin;
   letter-spacing: -0.05px;
+  user-select: none;
 }
 
 .star {

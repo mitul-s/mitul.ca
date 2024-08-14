@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, getRandomRotation } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./log.module.css";
 import Image from "next/image";
 import Drag from "./drag";
