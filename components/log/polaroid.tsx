@@ -9,13 +9,8 @@ import Image from "next/image";
 const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <Drag
-      animate={{
-        rotate: `${getRandomRotation()}deg`,
-        x: `${Math.floor(Math.random() * 100)}%`,
-        y: `${Math.floor(Math.random() * 100)}%`,
-      }}
       className={cn(
-        "p-1 pb-8 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute z-10",
+        "p-1 pb-8 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute",
         styles.polaroid
       )}
     >

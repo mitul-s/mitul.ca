@@ -2,8 +2,8 @@
 
 import { cn, getRandomRotation } from "@/lib/utils";
 import styles from "./log.module.css";
-import { motion } from "framer-motion";
 import Image from "next/image";
+import Drag from "./drag";
 
 const Note = ({
   name,
@@ -15,17 +15,11 @@ const Note = ({
   signature: string;
 }) => {
   return (
-    <motion.div
-      drag
+    <Drag
       className={cn(
         "bg-gray-1 text-gray-12 w-fit !max-w-[170px] px-1.5 pt-1.5 pb-2 absolute",
         styles.note
       )}
-      style={{
-        rotate: `${getRandomRotation()}deg`,
-        top: `${Math.floor(Math.random() * 100)}%`,
-        left: `${Math.floor(Math.random() * 100)}%`,
-      }}
     >
       {signature ? (
         <div
@@ -35,6 +29,7 @@ const Note = ({
         >
           <div
             className="object-contain z-10"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
             dangerouslySetInnerHTML={{ __html: signature }}
           />
           <Image
@@ -52,7 +47,7 @@ const Note = ({
         </span>
         <div className="text-[16px] font-medium leading-tight">{content}</div>
       </div>
-    </motion.div>
+    </Drag>
   );
 };
 

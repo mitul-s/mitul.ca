@@ -41,6 +41,15 @@ const Page = () => {
             <img
               className="w-36"
               src="/images/spiderman.png"
+              alt="Spiderman sticker"
+              draggable={false}
+            />
+          </Sticker>
+          <Sticker>
+            <img
+              className="w-24"
+              src="/images/cntower.png"
+              alt="CN Tower sticker"
               draggable={false}
             />
           </Sticker>
