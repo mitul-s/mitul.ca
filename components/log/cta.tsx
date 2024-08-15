@@ -1,16 +1,19 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import useMeasure from "react-use-measure";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
-import Signature, { SignatureRef } from "@uiw/react-signature";
+import Signature, { type SignatureRef } from "@uiw/react-signature";
 import styles from "./log.module.css";
 import { ArrowClockwise } from "@phosphor-icons/react";
-import { validateAndSaveEntry } from "@/app/(without-root-layout)/log/actions";
+import { validateAndSaveEntry } from "@/app/(without-root-layout)/visitors/actions";
 import Field from "./field";
+import { useSetAtom } from "jotai";
+import { localEntriesAtom } from "@/atoms/guestbook";
+import { revalidatePath } from "next/cache";
 
 const transition = {
   type: "spring",
@@ -77,7 +80,7 @@ export default function ToolbarExpandable() {
               label="ur name, handle, something"
               value={formInfo.created_by}
               name="created_by"
-              placeholder="peterparker"
+              placeholder="uncle ben"
               onChange={handleCreatedByChange}
               autoFocus
             />
@@ -85,7 +88,7 @@ export default function ToolbarExpandable() {
               label="a sweet likkle note"
               value={formInfo.entry}
               name="entry"
-              placeholder="ur the coolest"
+              placeholder="with great power..."
               onChange={handleEntryChange}
             />
           </fieldset>
@@ -93,7 +96,13 @@ export default function ToolbarExpandable() {
       case 2:
         return (
           <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative h-36 sm:h-auto">
-            <Signature ref={svgRef} />
+            <Signature
+              ref={svgRef}
+              options={{
+                size: 10,
+                thinning: 0.25,
+              }}
+            />
             <input type="hidden" value={formInfo.signature} />
             <button
               aria-label="clear signature"
@@ -172,6 +181,8 @@ export default function ToolbarExpandable() {
     setStep((prev) => prev + 1);
   };
 
+  const setLocalEntries = useSetAtom(localEntriesAtom);
+
   const handleSubmit = async (formData: FormData) => {
     const result = await validateAndSaveEntry(formData);
     if (!result.success) {
@@ -180,6 +191,14 @@ export default function ToolbarExpandable() {
       setLoading(false);
       return;
     }
+
+    const newEntry = {
+      id: crypto.randomUUID(),
+      created_by: formData.get("created_by") as string,
+      body: formData.get("entry") as string,
+      signature: formData.get("signature") as string,
+    };
+    setLocalEntries((prev) => [newEntry, ...prev]);
 
     setStep(3);
     setIsOpen(false);
@@ -200,7 +219,7 @@ export default function ToolbarExpandable() {
     <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-50">
       <div
         className={cn(
-          "rounded-6 bg-[#F3622A] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
+          "rounded-6 bg-[#F04F1F] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",
           styles.homeBtn
         )}
       >
@@ -297,7 +316,7 @@ export default function ToolbarExpandable() {
                                     },
                                   }}
                                 >
-                                  {`why not a little drawing as well!`}
+                                  why not a little drawing as well!
                                 </motion.div>
                               )}
                             </AnimatePresence>

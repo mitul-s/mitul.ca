@@ -15,8 +15,6 @@ export async function saveGuestbookEntry(state: unknown, formData: FormData) {
     throw new Error("Entry contains inappropriate");
   }
 
-  // console.log(signature);
-
   await sql`
     INSERT INTO "guestbook" (created_by, body, last_modified, signature) 
     VALUES (${created_by}, ${body}, ${new Date().toISOString()}, ${signature});

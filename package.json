@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^11.3.21",
     "ioredis": "5.4.1",
+    "jotai": "^2.9.3",
     "ms": "^2.1.3",
     "next": "^14.2.5",
     "openai": "^4.55.4",
