@@ -16,6 +16,12 @@ export const localEntriesAtom = atomWithStorage<Entry[]>(
   []
 );
 
+export const hasCreatedEntryBeforeAtom = atomWithStorage(
+  "hasCreatedEntryBefore",
+  false
+);
+export const localCreatedByIdAtom = atomWithStorage("localCreatedById", "");
+
 export const allEntriesAtom = atom((get) => {
   const serverEntries = get(serverEntriesAtom);
   const localEntries = get(localEntriesAtom);

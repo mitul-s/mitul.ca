@@ -28,6 +28,18 @@ export default function ProtectedPage() {
   );
 }
 
+const colorMap = new Map();
+const colors = ["red", "green", "blue", "orange", "purple", "yellow"];
+
+// we gotta improve this a bit to be easier to scan
+function getColor(id: string) {
+  if (!colorMap.has(id)) {
+    const color = colors[colorMap.size % colors.length];
+    colorMap.set(id, color);
+  }
+  return colorMap.get(id);
+}
+
 async function GuestbookEntries() {
   const { rows } =
     await sql`SELECT * from "guestbook" WHERE approved = false ORDER BY last_modified DESC;`;
@@ -46,6 +58,17 @@ async function GuestbookEntries() {
           {entry.created_by}
         </span>
         <div className="text-[16px] font-medium">{entry.body}</div>
+      </div>
+      <div className="flex flex-col">
+        <span>
+          {entry.hascreatedentrybefore ? "has created an entry before" : "new"}
+        </span>
+
+        {entry.local_created_by_id && (
+          <span style={{ color: getColor(entry.local_created_by_id) }}>
+            created by: {entry.local_created_by_id}
+          </span>
+        )}
       </div>
       <ApproveButton id={entry.id} />
     </div>

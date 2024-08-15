@@ -25,6 +25,8 @@ export async function validateAndSaveEntry(
     created_by: string;
     entry: string;
     signature?: string;
+    hasCreatedEntryBefore?: string;
+    local_created_by_id?: string;
   };
   if (validateOnly) {
     data = {
@@ -36,6 +38,8 @@ export async function validateAndSaveEntry(
       created_by: formData.get("created_by") as string,
       entry: formData.get("entry") as string,
       signature: formData.get("signature") as string,
+      hasCreatedEntryBefore: formData.get("hasCreatedEntryBefore") as string,
+      local_created_by_id: formData.get("local_created_by_id") as string,
     };
   }
 

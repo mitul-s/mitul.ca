@@ -11,11 +11,9 @@ import {
 import { getGuestbookEntries } from "@/app/(without-root-layout)/visitors/actions";
 
 function GuestbookEntries() {
-  //   const entries = await getGuestbookEntries();
   const [allEntries] = useAtom(allEntriesAtom);
   const [, setServerEntries] = useAtom(serverEntriesAtom);
   const [, setLocalEntries] = useAtom(localEntriesAtom);
-  //   setServerEntries(entries);
 
   useEffect(() => {
     const fetchEntries = async () => {

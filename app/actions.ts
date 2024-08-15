@@ -6,6 +6,10 @@ import moderateText from "@/lib/openai";
 export async function saveGuestbookEntry(state: unknown, formData: FormData) {
   const created_by = formData.get("created_by")?.toString() || "";
   const signature = formData.get("signature")?.toString() || "";
+  const hasCreatedEntryBefore = formData
+    .get("hasCreatedEntryBefore")
+    ?.toString();
+  const local_created_by_id = formData.get("local_created_by_id")?.toString();
   const entry = formData.get("entry")?.toString() || "";
   const body = entry.slice(0, 500);
 
@@ -16,8 +20,8 @@ export async function saveGuestbookEntry(state: unknown, formData: FormData) {
   }
 
   await sql`
-    INSERT INTO "guestbook" (created_by, body, last_modified, signature) 
-    VALUES (${created_by}, ${body}, ${new Date().toISOString()}, ${signature});
+    INSERT INTO "guestbook" (created_by, body, last_modified, signature, hasCreatedEntryBefore, local_created_by_id) 
+    VALUES (${created_by}, ${body}, ${new Date().toISOString()}, ${signature}, ${hasCreatedEntryBefore}, ${local_created_by_id});
   `;
 
   revalidatePath("/visitors");

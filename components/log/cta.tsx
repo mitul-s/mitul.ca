@@ -11,9 +11,12 @@ import styles from "./log.module.css";
 import { ArrowClockwise } from "@phosphor-icons/react";
 import { validateAndSaveEntry } from "@/app/(without-root-layout)/visitors/actions";
 import Field from "./field";
-import { useSetAtom } from "jotai";
-import { localEntriesAtom } from "@/atoms/guestbook";
-import { revalidatePath } from "next/cache";
+import { useAtom, useSetAtom } from "jotai";
+import {
+  hasCreatedEntryBeforeAtom,
+  localCreatedByIdAtom,
+  localEntriesAtom,
+} from "@/atoms/guestbook";
 
 const transition = {
   type: "spring",
@@ -33,6 +36,12 @@ export default function ToolbarExpandable() {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
+
+  const setLocalEntries = useSetAtom(localEntriesAtom);
+  const [hasCreatedEntryBefore, setHasCreatedEntryBefore] = useAtom(
+    hasCreatedEntryBeforeAtom
+  );
+  const [localCreatedById, setLocalCreatedById] = useAtom(localCreatedByIdAtom);
 
   const buttonText = ["Write me a note", "Next", "Submit", "Thanks!"][step];
 
@@ -174,14 +183,17 @@ export default function ToolbarExpandable() {
       formData.append("created_by", formInfo.created_by);
       formData.append("entry", formInfo.entry);
       formData.append("signature", s);
+      formData.append(
+        "hasCreatedEntryBefore",
+        hasCreatedEntryBefore.toString()
+      );
+      formData.append("local_created_by_id", localCreatedById);
       await handleSubmit(formData);
       return;
     }
 
     setStep((prev) => prev + 1);
   };
-
-  const setLocalEntries = useSetAtom(localEntriesAtom);
 
   const handleSubmit = async (formData: FormData) => {
     const result = await validateAndSaveEntry(formData);
@@ -204,6 +216,8 @@ export default function ToolbarExpandable() {
     setIsOpen(false);
     setLoading(false);
     formRef.current?.reset();
+    setHasCreatedEntryBefore(true);
+    if (!localCreatedById) setLocalCreatedById(crypto.randomUUID());
   };
 
   useClickOutside(ref, () => {
