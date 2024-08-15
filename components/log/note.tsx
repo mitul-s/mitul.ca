@@ -17,7 +17,7 @@ const Note = ({
   return (
     <Drag
       className={cn(
-        "bg-gray-1 text-gray-12 w-fit !max-w-[170px] px-1.5 pt-1.5 pb-2 absolute",
+        "bg-gray-1 text-gray-12 w-fit !max-w-[160px] px-1.5 pt-1.5 pb-2 absolute",
         styles.note
       )}
     >

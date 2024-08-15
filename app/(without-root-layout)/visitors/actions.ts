@@ -3,6 +3,7 @@
 import { z } from "zod";
 import moderateText from "@/lib/openai";
 import { saveGuestbookEntry } from "@/app/actions";
+import { sql } from "@vercel/postgres";
 
 const formSchema = z.object({
   created_by: z
@@ -18,7 +19,7 @@ const formSchema = z.object({
 
 export async function validateAndSaveEntry(
   formData: FormData,
-  validateOnly: boolean = false
+  validateOnly = false
 ) {
   let data: {
     created_by: string;
@@ -57,9 +58,17 @@ export async function validateAndSaveEntry(
 
   if (validateOnly) {
     return { success: true };
-  } else {
-    await saveGuestbookEntry("", formData);
   }
+
+  await saveGuestbookEntry("", formData);
 
   return { success: true };
 }
+
+export const getGuestbookEntries = async () => {
+  const { rows } = await sql`
+    SELECT * from "guestbook" WHERE approved = true ORDER BY last_modified DESC;
+  `;
+
+  return rows;
+};

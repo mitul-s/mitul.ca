@@ -33,12 +33,13 @@ async function GuestbookEntries() {
     await sql`SELECT * from "guestbook" WHERE approved = false ORDER BY last_modified DESC;`;
 
   return rows.map((entry) => (
-    <div className="w-fit h-fit border border-gray-10 p-2">
+    <div key={entry.id} className="w-fit h-fit border border-gray-10 p-2">
       <div className="border border-gray-6 bg-gray-3 rounded-[3px] flex items-center justify-center overflow-hidden">
         <div
           className="object-contain"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: entry.signature }}
-        ></div>
+        />
       </div>
       <div className="w-full text-sm break-words mt-1.5">
         <span className="text-gray-12 text-[14px] mr-1 font-semibold">
