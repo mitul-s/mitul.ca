@@ -55,6 +55,8 @@ const AccordionItem = ({
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm ml-2"
               href={link}
               target="_blank"
+              rel="noopener"
+              aria-label={`Link to ${company} website`}
             >
               <span
                 className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm border border-[transparent] hover:border-gray-12"

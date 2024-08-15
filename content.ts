@@ -2,7 +2,7 @@ export const experiences = [
   {
     company: "Compound",
     role: "Software Engineer",
-    link: "https://compoundplanning.com",
+    link: "https://compoundplanning.com/?ref=mitulca",
     range: "2022 - 2023",
     description:
       "Built charting components, rebuilt the app navigation and worked on improving UX for advisors to thrive in supporting clients",
@@ -10,7 +10,7 @@ export const experiences = [
   },
   {
     company: "Composer",
-    link: "https://composer.trade",
+    link: "https://composer.trade/?ref=mitulca",
     role: "Design Engineer",
     range: "2021 - 2022",
     description:
