@@ -6,6 +6,8 @@ export type Entry = {
   created_by: string;
   body: string;
   signature: string;
+  approved?: boolean;
+  last_modified?: string;
 };
 
 export const serverEntriesAtom = atom<Entry[]>([]);

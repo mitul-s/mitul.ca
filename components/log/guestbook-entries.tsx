@@ -1,14 +1,9 @@
 "use client";
 
-import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { sql } from "@vercel/postgres";
+import { useAtom } from "jotai";
 import Note from "@/components/log/note";
-import {
-  allEntriesAtom,
-  localEntriesAtom,
-  serverEntriesAtom,
-} from "@/atoms/guestbook";
+import { allEntriesAtom, serverEntriesAtom } from "@/atoms/guestbook";
 import { getGuestbookEntries } from "@/app/(without-root-layout)/visitors/actions";
 
 function GuestbookEntries() {
@@ -21,6 +16,7 @@ function GuestbookEntries() {
   useEffect(() => {
     const fetchEntries = async () => {
       const entries = await getGuestbookEntries();
+      // @ts-ignore
       setServerEntries(entries);
     };
 
