@@ -3,14 +3,18 @@
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import Note from "@/components/log/note";
-import { allEntriesAtom, serverEntriesAtom } from "@/atoms/guestbook";
+import {
+  allEntriesAtom,
+  localEntriesAtom,
+  serverEntriesAtom,
+} from "@/atoms/guestbook";
 import { getGuestbookEntries } from "@/app/(without-root-layout)/visitors/actions";
 
 function GuestbookEntries() {
   //   const entries = await getGuestbookEntries();
   const [allEntries] = useAtom(allEntriesAtom);
   const [, setServerEntries] = useAtom(serverEntriesAtom);
-  //   const [, setLocalEntries] = useAtom(localEntriesAtom);
+  const [, setLocalEntries] = useAtom(localEntriesAtom);
   //   setServerEntries(entries);
 
   useEffect(() => {
@@ -18,10 +22,21 @@ function GuestbookEntries() {
       const entries = await getGuestbookEntries();
       // @ts-ignore
       setServerEntries(entries);
+
+      // if entries contains an approved entry that matches an entry in localEntries, remove it
+      setLocalEntries((prev) =>
+        prev.filter(
+          (localEntry) =>
+            !entries.some(
+              (entry) =>
+                entry.signature === localEntry.signature && entry.approved
+            )
+        )
+      );
     };
 
     fetchEntries();
-  }, [setServerEntries]);
+  }, [setServerEntries, setLocalEntries]);
 
   return allEntries.map((entry) => (
     <Note
