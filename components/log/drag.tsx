@@ -9,20 +9,10 @@ import React from "react";
 const Drag = React.memo(
   ({
     children,
-    animate = {
-      x: 0,
-      y: 0,
-      rotate: 0,
-    },
     className,
     ...props
   }: {
     children: React.ReactNode;
-    animate?: {
-      x: number | string;
-      y: number | string;
-      rotate: number | string;
-    };
     className?: string;
   }) => {
     const [zIndex, updateZIndex] = useMaxZIndex();

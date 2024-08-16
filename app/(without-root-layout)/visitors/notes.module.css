@@ -34,9 +34,6 @@
   border-radius: 6px;
   margin: 30px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  @media (max-width: 768px) {
-    margin: 10px;
-  }
 }
 
 .matGrid::after {
@@ -54,6 +51,17 @@
     linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
   background-size: 10vmin 10vmin;
   background-position: center;
+}
+
+@media (max-width: 768px) {
+  .matGrid {
+    background-size: 10vmin 10vmin;
+    margin: 10px;
+  }
+
+  .matGrid:after {
+    background-size: 30vmin 30vmin;
+  }
 }
 
 .matTexture {
@@ -97,14 +105,17 @@
   0% {
     transform: translate(0px, 0px);
     opacity: 0.5;
+    scale: 1.05;
   }
   50% {
-    transform: translate(15px, 10px);
+    transform: translate(20px, 10px);
     opacity: 0.3;
+    scale: 1.05;
   }
   100% {
     transform: translate(30px, 5px);
     opacity: 0.2;
+    scale: 1.05;
   }
 }
 
@@ -183,3 +194,16 @@
   mix-blend-mode: hard-light;
   filter: invert(60%) blur(0.6px);
 }
+
+/* .moreNoise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(/images/024.png);
+  opacity: 0.6;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+*/

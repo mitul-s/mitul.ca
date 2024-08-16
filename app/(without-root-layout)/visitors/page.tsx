@@ -1,10 +1,8 @@
 import { Provider } from "jotai";
 import { cn } from "@/lib/utils";
-import Note from "@/components/log/note";
 import styles from "./notes.module.css";
 import Polaroid from "@/components/log/polaroid";
-import { sql } from "@vercel/postgres";
-import Popover from "@/components/log/cta";
+import WriteNoteCTA from "@/components/log/cta";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import Link from "next/link";
 import { VercelLogo, Sticker, NextWordmark } from "@/components/log/stickers";
@@ -24,12 +22,18 @@ const Page = () => {
             styles.matContainer
           )}
         >
-          <div aria-hidden className={styles.window} />
-          <div aria-hidden className={styles.star}>
-            <Image alt="" width={80} height={80} src="/images/Star_002.png" />
-          </div>
           <div className="z-10">
             <div id="mat-texture" className={styles.matTexture} />
+            <div aria-hidden className={styles.window} />
+            <div aria-hidden className={styles.star}>
+              <Image
+                alt="star drawing"
+                width={80}
+                height={80}
+                src="/images/Star_002.png"
+              />
+            </div>
+            {/* <div aria-hidden className={styles.moreNoise} /> */}
             <div id="mat-grid" className={styles.matGrid}>
               <div id="diagonal-lines" className={styles.diagonalLines} />
             </div>
@@ -76,26 +80,12 @@ const Page = () => {
               <ArrowLeft width={16} height={16} />
               take me home
             </Link>
-            <Popover />
+            <WriteNoteCTA />
           </main>
         </div>
       </div>
     </Provider>
   );
 };
-
-// async function GuestbookEntries() {
-//   const { rows } =
-//     await sql`SELECT * from "guestbook" WHERE approved = true ORDER BY last_modified DESC;`;
-
-//   return rows.map((entry) => (
-//     <Note
-//       key={entry.id}
-//       name={entry.created_by}
-//       content={entry.body}
-//       signature={entry.signature}
-//     />
-//   ));
-// }
 
 export default Page;

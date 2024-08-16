@@ -4,6 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 export type Entry = {
   id: string;
   created_by: string;
+  local_entry_id?: string;
   body: string;
   signature: string;
   approved?: boolean;

@@ -10,7 +10,6 @@ interface FieldProps {
   name: string;
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  autoFocus?: boolean;
 }
 
 const Field = ({
@@ -19,7 +18,6 @@ const Field = ({
   onChange,
   name,
   placeholder,
-  autoFocus,
   ...props
 }: FieldProps) => {
   const id = useId();
@@ -37,7 +35,6 @@ const Field = ({
         required
         autoComplete="off"
         autoCorrect="off"
-        autoFocus={autoFocus}
         className={cn(
           "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-none text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
           styles.input

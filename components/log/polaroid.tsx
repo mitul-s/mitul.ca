@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, getRandomRotation } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./log.module.css";
 import React from "react";
 import Drag from "./drag";
@@ -10,7 +10,7 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <Drag
       className={cn(
-        "p-1 pb-8 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute",
+        "p-1 pb-6 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute",
         styles.polaroid
       )}
     >

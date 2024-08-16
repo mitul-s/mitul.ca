@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import moderateText from "@/lib/openai";
 
 export async function saveGuestbookEntry(state: unknown, formData: FormData) {
+  const local_entry_id = formData.get("local_entry_id")?.toString();
   const created_by = formData.get("created_by")?.toString() || "";
   const signature = formData.get("signature")?.toString() || "";
   const hasCreatedEntryBefore = formData

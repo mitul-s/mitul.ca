@@ -24,7 +24,7 @@ const transition = {
   duration: 0.25,
 };
 
-export default function ToolbarExpandable() {
+export default function WriteNoteCTA() {
   const [step, setStep] = useState<number>(0);
   const [contentRef, { height: heightContent }] = useMeasure();
   const [menuRef, { width: widthContainer }] = useMeasure();
@@ -91,7 +91,6 @@ export default function ToolbarExpandable() {
               name="created_by"
               placeholder="uncle ben"
               onChange={handleCreatedByChange}
-              autoFocus
             />
             <Field
               label="a sweet likkle note"
@@ -152,6 +151,7 @@ export default function ToolbarExpandable() {
   };
 
   const handleClick = async () => {
+    if (!localCreatedById) setLocalCreatedById(crypto.randomUUID());
     if (step === 3) {
       return;
     }
@@ -179,7 +179,9 @@ export default function ToolbarExpandable() {
         setLoading(false);
         return;
       }
+
       const formData = new FormData();
+      formData.append("local_entry_id", crypto.randomUUID());
       formData.append("created_by", formInfo.created_by);
       formData.append("entry", formInfo.entry);
       formData.append("signature", s);
@@ -206,6 +208,7 @@ export default function ToolbarExpandable() {
 
     const newEntry = {
       id: crypto.randomUUID(),
+      local_entry_id: formData.get("local_entry_id") as string,
       created_by: formData.get("created_by") as string,
       body: formData.get("entry") as string,
       signature: formData.get("signature") as string,
@@ -217,7 +220,6 @@ export default function ToolbarExpandable() {
     setLoading(false);
     formRef.current?.reset();
     setHasCreatedEntryBefore(true);
-    if (!localCreatedById) setLocalCreatedById(crypto.randomUUID());
   };
 
   useClickOutside(ref, () => {
@@ -230,7 +232,7 @@ export default function ToolbarExpandable() {
   }, [widthContainer, maxWidth]);
 
   return (
-    <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-50">
+    <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-[300]">
       <div
         className={cn(
           "rounded-6 bg-[#F04F1F] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",

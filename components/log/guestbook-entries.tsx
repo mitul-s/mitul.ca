@@ -27,7 +27,9 @@ function GuestbookEntries() {
           (localEntry) =>
             !entries.some(
               (entry) =>
-                entry.signature === localEntry.signature && entry.approved
+                (entry.local_entry_id === localEntry.local_entry_id &&
+                  entry.approved) ||
+                (entry.signature === localEntry.signature && entry.approved)
             )
         )
       );
@@ -45,19 +47,5 @@ function GuestbookEntries() {
     />
   ));
 }
-
-// async function GuestbookEntries() {
-//   const { rows } =
-//     await sql`SELECT * from "guestbook" WHERE approved = true ORDER BY last_modified DESC;`;
-
-//   return rows.map((entry) => (
-//     <Note
-//       key={entry.id}
-//       name={entry.created_by}
-//       content={entry.body}
-//       signature={entry.signature}
-//     />
-//   ));
-// }
 
 export default GuestbookEntries;

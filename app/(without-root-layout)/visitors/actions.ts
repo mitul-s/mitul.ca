@@ -23,6 +23,7 @@ export async function validateAndSaveEntry(
 ) {
   let data: {
     created_by: string;
+    local_entry_id?: string;
     entry: string;
     signature?: string;
     hasCreatedEntryBefore?: string;
@@ -36,6 +37,7 @@ export async function validateAndSaveEntry(
   } else {
     data = {
       created_by: formData.get("created_by") as string,
+      local_entry_id: formData.get("local_entry_id") as string,
       entry: formData.get("entry") as string,
       signature: formData.get("signature") as string,
       hasCreatedEntryBefore: formData.get("hasCreatedEntryBefore") as string,
