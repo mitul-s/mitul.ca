@@ -10,18 +10,22 @@ const Drag = React.memo(
   ({
     children,
     className,
+    initialX,
+    initialY,
     ...props
   }: {
     children: React.ReactNode;
     className?: string;
+    initialX?: number;
+    initialY?: number;
   }) => {
     const [zIndex, updateZIndex] = useMaxZIndex();
     const controls = useAnimation();
     const r = getRandomRotation();
     const [initialRotate] = useState(r);
     const [x, y] = [
-      Math.floor(Math.random() * 1000),
-      Math.floor(Math.random() * 1000),
+      initialX ?? Math.floor(Math.random() * 1000),
+      initialY ?? Math.floor(Math.random() * 1000),
     ];
 
     const handleDragEnd = (event: MouseEvent, info: PanInfo) => {

@@ -12,13 +12,21 @@ const Note = React.memo(
     name,
     content,
     signature,
+    initialX,
+    initialY,
   }: {
     name: string;
     content: string;
     signature: string;
+    initialX?: number;
+    initialY?: number;
   }) => {
     return (
-      <Drag className={cn("absolute z-10 max-w-[200px]")}>
+      <Drag
+        className={cn("absolute z-10 max-w-[200px]")}
+        initialX={initialX}
+        initialY={initialY}
+      >
         <motion.div
           initial={{ opacity: 0, y: 2 }}
           animate={{ opacity: 1, y: 0 }}

@@ -197,6 +197,9 @@ export default function WriteNoteCTA() {
     setStep((prev) => prev + 1);
   };
 
+  const getRandomPosition = (min: number, max: number) =>
+    Math.random() * (max - min) + min;
+
   const handleSubmit = async (formData: FormData) => {
     const result = await validateAndSaveEntry(formData);
     if (!result.success) {
@@ -212,6 +215,8 @@ export default function WriteNoteCTA() {
       created_by: formData.get("created_by") as string,
       body: formData.get("entry") as string,
       signature: formData.get("signature") as string,
+      initialX: getRandomPosition(100, window.innerWidth - 100),
+      initialY: getRandomPosition(100, window.innerHeight - 100),
     };
     setLocalEntries((prev) => [newEntry, ...prev]);
 

@@ -2,6 +2,10 @@ import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export type Entry = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  initialX?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  initialY?: any;
   id: string;
   created_by: string;
   local_entry_id?: string;
