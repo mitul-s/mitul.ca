@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mitul Shah",
     description: "Design engineer, photographer, and a bit more.",
-    images: "/og.png",
+    images: "/og-2.png",
     url: "https://mitul.ca",
   },
   alternates: {
