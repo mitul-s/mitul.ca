@@ -35,7 +35,7 @@ const Note = React.memo(
               )}
             >
               <div
-                className="object-contain z-10 scale-75"
+                className="object-contain z-10"
                 // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                 dangerouslySetInnerHTML={{ __html: signature }}
               />
