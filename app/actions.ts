@@ -14,15 +14,9 @@ export async function saveGuestbookEntry(state: unknown, formData: FormData) {
   const entry = formData.get("entry")?.toString() || "";
   const body = entry.slice(0, 500);
 
-  const valid = await moderateText(body);
-
-  if (!valid) {
-    throw new Error("Entry contains inappropriate");
-  }
-
   await sql`
-    INSERT INTO "guestbook" (created_by, body, last_modified, signature, hasCreatedEntryBefore, local_created_by_id) 
-    VALUES (${created_by}, ${body}, ${new Date().toISOString()}, ${signature}, ${hasCreatedEntryBefore}, ${local_created_by_id});
+    INSERT INTO "guestbook" (created_by, body, last_modified, signature, hasCreatedEntryBefore, local_created_by_id, local_entry_id) 
+    VALUES (${created_by}, ${body}, ${new Date().toISOString()}, ${signature}, ${hasCreatedEntryBefore}, ${local_created_by_id}, ${local_entry_id});
   `;
 
   revalidatePath("/visitors");
