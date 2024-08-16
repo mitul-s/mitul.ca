@@ -24,7 +24,7 @@ const Note = React.memo(
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           className={cn(
-            "bg-gray-1 text-gray-12 w-fit !max-w-[160px] px-1.5 pt-1.5 pb-2 !scale-75",
+            "bg-gray-1 text-gray-12 w-fit !max-w-[160px] px-1.5 pt-1.5 pb-2 !scale-75 transition-shadow duration-300 ease-out hover:shadow-md",
             styles.note
           )}
         >

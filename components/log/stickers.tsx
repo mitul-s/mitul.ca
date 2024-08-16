@@ -1,6 +1,5 @@
 "use client";
 
-import { getRandomRotation } from "@/lib/utils";
 import Drag from "./drag";
 
 const NextWordmark = () => {
@@ -57,7 +56,7 @@ const VercelLogo = ({ ...props }) => {
 };
 
 const Sticker = ({ children }: { children: React.ReactNode }) => {
-  return <Drag className="absolute">{children}</Drag>;
+  return <Drag className="absolute drop-shadow-sm">{children}</Drag>;
 };
 
 export { VercelLogo, Sticker, NextWordmark };

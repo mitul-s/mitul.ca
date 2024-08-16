@@ -10,7 +10,7 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <Drag
       className={cn(
-        "p-1 pb-6 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-none absolute",
+        "p-1 pb-6 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-md absolute",
         styles.polaroid
       )}
     >
