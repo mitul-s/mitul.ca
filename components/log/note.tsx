@@ -23,7 +23,7 @@ const Note = React.memo(
   }) => {
     return (
       <Drag
-        className={cn("absolute z-10 max-w-[200px]")}
+        className={cn("z-10 max-w-[200px]")}
         initialX={initialX}
         initialY={initialY}
       >

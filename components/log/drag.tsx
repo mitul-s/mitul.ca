@@ -47,7 +47,10 @@ const Drag = React.memo(
       <motion.div
         drag
         dragElastic={0.2}
-        className={cn("select-none w-fit h-fit drag-elements", className)}
+        className={cn(
+          "select-none w-fit h-fit drag-elements absolute",
+          className
+        )}
         dragTransition={{ power: 0.2, timeConstant: 200 }}
         onMouseDown={updateZIndex}
         onTouchStart={updateZIndex}
@@ -59,9 +62,6 @@ const Drag = React.memo(
           y,
         }}
         style={{
-          // rotate: animate.rotate,
-          // top: animate.y,
-          // left: animate.x,
           zIndex,
         }}
         {...props}
