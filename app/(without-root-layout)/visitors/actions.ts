@@ -5,7 +5,7 @@ import moderateText from "@/lib/openai";
 import { saveGuestbookEntry } from "@/app/actions";
 import { sql } from "@vercel/postgres";
 
-const formSchema = z.object({
+const GuestbookEntrySchema = z.object({
   created_by: z
     .string()
     .min(1, "pls fill out all fields")
@@ -14,39 +14,32 @@ const formSchema = z.object({
     .string()
     .min(1, "pls fill out all fields")
     .max(200, "love ur long entry, but can u make it shorter?"),
+
   signature: z.string().optional(),
+  local_entry_id: z.string().optional(),
+  hasCreatedEntryBefore: z.string().optional(),
+  local_created_by_id: z.string().optional(),
 });
 
 export async function validateAndSaveEntry(
   formData: FormData,
   validateOnly = false
 ) {
-  let data: {
-    created_by: string;
-    local_entry_id?: string;
-    entry: string;
-    signature?: string;
-    hasCreatedEntryBefore?: string;
-    local_created_by_id?: string;
-  };
-  if (validateOnly) {
-    data = {
-      created_by: formData.get("created_by") as string,
-      entry: formData.get("entry") as string,
-    };
-  } else {
-    data = {
-      created_by: formData.get("created_by") as string,
-      local_entry_id: formData.get("local_entry_id") as string,
-      entry: formData.get("entry") as string,
-      signature: formData.get("signature") as string,
-      hasCreatedEntryBefore: formData.get("hasCreatedEntryBefore") as string,
-      local_created_by_id: formData.get("local_created_by_id") as string,
-    };
-  }
-
   try {
-    formSchema.parse(data);
+    const data = GuestbookEntrySchema.parse(Object.fromEntries(formData));
+
+    const isModerated = await moderateText(data.entry);
+    if (!isModerated) {
+      return { success: false, errors: { entry: ["let's keep it clean"] } };
+    }
+
+    if (validateOnly) {
+      return { success: true };
+    }
+
+    await saveGuestbookEntry("", formData);
+
+    return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, errors: error.flatten().fieldErrors };
@@ -56,19 +49,6 @@ export async function validateAndSaveEntry(
       errors: { form: ["An unexpected error occurred"] },
     };
   }
-
-  const isModerated = await moderateText(data.entry);
-  if (!isModerated) {
-    return { success: false, errors: { entry: ["let's keep it clean"] } };
-  }
-
-  if (validateOnly) {
-    return { success: true };
-  }
-
-  await saveGuestbookEntry("", formData);
-
-  return { success: true };
 }
 
 export const getGuestbookEntries = async () => {
