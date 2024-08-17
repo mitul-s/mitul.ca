@@ -44,8 +44,8 @@ function GuestbookEntries() {
       name={entry.created_by}
       content={entry.body}
       signature={entry.signature}
-      initialX={entry.initialX ? entry.initialX : undefined}
-      initialY={entry.initialY ? entry.initialY : undefined}
+      initialX={entry.initialX}
+      initialY={entry.initialY}
     />
   ));
 }
