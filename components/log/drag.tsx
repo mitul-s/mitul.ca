@@ -50,6 +50,7 @@ const Drag = React.memo(
         className={cn("select-none w-fit h-fit drag-elements", className)}
         dragTransition={{ power: 0.2, timeConstant: 200 }}
         onMouseDown={updateZIndex}
+        onTouchStart={updateZIndex}
         onDragEnd={handleDragEnd}
         animate={controls}
         initial={{
