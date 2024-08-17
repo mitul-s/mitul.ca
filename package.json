@@ -11,6 +11,8 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.35",
     "@ai-sdk/openai": "^0.0.40",
+    "@liveblocks/client": "^2.5.1",
+    "@liveblocks/react": "^2.5.1",
     "@phosphor-icons/react": "^2.0.13",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
