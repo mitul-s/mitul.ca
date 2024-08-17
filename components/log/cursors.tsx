@@ -19,7 +19,7 @@ const Cursors = () => {
   const userCount = others.length;
   return (
     <div
-      className="absolute inset-0 flex flex-col items-center justify-center z-[1000] isolate"
+      className="absolute inset-0 flex flex-col items-center justify-center isolate select-none touch-none"
       onPointerMove={(event) => {
         // Update the user cursor position on every pointer move
         updateMyPresence({
