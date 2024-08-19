@@ -30,6 +30,8 @@ const config: Config = {
     borderRadius: {
       sm: "1px",
       md: "2px",
+      "4": "4px",
+      "6": "6px",
       full: "9999px",
     },
     extend: {

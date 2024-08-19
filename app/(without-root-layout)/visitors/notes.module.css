@@ -1,0 +1,209 @@
+.matContainer {
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2),
+    0 16px 32px rgba(0, 0, 0, 0.2);
+  background-color: #0a4a31;
+}
+
+.matContainer:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1.5px #fff6;
+}
+
+.matGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 2vmin 2vmin;
+  background-position: center;
+  border-radius: 6px;
+  margin: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.matGrid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 10vmin 10vmin;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .matGrid {
+    background-size: 10vmin 10vmin;
+    margin: 10px;
+  }
+
+  .matGrid:after {
+    background-size: 30vmin 30vmin;
+  }
+}
+
+.matTexture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    url(/noise.svg);
+  opacity: 0.75;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(/images/Layer-88.png);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  pointer-events: none;
+  mix-blend-mode: normal;
+  z-index: 10000;
+  animation: window-shadow 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite
+    alternate;
+  border-radius: 10px;
+  user-select: none;
+}
+
+@keyframes window-shadow {
+  0% {
+    transform: translate(0px, 0px);
+    opacity: 0.5;
+    scale: 1.05;
+  }
+  50% {
+    transform: translate(20px, 10px);
+    opacity: 0.3;
+    scale: 1.05;
+  }
+  100% {
+    transform: translate(30px, 5px);
+    opacity: 0.2;
+    scale: 1.05;
+  }
+}
+
+.diagonalLines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      45deg,
+      transparent 49.5%,
+      rgba(255, 255, 255, 0.2) 49.5%,
+      rgba(255, 255, 255, 0.2) 50.5%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49.5%,
+      rgba(255, 255, 255, 0.2) 49.5%,
+      rgba(255, 255, 255, 0.2) 50.5%,
+      transparent 50.5%
+    );
+  background-size: 10vmin 10vmin;
+  background-position: center;
+  pointer-events: none;
+}
+
+.clip {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  transform: rotate(-8deg);
+}
+
+.homeBtn {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset,
+    inset 0 1px 0 0 #ffffff52;
+}
+
+.stamp {
+  position: absolute;
+  top: 5vmin;
+  right: 5vmin;
+  width: 11vmin;
+  height: 11vmin;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5);
+  word-wrap: break-word;
+  word-spacing: 1vmin;
+  text-transform: uppercase;
+  text-align: center;
+  transform: rotate(15deg);
+  font-weight: 600;
+  font-size: 1.25vmin;
+  letter-spacing: -0.05px;
+  user-select: none;
+}
+
+.star {
+  position: absolute;
+  bottom: 3.5vmin;
+  left: 5vmin;
+  width: 11vmin;
+  height: 11vmin;
+  transform: rotate(-15deg);
+  mix-blend-mode: hard-light;
+  filter: invert(60%) blur(0.6px);
+}
+
+/* .moreNoise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(/images/024.png);
+  opacity: 0.6;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+*/

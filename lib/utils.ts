@@ -13,3 +13,9 @@ export function pick(object: Record<string, any>, keys: string[]) {
     return obj;
   }, {} as Record<string, any>);
 }
+
+export const getRandomRotation = () => {
+  const isNegative = Math.random() < 0.5;
+  const angle = Math.floor(Math.random() * 60);
+  return isNegative ? -angle : angle;
+};

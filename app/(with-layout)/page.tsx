@@ -3,6 +3,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Copy,
+  ScribbleLoop,
 } from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
 import { MusicCard, ReadingCard } from "@/components/hover-card";
@@ -19,6 +20,7 @@ import Gallery from "@/components/gallery";
 import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
 import { Mood } from "@/components/listening-mood";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -70,7 +72,7 @@ const Items = () => {
   return (
     <Section>
       <h1 className="font-medium flex items-center gap-x-1.5">
-        <span className="inline-block w-2 h-2 rounded-full bg-accent"></span>
+        <span className="inline-block w-2 h-2 rounded-full bg-accent" />
         Mitul Shah
       </h1>
       <p className="mt-1 text-gray-9">
@@ -96,8 +98,11 @@ const Items = () => {
             Learn a bit more
             <ArrowRight size={12} aria-hidden={true} />
           </LinkPrimitive>
-          <ContactItem icon={<Copy />} className="text-sm">
+          {/* <ContactItem icon={<Copy />} className="text-sm">
             <ContactCopyItem title="Email me" copy="mitulxshah@gmail.com" />
+          </ContactItem> */}
+          <ContactItem icon={<ScribbleLoop />}>
+            <Link href="/visitors">Sign the visitor's log</Link>
           </ContactItem>
         </div>
       </div>
@@ -144,6 +149,7 @@ const Projects = () => {
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
               href="https://placestoread.xyz"
               target="_blank"
+              rel="noreferrer"
             >
               Live{" "}
               <span
@@ -157,6 +163,7 @@ const Projects = () => {
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
               href="https://github.com/mitul-s/placestoread"
               target="_blank"
+              rel="noreferrer"
             >
               Code{" "}
               <span
@@ -185,6 +192,7 @@ const Projects = () => {
               className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
               href="https://typicalmitul.com/montreal-in-motion"
               target="_blank"
+              rel="noreferrer"
             >
               Live{" "}
               <span className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm">
