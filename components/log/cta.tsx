@@ -323,7 +323,7 @@ export default function WriteNoteCTA() {
                               )}
                               {step === 2 && (
                                 <motion.div
-                                  className="absolute -top-12 w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition"
+                                  className="absolute -top-[4.5rem] w-full left-0 bg-[#101B1D] text-[1rem] rounded-6 shadow-lg px-4 py-2 font-medium text-center transition"
                                   style={{
                                     textWrap: "balance",
                                   }}
@@ -337,7 +337,8 @@ export default function WriteNoteCTA() {
                                     },
                                   }}
                                 >
-                                  why not a little drawing as well!
+                                  why not a little drawing as well!{" "}
+                                  <span>be creative!!</span>
                                 </motion.div>
                               )}
                             </AnimatePresence>
