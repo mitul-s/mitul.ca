@@ -103,7 +103,7 @@ export default function WriteNoteCTA() {
         );
       case 2:
         return (
-          <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative h-36 sm:h-auto">
+          <div className="rounded-6 overflow-hidden bg-gray-1 p-0.5 flex flex-col relative h-36">
             <Signature
               ref={svgRef}
               options={{
