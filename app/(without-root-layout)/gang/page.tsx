@@ -42,7 +42,7 @@ function getColor(id: string) {
 
 async function GuestbookEntries() {
   const { rows } =
-    await sql`SELECT * from "guestbook" WHERE approved = false ORDER BY last_modified DESC;`;
+    await sql`SELECT * from "guestbook" WHERE approved = false ORDER BY id DESC;`;
 
   return rows.map((entry) => (
     <div key={entry.id} className="w-fit h-fit border border-gray-10 p-2">
