@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import React, { Suspense } from "react";
 import {
   ArrowRight,
@@ -21,7 +22,7 @@ import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
 import { Mood } from "@/components/listening-mood";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const Photography = () => {
   return (
@@ -253,6 +254,7 @@ const Projects = () => {
 };
 
 const Currently = async () => {
+  noStore();
   const { reading } = await getShelves();
   const { data: song } = await getLastPlayed();
   const filter = new Filter();

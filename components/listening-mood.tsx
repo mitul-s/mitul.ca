@@ -11,7 +11,7 @@ async function getMood() {
   const now = Date.now();
   const fiveHoursAgo = now - ms("5h");
 
-  if (mood && timestamp && parseInt(timestamp) > fiveHoursAgo) {
+  if (mood && timestamp && Number.parseInt(timestamp) > fiveHoursAgo) {
     return { mood: mood, cached: true };
   }
 
@@ -36,7 +36,19 @@ export const Mood = async () => {
   return <span>{mood}</span>;
 };
 
-function stripObjProps(arr: any[]) {
+interface TrackFeatures {
+  danceability: number;
+  energy: number;
+  loudness: number;
+  speechiness: number;
+  acousticness: number;
+  instrumentalness: number;
+  liveness: number;
+  valence: number;
+  tempo: number;
+}
+
+function stripObjProps(arr: TrackFeatures[]) {
   return arr.map((item) =>
     pick(item, [
       "danceability",
