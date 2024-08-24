@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container :global(.note-item) {
+  box-shadow: none;
+  transform: none !important;
+  max-width: 100% !important;
+}

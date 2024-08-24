@@ -53,7 +53,11 @@ export async function validateAndSaveEntry(
 
 export const getGuestbookEntries = async () => {
   const { rows } = await sql`
-    SELECT * from "guestbook" WHERE approved = true ORDER BY last_modified DESC;
+    SELECT * FROM "guestbook"
+    TABLESAMPLE BERNOULLI (100)
+    WHERE approved = true
+    ORDER BY RANDOM()
+    LIMIT 35;
   `;
 
   return rows;

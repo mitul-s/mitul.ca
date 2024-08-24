@@ -80,6 +80,16 @@ const Page = () => {
               <ArrowLeft width={16} height={16} />
               take me home
             </Link>
+            {/* <Link
+              href="/visitors/all"
+              className={cn(
+                "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit z-50 absolute bottom-4 right-4 sm:bottom-10 sm:right-10",
+                styles.homeBtn
+              )}
+            >
+              <ArrowLeft width={16} height={16} />
+              see all notes
+            </Link> */}
             <WriteNoteCTA />
           </main>
         </div>
