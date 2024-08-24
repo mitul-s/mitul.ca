@@ -25,7 +25,7 @@ const Drag = React.memo(
     const [initialRotate] = useState(r);
     const [x, y] = [
       initialX ?? Math.floor(Math.random() * 1300),
-      initialY ?? Math.floor(Math.random() * 1300),
+      initialY ?? Math.floor(Math.random() * 900),
     ];
 
     const handleDragEnd = (event: MouseEvent, info: PanInfo) => {

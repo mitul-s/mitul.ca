@@ -20,7 +20,6 @@ import Gallery from "@/components/gallery";
 import Section from "@/components/section";
 import Skeleton from "@/components/skeleton";
 import { Mood } from "@/components/listening-mood";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -98,11 +97,13 @@ const Items = () => {
             Learn a bit more
             <ArrowRight size={12} aria-hidden={true} />
           </LinkPrimitive>
-          {/* <ContactItem icon={<Copy />} className="text-sm">
+
+          <LinkPrimitive href="/visitors" variant="route">
+            Sign the visitor's log
+            <ScribbleLoop size={12} aria-hidden={true} />
+          </LinkPrimitive>
+          <ContactItem icon={<Copy />} className="text-sm">
             <ContactCopyItem title="Email me" copy="mitulxshah@gmail.com" />
-          </ContactItem> */}
-          <ContactItem icon={<ScribbleLoop />}>
-            <Link href="/visitors">Sign the visitor's log</Link>
           </ContactItem>
         </div>
       </div>
