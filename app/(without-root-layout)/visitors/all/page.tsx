@@ -2,7 +2,7 @@ import Note from "@/components/log/note";
 import { cn } from "@/lib/utils";
 import { sql } from "@vercel/postgres";
 import styles from "./visitors-all.module.css";
-import Link from "next/link";
+import LinkPrimitive from "@/components/link-primitive";
 
 export default async function Page() {
   const entries = await getGuestbookEntries();
@@ -12,9 +12,23 @@ export default async function Page() {
   }
 
   return (
-    <div className="text-gray-10">
-      <Link href="/visitors">Return to the visitor's log</Link>
-      <Link href="/">Return home</Link>
+    <div className="relative">
+      <div className="fixed top-8 left-8 text-gray-2 z-10 isolate flex gap-x-4">
+        <LinkPrimitive
+          href="/visitors"
+          variant="route"
+          className="rounded-full text-gray-12 px-3 shadow-md font-medium"
+        >
+          return to the visitor's log
+        </LinkPrimitive>
+        <LinkPrimitive
+          href="/"
+          variant="route"
+          className="rounded-full text-gray-12 px-3 shadow-md font-medium"
+        >
+          return home
+        </LinkPrimitive>
+      </div>
       <div
         className={cn(
           "flex flex-wrap gap-x-8 gap-y-8 [&>*]:!relative [&>*]:!rotate-0 py-12",
