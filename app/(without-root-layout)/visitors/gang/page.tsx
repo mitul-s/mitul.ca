@@ -9,7 +9,7 @@ export default function ProtectedPage() {
   const isAuthenticated = cookieStore.get("auth");
 
   if (!isAuthenticated) {
-    redirect("/login");
+    redirect("/visitors/login");
   }
 
   return (

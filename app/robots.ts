@@ -4,8 +4,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: ["/private/", "/gang", "/api/*", "/login"],
+      allow: ["/", "/visitors"],
+      disallow: ["/private/", "/visitors/*", "/api/*"],
     },
   };
 }

@@ -16,7 +16,7 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      router.push("/gang");
+      router.push("/visitors/gang");
     } else {
       alert("Incorrect password");
     }

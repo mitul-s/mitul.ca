@@ -37,3 +37,10 @@ export async function declineGuestbookEntry(id: string) {
 
   revalidatePath("/visitors");
 }
+
+export async function getNomadListData() {
+  const data = fetch("https://nomadlist.com/@typicalmitul.json").then((res) =>
+    res.json()
+  );
+  return data;
+}
