@@ -1,7 +1,6 @@
 "use server";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import moderateText from "@/lib/openai";
 
 export async function saveGuestbookEntry(state: unknown, formData: FormData) {
   const local_entry_id = formData.get("local_entry_id")?.toString();
@@ -36,11 +35,4 @@ export async function declineGuestbookEntry(id: string) {
   `;
 
   revalidatePath("/visitors");
-}
-
-export async function getNomadListData() {
-  const data = fetch("https://nomadlist.com/@typicalmitul.json").then((res) =>
-    res.json()
-  );
-  return data;
 }
