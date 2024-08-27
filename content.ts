@@ -1,5 +1,11 @@
 export const experiences = [
   {
+    company: "Vercel",
+    role: "Design Engineer",
+    range: "2024 - today",
+    description: "Building for the future of the web while doing my best work",
+  },
+  {
     company: "Compound",
     role: "Software Engineer",
     link: "https://compoundplanning.com/?ref=mitulca",
