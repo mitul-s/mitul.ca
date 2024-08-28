@@ -57,7 +57,7 @@ export const getGuestbookEntries = async () => {
     TABLESAMPLE BERNOULLI (100)
     WHERE approved = true
     ORDER BY RANDOM()
-    LIMIT 30;
+    LIMIT 25;
   `;
 
   return rows;
