@@ -4,6 +4,7 @@ import styles from "./notes.module.css";
 import Polaroid from "@/components/log/polaroid";
 import WriteNoteCTA from "@/components/log/cta";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import Link from "next/link";
 import { VercelLogo, Sticker, NextWordmark } from "@/components/log/stickers";
 import Image from "next/image";
@@ -80,16 +81,16 @@ const Page = () => {
               <ArrowLeft width={16} height={16} />
               take me home
             </Link>
-            {/* <Link
+            <Link
               href="/visitors/all"
               className={cn(
-                "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit z-50 absolute bottom-4 right-4 sm:bottom-10 sm:right-10",
+                "mr-auto rounded-full bg-[#027582] hover:bg-[#027582]/90 transition hover:scale-105 hover:-rotate-6 px-3 py-1.5 flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold w-fit h-fit z-50 absolute top-14 left-4 sm:bottom-10 sm:right-10 sm:left-auto sm:top-auto",
                 styles.homeBtn
               )}
             >
-              <ArrowLeft width={16} height={16} />
               see all notes
-            </Link> */}
+              <ArrowRight width={16} height={16} />
+            </Link>
             <WriteNoteCTA />
           </main>
         </div>
