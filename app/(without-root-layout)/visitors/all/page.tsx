@@ -3,14 +3,9 @@ import { cn } from "@/lib/utils";
 import { sql } from "@vercel/postgres";
 import styles from "./visitors-all.module.css";
 import LinkPrimitive from "@/components/link-primitive";
+import { Suspense } from "react";
 
-export default async function Page() {
-  const entries = await getGuestbookEntries();
-
-  if (!entries.length) {
-    return <p>No entries found.</p>;
-  }
-
+export default function Page() {
   return (
     <div className="relative">
       <div className="fixed top-8 left-8 text-gray-2 z-10 isolate flex gap-x-4">
@@ -29,21 +24,35 @@ export default async function Page() {
           return home
         </LinkPrimitive>
       </div>
-      <div
-        className={cn(
-          "flex flex-wrap gap-x-8 gap-y-8 [&>*]:!relative [&>*]:!rotate-0 py-12",
-          styles.container
-        )}
-      >
-        {entries.map((entry) => (
-          <Note
-            key={entry.id}
-            name={entry.created_by}
-            content={entry.body}
-            signature={entry.signature}
-          />
-        ))}
-      </div>
+      <Suspense fallback={<p>Loading entries...</p>}>
+        <EntriesList />
+      </Suspense>
+    </div>
+  );
+}
+
+async function EntriesList() {
+  const entries = await getGuestbookEntries();
+
+  if (!entries.length) {
+    return <p>No entries found.</p>;
+  }
+
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap gap-x-8 gap-y-8 [&>*]:!relative [&>*]:!rotate-0 py-12",
+        styles.container
+      )}
+    >
+      {entries.map((entry) => (
+        <Note
+          key={entry.id}
+          name={entry.created_by}
+          content={entry.body}
+          signature={entry.signature}
+        />
+      ))}
     </div>
   );
 }
