@@ -18,6 +18,7 @@ const Tiptap = ({
         class: "h-full outline-none",
       },
     },
+    immediatelyRender: false,
     onUpdate({ editor }) {
       onChange(editor.getHTML());
       console.log(editor.getHTML());
