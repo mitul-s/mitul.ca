@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface Journal {
   id: number;
   title: string;
 }
 
-export default function JournalSelector({ journals }: { journals: Journal[] }) {
+function JournalSelectorInner({ journals }: { journals: Journal[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedJournal = searchParams.get("journal") || "movies";
@@ -33,5 +34,13 @@ export default function JournalSelector({ journals }: { journals: Journal[] }) {
         </button>
       ))}
     </div>
+  );
+}
+
+export default function JournalSelector({ journals }: { journals: Journal[] }) {
+  return (
+    <Suspense fallback={<div>Loading journals...</div>}>
+      <JournalSelectorInner journals={journals} />
+    </Suspense>
   );
 }
