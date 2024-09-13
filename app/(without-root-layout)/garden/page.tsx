@@ -21,16 +21,18 @@ const Page = ({
   const authenticated = isAuthenticated();
   const selectedJournal = searchParams.journal || "movies"; // Default to "movies" if no journal is selected
   return (
-    <>
-      <div className="w-96">
-        {authenticated && <EntryForm journal={selectedJournal} />}
-      </div>
+    <div className="flex flex-col gap-y-6">
+      {authenticated && (
+        <div className="w-96">
+          <EntryForm journal={selectedJournal} />
+        </div>
+      )}
       <div className="flex gap-4">
         <Suspense fallback="loading">
           <Entries journal={selectedJournal} />
         </Suspense>
       </div>
-    </>
+    </div>
   );
 };
 
