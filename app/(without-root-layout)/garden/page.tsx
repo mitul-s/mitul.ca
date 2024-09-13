@@ -1,9 +1,11 @@
-import { getEntries } from "@/app/actions";
-import { format } from "date-fns";
+import { getJournalEntries } from "@/app/actions";
+import { format, isValid, parseISO } from "date-fns";
 import { Suspense } from "react";
 import EntryForm from "@/components/garden/entry-form";
 import { sanitize } from "isomorphic-dompurify";
 import { cookies } from "next/headers";
+import Link from "next/link";
+import Time from "@/components/garden/time";
 
 const isAuthenticated = () => {
   const cookieStore = cookies();
@@ -15,8 +17,9 @@ const Page = () => {
   return (
     <main className="p-4 py-10 h-screen md:p-12 text-gray-11">
       <p>garden</p>
-      {authenticated && <EntryForm />}
-      <Suspense fallback={<p>Loading entries...</p>}>
+      <h2 className="font-medium">movies</h2>
+      <div className="w-96">{authenticated && <EntryForm />}</div>
+      <Suspense fallback="loading">
         <Entries />
       </Suspense>
     </main>
@@ -24,21 +27,24 @@ const Page = () => {
 };
 
 const Entries = async () => {
-  const entries = await getEntries("movies");
+  const entries = await getJournalEntries("movies");
+
   return (
-    <div>
-      {entries.map((entry) => (
-        <div className="flex gap-x-1.5" key={entry.id}>
-          <time className="text-gray-10">
-            {format(entry.last_modified, "MMM d, yyyy '@' h:mm a")}
-          </time>
-          <div
-            className="text-[black]"
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-            dangerouslySetInnerHTML={{ __html: sanitize(entry.body) }}
-          />
-        </div>
-      ))}
+    <div className="flex flex-col gap-y-2">
+      {entries.map((entry) => {
+        return (
+          <div className="flex gap-x-1.5" key={entry.id}>
+            <Link href={`/garden/i/${entry.id}`}>
+              <Time date={entry.created_at} />
+            </Link>
+            <div
+              className="text-[black]"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+              dangerouslySetInnerHTML={{ __html: sanitize(entry.content) }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

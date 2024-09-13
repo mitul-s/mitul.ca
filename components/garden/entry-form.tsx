@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { createEntry } from "@/app/actions";
+import { createJournalEntry } from "@/app/actions";
 import {
   Form,
   FormControl,
@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Tiptap from "@/components/garden/tip-tap";
+import type { Editor } from "@tiptap/react";
 
 const formSchema = z.object({
   description: z
@@ -33,14 +34,16 @@ export default function EntryForm() {
     },
   });
 
+  const editorRef = useRef<Editor | null>(null);
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     const formData = new FormData();
-    formData.append("entry", values.description);
+    formData.append("content", values.description);
 
     try {
-      await createEntry("movies", formData);
+      await createJournalEntry("movies", formData);
       form.reset();
+      editorRef.current?.commands.setContent("");
     } catch (error) {
       console.error("Failed to submit entry:", error);
     } finally {
@@ -58,7 +61,11 @@ export default function EntryForm() {
             <FormItem>
               <FormLabel>New Entry</FormLabel>
               <FormControl>
-                <Tiptap description={field.value} onChange={field.onChange} />
+                <Tiptap
+                  description={field.value}
+                  onChange={field.onChange}
+                  editorRef={editorRef}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
