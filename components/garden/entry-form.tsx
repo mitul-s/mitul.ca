@@ -24,7 +24,7 @@ const formSchema = z.object({
     .trim(),
 });
 
-export default function EntryForm() {
+export default function EntryForm({ journal }: { journal: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +41,7 @@ export default function EntryForm() {
     formData.append("content", values.description);
 
     try {
-      await createJournalEntry("movies", formData);
+      await createJournalEntry(journal, formData);
       form.reset();
       editorRef.current?.commands.setContent("");
     } catch (error) {

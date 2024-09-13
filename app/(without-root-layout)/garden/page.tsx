@@ -1,8 +1,6 @@
 import { getJournalEntries, getJournals } from "@/app/actions";
-import { format, isValid, parseISO } from "date-fns";
 import { Suspense } from "react";
 import EntryForm from "@/components/garden/entry-form";
-import { sanitize } from "isomorphic-dompurify";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Time from "@/components/garden/time";
@@ -13,25 +11,31 @@ const isAuthenticated = () => {
   return !!cookieStore.get("auth");
 };
 
-const Page = () => {
+const Page = ({
+  searchParams,
+}: {
+  searchParams: {
+    journal: string;
+  };
+}) => {
   const authenticated = isAuthenticated();
+  const selectedJournal = searchParams.journal || "movies"; // Default to "movies" if no journal is selected
   return (
     <>
-      <p>garden</p>
-      <h2 className="font-medium">movies</h2>
-      <div className="w-96">{authenticated && <EntryForm />}</div>
-      <Suspense fallback="loading">
-        <Journals />
-      </Suspense>
-      <Suspense fallback="loading">
-        <Entries />
-      </Suspense>
+      <div className="w-96">
+        {authenticated && <EntryForm journal={selectedJournal} />}
+      </div>
+      <div className="flex gap-4">
+        <Suspense fallback="loading">
+          <Entries journal={selectedJournal} />
+        </Suspense>
+      </div>
     </>
   );
 };
 
-const Entries = async () => {
-  const entries = await getJournalEntries("movies");
+const Entries = async ({ journal }: { journal: string }) => {
+  const entries = await getJournalEntries(journal);
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -46,21 +50,6 @@ const Entries = async () => {
             </Link>
             <ContentBlock>{entry.content}</ContentBlock>
           </div>
-        );
-      })}
-    </div>
-  );
-};
-
-const Journals = async () => {
-  const journals = await getJournals();
-  return (
-    <div className="flex gap-x-1.5">
-      {journals.map((journal) => {
-        return (
-          <Link key={journal.id} href={`/garden/${journal.title}`}>
-            {journal.title}
-          </Link>
         );
       })}
     </div>
