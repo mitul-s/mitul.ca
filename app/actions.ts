@@ -142,7 +142,7 @@ export async function getJournalEntries(
 
 export async function getJournalEntry(id: string): Promise<JournalEntry> {
   const { rows } = await sql<JournalEntry>`
-    SELECT e.id, e.journal_id, e.content, e.created_at, e.updated_at
+    SELECT e.*
     FROM garden_entries e
     WHERE e.id = ${id}
   `;
