@@ -100,7 +100,7 @@ export async function createJournalEntry(
 
 export interface JournalEntry {
   id: number;
-  title: string;
+  journal_id: number;
   content: string;
   created_at: string;
   updated_at: string;
@@ -138,7 +138,7 @@ export async function getJournalEntries(
 
 export async function getJournalEntry(id: string): Promise<JournalEntry> {
   const { rows } = await sql<JournalEntry>`
-    SELECT e.id, e.content, e.created_at, e.updated_at
+    SELECT e.id, e.journal_id, e.content, e.created_at, e.updated_at
     FROM garden_entries e
     WHERE e.id = ${id}
   `;
@@ -148,4 +148,32 @@ export async function getJournalEntry(id: string): Promise<JournalEntry> {
   }
 
   return rows[0];
+}
+
+export async function getJournalName(journalId: number) {
+  const { rows } = await sql`
+    SELECT title FROM garden_journals WHERE id = ${journalId}
+  `;
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  return rows[0].title;
+}
+
+export async function getJournals() {
+  const { rows } = await sql`
+    SELECT title FROM garden_journals
+  `;
+
+  return rows;
+}
+
+export async function createJournal(title: string) {
+  await sql`
+    INSERT INTO garden_journals (title) VALUES (${title})
+  `;
+
+  revalidatePath("/garden");
 }

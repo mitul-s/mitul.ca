@@ -1,8 +1,8 @@
 import type { Config } from "tailwindcss";
 
 function generateScale(name: string) {
-  let scale = Array.from({ length: 12 }, (_, i) => {
-    let id = i + 1;
+  const scale = Array.from({ length: 12 }, (_, i) => {
+    const id = i + 1;
     return [
       [id, `var(--${name}-${id})`],
       [`a${id}`, `var(--${name}A-${id})`],
@@ -21,6 +21,8 @@ const config: Config = {
   theme: {
     colors: {
       gray: generateScale("gray"),
+      black: "#000",
+      white: "#fff",
       accent: "#B3FC03",
     },
     fontSize: {

@@ -1,5 +1,6 @@
-import { getJournalEntry } from "@/app/actions";
+import { getJournalEntry, getJournalName } from "@/app/actions";
 import ContentBlock from "@/components/garden/content-block";
+import Link from "next/link";
 
 const Page = async ({
   params,
@@ -9,10 +10,14 @@ const Page = async ({
   };
 }) => {
   const d = await getJournalEntry(params.entry);
-  console.log(d.content);
+  const j = await getJournalName(d.journal_id);
+  console.log(j);
   return (
     <div className="text-[black]">
-      <ContentBlock>{d.content}</ContentBlock>
+      <Link href={`/garden/${j}`}>{j}</Link>
+      <div>
+        <ContentBlock>{d.content}</ContentBlock>
+      </div>
     </div>
   );
 };
