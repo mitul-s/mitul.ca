@@ -49,6 +49,7 @@ const formSchema = z.object({
 
 export async function createJournalEntry(
   journalName: string,
+  isPrivate: boolean,
   formData: FormData
 ) {
   const validatedFields = formSchema.safeParse({
@@ -76,16 +77,18 @@ export async function createJournalEntry(
     }
 
     const journalId = journalRows[0].id;
+    console.log(isPrivate);
 
     // Now insert the entry
     await sql`
-      INSERT INTO garden_entries (journal_id, content, created_at)
+      INSERT INTO garden_entries (journal_id, content, created_at, is_private)
       VALUES (
         ${journalId}, 
-        ${content}, 
-        CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+        ${content},
+        CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
+        ${isPrivate} 
       )
-      RETURNING id, content, created_at
+      RETURNING id, content, created_at, is_private
     `;
   } catch (error) {
     console.error("Database Error:", error);
@@ -102,6 +105,7 @@ export interface JournalEntry {
   id: number;
   journal_id: number;
   content: string;
+  is_private: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -113,7 +117,7 @@ export async function getJournalEntries(
     async () => {
       try {
         const { rows } = await sql<JournalEntry>`
-          SELECT e.id, e.content, e.created_at, e.updated_at
+          SELECT e.*
           FROM garden_entries e
           JOIN garden_journals j ON e.journal_id = j.id
           WHERE j.title = ${journalTitle}

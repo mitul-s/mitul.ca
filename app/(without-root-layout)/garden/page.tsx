@@ -38,22 +38,25 @@ const Page = ({
 
 const Entries = async ({ journal }: { journal: string }) => {
   const entries = await getJournalEntries(journal);
+  const authenticated = isAuthenticated();
 
   return (
     <div className="flex flex-col gap-y-4">
-      {entries.map((entry) => {
-        return (
-          <div className="flex flex-col gap-y-1.5" key={entry.id}>
-            <Link
-              className="transition hover:underline"
-              href={`/garden/i/${entry.id}`}
-            >
-              <Time date={entry.created_at} />
-            </Link>
-            <ContentBlock>{entry.content}</ContentBlock>
-          </div>
-        );
-      })}
+      {entries
+        .filter((entry) => authenticated || !entry.is_private)
+        .map((entry) => {
+          return (
+            <div className="flex flex-col gap-y-1.5" key={entry.id}>
+              <Link
+                className="transition hover:underline text-gray-10"
+                href={`/garden/i/${entry.id}`}
+              >
+                <Time date={entry.created_at} />
+              </Link>
+              <ContentBlock>{entry.content}</ContentBlock>
+            </div>
+          );
+        })}
     </div>
   );
 };

@@ -26,6 +26,7 @@ const formSchema = z.object({
 
 export default function EntryForm({ journal }: { journal: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,7 +42,7 @@ export default function EntryForm({ journal }: { journal: string }) {
     formData.append("content", values.description);
 
     try {
-      await createJournalEntry(journal, formData);
+      await createJournalEntry(journal, isPrivate, formData);
       form.reset();
       editorRef.current?.commands.setContent("");
     } catch (error) {
@@ -71,6 +72,9 @@ export default function EntryForm({ journal }: { journal: string }) {
             </FormItem>
           )}
         />
+        <button type="button" onClick={() => setIsPrivate((prev) => !prev)}>
+          {isPrivate ? "true" : "false"}
+        </button>
         <button
           type="submit"
           disabled={isSubmitting}

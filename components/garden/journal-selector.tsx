@@ -26,7 +26,7 @@ function JournalSelectorInner({ journals }: { journals: Journal[] }) {
           type="button"
           key={journal.id}
           onClick={() => handleJournalClick(journal.title)}
-          className={`transition hover:underline ${
+          className={`hover:bg-gray-2 w-full text-left transition duration-75 rounded-md py-0.5 px-2 ${
             selectedJournal === journal.title ? "font-bold" : ""
           }`}
         >
