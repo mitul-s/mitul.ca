@@ -1,5 +1,5 @@
 import { getJournalEntry, getJournalName } from "@/app/actions";
-import ContentBlock from "@/components/garden/content-block";
+import ContentBlock from "@/components/os/content-block";
 import Link from "next/link";
 
 const Page = async ({
@@ -14,7 +14,7 @@ const Page = async ({
   console.log(j);
   return (
     <div className="text-[black]">
-      <Link href={`/garden/${j}`}>{j}</Link>
+      <Link href={`/os/${j}`}>{j}</Link>
       <div>
         <ContentBlock>{d.content}</ContentBlock>
       </div>

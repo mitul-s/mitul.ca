@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 interface Journal {
@@ -9,29 +10,21 @@ interface Journal {
 }
 
 function JournalSelectorInner({ journals }: { journals: Journal[] }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const selectedJournal = searchParams.get("journal") || "movies";
-
-  const handleJournalClick = (journal: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("journal", journal);
-    router.push(`/garden?${params.toString()}`);
-  };
 
   return (
     <div className="flex flex-col items-start gap-x-1.5">
       {journals.map((journal) => (
-        <button
-          type="button"
+        <Link
           key={journal.id}
-          onClick={() => handleJournalClick(journal.title)}
+          href={`/os/trackers/${journal.title.toLowerCase()}`}
           className={`hover:bg-gray-2 w-full text-left transition duration-75 rounded-md py-0.5 px-2 ${
             selectedJournal === journal.title ? "font-bold" : ""
           }`}
         >
           {journal.title}
-        </button>
+        </Link>
       ))}
     </div>
   );

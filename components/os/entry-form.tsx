@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Tiptap from "@/components/garden/tip-tap";
+import Tiptap from "@/components/os/tip-tap";
 import type { Editor } from "@tiptap/react";
 
 const formSchema = z.object({

@@ -33,7 +33,7 @@ const Entries = async ({ journal }: { journal: string }) => {
         const relativeTime = formatDistanceToNow(date, { addSuffix: true });
         return (
           <div className="flex gap-x-1.5" key={entry.id}>
-            <Link href={`/garden/i/${entry.id}`}>
+            <Link href={`/os/i/${entry.id}`}>
               <time className="text-gray-10">
                 {formattedDate} ({relativeTime})
               </time>

@@ -1,10 +1,10 @@
 import { getJournalEntries, getJournals } from "@/app/actions";
 import { Suspense } from "react";
-import EntryForm from "@/components/garden/entry-form";
+import EntryForm from "@/components/os/entry-form";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import Time from "@/components/garden/time";
-import ContentBlock from "@/components/garden/content-block";
+import Time from "@/components/os/time";
+import ContentBlock from "@/components/os/content-block";
 
 const isAuthenticated = () => {
   const cookieStore = cookies();
@@ -49,7 +49,7 @@ const Entries = async ({ journal }: { journal: string }) => {
             <div className="flex flex-col gap-y-1.5" key={entry.id}>
               <Link
                 className="transition hover:underline text-gray-10"
-                href={`/garden/i/${entry.id}`}
+                href={`/os/i/${entry.id}`}
               >
                 <Time date={entry.created_at} />
               </Link>

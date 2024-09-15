@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import styles from "./log.module.css";
+import styles from "./visitors.module.css";
 import Image from "next/image";
 import Drag from "./drag";
 import React from "react";
