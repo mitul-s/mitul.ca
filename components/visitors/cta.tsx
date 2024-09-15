@@ -7,7 +7,7 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
 import Signature, { type SignatureRef } from "@uiw/react-signature";
-import styles from "./log.module.css";
+import styles from "./visitors.module.css";
 import { ArrowClockwise } from "@phosphor-icons/react";
 import { validateAndSaveEntry } from "@/app/(without-root-layout)/visitors/actions";
 import Field from "./field";

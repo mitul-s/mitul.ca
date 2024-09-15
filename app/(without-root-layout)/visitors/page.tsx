@@ -1,14 +1,18 @@
 import { Provider } from "jotai";
 import { cn } from "@/lib/utils";
 import styles from "./notes.module.css";
-import Polaroid from "@/components/log/polaroid";
-import WriteNoteCTA from "@/components/log/cta";
+import Polaroid from "@/components/visitors/polaroid";
+import WriteNoteCTA from "@/components/visitors/cta";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import Link from "next/link";
-import { VercelLogo, Sticker, NextWordmark } from "@/components/log/stickers";
+import {
+  VercelLogo,
+  Sticker,
+  NextWordmark,
+} from "@/components/visitors/stickers";
 import Image from "next/image";
-import GuestbookEntries from "@/components/log/guestbook-entries";
+import GuestbookEntries from "@/components/visitors/guestbook-entries";
 
 export const dynamic = "force-dynamic";
 

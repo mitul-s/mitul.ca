@@ -1,4 +1,4 @@
-import ApproveButton from "@/components/log/approve-btn";
+import ApproveButton from "@/components/visitors/approve-btn";
 
 import { sql } from "@vercel/postgres";
 import { cookies } from "next/headers";
