@@ -4,7 +4,7 @@ import { beliefs, bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { cva } from "class-variance-authority";
 import Link from "next/link";
-import { Metadata } from "next/types";
+import type { Metadata } from "next/types";
 import Section from "@/components/section";
 import Gallery from "@/components/gallery";
 

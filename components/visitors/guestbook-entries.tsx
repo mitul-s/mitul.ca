@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-import Note from "@/components/log/note";
+import Note from "@/components/visitors/note";
 import {
   allEntriesAtom,
   localEntriesAtom,

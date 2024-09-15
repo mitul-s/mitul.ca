@@ -1,4 +1,4 @@
-import Note from "@/components/log/note";
+import Note from "@/components/visitors/note";
 import { cn } from "@/lib/utils";
 import { sql } from "@vercel/postgres";
 import styles from "./visitors-all.module.css";
