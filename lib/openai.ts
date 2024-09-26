@@ -8,6 +8,7 @@ const openai = new OpenAI({
 
 async function moderateText(text: string) {
   const moderation = await openai.moderations.create({
+    model: "omni-moderation-latest",
     input: text,
   });
 
