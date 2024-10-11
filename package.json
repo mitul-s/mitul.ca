@@ -24,6 +24,7 @@
     "ai": "^3.2.45",
     "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
+    "cobe": "^0.6.3",
     "framer-motion": "^11.3.21",
     "ioredis": "5.4.1",
     "jotai": "^2.9.3",
