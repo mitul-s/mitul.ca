@@ -1,6 +1,10 @@
 "use server";
+
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { z } from "zod";
+import { unstable_cache } from "next/cache";
 
 export async function saveGuestbookEntry(state: unknown, formData: FormData) {
   const local_entry_id = formData.get("local_entry_id")?.toString();
@@ -35,4 +39,145 @@ export async function declineGuestbookEntry(id: string) {
   `;
 
   revalidatePath("/visitors");
+}
+
+// GARDEN
+
+const formSchema = z.object({
+  content: z.string().min(1, "Content is required"),
+});
+
+export async function createJournalEntry(
+  journalName: string,
+  isPrivate: boolean,
+  formData: FormData
+) {
+  const validatedFields = formSchema.safeParse({
+    content: formData.get("content"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { content } = validatedFields.data;
+
+  try {
+    // First, get the journal ID
+    const { rows: journalRows } = await sql`
+      SELECT id FROM garden_journals WHERE title = ${journalName}
+    `;
+
+    if (journalRows.length === 0) {
+      return {
+        message: "Journal not found.",
+      };
+    }
+
+    const journalId = journalRows[0].id;
+    console.log(isPrivate);
+
+    // Now insert the entry
+    await sql`
+      INSERT INTO garden_entries (journal_id, content, created_at, is_private)
+      VALUES (
+        ${journalId}, 
+        ${content},
+        CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
+        ${isPrivate} 
+      )
+      RETURNING id, content, created_at, is_private
+    `;
+  } catch (error) {
+    console.error("Database Error:", error);
+    return {
+      message: "Database Error: Failed to create entry.",
+    };
+  }
+
+  revalidatePath("/garden");
+  // redirect(`/journals/${encodeURIComponent(journalName)}`);
+}
+
+export interface JournalEntry {
+  id: number;
+  journal_id: number;
+  content: string;
+  is_private: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getJournalEntries(
+  journalTitle: string
+): Promise<JournalEntry[]> {
+  const getEntries = unstable_cache(
+    async () => {
+      try {
+        const { rows } = await sql<JournalEntry>`
+          SELECT e.*
+          FROM garden_entries e
+          JOIN garden_journals j ON e.journal_id = j.id
+          WHERE j.title = ${journalTitle}
+          ORDER BY e.created_at DESC
+          LIMIT 50
+        `;
+        return rows;
+      } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch journal entries.");
+      }
+    },
+    [`journal-entries-${journalTitle}`],
+    {
+      revalidate: 60, // Cache for 60 seconds
+      tags: [`journal-${journalTitle}`],
+    }
+  );
+
+  return getEntries();
+}
+
+export async function getJournalEntry(id: string): Promise<JournalEntry> {
+  const { rows } = await sql<JournalEntry>`
+    SELECT e.*
+    FROM garden_entries e
+    WHERE e.id = ${id}
+  `;
+
+  if (rows.length === 0) {
+    throw new Error("Entry not found.");
+  }
+
+  return rows[0];
+}
+
+export async function getJournalName(journalId: number) {
+  const { rows } = await sql`
+    SELECT title FROM garden_journals WHERE id = ${journalId}
+  `;
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  return rows[0].title;
+}
+
+export async function getJournals() {
+  const { rows } = await sql`
+    SELECT title FROM garden_journals
+  `;
+
+  return rows;
+}
+
+export async function createJournal(title: string) {
+  await sql`
+    INSERT INTO garden_journals (title) VALUES (${title})
+  `;
+
+  revalidatePath("/garden");
 }

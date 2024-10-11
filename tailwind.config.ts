@@ -21,6 +21,8 @@ const config: Config = {
   theme: {
     colors: {
       gray: generateScale("gray"),
+      black: "#000",
+      white: "#fff",
       accent: "#B3FC03",
     },
     fontSize: {
