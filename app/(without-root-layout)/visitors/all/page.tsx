@@ -155,9 +155,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-Button.displayName = "Button";
 
-export { Button, buttonVariants };
+Button.displayName = "Button";
 
 async function getGuestbookEntries(page: number) {
   const offset = (page - 1) * ITEMS_PER_PAGE;
