@@ -3,7 +3,10 @@ import { cn } from "@/lib/utils";
 import { sql } from "@vercel/postgres";
 import styles from "./visitors-all.module.css";
 import LinkPrimitive from "@/components/link-primitive";
-import { Suspense } from "react";
+import { cache, Suspense } from "react";
+
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
 export default function Page() {
   return (
@@ -57,16 +60,17 @@ async function EntriesList() {
   );
 }
 
-async function getGuestbookEntries() {
+const getGuestbookEntries = cache(async () => {
   try {
     const { rows } = await sql`
-      SELECT * FROM guestbook
+      SELECT id, created_by, body, signature
+      FROM guestbook
       WHERE approved = true
-      ORDER BY last_modified DESC    
+      ORDER BY last_modified DESC
     `;
     return rows;
   } catch (error) {
     console.error("Failed to fetch guestbook entries:", error);
-    return [];
+    throw new Error("Failed to fetch guestbook entries");
   }
-}
+});
