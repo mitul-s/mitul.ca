@@ -62,7 +62,7 @@ async function getGuestbookEntries() {
     const { rows } = await sql`
       SELECT * FROM guestbook
       WHERE approved = true
-        ORDER BY last_modified DESC    
+      ORDER BY last_modified DESC    
     `;
     return rows;
   } catch (error) {
