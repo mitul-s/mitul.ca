@@ -8,6 +8,7 @@ import { ArrowUpRight, Copy } from "@phosphor-icons/react/dist/ssr/index";
 
 //@ts-ignore
 import useSound from "use-sound";
+import Link from "next/link";
 
 export const ContactCopyItem = ({
   title,
@@ -63,6 +64,9 @@ const Contact = () => {
       <div className="flex flex-wrap mt-12 md:flex-col md:gap-y-0 gap-y-2 gap-x-6 md:items-end md:mt-0">
         <ContactItem icon={<Copy />}>
           <ContactCopyItem title="Email" copy="mitulxshah@gmail.com" />
+        </ContactItem>
+        <ContactItem icon={<ArrowUpRight />}>
+          <Link href="/visitors">Guestbook</Link>
         </ContactItem>
 
         <ContactItem icon={<ArrowUpRight />}>
