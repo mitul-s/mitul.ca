@@ -31,6 +31,8 @@ async function getMood() {
   return { mood: currentMood, cached: false };
 }
 
+// Spotify API deprecated the endpoint for getting multiple tracks' features
+// had to kill this, wack af
 export const Mood = async () => {
   const { mood } = await getMood();
   return <span>{mood}</span>;

@@ -83,6 +83,7 @@ export const MusicCard = ({
           <a
             href={songUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
           >
             <SpotifyLogo className="shrink-0" aria-hidden={true} />
