@@ -1,10 +1,11 @@
 export const experiences = [
-  // {
-  //   company: "Vercel",
-  //   role: "Design Engineer",
-  //   range: "2024 - Today",
-  //   description: "Building for the future of the web while doing my best work",
-  // },
+  {
+    company: "Vercel",
+    role: "Design Engineer",
+    range: "Today",
+    description: "Building for the future of the web while doing my best work",
+    skills: ["Next.js", "TypeScript", "TailwindCSS", "Contentful"],
+  },
   {
     company: "Compound",
     role: "Software Engineer",
