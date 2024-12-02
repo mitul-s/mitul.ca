@@ -35,6 +35,9 @@ const components: MDXComponents = {
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
     <strong className="font-medium" {...props} />
   ),
+  hr: (props: ComponentPropsWithoutRef<"hr">) => (
+    <hr className="border-t border-gray-7 my-6" {...props} />
+  ),
   img: (props: ImageProps) => {
     if (props.title !== undefined) {
       return (
