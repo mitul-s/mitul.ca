@@ -8,10 +8,11 @@ type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
 type AnchorProps = ComponentPropsWithoutRef<"a">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
+type ImageProps = ComponentPropsWithoutRef<"img">;
 
 const components: MDXComponents = {
   h1: (props: HeadingProps) => (
-    <h1 className="font-medium pt-12 mb-0 fade-in" {...props} />
+    <h1 className="font-medium pt-8 mb-0 fade-in" {...props} />
   ),
   h2: (props: HeadingProps) => (
     <h2 className="text-[18px] font-medium mt-8 mb-3" {...props} />
@@ -20,7 +21,7 @@ const components: MDXComponents = {
     <h3 className=" font-medium mt-8 mb-3" {...props} />
   ),
   h4: (props: HeadingProps) => <h4 className="font-medium" {...props} />,
-  p: (props: ParagraphProps) => <p className="leading-snug my-6" {...props} />,
+  p: (props: ParagraphProps) => <p className="leading-snug" {...props} />,
   ol: (props: ListProps) => (
     <ol className=" list-decimal pl-5 space-y-2" {...props} />
   ),
@@ -34,7 +35,7 @@ const components: MDXComponents = {
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
     <strong className="font-medium" {...props} />
   ),
-  img: (props: ComponentPropsWithoutRef<"img">) => {
+  img: (props: ImageProps) => {
     if (props.title !== undefined) {
       return (
         <figure>
@@ -57,7 +58,6 @@ const components: MDXComponents = {
       />
     );
   },
-
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
       "text-blue-10 hover:text-blue-12 hover:underline underline-offset-2";
