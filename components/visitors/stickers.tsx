@@ -56,7 +56,6 @@ const VercelLogo = ({ ...props }) => {
 };
 
 const Sticker = ({ children }: { children: React.ReactNode }) => {
-  return <Drag className="drop-shadow-sm">{children}</Drag>;
   return <Drag className="drop-shadow-xs">{children}</Drag>;
 };
 
