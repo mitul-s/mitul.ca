@@ -237,7 +237,7 @@ export default function WriteNoteCTA() {
   }, [widthContainer, maxWidth]);
 
   return (
-    <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-[300]">
+    <div className="bottom-10 left-1/2 -translate-x-1/2 absolute z-300">
       <div
         className={cn(
           "rounded-6 bg-[#F04F1F] transition text-[1.5rem] flex gap-x-1.5 items-center justify-center text-gray-1 font-semibold h-fit w-72",

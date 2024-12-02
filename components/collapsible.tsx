@@ -33,7 +33,7 @@ const AccordionItem = ({
     <AccordionPrimitive.Item value={company}>
       <div className="flex items-center justify-center gap-x-2">
         <AccordionPrimitive.Trigger
-          className="py-1 grid grid-cols-4 px-2 focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-transparent focus-visible:ring-accent/20 focus-visible:text-gray-12 hover:bg-accent hover:text-gray-12 rounded-sm w-full justify-items-start items-center group data-[state=open]:bg-accent/20 data-[state=open]:text-gray-1 whitespace-nowrap accordion-grid-cols"
+          className="py-1 grid grid-cols-4 px-2 focus-visible:bg-accent focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-offset-transparent focus-visible:ring-accent/20 focus-visible:text-gray-12 hover:bg-accent hover:text-gray-12 rounded-sm w-full justify-items-start items-center group data-[state=open]:bg-accent/20 data-[state=open]:text-gray-1 whitespace-nowrap accordion-grid-cols"
           onClick={play}
         >
           <CaretDown
