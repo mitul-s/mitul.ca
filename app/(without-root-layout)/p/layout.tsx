@@ -25,7 +25,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           @typicalmitul
         </Link>
       </nav>
-      <main className="max-w-[60ch] mx-auto w-full space-y-6">{children}</main>
+      <main className="max-w-[60ch] mx-auto w-full space-y-6 pb-12">
+        {children}
+      </main>
+      <footer className="max-w-[60ch] mx-auto w-full text-left">
+        <p className="text-[10px] text-gray-10 font-medium">
+          from toronto, with love / typicalmitul
+        </p>
+      </footer>
     </div>
   );
 };

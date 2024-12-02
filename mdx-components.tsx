@@ -12,7 +12,7 @@ type ImageProps = ComponentPropsWithoutRef<"img">;
 
 const components: MDXComponents = {
   h1: (props: HeadingProps) => (
-    <h1 className="font-medium pt-8 mb-0 fade-in" {...props} />
+    <h1 className="font-medium pt-8 mb-6 fade-in" {...props} />
   ),
   h2: (props: HeadingProps) => (
     <h2 className="text-[18px] font-medium mt-8 mb-3" {...props} />

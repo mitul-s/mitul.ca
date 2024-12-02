@@ -1,7 +1,7 @@
-@import '@radix-ui/colors/gray.css' layer(base);
-@import '@radix-ui/colors/blue.css' layer(base);
+@import "@radix-ui/colors/gray.css" layer(base);
+@import "@radix-ui/colors/blue.css" layer(base);
 
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-*: initial;
@@ -143,11 +143,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-::-moz-selection {
+.select ::-moz-selection {
   @apply text-accent bg-accent/10;
 }
 
-::selection {
+.select ::selection {
   @apply text-accent bg-accent/10;
 }
 
