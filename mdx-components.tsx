@@ -20,7 +20,7 @@ const components: MDXComponents = {
     <h3 className=" font-medium mt-8 mb-3" {...props} />
   ),
   h4: (props: HeadingProps) => <h4 className="font-medium" {...props} />,
-  p: (props: ParagraphProps) => <p className=" leading-snug" {...props} />,
+  p: (props: ParagraphProps) => <p className="leading-snug my-6" {...props} />,
   ol: (props: ListProps) => (
     <ol className=" list-decimal pl-5 space-y-2" {...props} />
   ),
