@@ -7,6 +7,7 @@ const config = {
   experimental: {
     mdxRs: true,
   },
+  transpilePackages: ["tailwind-animate"],
   images: {
     remotePatterns: [
       {
