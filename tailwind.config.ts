@@ -17,10 +17,12 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     colors: {
       gray: generateScale("gray"),
+      blue: generateScale("blue"),
       accent: "#B3FC03",
     },
     fontSize: {

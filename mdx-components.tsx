@@ -14,20 +14,18 @@ const components: MDXComponents = {
     <h1 className="font-medium pt-12 mb-0 fade-in" {...props} />
   ),
   h2: (props: HeadingProps) => (
-    <h2 className="text-gray-8 font-medium mt-8 mb-3" {...props} />
+    <h2 className="text-[18px] font-medium mt-8 mb-3" {...props} />
   ),
   h3: (props: HeadingProps) => (
-    <h3 className="text-gray-8 font-medium mt-8 mb-3" {...props} />
+    <h3 className=" font-medium mt-8 mb-3" {...props} />
   ),
   h4: (props: HeadingProps) => <h4 className="font-medium" {...props} />,
-  p: (props: ParagraphProps) => (
-    <p className="text-gray-8 leading-snug" {...props} />
-  ),
+  p: (props: ParagraphProps) => <p className=" leading-snug" {...props} />,
   ol: (props: ListProps) => (
-    <ol className="text-gray-8 list-decimal pl-5 space-y-2" {...props} />
+    <ol className=" list-decimal pl-5 space-y-2" {...props} />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-gray-8 list-disc pl-5 space-y-1" {...props} />
+    <ul className=" list-disc pl-5 space-y-1" {...props} />
   ),
   li: (props: ListItemProps) => <li className="pl-1" {...props} />,
   em: (props: ComponentPropsWithoutRef<"em">) => (
@@ -36,8 +34,33 @@ const components: MDXComponents = {
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
     <strong className="font-medium" {...props} />
   ),
+  img: (props: ComponentPropsWithoutRef<"img">) => {
+    if (props.title !== undefined) {
+      return (
+        <figure>
+          <img
+            className="rounded-4 border border-gray-6"
+            src={props.src}
+            alt={props.alt}
+          />
+          <figcaption className="text-sm text-gray-11 mt-1.5">
+            {props.title}
+          </figcaption>
+        </figure>
+      );
+    }
+    return (
+      <img
+        className="rounded-4 border border-gray-6"
+        src={props.src}
+        alt={props.alt}
+      />
+    );
+  },
+
   a: ({ href, children, ...props }: AnchorProps) => {
-    const className = "text-blue-500 hover:text-blue-700";
+    const className =
+      "text-blue-10 hover:text-blue-12 hover:underline underline-offset-2";
     if (href?.startsWith("/")) {
       return (
         <Link href={href} className={className} {...props}>
@@ -66,7 +89,7 @@ const components: MDXComponents = {
   },
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="ml-[0.075em] border-l-3 border-gray-300 pl-4 text-gray-7"
+      className="ml-[0.075em] border-l-3 border-gray-300 pl-4"
       {...props}
     />
   ),

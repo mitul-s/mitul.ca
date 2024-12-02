@@ -5,11 +5,15 @@ const withMDX = createMDX({});
 const config = {
   pageExtensions: ["mdx", "ts", "tsx"],
   experimental: {
-    serverActions: true,
     mdxRs: true,
   },
   images: {
     remotePatterns: [
+      {
+        protocol: "https",
+        port: "",
+        hostname: "res.craft.do",
+      },
       {
         protocol: "https",
         port: "",
