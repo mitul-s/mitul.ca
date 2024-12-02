@@ -46,6 +46,7 @@ const components: MDXComponents = {
             className="rounded-4 border border-gray-6"
             src={props.src}
             alt={props.alt}
+            fetchPriority="high"
           />
           <figcaption className="text-sm text-gray-11 mt-1.5">
             {props.title}
