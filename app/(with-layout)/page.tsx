@@ -323,7 +323,10 @@ const FooterDate = async () => {
   // hack lazy way to bypass rate limit without going through auth
   // to add proper stuff later!
   const lastCommit = !data.message
-    ? data.map((commit: any) => commit.commit.committer.date)[0]
+    ? data.map(
+        (commit: { commit: { committer: { date: string } } }) =>
+          commit.commit.committer.date
+      )[0]
     : "";
   const formatDate = lastCommit
     ? new Date(lastCommit).toLocaleDateString()
@@ -337,7 +340,7 @@ const FooterDate = async () => {
 
 export default function Home() {
   return (
-    <div className="justify-between md:flex animate-in fade-in duration-500">
+    <div className="justify-between md:flex animate-in fade-in duration-500 select">
       <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
         <Section heading="Currently">

@@ -5,7 +5,8 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 const BASIC = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
-const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played`;
+const RECENTLY_PLAYED_ENDPOINT =
+  "https://api.spotify.com/v1/me/player/recently-played";
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
 const getAccessToken = async () => {
@@ -50,9 +51,8 @@ const getNowPlaying = async () => {
         status: response.status,
         data: song,
       };
-    } else {
-      return getLastPlayed();
     }
+    return getLastPlayed();
   } catch {
     return {
       status: response.status,

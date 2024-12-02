@@ -1,8 +1,141 @@
-@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/gray.css" layer(base);
+@import "@radix-ui/colors/blue.css" layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-*: initial;
+  --color-gray-1: var(--gray-1);
+  --color-gray-2: var(--gray-2);
+  --color-gray-3: var(--gray-3);
+  --color-gray-4: var(--gray-4);
+  --color-gray-5: var(--gray-5);
+  --color-gray-6: var(--gray-6);
+  --color-gray-7: var(--gray-7);
+  --color-gray-8: var(--gray-8);
+  --color-gray-9: var(--gray-9);
+  --color-gray-10: var(--gray-10);
+  --color-gray-11: var(--gray-11);
+  --color-gray-12: var(--gray-12);
+  --color-gray-a1: var(--grayA-1);
+  --color-gray-a2: var(--grayA-2);
+  --color-gray-a3: var(--grayA-3);
+  --color-gray-a4: var(--grayA-4);
+  --color-gray-a5: var(--grayA-5);
+  --color-gray-a6: var(--grayA-6);
+  --color-gray-a7: var(--grayA-7);
+  --color-gray-a8: var(--grayA-8);
+  --color-gray-a9: var(--grayA-9);
+  --color-gray-a10: var(--grayA-10);
+  --color-gray-a11: var(--grayA-11);
+  --color-gray-a12: var(--grayA-12);
+
+  --color-blue-1: var(--blue-1);
+  --color-blue-2: var(--blue-2);
+  --color-blue-3: var(--blue-3);
+  --color-blue-4: var(--blue-4);
+  --color-blue-5: var(--blue-5);
+  --color-blue-6: var(--blue-6);
+  --color-blue-7: var(--blue-7);
+  --color-blue-8: var(--blue-8);
+  --color-blue-9: var(--blue-9);
+  --color-blue-10: var(--blue-10);
+  --color-blue-11: var(--blue-11);
+  --color-blue-12: var(--blue-12);
+  --color-blue-a1: var(--blueA-1);
+  --color-blue-a2: var(--blueA-2);
+  --color-blue-a3: var(--blueA-3);
+  --color-blue-a4: var(--blueA-4);
+  --color-blue-a5: var(--blueA-5);
+  --color-blue-a6: var(--blueA-6);
+  --color-blue-a7: var(--blueA-7);
+  --color-blue-a8: var(--blueA-8);
+  --color-blue-a9: var(--blueA-9);
+  --color-blue-a10: var(--blueA-10);
+  --color-blue-a11: var(--blueA-11);
+  --color-blue-a12: var(--blueA-12);
+
+  --color-accent: #b3fc03;
+
+  --text-*: initial;
+  --text-sm: 0.75rem;
+  --text-base: 0.875rem;
+
+  --radius-*: initial;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-full: 9999px;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-slide-up-and-fade: slide-up-and-fade 0.25s
+    cubic-bezier(0.16, 0, 0.13, 1);
+  --animate-slide-down-and-fade: slide-down-and-fade 0.25s
+    cubic-bezier(0.16, 0, 0.13, 1);
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes slide-up-and-fade {
+    0% {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slide-down-and-fade {
+    0% {
+      opacity: 0;
+      transform: translateY(-1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 :root {
   --foreground-rgb: 255, 255, 255;
@@ -10,11 +143,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-::-moz-selection {
+.select ::-moz-selection {
   @apply text-accent bg-accent/10;
 }
 
-::selection {
+.select ::selection {
   @apply text-accent bg-accent/10;
 }
 
