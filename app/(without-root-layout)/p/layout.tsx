@@ -20,6 +20,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <Link
           href="https://x.com/typicalmitul"
+          target="_blank"
+          rel="noopener noreferrer"
           className="underline underline-offset-4 decoration-from-font"
         >
           @typicalmitul
