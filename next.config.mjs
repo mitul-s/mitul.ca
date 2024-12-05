@@ -7,6 +7,15 @@ const config = {
   experimental: {
     mdxRs: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/os/:path*",
+        destination: "https://os-blond.vercel.app/:path*",
+      },
+    ];
+  },
+
   images: {
     remotePatterns: [
       {
