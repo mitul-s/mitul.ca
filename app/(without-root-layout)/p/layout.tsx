@@ -1,4 +1,9 @@
+import type { Viewport } from "next";
 import Link from "next/link";
+
+export const viewport: Viewport = {
+  themeColor: "#F9F2E2",
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

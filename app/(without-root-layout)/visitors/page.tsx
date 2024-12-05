@@ -1,3 +1,4 @@
+import type { Viewport } from "next";
 import { Provider } from "jotai";
 import { cn } from "@/lib/utils";
 import styles from "./notes.module.css";
@@ -15,6 +16,10 @@ import Image from "next/image";
 import GuestbookEntries from "@/components/visitors/guestbook-entries";
 
 export const dynamic = "force-dynamic";
+
+export const viewport: Viewport = {
+  themeColor: "#FCFCFC",
+};
 
 const Page = () => {
   return (
