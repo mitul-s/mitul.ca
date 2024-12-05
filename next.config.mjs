@@ -17,6 +17,10 @@ const config = {
         source: "/os/:path*",
         destination: "https://os-blond.vercel.app/:path*",
       },
+      {
+        source: "/os",
+        destination: "https://os-blond.vercel.app",
+      },
     ];
   },
 
