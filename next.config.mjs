@@ -10,6 +10,10 @@ const config = {
   async rewrites() {
     return [
       {
+        source: "/os",
+        destination: "https://os-blond.vercel.app",
+      },
+      {
         source: "/os/:path*",
         destination: "https://os-blond.vercel.app/:path*",
       },
