@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   if (password === process.env.ROUTE_PASSWORD) {
     cookies().set("auth", "true", { httpOnly: true });
     return NextResponse.json({ success: true });
-  } else {
-    return NextResponse.json({ success: false }, { status: 401 });
   }
+  return NextResponse.json({ success: false }, { status: 401 });
 }
