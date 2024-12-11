@@ -1,20 +1,16 @@
-import { Pool } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 import { Resend } from "resend";
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function startDbListener() {
-  const client = await pool.connect();
-
   try {
+    const client = await sql.connect();
+
     await client.query("LISTEN db_updates");
 
     client.on("notification", async (msg) => {
-      const payload = JSON.parse(msg.payload ?? "");
+      const payload = JSON.parse(msg.payload as string);
 
       console.log("Received database update:", payload);
 
@@ -48,6 +44,5 @@ export async function startDbListener() {
     console.log("Listening for database updates...");
   } catch (err) {
     console.error("Error setting up database listener:", err);
-    client.release();
   }
 }
