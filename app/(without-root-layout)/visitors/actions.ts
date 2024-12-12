@@ -39,6 +39,22 @@ export async function validateAndSaveEntry(
 
     await saveGuestbookEntry("", formData);
 
+    try {
+      const response = await fetch("https://mitul.ca/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ entry: Object.fromEntries(formData) }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to send email:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
