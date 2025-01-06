@@ -169,6 +169,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
   font-family: "Monument Grotesk", sans-serif;
+  /* font-family: "Helvetica Neue", sans-serif; */
   font-size: 14px;
   color: rgb(var(--foreground-rgb));
   /* background: linear-gradient(
@@ -188,4 +189,21 @@ body {
 
 .accordion-grid-cols {
   grid-template-columns: min-content 125px 1fr min-content min-content;
+}
+
+.main-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    url(/noise.svg);
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
