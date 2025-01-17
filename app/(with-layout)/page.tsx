@@ -1,5 +1,9 @@
 "use client";
 
+import CursorTrail from "@/components/cursor-trail";
+import LinkPrimitive from "@/components/link-primitive";
+import { experiences } from "@/content";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 // import { unstable_noStore as noStore } from "next/cache";
 // import React, { Suspense } from "react";
 // import {
@@ -24,6 +28,7 @@
 // import Skeleton from "@/components/skeleton";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import Link from "next/link";
 
 // // export const dynamic = "force-dynamic";
 
@@ -342,75 +347,164 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 //   );
 // };
 
+const Section = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
+      <div className="py-4 pr-4 font-bold h-full ml-auto">{title}</div>
+      {children}
+    </div>
+  );
+};
+
 export default function Home() {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
+      <img
+        src="https://framerusercontent.com/images/RYquguT8C1PcP6cVpprV5hNQ24I.png"
+        className="absolute bottom-0 right-0 opacity-80 w-[800px]"
+      />
+      <nav className="absolute top-4 right-4 flex gap-1 text-dreen font-medium">
+        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+          About
+        </div>
+        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+          Public Archive
+        </div>
+        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+          Guestbook
+        </div>
+        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+          Email
+        </div>
+      </nav>
       <div className="main-noise" aria-hidden />
-      <div className="grid grid-cols-[300px_500px_auto] divide-x w-full border-b border-[#0A4531] divide-[#0A4531] text-[#0A4531]">
+      <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
         <div className="p-12 font-bold h-full" />
-        <div className="p-4 h-full">
-          <h1 className="font-medium flex items-center gap-x-1.5">
-            <span className="inline-block w-2 h-2 rounded-full bg-accent" />
+        <div className="px-4 pt-8 pb-6">
+          <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
             Mitul Shah
           </h1>
-          Photographer, design engineer, and a bit more.
-          <p>
+          <span>Photographer, design engineer, and a bit more.</span>
+          <p className="mt-4">
             Crafting memorable interfaces with a deep attention to detail. I
             dedicate most my time to continuous learning and refining my
             skillset.
           </p>
-          <p>I'm a creative doing what I can't.</p>
+          <p className="mt-2">
+            I'm a creative{" "}
+            <LinkPrimitive
+              href="https://www.youtube.com/watch?v=jG7dSXcfVqE"
+              external
+            >
+              doing what I can't
+            </LinkPrimitive>
+          </p>
+          <div className="bg-gray-4 w-full h-20 rounded-4 border border-gray-6 mt-4" />
+          <Link
+            href="/visitors"
+            className="rounded-4 bg-dreen text-light-green font-medium px-2 py-1 "
+            style={{
+              boxShadow:
+                "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+            }}
+          >
+            Guestbook
+          </Link>
         </div>
         <div className="p-12 h-full" />
       </div>
-      <div className="grid grid-cols-[300px_500px_auto] divide-x w-full border-b border-[#0A4531] divide-[#0A4531] text-[#0A4531]">
-        <div className="py-4 px-12 font-bold h-full ml-auto">Experience</div>
+      <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
+        <div className="py-4 pr-4 font-bold h-full ml-auto">Experience</div>
         <AccordionPrimitive.Root
           type="single"
           defaultValue="one"
           collapsible
-          className="h-full flex flex-col divide-y"
+          className="h-full flex flex-col divide-y divide-dotted"
         >
-          <AccordionPrimitive.Item value="one">
-            <AccordionPrimitive.Trigger className="flex w-full p-4 hover:bg-[#0A4531] hover:text-[white]">
-              <span className="font-medium mr-2">Vercel</span>
-              <span>Design Engineer</span>
-              <span className="ml-auto">Today</span>
-            </AccordionPrimitive.Trigger>
-            <AccordionPrimitive.Content className="mt-2.5 px-4 pb-4">
-              Crafting memorable interfaces with a deep attention to detail. I
-              dedicate most my time to continuous learning and refining my
-              skillset.
-            </AccordionPrimitive.Content>
-          </AccordionPrimitive.Item>
-          <AccordionPrimitive.Item value="two" className="p-4">
-            <AccordionPrimitive.Trigger className="flex w-full">
-              <span className="font-medium mr-2">Vercel</span>
-              <span>Design Engineer</span>
-              <span className="ml-auto">Today</span>
-            </AccordionPrimitive.Trigger>
-            <AccordionPrimitive.Content className="mt-2.5">
-              Crafting memorable interfaces with a deep attention to detail. I
-              dedicate most my time to continuous learning and refining my
-              skillset.
-            </AccordionPrimitive.Content>
-          </AccordionPrimitive.Item>
-          <AccordionPrimitive.Item value="three" className="p-4">
-            <AccordionPrimitive.Trigger className="flex w-full">
-              <span className="font-medium mr-2">Vercel</span>
-              <span>Design Engineer</span>
-              <span className="ml-auto">Today</span>
-            </AccordionPrimitive.Trigger>
-            <AccordionPrimitive.Content className="mt-2.5">
-              Crafting memorable interfaces with a deep attention to detail. I
-              dedicate most my time to continuous learning and refining my
-              skillset.
-            </AccordionPrimitive.Content>
-          </AccordionPrimitive.Item>
+          {experiences.map((experience) => {
+            return (
+              <AccordionPrimitive.Item
+                key={experience.company}
+                value={experience.company}
+              >
+                <AccordionPrimitive.Trigger className="grid grid-cols-[100px_1fr_auto] text-left w-full px-4 py-2 hover:bg-dreen hover:text-[white] data-[state=open]:bg-light-green hover:data-[state=open]:text-dreen cursor-pointer">
+                  <span className="font-medium mr-2">{experience.company}</span>
+                  <span>{experience.role}</span>
+                  <span className="ml-auto">{experience.range}</span>
+                </AccordionPrimitive.Trigger>
+                <AccordionPrimitive.Content className="px-4 pb-4 data-[state=open]:bg-light-green">
+                  {experience.description}
+                </AccordionPrimitive.Content>
+              </AccordionPrimitive.Item>
+            );
+          })}
         </AccordionPrimitive.Root>
+
         <div className="p-12 h-full" />
-        <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer>
       </div>
+      <Section title="Projects">
+        <div className="px-4 py-4 border-r flex flex-col gap-y-4">
+          <div>
+            <h2 className="font-medium">Places to Read</h2>
+            <p>
+              A microsite to discover community submitted parks around the world
+              where you can sit down, chill and enjoy reading a book.
+            </p>
+          </div>
+          <div>
+            <h2 className="font-medium">Montreal in Motion</h2>
+            <p>
+              A microsite to discover community submitted parks around the world
+              where you can sit down, chill and enjoy reading a book.
+            </p>
+          </div>
+        </div>
+      </Section>
+      <Section title="Photography">
+        <div className="flex flex-col gap-y-1.5 px-4 py-4 border-r">
+          <p>
+            I've built up my craft as a photographer over a number of years and
+            thrived in turning it into an indepedent business.
+          </p>
+          <span>
+            <span className="font-medium">Notable achievements include</span>
+            <ul>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                being a personal photographer for the Uber CEO
+              </li>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                featured in local Toronto newspapers
+              </li>
+              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                having a photo as a wallpaper in every Google device
+              </li>
+            </ul>
+          </span>
+          <p>
+            Today, my focus is on music photography where I capture my favourite
+            artists at concerts or festivals. You can learn a little more by
+            visiting my portfolio below.
+          </p>
+          <Link
+            href="/visitors"
+            className="flex w-fit gap-x-2 items-center rounded-4 bg-dreen text-light-green font-medium px-2 py-1 my-2"
+            style={{
+              boxShadow:
+                "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+            }}
+          >
+            Visit my portfolio
+            <ArrowRight size={12} aria-hidden={true} />
+          </Link>
+        </div>
+      </Section>
+      <footer className="bg-dreen fixed bottom-0 w-full">Mitul Shah</footer>
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
         <Section heading="Currently">
@@ -435,6 +529,7 @@ export default function Home() {
       <aside className="md:max-w-[450px] md:text-right">
         <Contact />
       </aside> */}
+      {/* <CursorTrail /> */}
     </div>
   );
 }

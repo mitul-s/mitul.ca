@@ -24,13 +24,13 @@ export const experiences = [
       "As an early employee, I built out over 90% of the application UI and a scalable and accessible component library",
     skills: ["React", "ClojureScript", "TailwindCSS", "Contentful", "Next.js"],
   },
-  {
-    company: "Hypercontext",
-    role: "Product Analyst",
-    range: "2019 - 2020",
-    description:
-      "Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up",
-  },
+  // {
+  //   company: "Hypercontext",
+  //   role: "Product Analyst",
+  //   range: "2019 - 2020",
+  //   description:
+  //     "Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up",
+  // },
   {
     company: "Uber",
     role: "Operations Intern",

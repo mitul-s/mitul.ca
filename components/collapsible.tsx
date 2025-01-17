@@ -1,10 +1,10 @@
 "use client";
+
 import { CaretDown } from "@phosphor-icons/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 //@ts-ignore
 import useSound from "use-sound";
-import LinkPrimitive from "./link-primitive";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 
 const AccordionItem = ({

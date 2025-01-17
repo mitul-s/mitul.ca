@@ -20,6 +20,41 @@ const monument = localFont({
   ],
 });
 
+// const helvetica = localFont({
+//   src: [
+//     {
+//       path: "../public/font/HelveticaNeueBold.ttf",
+//       weight: "700",
+//       style: "bold",
+//     },
+//     {
+//       path: "../public/font/HelveticaNeue-Medium.otf",
+//       weight: "500",
+//       style: "medium",
+//     },
+//     {
+//       path: "../public/font/HelveticaNeue-Roman.otf",
+//       weight: "400",
+//       style: "regular",
+//     },
+//   ],
+// });
+
+const chico = localFont({
+  src: [
+    {
+      path: "../public/font/PPNeueMontreal-SemiBold.woff2",
+      weight: "500",
+      style: "medium",
+    },
+    {
+      path: "../public/font/PPNeueMontreal-Medium.woff2",
+      weight: "400",
+      style: "regular",
+    },
+  ],
+});
+
 export const metadata: Metadata = {
   title: {
     template: "%s / Mitul Shah",
@@ -44,7 +79,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(monument.className)}>
+      <body className={cn(chico.className)}>
         {children}
         <Analytics />
         <SpeedInsights />

@@ -56,6 +56,9 @@
   --color-blue-a12: var(--blueA-12);
 
   --color-accent: #b3fc03;
+  /* --color-dreen: #133212; */
+  --color-dreen: #021093;
+  --color-light-green: #e2f3e3;
 
   --text-*: initial;
   --text-sm: 0.75rem;
@@ -200,7 +203,7 @@ body {
   background: linear-gradient(
       45deg,
       rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0) 60%
+      var(--color-light-green) 100%
     ),
     url(/noise.svg);
   opacity: 0.35;
