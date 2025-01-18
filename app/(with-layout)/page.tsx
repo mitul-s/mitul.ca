@@ -29,9 +29,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 // import Section from "@/components/section";
 // import Skeleton from "@/components/skeleton";
 
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
 import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 import dynamic from "next/dynamic";
@@ -454,12 +452,27 @@ export default function Home() {
       </div>
       <Section title="Projects">
         <div className="border-r flex flex-col">
-          <div className="px-4 py-4">
+          <div className="px-4 py-4 flex flex-col gap-y-1">
             <h2 className="font-medium">Places to Read</h2>
             <p>
               A microsite to discover community submitted parks around the world
               where you can sit down, chill and enjoy reading a book.
             </p>
+            <div className="flex items-center mt-2 gap-x-2">
+              <Link
+                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+                href="https://placestoread.xyz"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Globe
+                  aria-hidden={true}
+                  size={12}
+                  className="shrink-0 text-gray-1"
+                />
+                Live{" "}
+              </Link>
+            </div>
           </div>
           <div className="flex gap-y-0.5 my-0.5 flex-col">
             <div className="h-px border-b border-dotted border-accent" />

@@ -3,6 +3,7 @@
 "use client";
 import type React from "react";
 import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import p5 from "p5";
 
 interface Particle {
@@ -259,12 +260,18 @@ const P5AsciiTree: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center  z-10 overflow-hidden">
+    <motion.div
+      className="flex items-center justify-center z-10 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 2 }}
+    >
       <div
         ref={sketchRef}
         className="w-1/2 max-w-3xl aspect-[5/4] opacity-55 absolute bottom-0 right-0"
       />
-    </div>
+    </motion.div>
   );
 };
 
