@@ -1,11 +1,11 @@
 "use client";
 
 import { Accordion, AccordionItem } from "@/components/collapsible";
-import CursorTrail from "@/components/cursor-trail";
+// import CursorTrail from "@/components/cursor-trail";
 import LinkPrimitive from "@/components/link-primitive";
 import { experiences } from "@/content";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
-import Tree from "./tree";
+// import Tree from "./tree";
 // import { unstable_noStore as noStore } from "next/cache";
 // import React, { Suspense } from "react";
 // import {
@@ -34,8 +34,10 @@ import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
 import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
+import dynamic from "next/dynamic";
 
-// // export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
+const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
 
 // const Photography = () => {
 //   return (
@@ -563,7 +565,7 @@ export default function Home() {
       <aside className="md:max-w-[450px] md:text-right">
         <Contact />
       </aside> */}
-      <Tree />
+      <DynamicTree />
       {/* <CursorTrail /> */}
     </div>
   );
