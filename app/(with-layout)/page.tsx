@@ -3,7 +3,7 @@
 import { Accordion, AccordionItem } from "@/components/collapsible";
 // import CursorTrail from "@/components/cursor-trail";
 import LinkPrimitive from "@/components/link-primitive";
-import { experiences } from "@/content";
+import { experiences, photos } from "@/content";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 // import Tree from "./tree";
 // import { unstable_noStore as noStore } from "next/cache";
@@ -33,6 +33,7 @@ import Link from "next/link";
 import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
 import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 import dynamic from "next/dynamic";
+import Gallery from "@/components/gallery";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -551,6 +552,7 @@ export default function Home() {
             Visit my portfolio
             <ArrowRight size={12} aria-hidden={true} />
           </Link>
+          <Gallery photos={photos} />
         </div>
       </Section>
       {/* <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer> */}
