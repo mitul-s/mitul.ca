@@ -55,9 +55,9 @@
   --color-blue-a11: var(--blueA-11);
   --color-blue-a12: var(--blueA-12);
 
-  --color-accent: #b3fc03;
-  /* --color-dreen: #133212; */
-  --color-dreen: #021093;
+  /* --color-accent: #b3fc03; */
+  /* --color-accent: #133212; */
+  --color-accent: #021093;
   --color-light-green: #e2f3e3;
 
   --text-*: initial;
@@ -87,19 +87,31 @@
   @keyframes accordion-down {
     from {
       height: 0;
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(-1rem);
     }
     to {
       height: var(--radix-accordion-content-height);
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
+      opacity: 1;
+      filter: blur(0);
     }
     to {
       height: 0;
+      opacity: 0;
+      filter: blur(5px);
     }
   }
+
   @keyframes slide-up-and-fade {
     0% {
       opacity: 0;

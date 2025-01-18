@@ -1,9 +1,11 @@
 "use client";
 
+import { Accordion, AccordionItem } from "@/components/collapsible";
 import CursorTrail from "@/components/cursor-trail";
 import LinkPrimitive from "@/components/link-primitive";
 import { experiences } from "@/content";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
+import Tree from "./tree";
 // import { unstable_noStore as noStore } from "next/cache";
 // import React, { Suspense } from "react";
 // import {
@@ -29,6 +31,9 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import Link from "next/link";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
+import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
+import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 
 // // export const dynamic = "force-dynamic";
 
@@ -355,7 +360,7 @@ const Section = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
+    <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
       <div className="py-4 pr-4 font-bold h-full ml-auto">{title}</div>
       {children}
     </div>
@@ -365,26 +370,21 @@ const Section = ({
 export default function Home() {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
-      <img
-        src="https://framerusercontent.com/images/RYquguT8C1PcP6cVpprV5hNQ24I.png"
-        className="absolute bottom-0 right-0 opacity-80 w-[800px]"
-      />
-      <nav className="absolute top-4 right-4 flex gap-1 text-dreen font-medium">
-        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+      <nav className="absolute top-4 right-4 flex gap-1 text-accent font-medium">
+        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           About
         </div>
-        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Public Archive
         </div>
-        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Guestbook
         </div>
-        <div className="bg-dreen text-light-green px-1 rounded-sm py-1 leading-none">
+        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Email
         </div>
       </nav>
-      <div className="main-noise" aria-hidden />
-      <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
+      <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
         <div className="p-12 font-bold h-full" />
         <div className="px-4 pt-8 pb-6">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
@@ -408,61 +408,95 @@ export default function Home() {
           <div className="bg-gray-4 w-full h-20 rounded-4 border border-gray-6 mt-4" />
           <Link
             href="/visitors"
-            className="rounded-4 bg-dreen text-light-green font-medium px-2 py-1 "
+            className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
             style={{
               boxShadow:
                 "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
             }}
           >
-            Guestbook
+            Sign Guestbook
           </Link>
         </div>
         <div className="p-12 h-full" />
       </div>
-      <div className="grid grid-cols-[160px_500px_auto] divide-x w-full border-b border-dreen divide-dreen text-dreen">
+      <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
         <div className="py-4 pr-4 font-bold h-full ml-auto">Experience</div>
-        <AccordionPrimitive.Root
-          type="single"
-          defaultValue="one"
-          collapsible
-          className="h-full flex flex-col divide-y divide-dotted"
-        >
-          {experiences.map((experience) => {
-            return (
-              <AccordionPrimitive.Item
-                key={experience.company}
-                value={experience.company}
-              >
-                <AccordionPrimitive.Trigger className="grid grid-cols-[100px_1fr_auto] text-left w-full px-4 py-2 hover:bg-dreen hover:text-[white] data-[state=open]:bg-light-green hover:data-[state=open]:text-dreen cursor-pointer">
-                  <span className="font-medium mr-2">{experience.company}</span>
-                  <span>{experience.role}</span>
-                  <span className="ml-auto">{experience.range}</span>
-                </AccordionPrimitive.Trigger>
-                <AccordionPrimitive.Content className="px-4 pb-4 data-[state=open]:bg-light-green">
-                  {experience.description}
-                </AccordionPrimitive.Content>
-              </AccordionPrimitive.Item>
-            );
-          })}
-        </AccordionPrimitive.Root>
+        <div>
+          <div className="flex gap-y-0.5 mt-0.5 flex-col">
+            <div className="h-px border-b border-dotted border-accent" />
+            <div className="h-px border-b border-dotted border-accent" />
+            <div className="h-px border-b border-dotted border-accent" />
+          </div>
+          <Accordion className="h-full flex flex-col divide-y divide-dotted">
+            {experiences.map((role) => {
+              return (
+                <AccordionItem
+                  key={role.company}
+                  role={role.role}
+                  company={role.company}
+                  range={role.range}
+                  description={role.description}
+                  skills={role.skills}
+                  link={role.link}
+                />
+              );
+            })}
+            <div className="flex gap-y-0.5 my-0.5 flex-col">
+              <div className="h-px border-b border-dotted border-accent" />
+              <div className="h-px border-b border-dotted border-accent" />
+            </div>
+          </Accordion>
+        </div>
 
         <div className="p-12 h-full" />
       </div>
       <Section title="Projects">
-        <div className="px-4 py-4 border-r flex flex-col gap-y-4">
-          <div>
+        <div className="border-r flex flex-col">
+          <div className="px-4 py-4">
             <h2 className="font-medium">Places to Read</h2>
             <p>
               A microsite to discover community submitted parks around the world
               where you can sit down, chill and enjoy reading a book.
             </p>
           </div>
-          <div>
+          <div className="flex gap-y-0.5 my-0.5 flex-col">
+            <div className="h-px border-b border-dotted border-accent" />
+            <div className="h-px border-b border-dotted border-accent" />
+          </div>
+          <div className="px-4 py-4 flex flex-col gap-y-1">
             <h2 className="font-medium">Montreal in Motion</h2>
             <p>
               A microsite to discover community submitted parks around the world
               where you can sit down, chill and enjoy reading a book.
             </p>
+            <div className="flex items-center mt-2 gap-x-2">
+              <Link
+                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+                href="https://placestoread.xyz"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Globe
+                  aria-hidden={true}
+                  size={12}
+                  className="shrink-0 text-gray-1"
+                />
+                Live{" "}
+              </Link>
+              <a
+                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+                href="https://github.com/mitul-s/placestoread"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Terminal
+                  aria-hidden={true}
+                  size={12}
+                  className="shrink-0 text-gray-1"
+                />
+                Code{" "}
+              </a>
+            </div>
           </div>
         </div>
       </Section>
@@ -493,7 +527,7 @@ export default function Home() {
           </p>
           <Link
             href="/visitors"
-            className="flex w-fit gap-x-2 items-center rounded-4 bg-dreen text-light-green font-medium px-2 py-1 my-2"
+            className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 my-2"
             style={{
               boxShadow:
                 "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
@@ -504,7 +538,7 @@ export default function Home() {
           </Link>
         </div>
       </Section>
-      <footer className="bg-dreen fixed bottom-0 w-full">Mitul Shah</footer>
+      {/* <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer> */}
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
         <Section heading="Currently">
@@ -529,6 +563,7 @@ export default function Home() {
       <aside className="md:max-w-[450px] md:text-right">
         <Contact />
       </aside> */}
+      <Tree />
       {/* <CursorTrail /> */}
     </div>
   );

@@ -5,6 +5,11 @@ export const viewport: Viewport = {
 };
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <div className="!text-[black]">{children}</div>;
+  return (
+    <div className="h-full relative">
+      <div className="main-noise" aria-hidden />
+      {children}
+    </div>
+  );
 };
 export default Layout;
