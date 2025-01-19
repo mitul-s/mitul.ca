@@ -482,13 +482,14 @@ export default function Home() {
           <div className="px-4 py-4 flex flex-col gap-y-1">
             <h2 className="font-medium">Montreal in Motion</h2>
             <p>
-              A microsite to discover community submitted parks around the world
-              where you can sit down, chill and enjoy reading a book.
+              A documentation of the brutalist and distinctly designed metro
+              stations. The project uses CSS 3D transforms and noise to mirror
+              the architecutral character of the spaces.
             </p>
             <div className="flex items-center mt-2 gap-x-2">
               <Link
                 className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-                href="https://placestoread.xyz"
+                href="https://typicalmitul.com/montreal-in-motion"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -501,7 +502,7 @@ export default function Home() {
               </Link>
               <a
                 className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-                href="https://github.com/mitul-s/placestoread"
+                href="https://github.com/mitul-s/typicalmitul.com"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -554,6 +555,9 @@ export default function Home() {
           </Link>
           <Gallery photos={photos} />
         </div>
+      </Section>
+      <Section title="Contact">
+        <div>yo</div>
       </Section>
       {/* <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer> */}
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
