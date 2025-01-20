@@ -200,8 +200,18 @@ const P5AsciiTree: React.FC = () => {
 
       p.draw = () => {
         p.clear();
-        p.fill(2, 16, 147);
+        const colorString = getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-accent-rgb")
+          .trim();
+
+        const [r, g, b] = colorString
+          .split(",")
+          .map((str) => Number.parseInt(str.trim(), 10));
+
+        p.fill(r, g, b);
+        // p.fill(2, 16, 147);
         // p.fill(19, 50, 18);
+        // p.fill(178, 0, 36);
 
         quadtree = new QuadTree({ x: 0, y: 0, w: p.width, h: p.height }, 4);
         for (let particle of particles) {
@@ -269,7 +279,7 @@ const P5AsciiTree: React.FC = () => {
     >
       <div
         ref={sketchRef}
-        className="w-1/2 max-w-3xl aspect-[5/4] opacity-55 absolute bottom-0 right-0"
+        className="w-1/2 max-w-3xl aspect-[5/4] opacity-55 absolute top-48 right-0"
       />
     </motion.div>
   );

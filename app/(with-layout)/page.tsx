@@ -418,17 +418,29 @@ export default function Home() {
               doing what I can't
             </LinkPrimitive>
           </p>
-          <div className="bg-gray-4 w-full h-20 rounded-4 border border-gray-6 mt-4" />
-          <Link
-            href="/visitors"
-            className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
-            style={{
-              boxShadow:
-                "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
-            }}
-          >
-            Sign Guestbook
-          </Link>
+          <div className="bg-gray-4 w-full h-20 rounded-4 border border-gray-6 my-4" />
+          <div className="flex gap-x-2">
+            <Link
+              href="/visitors"
+              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
+              style={{
+                boxShadow:
+                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+              }}
+            >
+              Learn about me
+            </Link>
+            <Link
+              href="/visitors"
+              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
+              style={{
+                boxShadow:
+                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+              }}
+            >
+              Sign Guestbook
+            </Link>
+          </div>
         </div>
       </div>
       <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">

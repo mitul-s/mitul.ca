@@ -3,6 +3,16 @@
 
 @import "tailwindcss";
 
+:root {
+  /* red */
+  /* --color-accent-rgb: 178, 0, 36; */
+  /* blue */
+  /* --color-accent-rgb: 2, 16, 147; */
+  /* green */
+  --color-accent-rgb: 19, 50, 18;
+  --color-accent: rgb(var(--color-accent-rgb));
+}
+
 @theme {
   --color-*: initial;
   --color-gray-1: var(--gray-1);
@@ -57,8 +67,8 @@
 
   /* --color-accent: #b3fc03; */
   /* --color-accent: #133212; */
-  --color-accent: #021093;
-  /* --color-accent: #b20024; */
+  /* --color-accent: #021093; */
+  --color-accent: #b20024;
   /* --color-accent: #ff7f00; */
   --color-light-green: #e2f3e3;
   --color-white: #fff;
