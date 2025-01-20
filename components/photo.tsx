@@ -10,7 +10,15 @@ import {
 } from "@/components/morphing-dialog";
 import { X as XIcon } from "@phosphor-icons/react";
 
-export function MorphingImageDialog({ src, alt, className }) {
+export function MorphingImageDialog({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <MorphingDialog
       transition={{

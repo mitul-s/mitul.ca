@@ -37,7 +37,7 @@ export default function TwitterXMotion({ className }: { className: string }) {
           exit="exit"
           transition={{ duration: 0.16 }}
         >
-          {isX ? "X" : "Twitter"}
+          {isX ? "X 🫨" : "Twitter"}
         </motion.div>
       </AnimatePresence>
       <Link href="https://twitter.com/typicalmitul">@typicalmitul</Link>
