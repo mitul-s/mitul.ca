@@ -23,7 +23,7 @@ export const ExpandingLink: React.FC<ExpandingLinkProps> = ({
 
   return (
     <motion.a
-      className="cursor-pointer text-sm z-[2] flex items-center overflow-hidden hover:group-data-[state=open]:bg-accent hover:text-gray-1 transition-colors duration-100 ease-in opacity-0 group-data-[state=open]:opacity-100 group-data-[state=open]:text-accent group-hover:opacity-100 text-gray-1"
+      className="cursor-pointer text-sm z-[2] flex items-center overflow-hidden hover:group-data-[state=open]:bg-accent hover:text-gray-1 transition-colors duration-100 ease-in opacity-0 group-data-[state=open]:opacity-100 group-data-[state=open]:text-accent group-hover:opacity-100 text-gray-1 h-4"
       animate={{ width: isHovered ? "auto" : "20px" }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -38,6 +38,7 @@ export const ExpandingLink: React.FC<ExpandingLinkProps> = ({
       rel="noopener noreferrer"
       aria-label={`Link to ${company} website`}
       onClick={(e) => e.stopPropagation()}
+      layout
     >
       <ArrowUpRight
         aria-hidden={true}

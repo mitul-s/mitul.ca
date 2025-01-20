@@ -597,10 +597,6 @@ export default function Home() {
               aria-hidden
               className="h-px border-b border-dotted border-accent"
             />
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
           </div>
           <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
             <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
@@ -639,10 +635,6 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-y-0.5 my-0.5 flex-col">
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
             <div
               aria-hidden
               className="h-px border-b border-dotted border-accent"
