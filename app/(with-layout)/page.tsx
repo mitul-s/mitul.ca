@@ -35,9 +35,9 @@ import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 import dynamic from "next/dynamic";
 import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
-import { CopySimple } from "@phosphor-icons/react/dist/ssr/CopySimple";
 import TwitterXMotion from "@/components/twitter-x-loop";
 import { CopyEmailButton } from "@/components/copy-email-button";
+import FooterDate from "@/components/footer-date";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -325,35 +325,6 @@ const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
 //         .
 //       </div>
 //     </Section>
-//   );
-// };
-
-// const FooterDate = async () => {
-//   const data = await fetch(
-//     "https://api.github.com/repos/mitul-s/mitul.ca/commits",
-//     {
-//       method: "GET",
-//       headers: {
-//         Accept: "application/vnd.github.v3+json",
-//       },
-//     }
-//   ).then((res) => res.json());
-
-//   // hack lazy way to bypass rate limit without going through auth
-//   // to add proper stuff later!
-//   const lastCommit = !data.message
-//     ? data.map(
-//         (commit: { commit: { committer: { date: string } } }) =>
-//           commit.commit.committer.date
-//       )[0]
-//     : "";
-//   const formatDate = lastCommit
-//     ? new Date(lastCommit).toLocaleDateString()
-//     : "2023/11/07";
-//   return (
-//     <LinkPrimitive href="https://github.com/mitul-s/mitul.ca" external>
-//       {formatDate}
-//     </LinkPrimitive>
 //   );
 // };
 
@@ -656,7 +627,9 @@ export default function Home() {
       <footer className="bg-accent text-gray-1 text-[12px] py-24">
         <div className="grid grid-cols-[160px_500px_auto]">
           <div className="grid grid-cols-[auto_1fr_auto] gap-x-4 items-center px-px col-start-2">
-            <span>Last updated on 12/12/2024</span>
+            <span>
+              Last updated on <FooterDate />
+            </span>
             <div className="h-px bg-gray-2/40" aria-hidden />
             <p className="whitespace-nowrap">
               With love, from Toronto, Canada.
