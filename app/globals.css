@@ -57,8 +57,9 @@
 
   /* --color-accent: #b3fc03; */
   /* --color-accent: #133212; */
-  /* --color-accent: #021093; */
-  --color-accent: #b20024;
+  --color-accent: #021093;
+  /* --color-accent: #b20024; */
+  /* --color-accent: #ff7f00; */
   --color-light-green: #e2f3e3;
   --color-white: #fff;
 
@@ -154,12 +155,6 @@
   }
 }
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
 .select ::-moz-selection {
   @apply text-accent bg-accent/10;
 }
@@ -168,17 +163,13 @@
   @apply text-accent bg-accent/10;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 a,
 button {
   touch-action: manipulation;
+}
+
+html {
+  /* background-color: var(--color-accent); */
 }
 
 body {
@@ -188,7 +179,7 @@ body {
   font-family: "Monument Grotesk", sans-serif;
   /* font-family: "Helvetica Neue", sans-serif; */
   font-size: 14px;
-  color: rgb(var(--foreground-rgb));
+  /* background-color: white; */
   /* background: linear-gradient(
       to bottom,
       transparent,
@@ -214,13 +205,14 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
       45deg,
       rgba(255, 255, 255, 0.1) 0%,
       var(--color-light-green) 100%
     ),
-    url(/noise.svg);
-  opacity: 0.35;
+    url(/noise.svg); */
+  background: url(/noise.svg);
+  opacity: 0.4;
   mix-blend-mode: overlay;
   pointer-events: none;
 }

@@ -37,6 +37,7 @@ import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
 import { CopySimple } from "@phosphor-icons/react/dist/ssr/CopySimple";
 import TwitterXMotion from "@/components/twitter-x-loop";
+import { CopyEmailButton } from "@/components/copy-email-button";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -612,13 +613,7 @@ export default function Home() {
                   <PencilSimpleLine size={12} aria-hidden={true} />
                   Compose
                 </Link>
-                <button
-                  type="button"
-                  className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
-                >
-                  <CopySimple size={12} aria-hidden={true} />
-                  Copy
-                </button>
+                <CopyEmailButton />
               </div>
             </div>
             <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
@@ -646,7 +641,18 @@ export default function Home() {
           </div>
         </div>
       </Section>
-      {/* <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer> */}
+      <footer className="bg-accent text-gray-1 text-[12px] py-24">
+        <div className="grid grid-cols-[160px_500px_auto]">
+          <div className="grid grid-cols-[auto_1fr_auto] gap-x-4 items-center px-px col-start-2">
+            <span>Last updated on 12/12/2024</span>
+            <div className="h-px bg-gray-2/40" aria-hidden />
+            <p className="whitespace-nowrap">
+              With love, from Toronto, Canada.
+            </p>
+          </div>
+        </div>
+      </footer>
+      <DynamicTree />
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
         <Section heading="Currently">
@@ -663,15 +669,6 @@ export default function Home() {
             <Currently />
           </Suspense>
         </Section>
-        <Experience />
-        <Projects />
-        <Photography />
-        <Footer />
-      </div>
-      <aside className="md:max-w-[450px] md:text-right">
-        <Contact />
-      </aside> */}
-      <DynamicTree />
       {/* <CursorTrail /> */}
     </div>
   );
