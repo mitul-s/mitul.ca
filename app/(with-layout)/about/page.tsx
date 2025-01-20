@@ -1,4 +1,4 @@
-import Photo from "@/components/photo";
+// import Photo from "@/components/photo";
 import LinkPrimitive from "@/components/link-primitive";
 import { beliefs, bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
@@ -131,7 +131,7 @@ const About = () => {
         </Section>
       </div>
       <div className="hidden px-1 my-4 mt-10 lg:flex gap-x-2 md:px-4">
-        <Photo
+        {/* <Photo
           src={"/images/me-2.jpg"}
           alt="A cinematic photo of me standing in the Monteal metro"
           priority
@@ -140,7 +140,7 @@ const About = () => {
           src={"/images/me-4.jpg"}
           alt="A photo of myself walking down a road in rainy British Columbia"
           priority
-        />
+        /> */}
       </div>
     </div>
   );
