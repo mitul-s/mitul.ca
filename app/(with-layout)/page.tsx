@@ -37,7 +37,7 @@ import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
 import TwitterXMotion from "@/components/twitter-x-loop";
 import { CopyEmailButton } from "@/components/copy-email-button";
-import FooterDate from "@/components/footer-date";
+import Footer from "@/components/footer/footer";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -624,19 +624,7 @@ export default function Home() {
           </div>
         </div>
       </Section>
-      <footer className="bg-accent text-gray-1 text-[12px] py-24">
-        <div className="grid grid-cols-[160px_500px_auto]">
-          <div className="grid grid-cols-[auto_1fr_auto] gap-x-4 items-center px-px col-start-2">
-            <span>
-              Last updated on <FooterDate />
-            </span>
-            <div className="h-px bg-gray-2/40" aria-hidden />
-            <p className="whitespace-nowrap">
-              With love, from Toronto, Canada.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
       <DynamicTree />
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Items />
