@@ -59,6 +59,7 @@
   /* --color-accent: #133212; */
   --color-accent: #021093;
   --color-light-green: #e2f3e3;
+  --color-white: #fff;
 
   --text-*: initial;
   --text-sm: 0.75rem;

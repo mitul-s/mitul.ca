@@ -1,5 +1,5 @@
 import ScrollArea from "@/components/scroll-area";
-import Photo from "@/components/photo";
+import MorphingImageDialog from "@/components/photo";
 
 const Gallery = ({
   photos,
@@ -13,7 +13,11 @@ const Gallery = ({
     <ScrollArea className="relative md:w-full">
       <div className="flex w-full h-full gap-x-2">
         {photos.map((photo) => (
-          <Photo key={photo.src} src={photo.src} alt={photo.alt} />
+          <MorphingImageDialog
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+          />
         ))}
       </div>
     </ScrollArea>

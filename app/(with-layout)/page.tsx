@@ -34,6 +34,9 @@ import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
 import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 import dynamic from "next/dynamic";
 import Gallery from "@/components/gallery";
+import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
+import { CopySimple } from "@phosphor-icons/react/dist/ssr/CopySimple";
+import TwitterXMotion from "@/components/twitter-x-loop";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -353,6 +356,14 @@ const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
 //   );
 // };
 
+const SectionTitle = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <h2 className="py-4 pl-4 md:pr-4 font-bold h-full md:ml-auto">
+      {children}
+    </h2>
+  );
+};
+
 const Section = ({
   title,
   children,
@@ -362,7 +373,7 @@ const Section = ({
 }) => {
   return (
     <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
-      <div className="py-4 pr-4 font-bold h-full ml-auto">{title}</div>
+      <SectionTitle>{title}</SectionTitle>
       {children}
     </div>
   );
@@ -387,7 +398,7 @@ export default function Home() {
       </nav>
       <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
         <div className="p-12 font-bold h-full" />
-        <div className="px-4 pt-8 pb-6">
+        <div className="px-4 pt-8 pb-6 border-r">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
             Mitul Shah
           </h1>
@@ -418,11 +429,10 @@ export default function Home() {
             Sign Guestbook
           </Link>
         </div>
-        <div className="p-12 h-full" />
       </div>
       <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
-        <div className="py-4 pr-4 font-bold h-full ml-auto">Experience</div>
-        <div>
+        <SectionTitle>Experience</SectionTitle>
+        <div className="border-r">
           <div className="flex gap-y-0.5 mt-0.5 flex-col">
             <div className="h-px border-b border-dotted border-accent" />
             <div className="h-px border-b border-dotted border-accent" />
@@ -448,8 +458,6 @@ export default function Home() {
             </div>
           </Accordion>
         </div>
-
-        <div className="p-12 h-full" />
       </div>
       <Section title="Projects">
         <div className="border-r flex flex-col">
@@ -476,10 +484,20 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-y-0.5 my-0.5 flex-col">
-            <div className="h-px border-b border-dotted border-accent" />
-            <div className="h-px border-b border-dotted border-accent" />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
           </div>
-          <div className="px-4 py-4 flex flex-col gap-y-1">
+          <div className="px-4 pt-3 pb-5 flex flex-col gap-y-1">
             <h2 className="font-medium">Montreal in Motion</h2>
             <p>
               A documentation of the brutalist and distinctly designed metro
@@ -554,10 +572,87 @@ export default function Home() {
             <ArrowRight size={12} aria-hidden={true} />
           </Link>
           <Gallery photos={photos} />
+
+          {/* {photos.map((photo) => (
+            <MorphingDialog key={photo.src}>
+              <Photo src={photo.src} alt={photo.alt} />
+            </MorphingDialog>
+          ))} */}
         </div>
       </Section>
       <Section title="Contact">
-        <div>yo</div>
+        <div className="pt-4 border-r">
+          <p className="pb-4 px-4">
+            Dolore enim dolore ad sint nostrud culpa reprehenderit id. Anim
+            aliqua elit qui tempor incididunt occaecat velit deserunt
+            reprehenderit exercitation sit Lorem sit dolore. Officia officia
+            tempor et nisi.
+          </p>
+          <div className="flex gap-y-0.5 my-0.5 flex-col">
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+          </div>
+          <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
+            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
+              <p className="font-medium">Mail</p>
+              <Link href="mailto:mitulxshah@gmail.com">
+                mitulxshah@gmail.com
+              </Link>
+              <div className="flex gap-x-1 ml-auto">
+                <Link
+                  href="mailto:mitulxshah@gmail.com"
+                  className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+                >
+                  <PencilSimpleLine size={12} aria-hidden={true} />
+                  Compose
+                </Link>
+                <button
+                  type="button"
+                  className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+                >
+                  <CopySimple size={12} aria-hidden={true} />
+                  Copy
+                </button>
+              </div>
+            </div>
+            <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
+
+            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
+              <p className="font-medium">Instagram</p>
+              <Link href="https://twitter.com/typicalmitul" className="">
+                @typicalmitul
+              </Link>
+            </div>
+            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
+              <p className="font-medium">GitHub</p>
+              <Link href="https://twitter.com/typicalmitul">mitul-s</Link>
+            </div>
+          </div>
+          <div className="flex gap-y-0.5 my-0.5 flex-col">
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+            <div
+              aria-hidden
+              className="h-px border-b border-dotted border-accent"
+            />
+          </div>
+        </div>
       </Section>
       {/* <footer className="bg-accent fixed bottom-0 w-full">Mitul Shah</footer> */}
       {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
