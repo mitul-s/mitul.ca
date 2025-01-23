@@ -1,5 +1,3 @@
-"use client";
-
 import { Accordion, AccordionItem } from "@/components/collapsible";
 // import CursorTrail from "@/components/cursor-trail";
 import LinkPrimitive from "@/components/link-primitive";
@@ -37,7 +35,10 @@ import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
 import TwitterXMotion from "@/components/twitter-x-loop";
 import { CopyEmailButton } from "@/components/copy-email-button";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer";
+import { cn } from "@/lib/utils";
+import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
+import MusicPlayer from "@/components/music-player";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -313,20 +314,26 @@ const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
 //   );
 // };
 
-// const Footer = () => {
-//   return (
-//     <Section>
-//       <div className="max-w-xs mt-12 text-sm text-gray-11 md:mt-0">
-//         This website has recently been revamped and is constant a work in
-//         progress. Last updated on{" "}
-//         <Suspense fallback={<Skeleton className="inline-flex w-24 h-4" />}>
-//           <FooterDate />
-//         </Suspense>
-//         .
-//       </div>
-//     </Section>
-//   );
-// };
+const DottedSpacer = ({
+  lines = 3,
+  className,
+}: {
+  lines?: number;
+  className?: string;
+}) => {
+  return (
+    <div className={cn("flex gap-y-0.5 my-0.5 flex-col", className)}>
+      {Array.from({ length: lines }).map((_, index) => (
+        <span
+          // biome-ignore lint/suspicious/noArrayIndexKey: this is a static list
+          key={index}
+          className="h-px border-b border-dotted border-accent"
+          aria-hidden
+        />
+      ))}
+    </div>
+  );
+};
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -340,13 +347,95 @@ const Section = ({
   title,
   children,
 }: {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }) => {
   return (
-    <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
-      <SectionTitle>{title}</SectionTitle>
-      {children}
+    <section className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
+      {title ? <SectionTitle>{title}</SectionTitle> : null}
+      <SectionContent>{children}</SectionContent>
+    </section>
+  );
+};
+
+const SocialLink = ({
+  href,
+  social,
+  children,
+}: {
+  href: string;
+  social: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <div className="grid grid-cols-[75px_auto_1fr] gap-x-1 items-center px-4 py-2">
+      <p className="font-medium">{social}</p>
+      <Link
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:underline underline-offset-2"
+      >
+        {children}
+      </Link>
+    </div>
+  );
+};
+
+const SectionContent = ({ children }: { children: React.ReactNode }) => {
+  return <div className="border-r">{children}</div>;
+};
+
+interface ProjectProps {
+  title: string;
+  description: string;
+  hrefs: {
+    live?: string;
+    code?: string;
+  };
+}
+
+const Project = ({
+  title,
+  description,
+  hrefs: { live, code },
+}: ProjectProps) => {
+  return (
+    <div className="px-4 pt-4 pb-5 flex flex-col gap-y-1">
+      <h3 className="font-medium">{title}</h3>
+      <p>{description}</p>
+      <div className="flex items-center mt-2 gap-x-2">
+        {live ? (
+          <Link
+            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+            href={live}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Globe
+              aria-hidden={true}
+              size={12}
+              className="shrink-0 text-gray-1"
+            />
+            Live{" "}
+          </Link>
+        ) : null}
+        {code ? (
+          <Link
+            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+            href={code}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Terminal
+              aria-hidden={true}
+              size={12}
+              className="shrink-0 text-gray-1"
+            />
+            Code{" "}
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 };
@@ -355,9 +444,6 @@ export default function Home() {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
       <nav className="absolute top-4 right-4 flex gap-1 text-accent font-medium">
-        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
-          About
-        </div>
         <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Public Archive
         </div>
@@ -368,9 +454,8 @@ export default function Home() {
           Email
         </div>
       </nav>
-      <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
-        <div className="p-12 font-bold h-full" />
-        <div className="px-4 pt-8 pb-6 border-r">
+      <Section title="x">
+        <div className="px-4 pt-8 pb-6 col-start-2">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
             Mitul Shah
           </h1>
@@ -389,138 +474,64 @@ export default function Home() {
               doing what I can't
             </LinkPrimitive>
           </p>
-          <div className="bg-gray-4 w-full h-20 rounded-4 border border-gray-6 my-4" />
+          <MusicPlayer />
           <div className="flex gap-x-2">
             <Link
               href="/visitors"
-              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
+              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1 flex gap-x-1.5 items-center"
               style={{
                 boxShadow:
                   "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
               }}
             >
-              Learn about me
+              Sign guestbook
+              <ScribbleLoop
+                size={12}
+                weight="bold"
+                aria-hidden={true}
+                className="shrink-0 text-light-green"
+              />
             </Link>
-            <Link
-              href="/visitors"
-              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1"
-              style={{
-                boxShadow:
-                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
-              }}
-            >
-              Sign Guestbook
-            </Link>
-          </div>
-        </div>
-      </div>
-      <div className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
-        <SectionTitle>Experience</SectionTitle>
-        <div className="border-r">
-          <div className="flex gap-y-0.5 mt-0.5 flex-col">
-            <div className="h-px border-b border-dotted border-accent" />
-            <div className="h-px border-b border-dotted border-accent" />
-            <div className="h-px border-b border-dotted border-accent" />
-          </div>
-          <Accordion className="h-full flex flex-col divide-y divide-dotted">
-            {experiences.map((role) => {
-              return (
-                <AccordionItem
-                  key={role.company}
-                  role={role.role}
-                  company={role.company}
-                  range={role.range}
-                  description={role.description}
-                  skills={role.skills}
-                  link={role.link}
-                />
-              );
-            })}
-            <div className="flex gap-y-0.5 my-0.5 flex-col">
-              <div className="h-px border-b border-dotted border-accent" />
-              <div className="h-px border-b border-dotted border-accent" />
-            </div>
-          </Accordion>
-        </div>
-      </div>
-      <Section title="Projects">
-        <div className="border-r flex flex-col">
-          <div className="px-4 py-4 flex flex-col gap-y-1">
-            <h2 className="font-medium">Places to Read</h2>
-            <p>
-              A microsite to discover community submitted parks around the world
-              where you can sit down, chill and enjoy reading a book.
-            </p>
-            <div className="flex items-center mt-2 gap-x-2">
-              <Link
-                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-                href="https://placestoread.xyz"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Globe
-                  aria-hidden={true}
-                  size={12}
-                  className="shrink-0 text-gray-1"
-                />
-                Live{" "}
-              </Link>
-            </div>
-          </div>
-          <div className="flex gap-y-0.5 my-0.5 flex-col">
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-          </div>
-          <div className="px-4 pt-3 pb-5 flex flex-col gap-y-1">
-            <h2 className="font-medium">Montreal in Motion</h2>
-            <p>
-              A documentation of the brutalist and distinctly designed metro
-              stations. The project uses CSS 3D transforms and noise to mirror
-              the architecutral character of the spaces.
-            </p>
-            <div className="flex items-center mt-2 gap-x-2">
-              <Link
-                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-                href="https://typicalmitul.com/montreal-in-motion"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Globe
-                  aria-hidden={true}
-                  size={12}
-                  className="shrink-0 text-gray-1"
-                />
-                Live{" "}
-              </Link>
-              <a
-                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-                href="https://github.com/mitul-s/typicalmitul.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Terminal
-                  aria-hidden={true}
-                  size={12}
-                  className="shrink-0 text-gray-1"
-                />
-                Code{" "}
-              </a>
-            </div>
           </div>
         </div>
       </Section>
+      <Section title="Experience">
+        <DottedSpacer className="mt-0.5 mb-0" />
+        <Accordion className="h-full flex flex-col divide-y divide-dotted">
+          {experiences.map((role) => {
+            return (
+              <AccordionItem
+                key={role.company}
+                role={role.role}
+                company={role.company}
+                range={role.range}
+                description={role.description}
+                skills={role.skills}
+                link={role.link}
+              />
+            );
+          })}
+          <DottedSpacer lines={2} />
+        </Accordion>
+      </Section>
+      <Section title="Projects">
+        <Project
+          title="Montreal in Motion"
+          description="A documentation of the brutalist and distinctly designed metro stations. The project uses CSS 3D transforms and noise to mirror the architecutral character of the spaces."
+          hrefs={{
+            live: "https://typicalmitul.com/montreal-in-motion",
+            code: "https://github.com/mitul-s/typicalmitul.com",
+          }}
+        />
+        <DottedSpacer className="my-0" />
+        <Project
+          title="Places to Read"
+          description="A microsite to discover community submitted parks around the world where you can sit down, chill and enjoy reading a book."
+          hrefs={{ live: "https://placestoread.xyz" }}
+        />
+      </Section>
       <Section title="Photography">
-        <div className="flex flex-col gap-y-1.5 px-4 py-4 border-r">
+        <div className="flex flex-col gap-y-1.5 px-4 pt-4 pb-8">
           <p>
             I've built up my craft as a photographer over a number of years and
             thrived in turning it into an indepedent business.
@@ -546,7 +557,7 @@ export default function Home() {
           </p>
           <Link
             href="/visitors"
-            className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 my-2"
+            className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
             style={{
               boxShadow:
                 "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
@@ -556,93 +567,45 @@ export default function Home() {
             <ArrowRight size={12} aria-hidden={true} />
           </Link>
           <Gallery photos={photos} />
-
-          {/* {photos.map((photo) => (
-            <MorphingDialog key={photo.src}>
-              <Photo src={photo.src} alt={photo.alt} />
-            </MorphingDialog>
-          ))} */}
         </div>
       </Section>
       <Section title="Contact">
-        <div className="pt-4 border-r">
-          <p className="pb-4 px-4">
-            Dolore enim dolore ad sint nostrud culpa reprehenderit id. Anim
-            aliqua elit qui tempor incididunt occaecat velit deserunt
-            reprehenderit exercitation sit Lorem sit dolore. Officia officia
-            tempor et nisi.
-          </p>
-          <div className="flex gap-y-0.5 my-0.5 flex-col">
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-          </div>
-          <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
-            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
-              <p className="font-medium">Mail</p>
-              <Link href="mailto:mitulxshah@gmail.com">
-                mitulxshah@gmail.com
+        <p className="pb-4 px-4 pt-4">
+          Dolore enim dolore ad sint nostrud culpa reprehenderit id. Anim aliqua
+          elit qui tempor incididunt occaecat velit deserunt reprehenderit
+          exercitation sit Lorem sit dolore. Officia officia tempor et nisi.
+        </p>
+        <DottedSpacer lines={2} />
+        <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
+          <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
+            <p className="font-medium">Mail</p>
+            <Link href="mailto:mitulxshah@gmail.com">mitulxshah@gmail.com</Link>
+            <div className="flex gap-x-1 ml-auto">
+              <Link
+                href="mailto:mitulxshah@gmail.com"
+                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+              >
+                <PencilSimpleLine size={12} aria-hidden={true} />
+                Compose
               </Link>
-              <div className="flex gap-x-1 ml-auto">
-                <Link
-                  href="mailto:mitulxshah@gmail.com"
-                  className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
-                >
-                  <PencilSimpleLine size={12} aria-hidden={true} />
-                  Compose
-                </Link>
-                <CopyEmailButton />
-              </div>
-            </div>
-            <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
-
-            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
-              <p className="font-medium">Instagram</p>
-              <Link href="https://twitter.com/typicalmitul" className="">
-                @typicalmitul
-              </Link>
-            </div>
-            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
-              <p className="font-medium">GitHub</p>
-              <Link href="https://twitter.com/typicalmitul">mitul-s</Link>
+              <CopyEmailButton />
             </div>
           </div>
-          <div className="flex gap-y-0.5 my-0.5 flex-col">
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-            <div
-              aria-hidden
-              className="h-px border-b border-dotted border-accent"
-            />
-          </div>
+          <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
+          <SocialLink
+            social="Instagram"
+            href="https://instagram.com/typicalmitul"
+          >
+            @typicalmitul
+          </SocialLink>
+          <SocialLink social="GitHub" href="https://github.com/mitul-s">
+            mitul-s
+          </SocialLink>
         </div>
+        <DottedSpacer lines={2} />
       </Section>
       <Footer />
       <DynamicTree />
-      {/* <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
-        <Items />
-        <Section heading="Currently">
-          <Suspense
-            fallback={
-              <div className="flex flex-wrap items-center gap-x-1">
-                Listening to <Skeleton className="inline-flex w-24 h-4" />
-                by <Skeleton className="inline-flex w-12 h-4" /> and slowly
-                reading <Skeleton className="inline-flex w-24 h-4" /> by{" "}
-                <Skeleton className="inline-flex w-24 h-4" />.
-              </div>
-            }
-          >
-            <Currently />
-          </Suspense>
-        </Section>
-      {/* <CursorTrail /> */}
     </div>
   );
 }

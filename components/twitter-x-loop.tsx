@@ -46,7 +46,14 @@ export default function TwitterXMotion({ className }: { className: string }) {
           {isX ? "X 🫨" : "Twitter"}
         </motion.div>
       </AnimatePresence>
-      <Link href="https://twitter.com/typicalmitul">@typicalmitul</Link>
+      <Link
+        href="https://twitter.com/typicalmitul"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:underline underline-offset-2"
+      >
+        @typicalmitul
+      </Link>
     </div>
   );
 }

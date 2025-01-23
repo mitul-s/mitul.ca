@@ -121,7 +121,7 @@
     to {
       height: 0;
       opacity: 0;
-      filter: blur(5px);
+      filter: blur(4px);
     }
   }
 

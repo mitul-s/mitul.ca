@@ -7,6 +7,15 @@ const config = {
   experimental: {
     mdxRs: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/os",
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

@@ -279,7 +279,7 @@ const P5AsciiTree: React.FC = () => {
     >
       <div
         ref={sketchRef}
-        className="w-1/2 max-w-3xl aspect-[5/4] opacity-55 absolute top-48 right-0"
+        className="w-1/2  aspect-[5/4] opacity-55 absolute top-48 right-0"
       />
     </motion.div>
   );
