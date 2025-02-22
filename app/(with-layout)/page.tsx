@@ -516,6 +516,14 @@ export default function Home() {
       </Section>
       <Section title="Projects">
         <Project
+          title="Daybloom"
+          description="Calendar based journaling app that helps you reflect on your day through text and photos."
+          hrefs={{
+            live: "https://daybloom.app",
+          }}
+        />
+        <DottedSpacer className="my-0" />
+        <Project
           title="Montreal in Motion"
           description="A documentation of the brutalist and distinctly designed metro stations. The project uses CSS 3D transforms and noise to mirror the architecutral character of the spaces."
           hrefs={{
@@ -531,42 +539,46 @@ export default function Home() {
         />
       </Section>
       <Section title="Photography">
-        <div className="flex flex-col gap-y-1.5 px-4 pt-4 pb-8">
-          <p>
-            I've built up my craft as a photographer over a number of years and
-            thrived in turning it into an indepedent business.
-          </p>
-          <span>
-            <span className="font-medium">Notable achievements include</span>
-            <ul>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                being a personal photographer for the Uber CEO
-              </li>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                featured in local Toronto newspapers
-              </li>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                having a photo as a wallpaper in every Google device
-              </li>
-            </ul>
-          </span>
-          <p>
-            Today, my focus is on music photography where I capture my favourite
-            artists at concerts or festivals. You can learn a little more by
-            visiting my portfolio below.
-          </p>
-          <Link
-            href="/visitors"
-            className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
-            style={{
-              boxShadow:
-                "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
-            }}
-          >
-            Visit my portfolio
-            <ArrowRight size={12} aria-hidden={true} />
-          </Link>
-          <Gallery photos={photos} />
+        <div className="flex flex-col gap-y-1.5 pt-4 pb-8">
+          <div className="flex flex-col gap-y-1.5 px-4">
+            <p>
+              I've built up my craft as a photographer over a number of years
+              and thrived in turning it into an indepedent business.
+            </p>
+            <span>
+              <span className="font-medium">Notable achievements include</span>
+              <ul>
+                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                  being a personal photographer for the Uber CEO
+                </li>
+                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                  featured in local Toronto newspapers
+                </li>
+                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                  having a photo as a wallpaper in every Google device
+                </li>
+              </ul>
+            </span>
+            <p>
+              Today, my focus is on music photography where I capture my
+              favourite artists at concerts or festivals. You can learn a little
+              more by visiting my portfolio below.
+            </p>
+            <Link
+              href="/visitors"
+              className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
+              style={{
+                boxShadow:
+                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+              }}
+            >
+              Visit my portfolio
+              <ArrowRight size={12} aria-hidden={true} />
+            </Link>
+          </div>
+          <div className="scroll-pl-4 scroll-pr-4">
+            <Gallery photos={photos} />
+          </div>
         </div>
       </Section>
       <Section title="Contact">

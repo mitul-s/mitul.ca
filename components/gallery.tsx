@@ -11,7 +11,7 @@ const Gallery = ({
 }) => {
   return (
     <ScrollArea className="relative md:w-full">
-      <div className="flex w-full h-full gap-x-2">
+      <div className="flex w-full h-full gap-x-2 px-4">
         {photos.map((photo) => (
           <MorphingImageDialog
             key={photo.src}
