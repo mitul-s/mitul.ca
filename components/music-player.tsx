@@ -1,11 +1,9 @@
 import Filter from "bad-words";
 import getLastPlayed from "@/lib/spotify";
 import Image from "next/image";
-import { unstable_noStore as noStore } from "next/cache";
 import { getShelves } from "@/lib/literal";
 
 const MusicPlayer = async () => {
-  noStore();
   const { data: song } = await getLastPlayed();
   const { reading } = await getShelves();
   const filter = new Filter();
@@ -24,23 +22,9 @@ const MusicPlayer = async () => {
   console.log(track);
   return (
     <>
-      {/* <div className="w-full flex gap-x-2 bg-gray-1 rounded-4 px-1.5 py-1.5 shadow-sm border border-dotted my-3">
-        <div className="rounded-md overflow-hidden border border-gray-11">
-          <Image
-            src={track.coverArt}
-            width={60}
-            height={60}
-            alt="Album cover"
-          />
-        </div>
-        <div className="flex flex-col gap-y-1 justify-center leading-none">
-          <span className="font-medium text-accent">{track.title}</span>
-          <span className="text-sm">{track.artist}</span>
-        </div>
-      </div> */}
-      <div className="flex gap-x-2">
-        <div className="flex flex-col gap-y-1 border w-fit overflow-hidden border-dotted shadow-sm bg-white p-2 rounded-4 my-4">
-          <div className="rounded-md border border-gray-11 h-24 w-24 aspect-square relative">
+      <div className="grid grid-cols-2 gap-x-2 gap-y-4 my-4">
+        <div className="flex flex-row items-center gap-x-1.5 w-fit overflow-hidden">
+          <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square relative">
             <Image
               src={track.coverArt}
               fill
@@ -53,8 +37,8 @@ const MusicPlayer = async () => {
             <span className="text-sm">{track.artist}</span>
           </div>
         </div>
-        <div className="flex flex-col gap-y-1 border w-fit overflow-hidden border-dotted shadow-sm bg-white p-2 rounded-4 my-4">
-          <div className="rounded-md border border-gray-11 h-24 w-24 aspect-square relative">
+        <div className="flex flex-row items-center gap-x-1.5 w-fit overflow-hidden">
+          <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square relative">
             <Image
               src={reading.cover}
               fill
@@ -63,7 +47,7 @@ const MusicPlayer = async () => {
             />
           </div>
           <div className="flex flex-col gap-y-1 justify-center leading-none">
-            <span className="font-medium text-accent truncate max-w-24">
+            <span className="font-medium text-accent truncate max-w-32">
               {reading.title}
             </span>
             <span className="text-sm">{reading.author}</span>

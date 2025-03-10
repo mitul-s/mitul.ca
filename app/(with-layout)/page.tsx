@@ -39,6 +39,7 @@ import Footer from "@/components/footer";
 import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
+import ThemeChanger from "@/components/theme-switcher";
 
 // export const dynamic = "force-dynamic";
 const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
@@ -453,6 +454,7 @@ export default function Home() {
         <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Email
         </div>
+        <ThemeChanger />
       </nav>
       <Section title="x">
         <div className="px-4 pt-8 pb-6 col-start-2">
@@ -474,6 +476,9 @@ export default function Home() {
               doing what I can't
             </LinkPrimitive>
           </p>
+          <span className="font-medium text-sm tracking-tight mt-4 -mb-2 block">
+            Currently
+          </span>
           <MusicPlayer />
           <div className="flex gap-x-2">
             <Link
@@ -517,7 +522,7 @@ export default function Home() {
       <Section title="Projects">
         <Project
           title="Daybloom"
-          description="Calendar based journaling app that helps you reflect on your day through text and photos."
+          description="A mindful daily journal that combines your photos and thoughts into calendar view, helping you capture memories and reflect on life's meaningful moments."
           hrefs={{
             live: "https://daybloom.app",
           }}

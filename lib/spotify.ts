@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
@@ -23,74 +25,117 @@ const getAccessToken = async () => {
   });
 
   const data = await response.json();
-
-  return data.access_token as string;
+  return data.access_token;
 };
 
-const getNowPlaying = async () => {
+const fetchSpotifyData = async (endpoint: string) => {
   const accessToken = await getAccessToken();
 
-  const response = await fetch(NOW_PLAYING_ENDPOINT, {
+  const response = await fetch(endpoint, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
-    },
-    next: {
-      revalidate: 60,
     },
   });
 
   if (response.status === 204) {
-    return getLastPlayed();
+    return {
+      status: response.status,
+    };
   }
 
   try {
-    const song = await response.json();
+    const data = await response.json();
+    return { status: response.status, data };
+  } catch {
+    return { status: response.status };
+  }
+};
 
-    if (song.is_playing) {
-      return {
-        status: response.status,
-        data: song,
-      };
+export const getNowPlaying = unstable_cache(
+  async () => {
+    const nowPlaying = await fetchSpotifyData(NOW_PLAYING_ENDPOINT);
+    if (nowPlaying.status === 200 && nowPlaying.data.is_playing) {
+      return nowPlaying;
     }
+
     return getLastPlayed();
-  } catch {
-    return {
-      status: response.status,
-    };
-  }
-};
+  },
+  ["spotify-now-playing"],
+  { revalidate: 60 }
+);
 
-const getLastPlayed = async () => {
-  const accessToken = await getAccessToken();
+export const getLastPlayed = unstable_cache(
+  async () => {
+    return fetchSpotifyData(RECENTLY_PLAYED_ENDPOINT);
+  },
+  ["spotify-last-played"],
+  { revalidate: 60 } // Cache for 1 minute
+);
 
-  const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    next: {
-      revalidate: 60,
-    },
-  });
+// const getNowPlaying = async () => {
+//   const accessToken = await getAccessToken();
 
-  if (response.status === 204) {
-    return {
-      status: response.status,
-    };
-  }
+//   const response = await fetch(NOW_PLAYING_ENDPOINT, {
+//     headers: {
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//     next: {
+//       revalidate: 60,
+//     },
+//   });
 
-  try {
-    const song = await response.json();
+//   if (response.status === 204) {
+//     return getLastPlayed();
+//   }
 
-    return {
-      status: response.status,
-      data: song,
-    };
-  } catch {
-    return {
-      status: response.status,
-    };
-  }
-};
+//   try {
+//     const song = await response.json();
+
+//     if (song.is_playing) {
+//       return {
+//         status: response.status,
+//         data: song,
+//       };
+//     }
+//     return getLastPlayed();
+//   } catch {
+//     return {
+//       status: response.status,
+//     };
+//   }
+// };
+
+// const getLastPlayed = async () => {
+//   const accessToken = await getAccessToken();
+
+//   const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
+//     headers: {
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//     next: {
+//       revalidate: 60,
+//     },
+//   });
+
+//   if (response.status === 204) {
+//     return {
+//       status: response.status,
+//     };
+//   }
+
+//   try {
+//     const song = await response.json();
+
+//     return {
+//       status: response.status,
+//       data: song,
+//     };
+//   } catch {
+//     return {
+//       status: response.status,
+//     };
+//   }
+// };
 
 export const getTopTracks = async () => {
   const accessToken = await getAccessToken();
