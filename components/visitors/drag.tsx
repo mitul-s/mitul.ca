@@ -32,9 +32,10 @@ const Drag = React.memo(
       const direction = info.offset.x > 0 ? 1 : -1;
       const velocity = Math.min(Math.abs(info.velocity.x), 1);
       controls.start({
-        rotate: Math.floor(initialRotate + velocity * 40 * direction),
+        rotate: Math.floor(initialRotate + velocity * 20 * direction),
         transition: {
-          type: "spring",
+          type: "easeInOut",
+          duration: 1,
           stiffness: 50,
           damping: 30,
           mass: 1,
