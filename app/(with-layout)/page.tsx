@@ -445,12 +445,21 @@ export default function Home() {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
       <nav className="absolute top-4 right-4 flex gap-1 text-accent font-medium">
-        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
+        <Link
+          href="/os"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+        >
           Public Archive
-        </div>
-        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
+        </Link>
+        <Link
+          href="/visitors"
+          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+        >
           Guestbook
-        </div>
+        </Link>
+
         <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
           Email
         </div>
@@ -511,7 +520,7 @@ export default function Home() {
                 company={role.company}
                 range={role.range}
                 description={role.description}
-                skills={role.skills}
+                // skills={role.skills}
                 link={role.link}
               />
             );

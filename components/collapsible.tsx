@@ -6,7 +6,6 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 //@ts-ignore
 import useSound from "use-sound";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
