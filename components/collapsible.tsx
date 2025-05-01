@@ -101,9 +101,7 @@ const AccordionItem = ({
         </div>
 
         <span className="hidden sm:block ml-auto">{range}</span>
-        <span className="sm:hidden ml-auto text-gray-10 text-sm group-hover:text-gray-12 group-focus-visible:text-gray-12 group-data-[state=open]:text-gray-1">
-          {shortRange}
-        </span>
+        <span className="sm:hidden ml-auto text-sm">{shortRange}</span>
       </AccordionPrimitive.Trigger>
       <AccordionPrimitive.Content className="overflow-clip transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down data-[state=open]:bg-accent/10">
         <div className="px-4 pb-4">

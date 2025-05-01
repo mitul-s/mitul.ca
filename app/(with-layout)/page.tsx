@@ -338,7 +338,7 @@ const DottedSpacer = ({
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => {
   return (
-    <h2 className="py-4 pl-4 md:pr-4 font-bold h-full md:ml-auto">
+    <h2 className="md:py-4 pt-4 pl-4 md:pr-4 font-bold h-full md:ml-auto">
       {children}
     </h2>
   );
@@ -352,7 +352,7 @@ const Section = ({
   children: React.ReactNode;
 }) => {
   return (
-    <section className="grid md:grid-cols-[160px_500px_auto] divide-x w-full border-b border-accent divide-accent text-accent">
+    <section className="md:grid grid-cols-[160px_500px_auto] md:divide-x w-full border-b border-accent divide-accent text-accent">
       {title ? <SectionTitle>{title}</SectionTitle> : null}
       <SectionContent>{children}</SectionContent>
     </section>
@@ -384,7 +384,7 @@ const SocialLink = ({
 };
 
 const SectionContent = ({ children }: { children: React.ReactNode }) => {
-  return <div className="border-r">{children}</div>;
+  return <div className="md:border-r">{children}</div>;
 };
 
 interface ProjectProps {
@@ -449,23 +449,24 @@ export default function Home() {
           href="/os"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
         >
           Public Archive
         </Link>
         <Link
           href="/visitors"
-          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer text-sm"
+          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
         >
           Guestbook
         </Link>
 
-        <div className="bg-accent text-light-green px-1 rounded-sm py-1 leading-none">
+        <div className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer">
           Email
         </div>
+
         <ThemeChanger />
       </nav>
-      <Section title="x">
+      <Section title=" ">
         <div className="px-4 pt-8 pb-6 col-start-2">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
             Mitul Shah
@@ -492,7 +493,7 @@ export default function Home() {
           <div className="flex gap-x-2">
             <Link
               href="/visitors"
-              className="rounded-4 bg-accent text-light-green font-medium px-2 py-1 flex gap-x-1.5 items-center"
+              className="rounded-4 bg-accent transition hover:bg-accent/90 text-light-green font-medium px-2 py-1 flex gap-x-1.5 items-center"
               style={{
                 boxShadow:
                   "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
@@ -510,7 +511,7 @@ export default function Home() {
         </div>
       </Section>
       <Section title="Experience">
-        <DottedSpacer className="mt-0.5 mb-0" />
+        <DottedSpacer className="mt-4 md:mt-0.5 mb-0" />
         <Accordion className="h-full flex flex-col divide-y divide-dotted">
           {experiences.map((role) => {
             return (
