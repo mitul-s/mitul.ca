@@ -22,7 +22,7 @@ const MusicPlayer = async () => {
   console.log(track);
   return (
     <>
-      <div className="grid grid-cols-2 gap-x-2 gap-y-4 my-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4 my-4">
         <div className="flex flex-row items-center gap-x-1.5 w-fit overflow-hidden">
           <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square relative">
             <Image

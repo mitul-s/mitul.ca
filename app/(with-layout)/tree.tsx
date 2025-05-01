@@ -34,6 +34,7 @@ const P5AsciiTree: React.FC = () => {
       p.preload = () => {
         img = p.loadImage(
           "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tree%20PNG%203498-WZXyiQf0MZdOkGZGNuQvBFOgvMHxgZ.png"
+          // "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/Tree%20PNG%20Image-FuCcTHTGIQhPV1Q9zND4BeFX4yuyn2.png"
         );
       };
 
@@ -154,7 +155,7 @@ const P5AsciiTree: React.FC = () => {
       }
 
       p.setup = () => {
-        p.createCanvas(1000, 800);
+        p.createCanvas(1400, 1120);
         p.clear(); // Added this line
         p.background(0);
         p.textSize(24);
@@ -277,10 +278,7 @@ const P5AsciiTree: React.FC = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 2 }}
     >
-      <div
-        ref={sketchRef}
-        className="w-1/2  aspect-[5/4] opacity-55 absolute top-48 right-0"
-      />
+      <div ref={sketchRef} className="w-screen h-screen opacity-55 " />
     </motion.div>
   );
 };
