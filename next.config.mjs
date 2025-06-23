@@ -11,11 +11,11 @@ const config = {
     return [
       {
         source: "/os",
-        destination: "https://os-blond.vercel.app/os",
+        destination: "https://os-2.vercel.app/os",
       },
       {
         source: "/os/:path*",
-        destination: "https://os-blond.vercel.app/os/:path*",
+        destination: "https://os-2.vercel.app/os/:path*",
       },
     ];
   },
