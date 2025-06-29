@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/microfrontends.json",
+  "applications": {
+    "mitul-ca": {
+      "development": {
+        "fallback": "mitul.ca"
+      }
+    },
+    "os-2": {
+      "routing": [
+        {
+          "group": "main",
+          "paths": ["/os", "/os/:path*"]
+        }
+      ]
+    }
+  }
+}
