@@ -17,7 +17,7 @@ import MusicPlayer from "@/components/music-player";
 import ThemeChanger from "@/components/theme-switcher";
 
 // export const dynamic = "force-dynamic";
-const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
+// const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
 
 const DottedSpacer = ({
   lines = 3,
