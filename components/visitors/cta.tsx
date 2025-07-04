@@ -80,7 +80,7 @@ export default function WriteNoteCTA() {
     return svgelm.outerHTML;
   };
 
-  const stepConent = (step: number, svgRef: React.RefObject<SignatureRef>) => {
+  const stepConent = (step: number, svgRef: React.RefObject<SignatureRef | null>) => {
     switch (step) {
       case 1:
         return (
