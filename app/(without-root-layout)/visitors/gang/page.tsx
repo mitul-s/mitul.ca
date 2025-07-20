@@ -4,8 +4,8 @@ import { sql } from "@vercel/postgres";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default function ProtectedPage() {
-  const cookieStore = cookies();
+export default async function ProtectedPage() {
+  const cookieStore = await cookies();
   const isAuthenticated = cookieStore.get("auth");
 
   if (!isAuthenticated) {
