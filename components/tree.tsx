@@ -35,11 +35,15 @@ const P5AsciiTree: React.FC = () => {
       let quadtree: any;
       let prevMouseX: number;
       let prevMouseY: number;
+      let frameCount = 0;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      let cachedColor = { r: 2, g: 16, b: 147 };
+      let lastColorCheck = 0;
 
       p.preload = () => {
         img = p.loadImage(
           "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tree%20PNG%203498-WZXyiQf0MZdOkGZGNuQvBFOgvMHxgZ.png"
-          // "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/Tree%20PNG%20Image-FuCcTHTGIQhPV1Q9zND4BeFX4yuyn2.png"
         );
       };
 
@@ -59,6 +63,15 @@ const P5AsciiTree: React.FC = () => {
         ) {
           this.boundary = boundary;
           this.capacity = capacity;
+          this.points = [];
+          this.divided = false;
+          this.northwest = null;
+          this.northeast = null;
+          this.southwest = null;
+          this.southeast = null;
+        }
+
+        clear() {
           this.points = [];
           this.divided = false;
           this.northwest = null;
@@ -166,17 +179,16 @@ const P5AsciiTree: React.FC = () => {
         p.textAlign(p.CENTER, p.CENTER);
 
         img.loadPixels();
-        const stepSize = 6;
+        const stepSize = 8; // Increased step size for fewer particles
         const w = p.width / img.width;
         const h = p.height / img.height;
 
         // Define the area to exclude (top-left corner)
-        const excludeWidth = img.width * 0.2; // Exclude 20% from the left
-        const excludeHeight = img.height * 0.2; // Exclude 20% from the top
+        const excludeWidth = img.width * 0.2;
+        const excludeHeight = img.height * 0.2;
 
         for (let i = 0; i < img.width; i += stepSize) {
           for (let j = 0; j < img.height; j += stepSize) {
-            // Skip particles in the top-left corner
             if (i < excludeWidth && j < excludeHeight) continue;
 
             const pixelIndex = (i + j * img.width) * 4;
@@ -203,33 +215,49 @@ const P5AsciiTree: React.FC = () => {
         prevMouseY = p.mouseY;
       };
 
-      p.draw = () => {
-        p.clear();
+      const getCachedColor = () => {
+        // Only check color every 60 frames (1 second at 60fps)
+        if (frameCount - lastColorCheck > 60) {
+          if (typeof document !== "undefined") {
+            const colorString = getComputedStyle(document.documentElement)
+              .getPropertyValue("--color-accent-rgb")
+              .trim();
 
-        // Only access document on the client side
-        let r = 2,
-          g = 16,
-          b = 147; // Default fallback values
-        if (typeof document !== "undefined") {
-          const colorString = getComputedStyle(document.documentElement)
-            .getPropertyValue("--color-accent-rgb")
-            .trim();
+            const colorValues = colorString
+              .split(",")
+              .map((str) => Number.parseInt(str.trim(), 10));
 
-          const colorValues = colorString
-            .split(",")
-            .map((str) => Number.parseInt(str.trim(), 10));
-
-          if (colorValues.length === 3 && !colorValues.some(isNaN)) {
-            [r, g, b] = colorValues;
+            if (colorValues.length === 3 && !colorValues.some(isNaN)) {
+              cachedColor = {
+                r: colorValues[0],
+                g: colorValues[1],
+                b: colorValues[2],
+              };
+            }
           }
+          lastColorCheck = frameCount;
+        }
+        return cachedColor;
+      };
+
+      p.draw = () => {
+        frameCount++;
+
+        // Skip frames when mouse hasn't moved significantly
+        const mouseMoved =
+          Math.abs(p.mouseX - lastMouseX) > 2 ||
+          Math.abs(p.mouseY - lastMouseY) > 2;
+        if (!mouseMoved && frameCount % 2 !== 0) {
+          return;
         }
 
-        p.fill(r, g, b);
-        // p.fill(2, 16, 147);
-        // p.fill(19, 50, 18);
-        // p.fill(178, 0, 36);
+        p.clear();
 
-        quadtree = new QuadTree({ x: 0, y: 0, w: p.width, h: p.height }, 4);
+        const color = getCachedColor();
+        p.fill(color.r, color.g, color.b);
+
+        // Reuse quadtree instead of recreating
+        quadtree.clear();
         for (let particle of particles) {
           quadtree.insert(particle);
         }
@@ -262,16 +290,21 @@ const P5AsciiTree: React.FC = () => {
           }
         }
 
+        // Batch text rendering
+        p.push();
+        p.textSize(16);
+        p.textAlign(p.CENTER, p.CENTER);
+
         for (let particle of particles) {
           particle.x += particle.vx;
           particle.y += particle.vy;
 
-          // Immediate return to original position
           particle.x = p.lerp(particle.x, particle.originalX, 0.1);
           particle.y = p.lerp(particle.y, particle.originalY, 0.1);
 
           p.text(density, particle.x, particle.y);
         }
+        p.pop();
 
         if (!signaledReady) {
           signaledReady = true;
@@ -281,8 +314,11 @@ const P5AsciiTree: React.FC = () => {
             setReady(true);
           }
         }
+
         prevMouseX = p.mouseX;
         prevMouseY = p.mouseY;
+        lastMouseX = p.mouseX;
+        lastMouseY = p.mouseY;
       };
     };
 
