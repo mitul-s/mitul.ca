@@ -34,7 +34,7 @@ const Drag = React.memo(
       controls.start({
         rotate: Math.floor(initialRotate + velocity * 20 * direction),
         transition: {
-          type: "easeInOut",
+          type: "spring",
           duration: 1,
           stiffness: 50,
           damping: 30,
