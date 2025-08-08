@@ -205,13 +205,24 @@ const P5AsciiTree: React.FC = () => {
 
       p.draw = () => {
         p.clear();
-        const colorString = getComputedStyle(document.documentElement)
-          .getPropertyValue("--color-accent-rgb")
-          .trim();
 
-        const [r, g, b] = colorString
-          .split(",")
-          .map((str) => Number.parseInt(str.trim(), 10));
+        // Only access document on the client side
+        let r = 2,
+          g = 16,
+          b = 147; // Default fallback values
+        if (typeof document !== "undefined") {
+          const colorString = getComputedStyle(document.documentElement)
+            .getPropertyValue("--color-accent-rgb")
+            .trim();
+
+          const colorValues = colorString
+            .split(",")
+            .map((str) => Number.parseInt(str.trim(), 10));
+
+          if (colorValues.length === 3 && !colorValues.some(isNaN)) {
+            [r, g, b] = colorValues;
+          }
+        }
 
         p.fill(r, g, b);
         // p.fill(2, 16, 147);
