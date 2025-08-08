@@ -281,7 +281,8 @@ export default function Home() {
               more by visiting my portfolio below.
             </p>
             <Link
-              href="/visitors"
+              href="https://typicalmitul.com"
+              target="_blank"
               className="flex w-fit gap-x-2 items-center transition hover:bg-accent/90 rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
               style={{
                 boxShadow:
