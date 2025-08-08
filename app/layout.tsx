@@ -81,7 +81,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(chico.className)}>
-        <ThemeProvider themes={["blue", "green", "red"]}>
+        <ThemeProvider
+          themes={["blue", "green", "red"]}
+          defaultTheme="blue"
+          storageKey="ms-theme"
+        >
           {children}
           <Analytics />
           <SpeedInsights />
