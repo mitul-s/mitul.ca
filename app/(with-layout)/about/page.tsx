@@ -50,33 +50,15 @@ const BucketItem = ({
 const About = () => {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500">
-      <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
+      <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6 p-6">
         <Link
           href="/"
-          className="flex gap-x-1 bg-accent text-gray-12 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
+          className="flex gap-x-1 bg-accent text-gray-1 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
           aria-label="Back"
         >
           <ArrowLeft size={16} className="shrink-0" />
-          <span className="text-sm font-medium">Index</span>
+          <span className="text-sm font-medium">Home</span>
         </Link>
-        <div className="my-1 md:my-4 lg:hidden">
-          <Gallery
-            photos={[
-              {
-                src: "/images/me-1.jpg",
-                alt: "Photo of myself standing in front of a lake and mountain peak",
-              },
-              {
-                src: "/images/me-3.jpg",
-                alt: "A sunrise in Chicago waterfront with myself standing on the edge of a pathway",
-              },
-              {
-                src: "/images/me-4.jpg",
-                alt: "A photo of myself walking down a road in rainy British Columbia",
-              },
-            ]}
-          />
-        </div>
         <Section heading="I'm still figuring it out">
           <div className="space-y-4">
             <p>

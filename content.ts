@@ -76,7 +76,7 @@ export const photos = [
 export const bucketList = [
   {
     item: "Travel the world",
-    status: Status.progress,
+    status: Status.completed,
   },
   {
     item: "Visit Iceland",
@@ -108,7 +108,7 @@ export const bucketList = [
   },
   {
     item: "Live in New York City",
-    status: Status.none,
+    status: Status.completed,
   },
   {
     item: "Do a month+ long hike",
