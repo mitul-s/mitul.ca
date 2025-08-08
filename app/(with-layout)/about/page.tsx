@@ -1,4 +1,3 @@
-// import Photo from "@/components/photo";
 import LinkPrimitive from "@/components/link-primitive";
 import { beliefs, bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
@@ -6,7 +5,6 @@ import { cva } from "class-variance-authority";
 import Link from "next/link";
 import type { Metadata } from "next/types";
 import Section from "@/components/section";
-import Gallery from "@/components/gallery";
 
 export const metadata: Metadata = {
   title: "About",
@@ -111,18 +109,6 @@ const About = () => {
             })}
           </ul>
         </Section>
-      </div>
-      <div className="hidden px-1 my-4 mt-10 lg:flex gap-x-2 md:px-4">
-        {/* <Photo
-          src={"/images/me-2.jpg"}
-          alt="A cinematic photo of me standing in the Monteal metro"
-          priority
-        />
-        <Photo
-          src={"/images/me-4.jpg"}
-          alt="A photo of myself walking down a road in rainy British Columbia"
-          priority
-        /> */}
       </div>
     </div>
   );
