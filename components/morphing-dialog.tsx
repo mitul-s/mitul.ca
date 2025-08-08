@@ -15,6 +15,7 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { X as XIcon } from "@phosphor-icons/react";
 import useClickOutside from "@/hooks/useClickOutside";
+import Image from "next/image";
 
 export type MorphingDialogContextType = {
   isOpen: boolean;
@@ -348,6 +349,8 @@ export type MorphingDialogImageProps = {
   style?: React.CSSProperties;
 };
 
+const MotionImage = motion(Image);
+
 function MorphingDialogImage({
   src,
   alt,
@@ -357,10 +360,12 @@ function MorphingDialogImage({
   const { uniqueId } = useMorphingDialog();
 
   return (
-    <motion.img
+    <MotionImage
       src={src}
       alt={alt}
-      className={cn(className)}
+      width={1000}
+      height={1000}
+      className={cn("object-cover object-center w-full h-full", className)}
       layoutId={`dialog-img-${uniqueId}`}
       style={style}
     />
