@@ -2,7 +2,7 @@
 
 "use client";
 import type React from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import p5 from "p5";
 
@@ -17,9 +17,14 @@ interface Particle {
 
 const P5AsciiTree: React.FC = () => {
   const sketchRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+  const readyRef = useRef(false);
 
   useEffect(() => {
     if (!sketchRef.current) return;
+    const containerEl = sketchRef.current;
+    containerEl.style.visibility = "hidden";
+    let signaledReady = false;
 
     const sketch = (p: p5) => {
       let img: p5.Image;
@@ -155,10 +160,9 @@ const P5AsciiTree: React.FC = () => {
       }
 
       p.setup = () => {
-        p.createCanvas(1400, 1120);
-        p.clear(); // Added this line
-        p.background(0);
-        p.textSize(24);
+        p.createCanvas(900, 720);
+        p.clear();
+        p.textSize(16);
         p.textAlign(p.CENTER, p.CENTER);
 
         img.loadPixels();
@@ -258,6 +262,14 @@ const P5AsciiTree: React.FC = () => {
           p.text(density, particle.x, particle.y);
         }
 
+        if (!signaledReady) {
+          signaledReady = true;
+          if (containerEl) containerEl.style.visibility = "visible";
+          if (!readyRef.current) {
+            readyRef.current = true;
+            setReady(true);
+          }
+        }
         prevMouseX = p.mouseX;
         prevMouseY = p.mouseY;
       };
@@ -272,13 +284,14 @@ const P5AsciiTree: React.FC = () => {
 
   return (
     <motion.div
-      className="flex items-center justify-center z-10 overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      className="flex items-center justify-center overflow-hidden"
+      initial={false}
+      animate={{ opacity: ready ? 1 : 0 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      style={{ opacity: 0, willChange: "opacity" }}
     >
-      <div ref={sketchRef} className="w-screen h-screen opacity-55 " />
+      <div ref={sketchRef} style={{ opacity: 0.65, visibility: "hidden" }} />
     </motion.div>
   );
 };

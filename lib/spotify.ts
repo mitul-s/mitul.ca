@@ -51,26 +51,35 @@ const fetchSpotifyData = async (endpoint: string) => {
   }
 };
 
-export const getNowPlaying = unstable_cache(
+export const getSpotifyData = unstable_cache(
   async () => {
     const nowPlaying = await fetchSpotifyData(NOW_PLAYING_ENDPOINT);
     if (nowPlaying.status === 200 && nowPlaying.data.is_playing) {
-      return nowPlaying;
+      return {
+        type: "now-playing",
+        data: nowPlaying.data,
+      };
     }
 
-    return getLastPlayed();
+    const lastPlayer = await fetchSpotifyData(RECENTLY_PLAYED_ENDPOINT);
+    return {
+      type: "last-played",
+      data: lastPlayer.data,
+    };
   },
-  ["spotify-now-playing"],
-  { revalidate: 60 }
+  ["spotify-data"],
+  { revalidate: 30, tags: ["spotify"] }
 );
 
-export const getLastPlayed = unstable_cache(
-  async () => {
-    return fetchSpotifyData(RECENTLY_PLAYED_ENDPOINT);
-  },
-  ["spotify-last-played"],
-  { revalidate: 60 } // Cache for 1 minute
-);
+export const getNowPlaying = async () => {
+  const result = await getSpotifyData();
+  return result;
+};
+
+export const getLastPlayed = async () => {
+  const result = await getSpotifyData();
+  return result.data;
+};
 
 // const getNowPlaying = async () => {
 //   const accessToken = await getAccessToken();

@@ -53,3 +53,37 @@ export const CopyEmailButton = () => {
     </button>
   );
 };
+
+export const CopyEmailButtonAlt = () => {
+  const [play] = useSound("/sounds/copy.mp3");
+  const [copied, setCopied] = useState(false);
+  const handleCopy = (text: string) => {
+    play();
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+  };
+
+  return (
+    <button
+      type="button"
+      className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
+      onClick={() => handleCopy("mitulxshah@gmail.com")}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          variants={motionVariants}
+          key={copied ? "Copied!" : "Copy"}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.05 }}
+        >
+          {copied ? "Copied!" : "Email"}
+        </motion.div>
+      </AnimatePresence>
+    </button>
+  );
+};

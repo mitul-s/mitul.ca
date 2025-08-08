@@ -5,19 +5,19 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import Link from "next/link";
 import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
 import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
-import dynamic from "next/dynamic";
 import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
 import TwitterXMotion from "@/components/twitter-x-loop";
-import { CopyEmailButton } from "@/components/copy-email-button";
+import {
+  CopyEmailButton,
+  CopyEmailButtonAlt,
+} from "@/components/copy-email-button";
 import Footer from "@/components/footer";
 import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
 import ThemeChanger from "@/components/theme-switcher";
-
-// export const dynamic = "force-dynamic";
-// const DynamicTree = dynamic(() => import("./tree"), { ssr: false });
+import P5AsciiTree from "./tree";
 
 const DottedSpacer = ({
   lines = 3,
@@ -42,7 +42,7 @@ const DottedSpacer = ({
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => {
   return (
-    <h2 className="md:py-4 pt-4 pl-4 md:pr-4 font-bold h-full md:ml-auto">
+    <h2 className="md:py-4 pt-4 pl-4 md:pr-4 font-medium h-full md:ml-auto">
       {children}
     </h2>
   );
@@ -163,13 +163,10 @@ export default function Home() {
         >
           Guestbook
         </Link>
-
-        <div className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer">
-          Email
-        </div>
-
+        <CopyEmailButtonAlt />
         <ThemeChanger />
       </nav>
+
       <Section title=" ">
         <div className="px-4 pt-8 pb-6 col-start-2">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
@@ -285,7 +282,7 @@ export default function Home() {
             </p>
             <Link
               href="/visitors"
-              className="flex w-fit gap-x-2 items-center rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
+              className="flex w-fit gap-x-2 items-center transition hover:bg-accent/90 rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
               style={{
                 boxShadow:
                   "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
@@ -302,9 +299,8 @@ export default function Home() {
       </Section>
       <Section title="Contact">
         <p className="pb-4 px-4 pt-4">
-          Dolore enim dolore ad sint nostrud culpa reprehenderit id. Anim aliqua
-          elit qui tempor incididunt occaecat velit deserunt reprehenderit
-          exercitation sit Lorem sit dolore. Officia officia tempor et nisi.
+          Let's hang, up for a chat or just say hi. If you're into photography,
+          film or music, I'd love to hear from you.
         </p>
         <DottedSpacer lines={2} />
         <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
@@ -335,10 +331,13 @@ export default function Home() {
         </div>
         <DottedSpacer lines={2} />
       </Section>
+
+      <div className="sticky bottom-0 right-0 -z-10">
+        <div className="ml-auto w-fit pointer-events-none">
+          <P5AsciiTree />
+        </div>
+      </div>
       <Footer />
-      {/* <div className="fixed inset-0">
-        <DynamicTree />
-      </div> */}
     </div>
   );
 }
