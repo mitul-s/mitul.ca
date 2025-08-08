@@ -6,20 +6,20 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 
-const monument = localFont({
-  src: [
-    {
-      path: "../public/font/ABCMonumentGrotesk-Medium-Trial.otf",
-      weight: "500",
-      style: "medium",
-    },
-    {
-      path: "../public/font/ABCMonumentGrotesk-Regular-Trial.otf",
-      weight: "400",
-      style: "regular",
-    },
-  ],
-});
+// const monument = localFont({
+//   src: [
+//     {
+//       path: "../public/font/ABCMonumentGrotesk-Medium-Trial.otf",
+//       weight: "500",
+//       style: "medium",
+//     },
+//     {
+//       path: "../public/font/ABCMonumentGrotesk-Regular-Trial.otf",
+//       weight: "400",
+//       style: "regular",
+//     },
+//   ],
+// });
 
 // const helvetica = localFont({
 //   src: [

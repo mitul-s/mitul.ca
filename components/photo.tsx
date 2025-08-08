@@ -13,11 +13,9 @@ import { X as XIcon } from "@phosphor-icons/react";
 export function MorphingImageDialog({
   src,
   alt,
-  className,
 }: {
   src: string;
   alt: string;
-  className?: string;
 }) {
   return (
     <MorphingDialog

@@ -1,14 +1,7 @@
 "use client";
 
 import { PaintRoller } from "@phosphor-icons/react";
-import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useTheme } from "next-themes";
-
-const motionVariants: Variants = {
-  initial: { y: 10, opacity: 0, filter: "blur(2px)" },
-  animate: { y: 0, opacity: 1, filter: "blur(0px)" },
-  exit: { y: -10, opacity: 0, filter: "blur(2px)" },
-};
 
 const ThemeChanger = () => {
   const { theme, setTheme } = useTheme();
@@ -38,7 +31,5 @@ const ThemeChanger = () => {
     </div>
   );
 };
-
-// ... existing code ...
 
 export default ThemeChanger;
