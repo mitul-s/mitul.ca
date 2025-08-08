@@ -64,7 +64,7 @@ const components: MDXComponents = {
   },
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
-      "text-blue-10 hover:text-blue-12 hover:underline underline-offset-2";
+      "text-blue-10 hover:text-blue-11 hover:underline underline-offset-2";
     if (href?.startsWith("/")) {
       return (
         <Link href={href} className={className} {...props}>
