@@ -3,7 +3,7 @@
 "use client";
 import type React from "react";
 import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import p5 from "p5";
 
 interface Particle {

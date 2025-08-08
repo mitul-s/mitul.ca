@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import useMeasure from "react-use-measure";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
 import Signature, { type SignatureRef } from "@uiw/react-signature";
@@ -80,7 +80,10 @@ export default function WriteNoteCTA() {
     return svgelm.outerHTML;
   };
 
-  const stepConent = (step: number, svgRef: React.RefObject<SignatureRef | null>) => {
+  const stepConent = (
+    step: number,
+    svgRef: React.RefObject<SignatureRef | null>
+  ) => {
     switch (step) {
       case 1:
         return (

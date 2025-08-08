@@ -9,8 +9,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { motion, MotionConfig, AnimatePresence } from "framer-motion";
-import type { Transition, Variant } from "framer-motion";
+import { motion, MotionConfig, AnimatePresence } from "motion/react";
+import type { Transition, Variant } from "motion/react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { X as XIcon } from "@phosphor-icons/react";

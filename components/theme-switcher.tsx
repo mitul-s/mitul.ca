@@ -1,7 +1,7 @@
 "use client";
 
 import { PaintRoller } from "@phosphor-icons/react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useTheme } from "next-themes";
 
 const motionVariants: Variants = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { CopySimple } from "@phosphor-icons/react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useState } from "react";
 
 //@ts-ignore
