@@ -1,4 +1,3 @@
-import Image from "next/image";
 import img from "./img.jpg";
 import img2 from "./img2.jpg";
 import Figure from "../components/figure";
