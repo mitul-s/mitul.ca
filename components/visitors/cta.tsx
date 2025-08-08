@@ -22,7 +22,7 @@ const transition = {
   type: "spring",
   bounce: 0.1,
   duration: 0.25,
-};
+} as const;
 
 export default function WriteNoteCTA() {
   const [step, setStep] = useState<number>(0);
@@ -299,9 +299,8 @@ export default function WriteNoteCTA() {
                                   transition={{
                                     type: "spring",
                                     duration: 0.05,
-                                    friction: 20,
                                     bounce: 0.02,
-                                    restDelta: "0.01",
+                                    restDelta: 0.01,
                                   }}
                                 >
                                   <AnimatePresence mode="wait" initial={false}>
