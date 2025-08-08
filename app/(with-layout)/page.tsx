@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
 import ThemeChanger from "@/components/theme-switcher";
-import P5AsciiTree from "./tree";
+import TreeClient from "@/components/tree-client";
 
 const DottedSpacer = ({
   lines = 3,
@@ -334,7 +334,7 @@ export default function Home() {
 
       <div className="sticky bottom-0 right-0 -z-10">
         <div className="ml-auto w-fit pointer-events-none">
-          <P5AsciiTree />
+          <TreeClient />
         </div>
       </div>
       <Footer />
