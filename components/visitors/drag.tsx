@@ -3,7 +3,7 @@
 import { useState } from "react";
 import useMaxZIndex from "@/hooks/useMaxZIndex";
 import { cn, getRandomRotation } from "@/lib/utils";
-import { motion, type PanInfo, useAnimation } from "motion/react";
+import { motion, type PanInfo, useAnimation } from "framer-motion";
 import React from "react";
 
 const Drag = React.memo(
@@ -34,7 +34,7 @@ const Drag = React.memo(
       controls.start({
         rotate: Math.floor(initialRotate + velocity * 20 * direction),
         transition: {
-          type: "spring",
+          type: "easeInOut",
           duration: 1,
           stiffness: 50,
           damping: 30,

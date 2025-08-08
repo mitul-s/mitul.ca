@@ -5,7 +5,7 @@ import styles from "./visitors.module.css";
 import Image from "next/image";
 import Drag from "./drag";
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const Note = React.memo(
   ({

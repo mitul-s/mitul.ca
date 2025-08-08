@@ -2,9 +2,9 @@ export const experiences = [
   {
     company: "Vercel",
     role: "Design Engineer",
-    link: "https://vercel.com/?ref=mitulca",
-    range: "Now",
+    range: "Today",
     description: "Building for the future of the web while doing my best work",
+    skills: ["Next.js", "TypeScript", "TailwindCSS", "Contentful"],
   },
   {
     company: "Compound",
@@ -24,13 +24,13 @@ export const experiences = [
       "As an early employee, I built out over 90% of the application UI and a scalable and accessible component library",
     skills: ["React", "ClojureScript", "TailwindCSS", "Contentful", "Next.js"],
   },
-  // {
-  //   company: "Hypercontext",
-  //   role: "Product Analyst",
-  //   range: "2019 - 2020",
-  //   description:
-  //     "Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up",
-  // },
+  {
+    company: "Hypercontext",
+    role: "Product Analyst",
+    range: "2019 - 2020",
+    description:
+      "Designed growth experiments to convert users from free to paid, built the sales operations and email-marketing playbook from the ground up",
+  },
   {
     company: "Uber",
     role: "Operations Intern",
@@ -76,7 +76,7 @@ export const photos = [
 export const bucketList = [
   {
     item: "Travel the world",
-    status: Status.completed,
+    status: Status.progress,
   },
   {
     item: "Visit Iceland",
@@ -108,7 +108,7 @@ export const bucketList = [
   },
   {
     item: "Live in New York City",
-    status: Status.completed,
+    status: Status.none,
   },
   {
     item: "Do a month+ long hike",
