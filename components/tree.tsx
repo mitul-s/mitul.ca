@@ -179,7 +179,7 @@ const P5AsciiTree: React.FC = () => {
         p.textAlign(p.CENTER, p.CENTER);
 
         img.loadPixels();
-        const stepSize = 8; // Increased step size for fewer particles
+        const stepSize = 6; // Increased step size for fewer particles
         const w = p.width / img.width;
         const h = p.height / img.height;
 
@@ -187,11 +187,25 @@ const P5AsciiTree: React.FC = () => {
         const excludeWidth = img.width * 0.2;
         const excludeHeight = img.height * 0.2;
 
-        for (let i = 0; i < img.width; i += stepSize) {
-          for (let j = 0; j < img.height; j += stepSize) {
-            if (i < excludeWidth && j < excludeHeight) continue;
+        // Generate particles in chunks to avoid blocking
+        let currentI = 0;
+        let currentJ = 0;
+        const batchSize = 50; // Process 50 particles per frame
 
-            const pixelIndex = (i + j * img.width) * 4;
+        const generateParticles = () => {
+          let processed = 0;
+
+          while (processed < batchSize && currentI < img.width) {
+            if (currentI < excludeWidth && currentJ < excludeHeight) {
+              currentJ += stepSize;
+              if (currentJ >= img.height) {
+                currentJ = 0;
+                currentI += stepSize;
+              }
+              continue;
+            }
+
+            const pixelIndex = (currentI + currentJ * img.width) * 4;
             const r = img.pixels[pixelIndex];
             const g = img.pixels[pixelIndex + 1];
             const b = img.pixels[pixelIndex + 2];
@@ -199,16 +213,30 @@ const P5AsciiTree: React.FC = () => {
 
             if (brightness > 50) {
               particles.push({
-                x: i * w,
-                y: j * h,
-                originalX: i * w,
-                originalY: j * h,
+                x: currentI * w,
+                y: currentJ * h,
+                originalX: currentI * w,
+                originalY: currentJ * h,
                 vx: 0,
                 vy: 0,
               });
             }
+
+            currentJ += stepSize;
+            if (currentJ >= img.height) {
+              currentJ = 0;
+              currentI += stepSize;
+            }
+            processed++;
           }
-        }
+
+          if (currentI < img.width) {
+            // Continue in next frame
+            setTimeout(generateParticles, 0);
+          }
+        };
+
+        generateParticles();
 
         quadtree = new QuadTree({ x: 0, y: 0, w: p.width, h: p.height }, 4);
         prevMouseX = p.mouseX;
