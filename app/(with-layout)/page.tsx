@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
 import ThemeChanger from "@/components/theme-switcher";
+import TreeClient from "@/components/tree-client";
+import { Suspense } from "react";
 
 const DottedSpacer = ({
   lines = 3,
@@ -332,6 +334,13 @@ export default function Home() {
         <DottedSpacer lines={2} />
       </Section>
 
+      <Suspense fallback={null}>
+        <div className="sticky bottom-0 right-0 -z-10">
+          <div className="ml-auto w-fit pointer-events-none">
+            <TreeClient />
+          </div>
+        </div>
+      </Suspense>
       <Footer />
     </div>
   );
