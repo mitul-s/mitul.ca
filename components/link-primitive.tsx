@@ -9,7 +9,7 @@ export const link = cva(["flex", "items-center", "gap-x-0.5", "w-fit"], {
         "text-gray-11 text-sm hover:bg-accent hover:text-gray-12 px-1.5 py-1 rounded-sm -mx-1.5 font-medium border border-gray-12 hover:border-accent",
       ],
       default: [
-        "hover:bg-accent hover:text-gray-1 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex",
+        "hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex",
       ],
     },
     popover: {

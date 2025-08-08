@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import useMeasure from "react-use-measure";
-import { AnimatePresence, motion, MotionConfig } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useClickOutside from "@/hooks/useClickOutside";
 import Signature, { type SignatureRef } from "@uiw/react-signature";
@@ -22,7 +22,7 @@ const transition = {
   type: "spring",
   bounce: 0.1,
   duration: 0.25,
-} as const;
+};
 
 export default function WriteNoteCTA() {
   const [step, setStep] = useState<number>(0);
@@ -80,10 +80,7 @@ export default function WriteNoteCTA() {
     return svgelm.outerHTML;
   };
 
-  const stepConent = (
-    step: number,
-    svgRef: React.RefObject<SignatureRef | null>
-  ) => {
+  const stepConent = (step: number, svgRef: React.RefObject<SignatureRef>) => {
     switch (step) {
       case 1:
         return (
@@ -299,8 +296,9 @@ export default function WriteNoteCTA() {
                                   transition={{
                                     type: "spring",
                                     duration: 0.05,
+                                    friction: 20,
                                     bounce: 0.02,
-                                    restDelta: 0.01,
+                                    restDelta: "0.01",
                                   }}
                                 >
                                   <AnimatePresence mode="wait" initial={false}>

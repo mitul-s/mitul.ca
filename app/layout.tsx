@@ -4,52 +4,16 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "next-themes";
 
-// const monument = localFont({
-//   src: [
-//     {
-//       path: "../public/font/ABCMonumentGrotesk-Medium-Trial.otf",
-//       weight: "500",
-//       style: "medium",
-//     },
-//     {
-//       path: "../public/font/ABCMonumentGrotesk-Regular-Trial.otf",
-//       weight: "400",
-//       style: "regular",
-//     },
-//   ],
-// });
-
-// const helvetica = localFont({
-//   src: [
-//     {
-//       path: "../public/font/HelveticaNeueBold.ttf",
-//       weight: "700",
-//       style: "bold",
-//     },
-//     {
-//       path: "../public/font/HelveticaNeue-Medium.otf",
-//       weight: "500",
-//       style: "medium",
-//     },
-//     {
-//       path: "../public/font/HelveticaNeue-Roman.otf",
-//       weight: "400",
-//       style: "regular",
-//     },
-//   ],
-// });
-
-const chico = localFont({
+const monument = localFont({
   src: [
     {
-      path: "../public/font/PPNeueMontreal-SemiBold.woff2",
+      path: "../public/font/ABCMonumentGrotesk-Medium-Trial.otf",
       weight: "500",
       style: "medium",
     },
     {
-      path: "../public/font/PPNeueMontreal-Medium.woff2",
+      path: "../public/font/ABCMonumentGrotesk-Regular-Trial.otf",
       weight: "400",
       style: "regular",
     },
@@ -79,13 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={cn(chico.className)}>
-        <ThemeProvider themes={["blue", "green", "red"]}>
-          {children}
-          <Analytics />
-          <SpeedInsights />
-        </ThemeProvider>
+    <html lang="en">
+      <body className={cn(monument.className)}>
+        {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

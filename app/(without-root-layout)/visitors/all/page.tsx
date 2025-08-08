@@ -11,12 +11,11 @@ import Link from "next/link";
 
 const ITEMS_PER_PAGE = 50;
 
-export default async function Page(
-  props: {
-    searchParams: Promise<{ page?: string }>;
-  }
-) {
-  const searchParams = await props.searchParams;
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
   const currentPage = Number(searchParams.page) || 1;
 
   return (

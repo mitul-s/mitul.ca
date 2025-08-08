@@ -1,3 +1,4 @@
+import Photo from "@/components/photo";
 import LinkPrimitive from "@/components/link-primitive";
 import { beliefs, bucketList, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
@@ -5,6 +6,7 @@ import { cva } from "class-variance-authority";
 import Link from "next/link";
 import type { Metadata } from "next/types";
 import Section from "@/components/section";
+import Gallery from "@/components/gallery";
 
 export const metadata: Metadata = {
   title: "About",
@@ -48,15 +50,33 @@ const BucketItem = ({
 const About = () => {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500">
-      <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6 p-6">
+      <div className="md:max-w-[450px] flex flex-col md:gap-y-0 gap-y-6">
         <Link
           href="/"
-          className="flex gap-x-1 bg-accent text-gray-1 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
+          className="flex gap-x-1 bg-accent text-gray-12 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
           aria-label="Back"
         >
           <ArrowLeft size={16} className="shrink-0" />
-          <span className="text-sm font-medium">Home</span>
+          <span className="text-sm font-medium">Index</span>
         </Link>
+        <div className="my-1 md:my-4 lg:hidden">
+          <Gallery
+            photos={[
+              {
+                src: "/images/me-1.jpg",
+                alt: "Photo of myself standing in front of a lake and mountain peak",
+              },
+              {
+                src: "/images/me-3.jpg",
+                alt: "A sunrise in Chicago waterfront with myself standing on the edge of a pathway",
+              },
+              {
+                src: "/images/me-4.jpg",
+                alt: "A photo of myself walking down a road in rainy British Columbia",
+              },
+            ]}
+          />
+        </div>
         <Section heading="I'm still figuring it out">
           <div className="space-y-4">
             <p>
@@ -109,6 +129,18 @@ const About = () => {
             })}
           </ul>
         </Section>
+      </div>
+      <div className="hidden px-1 my-4 mt-10 lg:flex gap-x-2 md:px-4">
+        <Photo
+          src={"/images/me-2.jpg"}
+          alt="A cinematic photo of me standing in the Monteal metro"
+          priority
+        />
+        <Photo
+          src={"/images/me-4.jpg"}
+          alt="A photo of myself walking down a road in rainy British Columbia"
+          priority
+        />
       </div>
     </div>
   );

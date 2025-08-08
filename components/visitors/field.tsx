@@ -36,7 +36,7 @@ const Field = ({
         autoComplete="off"
         autoCorrect="off"
         className={cn(
-          "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-hidden text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-white/40 ",
+          "bg-[#101B1D]/30 focus:bg-gray-1 transition-all focus:placeholder:text-gray-9 text-[16px] outline-hidden text-gray-2 focus:text-gray-12 font-normal rounded-[6px] p-3 w-full placeholder:text-[white]/40 ",
           styles.input
         )}
         onChange={onChange}

@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       from: "Guestbook <hi@daybloom.app>",
       to: ["mitulxshah@gmail.com"],
       subject: "New Submission!",
-      react: await EmailTemplate({ entry }),
+      react: EmailTemplate({ entry }),
     });
 
     if (error) {
