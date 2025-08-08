@@ -1,11 +1,65 @@
 "use client";
+
 import { CaretDown } from "@phosphor-icons/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 //@ts-ignore
 import useSound from "use-sound";
-import LinkPrimitive from "./link-primitive";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+
+interface ExpandingLinkProps {
+  link: string;
+  company: string;
+}
+
+export const ExpandingLink: React.FC<ExpandingLinkProps> = ({
+  link,
+  company,
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.a
+      className="cursor-pointer text-sm z-[2] flex items-center overflow-clip hover:group-data-[state=open]:bg-accent hover:text-gray-1 transition-colors duration-100 ease-in opacity-0 group-data-[state=open]:opacity-100 group-data-[state=open]:text-accent group-hover:opacity-100 text-gray-1 h-4"
+      animate={{ width: isHovered ? "auto" : "20px" }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      transition={{
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        mass: 0.5,
+      }}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Link to ${company} website`}
+      onClick={(e) => e.stopPropagation()}
+      layout
+    >
+      <ArrowUpRight
+        aria-hidden={true}
+        size={12}
+        className="shrink-0 ml-0.5 translate-y-[0.5px]"
+      />
+
+      <AnimatePresence>
+        {isHovered && (
+          <motion.span
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: "auto" }}
+            exit={{ opacity: 0, width: 0 }}
+            className="ml-1 whitespace-nowrap text-xs mr-1 peer"
+          >
+            Visit
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.a>
+  );
+};
 
 const AccordionItem = ({
   role,
@@ -31,51 +85,32 @@ const AccordionItem = ({
 
   return (
     <AccordionPrimitive.Item value={company}>
-      <div className="flex items-center justify-center gap-x-2">
-        <AccordionPrimitive.Trigger
-          className="py-1 grid grid-cols-4 px-2 focus-visible:bg-accent focus-visible:outline-hidden focus-visible:ring-4 focus-visible:ring-offset-transparent focus-visible:ring-accent/20 focus-visible:text-gray-12 hover:bg-accent hover:text-gray-12 rounded-sm w-full justify-items-start items-center group data-[state=open]:bg-accent/20 data-[state=open]:text-gray-1 whitespace-nowrap accordion-grid-cols"
-          onClick={play}
-        >
+      <AccordionPrimitive.Trigger
+        onClick={play}
+        className="flex justify-between items-center text-left w-full px-4 py-2 hover:bg-accent hover:text-white data-[state=open]:bg-accent/10 transition-all duration-150 hover:data-[state=open]:text-accent cursor-pointer group"
+      >
+        <div className="flex items-center gap-x-1">
           <CaretDown
             size={11}
-            className="text-gray-10 group-data-[state=open]:-rotate-90 transition-transform duration-150 mr-2 group-hover:text-gray-12 group-focus-visible:text-gray-12 group-data-[state=open]:text-gray-1 -translate-y-px"
+            className="text-accent group-data-[state=open]:-rotate-90 transition duration-150 mr-1 group-hover:text-gray-1 group-focus-visible:text-gray-12 group-data-[state=open]:text-accent -ml-1"
             aria-hidden={true}
           />
+          <span className="font-medium">{company}</span>
+          <span className="whitespace-nowrap">{role}</span>
+          {link && <ExpandingLink link={link} company={company} />}
+        </div>
 
-          <span>{role}</span>
-          <span>{company}</span>
-          <span className="hidden sm:block ml-auto text-gray-10 text-sm group-hover:text-gray-12 group-focus-visible:text-gray-12 group-data-[state=open]:text-gray-1">
-            {range}
-          </span>
-          <span className="sm:hidden ml-auto text-gray-10 text-sm group-hover:text-gray-12 group-focus-visible:text-gray-12 group-data-[state=open]:text-gray-1">
-            {shortRange}
-          </span>
-          {link && (
-            <a
-              className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm ml-2"
-              href={link}
-              target="_blank"
-              rel="noopener"
-              aria-label={`Link to ${company} website`}
-            >
-              <span
-                className="w-3.5 h-3.5 p-0.5 bg-accent flex items-center justify-center rounded-sm border border-[transparent] hover:border-gray-12"
-                aria-hidden={true}
-              >
-                <ArrowUpRight size={12} className="shrink-0 text-gray-12" />
-              </span>
-            </a>
-          )}
-        </AccordionPrimitive.Trigger>
-      </div>
-      <AccordionPrimitive.Content className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-        <div className="flex flex-col px-2 py-3 gap-y-2">
+        <span className="hidden sm:block ml-auto">{range}</span>
+        <span className="sm:hidden ml-auto text-sm">{shortRange}</span>
+      </AccordionPrimitive.Trigger>
+      <AccordionPrimitive.Content className="overflow-clip transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down data-[state=open]:bg-accent/10">
+        <div className="px-4 pb-4">
           <p>{description}</p>
           <div className="flex gap-x-1.5">
             {skills?.map((skill) => {
               return (
                 <div
-                  className="rounded-sm text-gray-10 text-sm py-0.5"
+                  className="rounded-sm text-accent/70 text-sm mt-2"
                   key={skill}
                 >
                   {skill}
