@@ -74,7 +74,7 @@ const SocialLink = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="grid grid-cols-[75px_auto_1fr] gap-x-1 items-center px-4 py-2">
+    <div className="grid grid-cols-[75px_auto_auto] gap-x-1 items-center px-4 py-2">
       <p className="font-medium">{social}</p>
       <Link
         href={href}
