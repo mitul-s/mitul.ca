@@ -312,7 +312,7 @@ export default function Home() {
             <div className="flex gap-x-1 ml-auto">
               <Link
                 href="mailto:mitulxshah@gmail.com"
-                className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+                className="hidden min-md:flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
               >
                 <PencilSimpleLine size={12} aria-hidden={true} />
                 Compose
