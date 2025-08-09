@@ -20,7 +20,7 @@ const MusicPlayer = async () => {
           />
         </div>
         <div className="flex flex-col gap-y-1 justify-center leading-none">
-          <span className="font-medium text-accent truncate max-w-32">
+          <span className="font-medium text-accent truncate max-w-20 min-md:max-w-32">
             {reading.title}
           </span>
           <span className="text-sm">{reading.author}</span>

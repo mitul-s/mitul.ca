@@ -149,7 +149,7 @@ const Project = ({
 export default function Home() {
   return (
     <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
-      <nav className="absolute top-4 right-4 flex gap-1 text-accent font-medium">
+      <nav className="min-md:absolute top-4 right-4 flex max-md:p-4 gap-1 text-accent font-medium">
         <Link
           href="/os"
           target="_blank"
@@ -169,7 +169,7 @@ export default function Home() {
       </nav>
 
       <Section title=" ">
-        <div className="px-4 pt-8 pb-6 col-start-2">
+        <div className="px-4 min-md:pt-8 pb-6 col-start-2">
           <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
             Mitul Shah
           </h1>
