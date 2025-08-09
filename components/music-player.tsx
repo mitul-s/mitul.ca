@@ -17,6 +17,7 @@ const MusicPlayer = async () => {
             fill
             alt="Album cover"
             className="object-cover"
+            quality={40}
           />
         </div>
         <div className="flex flex-col gap-y-1 justify-center leading-none">

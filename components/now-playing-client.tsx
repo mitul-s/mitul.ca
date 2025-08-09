@@ -38,6 +38,7 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
           fill
           alt="Album cover"
           className="object-cover"
+          quality={40}
         />
       </div>
       <div className="flex flex-col gap-y-1 justify-center leading-none">

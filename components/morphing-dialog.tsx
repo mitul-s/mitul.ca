@@ -368,7 +368,7 @@ function MorphingDialogImage({
       className={cn("object-cover object-center w-full h-full", className)}
       layoutId={`dialog-img-${uniqueId}`}
       style={style}
-      quality={50}
+      quality={40}
     />
   );
 }
