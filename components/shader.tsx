@@ -128,15 +128,12 @@ export default function DitherShaderCanvas() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [fallback, setFallback] = useState(false);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   // Settings that the shader actually uses
   const [dotSize, setDotSize] = useState(9);
   const [angleDeg, setAngleDeg] = useState(68);
 
   const [panelOpen, setPanelOpen] = useState(true);
-
-  const objectUrlRef = useRef<string | null>(null);
 
   // GL refs/state
   const rafRef = useRef<number | null>(null);
@@ -409,23 +406,6 @@ export default function DitherShaderCanvas() {
     setupGL();
   }, []);
 
-  //   // File input + DnD
-  //   function handleFile(file?: File) {
-  //     if (!file || !file.type.startsWith("video/")) return;
-  //     if (objectUrlRef.current) {
-  //       URL.revokeObjectURL(objectUrlRef.current);
-  //       objectUrlRef.current = null;
-  //     }
-  //     const url = URL.createObjectURL(file);
-  //     objectUrlRef.current = url;
-  //     // setVideoUrl(url);
-  //   }
-
-  //   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //     handleFile(e.target.files?.[0]);
-  //     e.currentTarget.value = "";
-  //   }
-
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
       {/* Hidden video (shown when falling back) */}
@@ -457,92 +437,6 @@ export default function DitherShaderCanvas() {
             : "absolute inset-0 w-full h-full block pointer-events-none"
         }
       />
-
-      {/* Upload button */}
-      <div className="absolute top-4 left-4 z-30 pointer-events-auto">
-        <label className="inline-flex items-center gap-2 rounded bg-black/60 text-white px-3 py-2 cursor-pointer hover:bg-black/80">
-          <span className="text-sm">
-            {videoUrl ? "Change video" : "Upload video"}
-          </span>
-          <input
-            type="file"
-            accept="video/*"
-            // onChange={onInputChange}
-            className="hidden"
-          />
-        </label>
-      </div>
-
-      {/* Settings toggle */}
-      <button
-        onClick={() => setPanelOpen((v) => !v)}
-        className="absolute top-4 right-4 z-20 flex bg-black/60 text-white px-3 py-2 text-sm hover:bg-black/80"
-        aria-pressed={panelOpen}
-        aria-label="Toggle settings panel"
-      >
-        {panelOpen ? "Hide settings" : "Show settings"}
-      </button>
-
-      {/* Settings panel */}
-      {panelOpen && (
-        <div className="absolute top-14 right-4 z-20 w-[300px] max-w-[calc(100vw-2rem)] rounded-lg bg-black/70 text-white p-4 space-y-3 backdrop-blur">
-          <div className="text-sm font-semibold opacity-90">
-            Effect Settings
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs opacity-80">Dot size (px)</label>
-            <input
-              type="range"
-              min={2}
-              max={16}
-              step={0.5}
-              value={dotSize}
-              onChange={(e) => setDotSize(Number.parseFloat(e.target.value))}
-              className="w-full"
-            />
-            <div className="text-xs opacity-70">{dotSize.toFixed(1)} px</div>
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs opacity-80">Angle (°)</label>
-            <input
-              type="range"
-              min={0}
-              max={90}
-              step={1}
-              value={angleDeg}
-              onChange={(e) => setAngleDeg(Number.parseFloat(e.target.value))}
-              className="w-full"
-            />
-            <div className="text-xs opacity-70">{angleDeg}°</div>
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs opacity-80">
-              Ink color (theme-based)
-            </label>
-            <div
-              className="w-full h-8 rounded border border-white/20 flex items-center justify-center text-xs opacity-70"
-              style={{ backgroundColor: getCurrentAccentColor() }}
-            >
-              Adapts to theme
-            </div>
-          </div>
-
-          <div className="text-[11px] opacity-70">
-            Video uses muted and playsInline for reliable autoplay on mobile
-            browsers. External sources may require CORS headers when uploading
-            frames to WebGL [^1][^2].
-          </div>
-        </div>
-      )}
-
-      {!videoUrl && (
-        <div className="absolute inset-x-0 bottom-4 z-10 mx-auto w-max rounded bg-black/40 text-white px-3 py-1 text-xs">
-          Drag & drop a video here, or click “Upload video”
-        </div>
-      )}
     </div>
   );
 }
