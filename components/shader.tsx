@@ -130,10 +130,8 @@ export default function DitherShaderCanvas() {
   const [fallback, setFallback] = useState(false);
 
   // Settings that the shader actually uses
-  const [dotSize, setDotSize] = useState(9);
-  const [angleDeg, setAngleDeg] = useState(68);
-
-  const [panelOpen, setPanelOpen] = useState(true);
+  const dotSize = 9;
+  const angleDeg = 68;
 
   // GL refs/state
   const rafRef = useRef<number | null>(null);
