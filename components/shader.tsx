@@ -2,9 +2,8 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
 
-// WebGL helpers
+// --- WebGL helpers -----------------------------------------------------------
 function createShader(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type)!;
   gl.shaderSource(shader, source);
@@ -38,11 +37,13 @@ function createProgram(
   return program;
 }
 
+// --- Shaders -----------------------------------------------------------------
 const VERT = `
 attribute vec2 aPos;
 varying vec2 vUV;
 void main() {
-  vUV = aPos * 0.5 + 0.5; // [-1,1] -> [0,1]
+  // Single big triangle coordinates -> UV in [0,1]
+  vUV = aPos * 0.5 + 0.5;
   gl_Position = vec4(aPos, 0.0, 1.0);
 }
 `;
@@ -95,45 +96,24 @@ void main() {
 }
 `;
 
-// Helper function to get current accent color from CSS variables
-function getCurrentAccentColor(): string {
-  if (typeof document === "undefined") return "#021093"; // fallback for SSR
+// Fixed color (no per-frame getComputedStyle).
+const INK_COLOR: [number, number, number] = [2 / 255, 16 / 255, 147 / 255];
 
-  return getComputedStyle(document.documentElement)
-    .getPropertyValue("--color-accent-hex")
-    .trim();
-}
-
-function getCurrentAccentColorRGB(): [number, number, number] {
-  if (typeof document === "undefined") return [2 / 255, 16 / 255, 147 / 255]; // fallback for SSR
-
-  const colorString = getComputedStyle(document.documentElement)
-    .getPropertyValue("--color-accent-rgb")
-    .trim();
-
-  const colorValues = colorString
-    .split(",")
-    .map((str) => Number.parseInt(str.trim(), 10));
-
-  if (colorValues.length === 3 && !colorValues.some(isNaN)) {
-    const [r, g, b] = colorValues;
-    return [r / 255, g / 255, b / 255];
-  }
-
-  return [2 / 255, 16 / 255, 147 / 255]; // fallback
-}
-
+// --- Component ---------------------------------------------------------------
 export default function DitherShaderCanvas() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [fallback, setFallback] = useState(false);
 
-  // Settings that the shader actually uses
-  const dotSize = 9;
-  const angleDeg = 68;
+  // Tunables focused on keeping machines cool
+  const DOT_SIZE = 9; // visual size
+  const ANGLE_DEG = 68; // visual angle
+  const RES_SCALE = 0.75; // internal resolution scale (0.5–1.0)
+  const FPS_CAP_NO_RVFC = 30; // cap when requestVideoFrameCallback isn't available
 
-  // GL refs/state
+  // GL refs
   const rafRef = useRef<number | null>(null);
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
@@ -147,48 +127,143 @@ export default function DitherShaderCanvas() {
   const uAngleRef = useRef<WebGLUniformLocation | null>(null);
   const uInkColorRef = useRef<WebGLUniformLocation | null>(null);
 
-  // Frame upload gating
-  const needsUploadRef = useRef(false);
+  // Render gating
   const hasRVFCRef = useRef(false);
-  const lastTimeRef = useRef(-1);
+  const needsUploadRef = useRef(false);
+  const drawPendingRef = useRef(false);
+  const lastTimeRef = useRef(-1); // for fallback frame detection
+  const lastDrawMsRef = useRef(0);
 
-  // Fast param access per-frame
-  const paramsRef = useRef({
-    dotSize,
-    angleDeg,
-  });
-  useEffect(() => {
-    paramsRef.current = {
-      dotSize,
-      angleDeg,
-    };
-  }, [dotSize, angleDeg]);
+  // Active when visible and tab not hidden
+  const isVisibleRef = useRef(true);
+  const isDocVisibleRef = useRef(
+    typeof document !== "undefined" ? !document.hidden : true
+  );
+  const isActive = () => isVisibleRef.current && isDocVisibleRef.current;
 
+  // Schedule a single RAF when needed (no endless loop)
+  const scheduleRender = () => {
+    if (drawPendingRef.current) return;
+    drawPendingRef.current = true;
+    rafRef.current = requestAnimationFrame(drawOnce);
+  };
+
+  // Size/viewport
+  const setSize = () => {
+    const canvas = canvasRef.current;
+    const gl = glRef.current;
+    if (!canvas || !gl) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const scale = RES_SCALE;
+    const w = Math.max(1, Math.floor(canvas.clientWidth * dpr * scale));
+    const h = Math.max(1, Math.floor(canvas.clientHeight * dpr * scale));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+      scheduleRender();
+    }
+  };
+
+  // One-shot draw when something actually changed
+  const drawOnce = () => {
+    drawPendingRef.current = false;
+    const gl = glRef.current;
+    const v = videoRef.current;
+    const program = programRef.current;
+    const canvas = canvasRef.current;
+    if (!gl || !program || !v || !canvas) return;
+    if (!isActive()) return;
+
+    // If no RVFC, cap fps while polling frames
+    if (!hasRVFCRef.current) {
+      const now = performance.now();
+      const minDelta = 1000 / FPS_CAP_NO_RVFC;
+      if (now - lastDrawMsRef.current < minDelta) {
+        // delay a bit more to respect cap
+        drawPendingRef.current = true;
+        rafRef.current = requestAnimationFrame(drawOnce);
+        return;
+      }
+      lastDrawMsRef.current = now;
+    }
+
+    gl.useProgram(program);
+
+    // Uniforms that can change
+    if (uResolutionRef.current)
+      gl.uniform2f(uResolutionRef.current, canvas.width, canvas.height);
+    const vw = v.videoWidth || 1920;
+    const vh = v.videoHeight || 1080;
+    if (uVideoSizeRef.current) gl.uniform2f(uVideoSizeRef.current, vw, vh);
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (uDotSizeRef.current)
+      gl.uniform1f(uDotSizeRef.current, Math.max(1, DOT_SIZE) * dpr);
+    if (uAngleRef.current)
+      gl.uniform1f(uAngleRef.current, (ANGLE_DEG * Math.PI) / 180.0);
+
+    // Upload new frame only when it actually changed
+    if (!hasRVFCRef.current && v.readyState >= 2) {
+      const t = v.currentTime;
+      if (t !== lastTimeRef.current) {
+        needsUploadRef.current = true;
+        lastTimeRef.current = t;
+      }
+    }
+
+    if (needsUploadRef.current && v.readyState >= 2) {
+      const texture = textureRef.current!;
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      try {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, v);
+        needsUploadRef.current = false;
+      } catch {
+        setFallback(true); // likely CORS or lost context
+        return;
+      }
+    }
+
+    // Draw
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    // If no RVFC, keep a gentle loop; otherwise, we draw again only when scheduled by RVFC/resize/etc.
+    if (!hasRVFCRef.current && isActive()) {
+      drawPendingRef.current = true;
+      rafRef.current = requestAnimationFrame(drawOnce);
+    }
+  };
+
+  // Init video (muted/autoplay and first upload)
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
 
-    // Ensure autoplay policy passes
     v.muted = true;
     v.defaultMuted = true;
 
     const tryPlay = () => v.play().catch(() => {});
-
-    // First attempts
     tryPlay();
+
     if (v.readyState >= 2) {
       needsUploadRef.current = true;
+      scheduleRender();
     } else {
       const onLoadedData = () => {
         needsUploadRef.current = true;
         tryPlay();
+        scheduleRender();
       };
       v.addEventListener("loadeddata", onLoadedData, { once: true });
       return () => v.removeEventListener("loadeddata", onLoadedData);
     }
   }, []);
-  // Main GL setup + loop
-  const setupGL = () => {
+
+  // Main GL setup
+  useEffect(() => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
     if (!canvas || !video) return;
@@ -196,8 +271,12 @@ export default function DitherShaderCanvas() {
     const gl = canvas.getContext("webgl", {
       alpha: true,
       antialias: false,
-      premultipliedAlpha: false,
+      depth: false,
+      stencil: false,
+      premultipliedAlpha: true,
       preserveDrawingBuffer: false,
+      desynchronized: true, // hint; ignored if unsupported
+      powerPreference: "low-power",
     });
     if (!gl) {
       setFallback(true);
@@ -205,19 +284,24 @@ export default function DitherShaderCanvas() {
     }
     glRef.current = gl;
 
+    // Keep pipeline minimal
     gl.disable(gl.DITHER);
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.CULL_FACE);
+    gl.disable(gl.SCISSOR_TEST);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     const program = createProgram(gl, VERT, FRAG);
     programRef.current = program;
+    gl.useProgram(program);
 
-    // Fullscreen quad
-    const quad = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+    // Single full-screen triangle (less vertex work than strip)
+    const tri = new Float32Array([-1, -1, 3, -1, -1, 3]);
     const buf = gl.createBuffer();
     bufRef.current = buf;
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, tri, gl.STATIC_DRAW);
     const aPos = gl.getAttribLocation(program, "aPos");
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
@@ -240,8 +324,9 @@ export default function DitherShaderCanvas() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     if (uTexRef.current) gl.uniform1i(uTexRef.current, 0);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // set once
 
-    // Seed a valid texture
+    // Seed texture
     const pixel = new Uint8Array([0, 0, 0, 0]);
     gl.texImage2D(
       gl.TEXTURE_2D,
@@ -255,35 +340,38 @@ export default function DitherShaderCanvas() {
       pixel
     );
 
-    // Resize
-    const setSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.floor(canvas.clientWidth * dpr);
-      const h = Math.floor(canvas.clientHeight * dpr);
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-      }
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
+    // Set static uniforms
+    if (uInkColorRef.current)
+      gl.uniform3f(
+        uInkColorRef.current,
+        INK_COLOR[0],
+        INK_COLOR[1],
+        INK_COLOR[2]
+      );
+
+    // Resize handling
     setSize();
     const onResize = () => setSize();
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize, { passive: true });
 
-    // Upload frames when they change
+    // Video frame callbacks (prefer this over an endless RAF)
     const setupRVFC = () => {
-      const v: any = video;
-      if (v && typeof v.requestVideoFrameCallback === "function") {
+      const vv: any = video;
+      if (vv && typeof vv.requestVideoFrameCallback === "function") {
         hasRVFCRef.current = true;
         let id: any;
         const onFrame = () => {
+          if (!isActive()) return; // if inactive, skip uploads until resumed
           needsUploadRef.current = true;
-          id = v.requestVideoFrameCallback(onFrame);
+          scheduleRender();
+          id = vv.requestVideoFrameCallback(onFrame);
         };
-        id = v.requestVideoFrameCallback(onFrame);
-        return () => v.cancelVideoFrameCallback?.(id);
+        id = vv.requestVideoFrameCallback(onFrame);
+        return () => vv.cancelVideoFrameCallback?.(id);
       }
       hasRVFCRef.current = false;
+      // If no RVFC, we’ll gently loop in drawOnce() with an FPS cap.
+      scheduleRender();
       return () => {};
     };
     const cancelRVFC = setupRVFC();
@@ -292,10 +380,11 @@ export default function DitherShaderCanvas() {
     const onCanPlay = () => {
       needsUploadRef.current = true;
       video.play().catch(() => {});
+      scheduleRender();
     };
     video.addEventListener("canplay", onCanPlay, { once: true });
 
-    // Context loss
+    // WebGL context loss -> fallback to plain video
     const onLost = (e: Event) => {
       e.preventDefault();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -305,78 +394,6 @@ export default function DitherShaderCanvas() {
       passive: false,
     });
 
-    // Render loop
-    const render = () => {
-      rafRef.current = requestAnimationFrame(render);
-      const gl = glRef.current;
-      const v = videoRef.current;
-      const program = programRef.current;
-      if (!gl || !program || !v) return;
-
-      gl.useProgram(program); // IMPORTANT: bind each frame before uniforms/draw
-
-      const uResolution = uResolutionRef.current;
-      const uVideoSize = uVideoSizeRef.current;
-      const uDotSize = uDotSizeRef.current;
-      const uAngle = uAngleRef.current;
-      const uInkColor = uInkColorRef.current;
-      const texture = textureRef.current;
-      if (
-        !uResolution ||
-        !uVideoSize ||
-        !uDotSize ||
-        !uAngle ||
-        !uInkColor ||
-        !texture
-      )
-        return;
-
-      gl.uniform2f(uResolution, canvas.width, canvas.height);
-      const vw = v.videoWidth || 1920;
-      const vh = v.videoHeight || 1080;
-      gl.uniform2f(uVideoSize, vw, vh);
-
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      gl.uniform1f(uDotSize, Math.max(1, paramsRef.current.dotSize) * dpr);
-      gl.uniform1f(uAngle, (paramsRef.current.angleDeg * Math.PI) / 180);
-
-      // Get the current color directly in the render loop
-      const [r, g, b] = getCurrentAccentColorRGB();
-      gl.uniform3f(uInkColor, r, g, b);
-
-      // Fallback frame-change detection if RVFC is not available
-      if (!hasRVFCRef.current && v.readyState >= 2) {
-        const t = v.currentTime;
-        if (t !== lastTimeRef.current) {
-          needsUploadRef.current = true;
-          lastTimeRef.current = t;
-        }
-      }
-
-      if (needsUploadRef.current && v.readyState >= 2) {
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-        try {
-          gl.texImage2D(
-            gl.TEXTURE_2D,
-            0,
-            gl.RGBA,
-            gl.RGBA,
-            gl.UNSIGNED_BYTE,
-            v
-          );
-          needsUploadRef.current = false;
-        } catch {
-          setFallback(true); // likely CORS
-        }
-      }
-
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    };
-    render();
-
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", onResize);
@@ -384,28 +401,67 @@ export default function DitherShaderCanvas() {
       canvas.removeEventListener("webglcontextlost", onLost as any);
       cancelRVFC();
 
-      const gl = glRef.current;
-      const program = programRef.current;
-      const buf = bufRef.current;
-      const texture = textureRef.current;
-      if (gl) {
-        if (texture) gl.deleteTexture(texture);
-        if (buf) gl.deleteBuffer(buf);
-        if (program) gl.deleteProgram(program);
+      const gl2 = glRef.current;
+      const program2 = programRef.current;
+      const buf2 = bufRef.current;
+      const texture2 = textureRef.current;
+      if (gl2) {
+        if (texture2) gl2.deleteTexture(texture2);
+        if (buf2) gl2.deleteBuffer(buf2);
+        if (program2) gl2.deleteProgram(program2);
       }
       glRef.current = null;
       programRef.current = null;
       bufRef.current = null;
       textureRef.current = null;
     };
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  // Pause when off-screen to save power
   useEffect(() => {
-    setupGL();
+    const root = containerRef.current;
+    if (!root) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisibleRef.current = !!entry?.isIntersecting;
+        const v = videoRef.current;
+        if (isActive()) {
+          v?.play().catch(() => {});
+          scheduleRender();
+        } else {
+          v?.pause();
+        }
+      },
+      { root: null, threshold: 0.01 }
+    );
+    obs.observe(root);
+    return () => obs.disconnect();
+  }, []);
+
+  // Pause when tab is hidden
+  useEffect(() => {
+    const onVis = () => {
+      isDocVisibleRef.current = !document.hidden;
+      const v = videoRef.current;
+      if (isActive()) {
+        v?.play().catch(() => {});
+        scheduleRender();
+      } else {
+        v?.pause();
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+    <div
+      ref={containerRef}
+      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+    >
       {/* Hidden video (shown when falling back) */}
       <video
         ref={videoRef}
