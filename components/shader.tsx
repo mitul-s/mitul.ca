@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import GenerateVideoForm from "@/components/generate-video-form";
 
 // --- WebGL helpers -----------------------------------------------------------
 function createShader(gl: WebGLRenderingContext, type: number, source: string) {
@@ -102,6 +103,9 @@ export default function DitherShaderCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const [videoUrl, setVideoUrl] = useState<string | null>(
+    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/Flowers%20Blowing%20Video.mp4"
+  );
   const [fallback, setFallback] = useState(false);
   const [ready, setReady] = useState(false); // <- canvas will fade in after first GPU upload
   const didFirstDrawRef = useRef(false);
@@ -451,42 +455,51 @@ export default function DitherShaderCanvas() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
-    >
-      {/* Show the raw video until the canvas has its first uploaded frame (or on fallback) */}
-      <video
-        ref={videoRef}
-        src={
-          "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/Flowers%20Blowing%20Video.mp4"
-        }
-        muted
-        autoPlay
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-        crossOrigin="anonymous"
-        className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity duration-200 pointer-events-none",
-          // TODO tweak? framer motion?
-          !ready ? "opacity-100" : "opacity-0",
-          fallback ? "opacity-0" : "opacity-0"
-        )}
-      />
+    <>
+      <div className="bg-[red] p-12">
+        <h1 className="text-white text-4xl font-bold">this is in the shader</h1>
+        <GenerateVideoForm setVideoUrl={setVideoUrl} />
+      </div>
 
-      {/* Fade the shader canvas in only after first draw to avoid flash */}
-      <canvas
-        ref={canvasRef}
-        className={
-          fallback
-            ? "hidden"
-            : `absolute inset-0 w-full h-full block pointer-events-none transition-opacity duration-200 ${
-                ready ? "opacity-100" : "opacity-0"
-              }`
-        }
-      />
-    </div>
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+      >
+        {/* Show the raw video until the canvas has its first uploaded frame (or on fallback) */}
+        <video
+          ref={videoRef}
+          src={
+            videoUrl ||
+            "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/Flowers%20Blowing%20Video.mp4" ||
+            ""
+          }
+          muted
+          autoPlay
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          crossOrigin="anonymous"
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-200 pointer-events-none",
+            // TODO tweak? framer motion?
+            !ready ? "opacity-100" : "opacity-0",
+            fallback ? "opacity-0" : "opacity-0"
+          )}
+        />
+
+        {/* Fade the shader canvas in only after first draw to avoid flash */}
+        <canvas
+          ref={canvasRef}
+          className={
+            fallback
+              ? "hidden"
+              : `absolute inset-0 w-full h-full block pointer-events-none transition-opacity duration-200 ${
+                  ready ? "opacity-100" : "opacity-0"
+                }`
+          }
+        />
+      </div>
+    </>
   );
 }
