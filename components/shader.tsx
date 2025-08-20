@@ -97,6 +97,11 @@ void main() {
 // Fixed color (keeps perf; avoids per-frame style reads)
 const INK_COLOR: [number, number, number] = [2 / 255, 16 / 255, 147 / 255];
 
+const prefersReducedMotion = () => {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+};
+
 export default function DitherShaderCanvas() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -107,7 +112,7 @@ export default function DitherShaderCanvas() {
   const didFirstDrawRef = useRef(false);
 
   // Tunables
-  const DOT_SIZE = 9;
+  const DOT_SIZE = 5;
   const ANGLE_DEG = 68;
   const RES_SCALE = 0.75;
   const FPS_CAP_NO_RVFC = 30;
@@ -450,19 +455,24 @@ export default function DitherShaderCanvas() {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
+  const reducedMotion = prefersReducedMotion();
+  if (reducedMotion) {
+    return <></>;
+  }
+
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+      className="absolute -z-10 inset-0 w-full h-full overflow-hidden pointer-events-none"
     >
       {/* Show the raw video until the canvas has its first uploaded frame (or on fallback) */}
       <video
         ref={videoRef}
         src={
-          "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/Flowers%20Blowing%20Video.mp4"
+          "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/shader-vid.mp4"
         }
         muted
-        autoPlay
+        autoPlay={!reducedMotion}
         loop
         playsInline
         preload="metadata"
@@ -483,7 +493,7 @@ export default function DitherShaderCanvas() {
           fallback
             ? "hidden"
             : `absolute inset-0 w-full h-full block pointer-events-none transition-opacity duration-200 ${
-                ready ? "opacity-100" : "opacity-0"
+                ready ? "opacity-70" : "opacity-0"
               }`
         }
       />

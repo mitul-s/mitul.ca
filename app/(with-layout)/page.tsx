@@ -16,7 +16,6 @@ import Footer from "@/components/footer";
 import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
-import ThemeChanger from "@/components/theme-switcher";
 import Shader from "@/components/shader";
 
 export const dynamic = "force-static";
@@ -168,7 +167,7 @@ export default function Home() {
             Guestbook
           </Link>
           <CopyEmailButtonAlt />
-          <ThemeChanger />
+          {/* <ThemeChanger /> */}
         </nav>
 
         <Section title=" ">
