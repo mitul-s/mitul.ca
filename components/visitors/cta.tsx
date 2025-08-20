@@ -340,7 +340,9 @@ export default function WriteNoteCTA() {
                                   }}
                                 >
                                   why not a little drawing as well!{" "}
-                                  <span>be creative!!</span>
+                                  <span>
+                                    be creative!! no more smiley faces
+                                  </span>
                                 </motion.div>
                               )}
                             </AnimatePresence>
