@@ -17,9 +17,16 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
   if (!data) return null;
   const song = data?.data || initial;
 
+  const recent = song.is_playing ? song.item : song.items[0].track;
+  if (!recent)
+    return (
+      <div className="h-16 w-full">
+        im probably being rate limited by spotify if u see this
+      </div>
+    );
+
   const filter = new Filter();
 
-  const recent = song.is_playing ? song.item : song.items[0].track;
   const track = {
     title: filter.clean(recent.name),
     artist: recent.artists
