@@ -4,19 +4,21 @@
 @import "tailwindcss";
 
 [data-theme="green"] {
-  /* Default theme (light) */
   --color-accent-rgb: 19, 50, 18;
   --color-accent: rgb(var(--color-accent-rgb));
+  --color-accent-hex: #133212;
 }
 
 [data-theme="red"] {
   --color-accent-rgb: 178, 0, 36;
   --color-accent: rgb(var(--color-accent-rgb));
+  --color-accent-hex: #b20024;
 }
 
 [data-theme="blue"] {
   --color-accent-rgb: 2, 16, 147;
   --color-accent: rgb(var(--color-accent-rgb));
+  --color-accent-hex: #021093;
 }
 
 @theme {

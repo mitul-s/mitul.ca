@@ -1,0 +1,502 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+// --- WebGL helpers -----------------------------------------------------------
+function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+  const shader = gl.createShader(type)!;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const info = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error("Shader compile failed: " + info);
+  }
+  return shader;
+}
+
+function createProgram(
+  gl: WebGLRenderingContext,
+  vsSource: string,
+  fsSource: string
+) {
+  const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+  const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+  const program = gl.createProgram()!;
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const info = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    throw new Error("Program link failed: " + info);
+  }
+  gl.deleteShader(vs);
+  gl.deleteShader(fs);
+  return program;
+}
+
+// --- Shaders -----------------------------------------------------------------
+const VERT = `
+attribute vec2 aPos;
+varying vec2 vUV;
+void main() {
+  vUV = aPos * 0.5 + 0.5;
+  gl_Position = vec4(aPos, 0.0, 1.0);
+}
+`;
+
+const FRAG = `
+precision highp float;
+
+varying vec2 vUV;
+uniform sampler2D uTex;
+uniform vec2 uResolution;
+uniform vec2 uVideoSize;
+uniform float uDotSize;
+uniform float uAngle;
+uniform vec3 uInkColor;
+
+vec2 coverMap(vec2 uv, vec2 canvasSize, vec2 contentSize) {
+  vec2 pos = (uv - 0.5) * canvasSize;
+  float s = max(canvasSize.x / contentSize.x, canvasSize.y / contentSize.y);
+  vec2 src = pos / s + 0.5 * contentSize;
+  return src / contentSize;
+}
+
+vec2 rotate2D(vec2 p, float a) {
+  float s = sin(a), c = cos(a);
+  return mat2(c, -s, s, c) * p;
+}
+
+void main() {
+  vec2 uv = coverMap(vUV, uResolution, uVideoSize);
+  vec3 vid = texture2D(uTex, uv).rgb;
+
+  float lum = dot(vid, vec3(0.299, 0.587, 0.114));
+
+  vec2 p = gl_FragCoord.xy - 0.5 * uResolution;
+  p = rotate2D(p, uAngle);
+  p += 0.5 * uResolution;
+
+  vec2 g = p / max(uDotSize, 1.0);
+  vec2 cell = fract(g) - 0.5;
+
+  float radius = (1.0 - lum) * 0.5;
+  float dist = length(cell);
+
+  float feather = 0.35 / max(uDotSize, 1.0);
+  float dotMask = 1.0 - smoothstep(radius, radius + feather, dist);
+
+  gl_FragColor = vec4(uInkColor, dotMask);
+}
+`;
+
+// Fixed color (keeps perf; avoids per-frame style reads)
+const INK_COLOR: [number, number, number] = [2 / 255, 16 / 255, 147 / 255];
+
+const prefersReducedMotion = () => {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+};
+
+export default function DitherShaderCanvas() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const [fallback, setFallback] = useState(false);
+  const [ready, setReady] = useState(false); // <- canvas will fade in after first GPU upload
+  const didFirstDrawRef = useRef(false);
+
+  // Tunables
+  const DOT_SIZE = 5;
+  const ANGLE_DEG = 68;
+  const RES_SCALE = 0.75;
+  const FPS_CAP_NO_RVFC = 30;
+
+  // GL refs
+  const rafRef = useRef<number | null>(null);
+  const glRef = useRef<WebGLRenderingContext | null>(null);
+  const programRef = useRef<WebGLProgram | null>(null);
+  const bufRef = useRef<WebGLBuffer | null>(null);
+  const textureRef = useRef<WebGLTexture | null>(null);
+
+  const uTexRef = useRef<WebGLUniformLocation | null>(null);
+  const uResolutionRef = useRef<WebGLUniformLocation | null>(null);
+  const uVideoSizeRef = useRef<WebGLUniformLocation | null>(null);
+  const uDotSizeRef = useRef<WebGLUniformLocation | null>(null);
+  const uAngleRef = useRef<WebGLUniformLocation | null>(null);
+  const uInkColorRef = useRef<WebGLUniformLocation | null>(null);
+
+  // Render gating
+  const hasRVFCRef = useRef(false);
+  const needsUploadRef = useRef(false);
+  const drawPendingRef = useRef(false);
+  const lastTimeRef = useRef(-1);
+  const lastDrawMsRef = useRef(0);
+
+  // Visibility gating
+  const isVisibleRef = useRef(true);
+  const isDocVisibleRef = useRef(
+    typeof document !== "undefined" ? !document.hidden : true
+  );
+  const isActive = () => isVisibleRef.current && isDocVisibleRef.current;
+
+  const scheduleRender = () => {
+    if (drawPendingRef.current) return;
+    drawPendingRef.current = true;
+    rafRef.current = requestAnimationFrame(drawOnce);
+  };
+
+  const setSize = () => {
+    const canvas = canvasRef.current;
+    const gl = glRef.current;
+    if (!canvas || !gl) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const scale = RES_SCALE;
+    const w = Math.max(1, Math.floor(canvas.clientWidth * dpr * scale));
+    const h = Math.max(1, Math.floor(canvas.clientHeight * dpr * scale));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+      scheduleRender();
+    }
+  };
+
+  const drawOnce = () => {
+    drawPendingRef.current = false;
+    const gl = glRef.current;
+    const v = videoRef.current;
+    const program = programRef.current;
+    const canvas = canvasRef.current;
+    if (!gl || !program || !v || !canvas) return;
+    if (!isActive()) return;
+
+    if (!hasRVFCRef.current) {
+      const now = performance.now();
+      const minDelta = 1000 / FPS_CAP_NO_RVFC;
+      if (now - lastDrawMsRef.current < minDelta) {
+        drawPendingRef.current = true;
+        rafRef.current = requestAnimationFrame(drawOnce);
+        return;
+      }
+      lastDrawMsRef.current = now;
+    }
+
+    gl.useProgram(program);
+
+    if (uResolutionRef.current)
+      gl.uniform2f(uResolutionRef.current, canvas.width, canvas.height);
+    const vw = v.videoWidth || 1920;
+    const vh = v.videoHeight || 1080;
+    if (uVideoSizeRef.current) gl.uniform2f(uVideoSizeRef.current, vw, vh);
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (uDotSizeRef.current)
+      gl.uniform1f(uDotSizeRef.current, Math.max(1, DOT_SIZE) * dpr);
+    if (uAngleRef.current)
+      gl.uniform1f(uAngleRef.current, (ANGLE_DEG * Math.PI) / 180.0);
+
+    // Detect new frames if no RVFC
+    if (!hasRVFCRef.current && v.readyState >= 2) {
+      const t = v.currentTime;
+      if (t !== lastTimeRef.current) {
+        needsUploadRef.current = true;
+        lastTimeRef.current = t;
+      }
+    }
+
+    let didUpload = false;
+    if (needsUploadRef.current && v.readyState >= 2) {
+      const texture = textureRef.current!;
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      try {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, v);
+        needsUploadRef.current = false;
+        didUpload = true;
+      } catch {
+        setFallback(true);
+        return;
+      }
+    }
+
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    // Mark ready immediately after the first successful GPU upload + draw
+    if (didUpload && !didFirstDrawRef.current) {
+      didFirstDrawRef.current = true;
+      // Defer state change to next macrotask to ensure the first frame is painted
+      setTimeout(() => setReady(true), 0);
+    }
+
+    if (!hasRVFCRef.current && isActive()) {
+      drawPendingRef.current = true;
+      rafRef.current = requestAnimationFrame(drawOnce);
+    }
+  };
+
+  // Init video
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+
+    if (v.readyState >= 2) {
+      needsUploadRef.current = true;
+      scheduleRender();
+    } else {
+      const onLoadedData = () => {
+        needsUploadRef.current = true;
+        tryPlay();
+        scheduleRender();
+      };
+      v.addEventListener("loadeddata", onLoadedData, { once: true });
+      return () => v.removeEventListener("loadeddata", onLoadedData);
+    }
+  }, []);
+
+  // Main GL setup
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) return;
+
+    const gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      premultipliedAlpha: true,
+      preserveDrawingBuffer: false,
+      desynchronized: true,
+      powerPreference: "low-power",
+    });
+    if (!gl) {
+      setFallback(true);
+      return;
+    }
+    glRef.current = gl;
+
+    gl.disable(gl.DITHER);
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.CULL_FACE);
+    gl.disable(gl.SCISSOR_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    const program = createProgram(gl, VERT, FRAG);
+    programRef.current = program;
+    gl.useProgram(program);
+
+    // Full-screen single triangle
+    const tri = new Float32Array([-1, -1, 3, -1, -1, 3]);
+    const buf = gl.createBuffer();
+    bufRef.current = buf;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, tri, gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(program, "aPos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    // Uniforms
+    uTexRef.current = gl.getUniformLocation(program, "uTex");
+    uResolutionRef.current = gl.getUniformLocation(program, "uResolution");
+    uVideoSizeRef.current = gl.getUniformLocation(program, "uVideoSize");
+    uDotSizeRef.current = gl.getUniformLocation(program, "uDotSize");
+    uAngleRef.current = gl.getUniformLocation(program, "uAngle");
+    uInkColorRef.current = gl.getUniformLocation(program, "uInkColor");
+    if (uInkColorRef.current)
+      gl.uniform3f(
+        uInkColorRef.current,
+        INK_COLOR[0],
+        INK_COLOR[1],
+        INK_COLOR[2]
+      );
+
+    // Texture
+    const texture = gl.createTexture();
+    textureRef.current = texture;
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    if (uTexRef.current) gl.uniform1i(uTexRef.current, 0);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+
+    // Seed transparent pixel
+    const pixel = new Uint8Array([0, 0, 0, 0]);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      1,
+      1,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixel
+    );
+
+    // Size / viewport
+    setSize();
+    const onResize = () => setSize();
+    window.addEventListener("resize", onResize, { passive: true });
+
+    // Prefer requestVideoFrameCallback
+    const setupRVFC = () => {
+      const vv: any = video;
+      if (vv && typeof vv.requestVideoFrameCallback === "function") {
+        hasRVFCRef.current = true;
+        let id: any;
+        const onFrame = () => {
+          if (!isActive()) return;
+          needsUploadRef.current = true;
+          scheduleRender();
+          id = vv.requestVideoFrameCallback(onFrame);
+        };
+        id = vv.requestVideoFrameCallback(onFrame);
+        return () => vv.cancelVideoFrameCallback?.(id);
+      }
+      hasRVFCRef.current = false;
+      scheduleRender();
+      return () => {};
+    };
+    const cancelRVFC = setupRVFC();
+
+    const onCanPlay = () => {
+      needsUploadRef.current = true;
+      video.play().catch(() => {});
+      scheduleRender();
+    };
+    video.addEventListener("canplay", onCanPlay, { once: true });
+
+    const onLost = (e: Event) => {
+      e.preventDefault();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      setFallback(true);
+    };
+    canvas.addEventListener("webglcontextlost", onLost as any, {
+      passive: false,
+    });
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", onResize);
+      video.removeEventListener("canplay", onCanPlay);
+      canvas.removeEventListener("webglcontextlost", onLost as any);
+      cancelRVFC();
+
+      const gl2 = glRef.current;
+      const program2 = programRef.current;
+      const buf2 = bufRef.current;
+      const texture2 = textureRef.current;
+      if (gl2) {
+        if (texture2) gl2.deleteTexture(texture2);
+        if (buf2) gl2.deleteBuffer(buf2);
+        if (program2) gl2.deleteProgram(program2);
+      }
+      glRef.current = null;
+      programRef.current = null;
+      bufRef.current = null;
+      textureRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Pause when off-screen
+  useEffect(() => {
+    const root = containerRef.current;
+    if (!root) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisibleRef.current = !!entry?.isIntersecting;
+        const v = videoRef.current;
+        if (isActive()) {
+          v?.play().catch(() => {});
+          scheduleRender();
+        } else {
+          v?.pause();
+        }
+      },
+      { root: null, threshold: 0.01 }
+    );
+    obs.observe(root);
+    return () => obs.disconnect();
+  }, []);
+
+  // Pause when tab hidden
+  useEffect(() => {
+    const onVis = () => {
+      isDocVisibleRef.current = !document.hidden;
+      const v = videoRef.current;
+      if (isActive()) {
+        v?.play().catch(() => {});
+        scheduleRender();
+      } else {
+        v?.pause();
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  const reducedMotion = prefersReducedMotion();
+  if (reducedMotion) {
+    return <></>;
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute -z-10 inset-0 w-full h-full overflow-hidden pointer-events-none"
+    >
+      {/* Show the raw video until the canvas has its first uploaded frame (or on fallback) */}
+      <video
+        ref={videoRef}
+        src={
+          "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/main/shader-vid.mp4"
+        }
+        muted
+        autoPlay={!reducedMotion}
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        crossOrigin="anonymous"
+        className={cn(
+          "absolute inset-0 w-full h-full object-cover transition-opacity duration-200 pointer-events-none",
+          // TODO tweak? framer motion?
+          !ready ? "opacity-100" : "opacity-0",
+          fallback ? "opacity-0" : "opacity-0"
+        )}
+      />
+
+      {/* Fade the shader canvas in only after first draw to avoid flash */}
+      <canvas
+        ref={canvasRef}
+        className={
+          fallback
+            ? "hidden"
+            : `absolute inset-0 w-full h-full block pointer-events-none transition-opacity duration-200 ${
+                ready ? "opacity-70" : "opacity-0"
+              }`
+        }
+      />
+    </div>
+  );
+}

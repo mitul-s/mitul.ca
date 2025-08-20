@@ -14,7 +14,7 @@ import Footer from "@/components/footer";
 import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
-import ThemeChanger from "@/components/theme-switcher";
+import Shader from "@/components/shader";
 import { Project } from "./page.client";
 
 export const dynamic = "force-static";
@@ -93,193 +93,200 @@ const SectionContent = ({ children }: { children: React.ReactNode }) => {
 
 export default function Home() {
   return (
-    <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
-      <nav className="min-md:absolute top-4 right-4 flex max-md:p-4 gap-1 text-accent font-medium">
-        <Link
-          href="/os"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
-        >
-          Public Archive
-        </Link>
-        <Link
-          href="/visitors"
-          className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
-        >
-          Guestbook
-        </Link>
-        <CopyEmailButtonAlt />
-        <ThemeChanger />
-      </nav>
+    <>
+      <Shader />
+      <div className="justify-between md:flex animate-in fade-in duration-500 select flex-col">
+        <nav className="min-md:absolute top-4 right-4 flex max-md:p-4 gap-1 text-accent font-medium">
+          <Link
+            href="/os"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
+          >
+            Public Archive
+          </Link>
+          <Link
+            href="/visitors"
+            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1.5 pr-1.5 rounded-[2px] cursor-pointer"
+          >
+            Guestbook
+          </Link>
+          <CopyEmailButtonAlt />
+          {/* <ThemeChanger /> */}
+        </nav>
 
-      <Section title=" ">
-        <div className="px-4 min-md:pt-8 pb-6 col-start-2">
-          <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
-            Mitul Shah
-          </h1>
-          <span>Photographer, design engineer, and a bit more.</span>
-          <p className="mt-4">
-            Crafting memorable interfaces with a deep attention to detail. I
-            dedicate most my time to continuous learning and refining my
-            skillset.
-          </p>
-          <p className="mt-2">
-            I'm a creative{" "}
-            <LinkPrimitive
-              href="https://www.youtube.com/watch?v=jG7dSXcfVqE"
-              external
-            >
-              doing what I can't
-            </LinkPrimitive>
-          </p>
-          <span className="font-medium text-sm tracking-tight mt-4 -mb-2 block">
-            Currently
-          </span>
-          <MusicPlayer />
-          <div className="flex gap-x-2">
-            <Link
-              href="/visitors"
-              className="rounded-4 bg-accent transition hover:bg-accent/90 text-light-green font-medium px-2 py-1 flex gap-x-1.5 items-center"
-              style={{
-                boxShadow:
-                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
-              }}
-            >
-              Sign guestbook
-              <ScribbleLoop
-                size={12}
-                weight="bold"
-                aria-hidden={true}
-                className="shrink-0 text-light-green"
-              />
-            </Link>
-          </div>
-        </div>
-      </Section>
-      <Section title="Experience">
-        <DottedSpacer className="mt-4 md:mt-0.5 mb-0" />
-        <Accordion className="h-full flex flex-col divide-y divide-dotted">
-          {experiences.map((role) => {
-            return (
-              <AccordionItem
-                key={role.company}
-                role={role.role}
-                company={role.company}
-                range={role.range}
-                description={role.description}
-                // skills={role.skills}
-                link={role.link}
-              />
-            );
-          })}
-          <DottedSpacer lines={2} />
-        </Accordion>
-      </Section>
-      <Section title="Projects">
-        <Project
-          title="Daybloom"
-          description="A mindful daily journal that combines your photos and thoughts into calendar view, helping you capture memories and reflect on life's meaningful moments."
-          hrefs={{
-            live: "https://daybloom.app",
-          }}
-        />
-        <DottedSpacer className="my-0" />
-        <Project
-          title="Montreal in Motion"
-          description="A documentation of the brutalist and distinctly designed metro stations. The project uses CSS 3D transforms and noise to mirror the architecutral character of the spaces."
-          hrefs={{
-            live: "https://typicalmitul.com/montreal-in-motion",
-            code: "https://github.com/mitul-s/typicalmitul.com",
-          }}
-        />
-        <DottedSpacer className="my-0" />
-        <Project
-          title="Places to Read"
-          description="A microsite to discover community submitted parks around the world where you can sit down, chill and enjoy reading a book."
-          hrefs={{ live: "https://placestoread.xyz" }}
-        />
-      </Section>
-      <Section title="Photography">
-        <div className="flex flex-col gap-y-1.5 pt-4 pb-8">
-          <div className="flex flex-col gap-y-1.5 px-4">
-            <p>
-              I've built up my craft as a photographer over a number of years
-              and thrived in turning it into an indepedent business.
+        <Section title=" ">
+          <div className="px-4 min-md:pt-8 pb-6 col-start-2">
+            <h1 className="font-medium flex items-center gap-x-1.5 text-[24px]">
+              Mitul Shah
+            </h1>
+            <span>Photographer, design engineer, and a bit more.</span>
+            <p className="mt-4">
+              Crafting memorable interfaces with a deep attention to detail. I
+              dedicate most my time to continuous learning and refining my
+              skillset.
             </p>
-            <span>
-              <span className="font-medium">Notable achievements include</span>
-              <ul>
-                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                  being a personal photographer for the Uber CEO
-                </li>
-                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                  featured in local Toronto newspapers
-                </li>
-                <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                  having a photo as a wallpaper in every Google device
-                </li>
-              </ul>
-            </span>
-            <p>
-              Today, my focus is on music photography where I capture my
-              favourite artists at concerts or festivals. You can learn a little
-              more by visiting my portfolio below.
-            </p>
-            <Link
-              href="https://typicalmitul.com"
-              target="_blank"
-              className="flex w-fit gap-x-2 items-center transition hover:bg-accent/90 rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
-              style={{
-                boxShadow:
-                  "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
-              }}
-            >
-              Visit my portfolio
-              <ArrowRight size={12} aria-hidden={true} />
-            </Link>
-          </div>
-          <div className="scroll-pl-4 scroll-pr-4">
-            <Gallery photos={photos} />
-          </div>
-        </div>
-      </Section>
-      <Section title="Contact">
-        <p className="pb-4 px-4 pt-4">
-          Let's hang, up for a chat or just say hi. If you're into photography,
-          film or music, I'd love to hear from you.
-        </p>
-        <DottedSpacer lines={2} />
-        <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
-          <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
-            <p className="font-medium">Mail</p>
-            <Link href="mailto:mitulxshah@gmail.com">mitulxshah@gmail.com</Link>
-            <div className="flex gap-x-1 ml-auto">
-              <Link
-                href="mailto:mitulxshah@gmail.com"
-                className="hidden min-md:flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+            <p className="mt-2">
+              I'm a creative{" "}
+              <LinkPrimitive
+                href="https://www.youtube.com/watch?v=jG7dSXcfVqE"
+                external
               >
-                <PencilSimpleLine size={12} aria-hidden={true} />
-                Compose
+                doing what I can't
+              </LinkPrimitive>
+            </p>
+            <span className="font-medium text-sm tracking-tight mt-4 -mb-2 block">
+              Currently
+            </span>
+            <MusicPlayer />
+            <div className="flex gap-x-2">
+              <Link
+                href="/visitors"
+                className="rounded-4 bg-accent transition hover:bg-accent/90 text-light-green font-medium px-2 py-1 flex gap-x-1.5 items-center"
+                style={{
+                  boxShadow:
+                    "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+                }}
+              >
+                Sign guestbook
+                <ScribbleLoop
+                  size={12}
+                  weight="bold"
+                  aria-hidden={true}
+                  className="shrink-0 text-light-green"
+                />
               </Link>
-              <CopyEmailButton />
             </div>
           </div>
-          <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
-          <SocialLink
-            social="Instagram"
-            href="https://instagram.com/typicalmitul"
-          >
-            @typicalmitul
-          </SocialLink>
-          <SocialLink social="GitHub" href="https://github.com/mitul-s">
-            mitul-s
-          </SocialLink>
-        </div>
-        <DottedSpacer lines={2} />
-      </Section>
+        </Section>
+        <Section title="Experience">
+          <DottedSpacer className="mt-4 md:mt-0.5 mb-0" />
+          <Accordion className="h-full flex flex-col divide-y divide-dotted">
+            {experiences.map((role) => {
+              return (
+                <AccordionItem
+                  key={role.company}
+                  role={role.role}
+                  company={role.company}
+                  range={role.range}
+                  description={role.description}
+                  // skills={role.skills}
+                  link={role.link}
+                />
+              );
+            })}
+            <DottedSpacer lines={2} />
+          </Accordion>
+        </Section>
+        <Section title="Projects">
+          <Project
+            title="Daybloom"
+            description="A mindful daily journal that combines your photos and thoughts into calendar view, helping you capture memories and reflect on life's meaningful moments."
+            hrefs={{
+              live: "https://daybloom.app",
+            }}
+          />
+          <DottedSpacer className="my-0" />
+          <Project
+            title="Montreal in Motion"
+            description="A documentation of the brutalist and distinctly designed metro stations. The project uses CSS 3D transforms and noise to mirror the architecutral character of the spaces."
+            hrefs={{
+              live: "https://typicalmitul.com/montreal-in-motion",
+              code: "https://github.com/mitul-s/typicalmitul.com",
+            }}
+          />
+          <DottedSpacer className="my-0" />
+          <Project
+            title="Places to Read"
+            description="A microsite to discover community submitted parks around the world where you can sit down, chill and enjoy reading a book."
+            hrefs={{ live: "https://placestoread.xyz" }}
+          />
+        </Section>
+        <Section title="Photography">
+          <div className="flex flex-col gap-y-1.5 pt-4 pb-8">
+            <div className="flex flex-col gap-y-1.5 px-4">
+              <p>
+                I've built up my craft as a photographer over a number of years
+                and thrived in turning it into an indepedent business.
+              </p>
+              <span>
+                <span className="font-medium">
+                  Notable achievements include
+                </span>
+                <ul>
+                  <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                    being a personal photographer for the Uber CEO
+                  </li>
+                  <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                    featured in local Toronto newspapers
+                  </li>
+                  <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+                    having a photo as a wallpaper in every Google device
+                  </li>
+                </ul>
+              </span>
+              <p>
+                Today, my focus is on music photography where I capture my
+                favourite artists at concerts or festivals. You can learn a
+                little more by visiting my portfolio below.
+              </p>
+              <Link
+                href="https://typicalmitul.com"
+                target="_blank"
+                className="flex w-fit gap-x-2 items-center transition hover:bg-accent/90 rounded-4 bg-accent text-light-green font-medium px-2 py-1 mt-2 mb-4"
+                style={{
+                  boxShadow:
+                    "0 4px 4px #08080814, 0 1px 2px #08080833, inset 0 6px 12px #ffffff1f, inset 0 1px 1px #fff3",
+                }}
+              >
+                Visit my portfolio
+                <ArrowRight size={12} aria-hidden={true} />
+              </Link>
+            </div>
+            <div className="scroll-pl-4 scroll-pr-4">
+              <Gallery photos={photos} />
+            </div>
+          </div>
+        </Section>
+        <Section title="Contact">
+          <p className="pb-4 px-4 pt-4">
+            Let's hang, up for a chat or just say hi. If you're into
+            photography, film or music, I'd love to hear from you.
+          </p>
+          <DottedSpacer lines={2} />
+          <div className="grid gap-x-4 divide-y border-y divide-dotted border-dotted">
+            <div className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2">
+              <p className="font-medium">Mail</p>
+              <Link href="mailto:mitulxshah@gmail.com">
+                mitulxshah@gmail.com
+              </Link>
+              <div className="flex gap-x-1 ml-auto">
+                <Link
+                  href="mailto:mitulxshah@gmail.com"
+                  className="hidden min-md:flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm w-fit"
+                >
+                  <PencilSimpleLine size={12} aria-hidden={true} />
+                  Compose
+                </Link>
+                <CopyEmailButton />
+              </div>
+            </div>
+            <TwitterXMotion className="grid grid-cols-[75px_auto_1fr] gap-x-1.5 items-center px-4 py-2 overflow-hidden" />
+            <SocialLink
+              social="Instagram"
+              href="https://instagram.com/typicalmitul"
+            >
+              @typicalmitul
+            </SocialLink>
+            <SocialLink social="GitHub" href="https://github.com/mitul-s">
+              mitul-s
+            </SocialLink>
+          </div>
+          <DottedSpacer lines={2} />
+        </Section>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 }
