@@ -1,5 +1,4 @@
 import createMDX from "@next/mdx";
-import { withMicrofrontends } from "@vercel/microfrontends/next/config";
 
 const withMDX = createMDX({});
 
@@ -17,18 +16,18 @@ const config = {
   //     },
   //   ];
   // },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/os",
-  //       destination: "https://os-2.vercel.app/os",
-  //     },
-  //     {
-  //       source: "/os/:path*",
-  //       destination: "https://os-2.vercel.app/os/:path*",
-  //     },
-  //   ];
-  // },
+  async rewrites() {
+    return [
+      {
+        source: "/os",
+        destination: "https://os-2.vercel.app/os",
+      },
+      {
+        source: "/os/:path*",
+        destination: "https://os-2.vercel.app/os/:path*",
+      },
+    ];
+  },
 
   images: {
     remotePatterns: [
@@ -61,4 +60,4 @@ const config = {
   },
 };
 
-export default withMicrofrontends(withMDX(config));
+export default withMDX(config);
