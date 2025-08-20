@@ -3,8 +3,6 @@ import LinkPrimitive from "@/components/link-primitive";
 import { experiences, photos } from "@/content";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import Link from "next/link";
-import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
-import { Terminal } from "@phosphor-icons/react/dist/ssr/Terminal";
 import Gallery from "@/components/gallery";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/ssr/PencilSimpleLine";
 import TwitterXMotion from "@/components/twitter-x-loop";
@@ -17,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
 import Shader from "@/components/shader";
+import { Project } from "./page.client";
 
 export const dynamic = "force-static";
 
@@ -90,60 +89,6 @@ const SocialLink = ({
 
 const SectionContent = ({ children }: { children: React.ReactNode }) => {
   return <div className="md:border-r">{children}</div>;
-};
-
-interface ProjectProps {
-  title: string;
-  description: string;
-  hrefs: {
-    live?: string;
-    code?: string;
-  };
-}
-
-const Project = ({
-  title,
-  description,
-  hrefs: { live, code },
-}: ProjectProps) => {
-  return (
-    <div className="px-4 pt-4 pb-5 flex flex-col gap-y-1">
-      <h3 className="font-medium">{title}</h3>
-      <p>{description}</p>
-      <div className="flex items-center mt-2 gap-x-2">
-        {live ? (
-          <Link
-            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-            href={live}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Globe
-              aria-hidden={true}
-              size={12}
-              className="shrink-0 text-gray-1"
-            />
-            Live{" "}
-          </Link>
-        ) : null}
-        {code ? (
-          <Link
-            className="flex gap-x-1.5 items-center bg-accent hover:bg-accent/80 transition text-gray-1 py-0.5 pl-1 pr-1.5 rounded-[2px] cursor-pointer text-sm"
-            href={code}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Terminal
-              aria-hidden={true}
-              size={12}
-              className="shrink-0 text-gray-1"
-            />
-            Code{" "}
-          </Link>
-        ) : null}
-      </div>
-    </div>
-  );
 };
 
 export default function Home() {

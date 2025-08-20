@@ -74,11 +74,12 @@ async function sendEmail(formData: FormData) {
 
 export const getGuestbookEntries = async () => {
   const { rows } = await sql`
-    SELECT * FROM "guestbook"
-    TABLESAMPLE BERNOULLI (100)
-    WHERE approved = true
-    ORDER BY RANDOM()
-    LIMIT 25;
+      SELECT * FROM "guestbook"
+  WHERE approved = true AND id > (
+    SELECT FLOOR(RANDOM() * (SELECT MAX(id) FROM guestbook WHERE approved = true))
+  )
+  ORDER BY id
+  LIMIT 30;
   `;
 
   return rows;
