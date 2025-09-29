@@ -29,6 +29,8 @@ const LinkPrimitive = ({
   variant = "default",
   popover,
   children,
+  onClick,
+  ...props
 }: {
   href: string;
   external?: boolean;
@@ -36,6 +38,7 @@ const LinkPrimitive = ({
   variant?: "default" | "route";
   popover?: boolean;
   children: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   const Component = external ? "a" : Link;
   return (
@@ -43,6 +46,8 @@ const LinkPrimitive = ({
       className={cn(link({ variant: variant, popover: popover }), className)}
       target={external ? "_blank" : undefined}
       href={href}
+      onClick={onClick}
+      {...props}
     >
       {children}
     </Component>

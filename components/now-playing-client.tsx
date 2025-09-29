@@ -17,8 +17,6 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
   if (!data) return null;
   const song = data?.data || initial;
 
-  console.log(song);
-
   const recent = song.is_playing ? song.item : song.items[0].track;
 
   if (!recent)

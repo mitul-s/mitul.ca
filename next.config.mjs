@@ -45,17 +45,12 @@ const config = {
       {
         protocol: "https",
         port: "",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        port: "",
-        hostname: "source.unsplash.com",
-      },
-      {
-        protocol: "https",
-        port: "",
         hostname: "assets.literal.club",
+      },
+      {
+        protocol: "https",
+        port: "",
+        hostname: "img.youtube.com",
       },
     ],
   },

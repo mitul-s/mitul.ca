@@ -105,6 +105,11 @@
   --animate-slide-down-and-fade: slide-down-and-fade 0.25s
     cubic-bezier(0.16, 0, 0.13, 1);
 
+  --animate-blur-and-slide-up: blur-and-slide-up 0.25s
+    cubic-bezier(0.16, 0, 0.13, 1);
+  --animate-blur-and-slide-down: blur-and-slide-down 0.25s
+    cubic-bezier(0.16, 0, 0.13, 1);
+
   @keyframes accordion-down {
     from {
       height: 0;
@@ -151,6 +156,32 @@
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes blur-and-slide-up {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(-1.5rem) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes blur-and-slide-down {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(1.5rem) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
     }
   }
 }

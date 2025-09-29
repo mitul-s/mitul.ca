@@ -1,5 +1,5 @@
 import { Accordion, AccordionItem } from "@/components/collapsible";
-import LinkPrimitive from "@/components/link-primitive";
+import VideoHoverPreview from "@/components/video-hover-preview";
 import { experiences, photos } from "@/content";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import Link from "next/link";
@@ -128,12 +128,11 @@ export default function Home() {
             </p>
             <p className="mt-2">
               I'm a creative{" "}
-              <LinkPrimitive
+              <VideoHoverPreview
                 href="https://www.youtube.com/watch?v=jG7dSXcfVqE"
-                external
               >
                 doing what I can't
-              </LinkPrimitive>
+              </VideoHoverPreview>
             </p>
             <span className="font-medium text-sm tracking-tight mt-4 -mb-2 block">
               Currently
