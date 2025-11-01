@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState, useCallback } from "react";
-import { Sprite } from "../friends/lib/classes/sprite";
+import { Character, Sprite } from "../friends/lib/classes/sprite";
 // import { Position } from "./lib/types";
 import {
   CANVAS_HEIGHT,
@@ -22,6 +22,13 @@ const BACKGROUND_URL =
 const FOREGROUND_URL =
   "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/foreground.png";
 
+// CHARACTER IMAGES
+const VILLAGER_URL =
+  "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/villager.png";
+const OLD_MAN_URL =
+  "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/oldMan.png";
+
+// PLAYER IMAGES
 const PLAYER_DOWN_URL =
   "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/playerDown.png";
 const PLAYER_UP_URL =
@@ -48,6 +55,19 @@ const Page = () => {
     error: foregroundError,
   } = useImageLoader(FOREGROUND_URL);
 
+  // CHARACTER IMAGES
+  const {
+    image: villagerImage,
+    loading: villagerLoading,
+    error: villagerError,
+  } = useImageLoader(VILLAGER_URL);
+  const {
+    image: oldManImage,
+    loading: oldManLoading,
+    error: oldManError,
+  } = useImageLoader(OLD_MAN_URL);
+
+  // PLAYER IMAGES
   const {
     image: playerDownImage,
     loading: playerDownLoading,
@@ -78,14 +98,19 @@ const Page = () => {
     !playerDownLoading &&
     !playerUpLoading &&
     !playerLeftLoading &&
-    !playerRightLoading;
+    !playerRightLoading &&
+    !villagerLoading &&
+    !oldManLoading;
+
   const hasImageError =
     mapError ||
     foregroundError ||
     playerDownError ||
     playerUpError ||
     playerLeftError ||
-    playerRightError;
+    playerRightError ||
+    villagerError ||
+    oldManError;
   const gameObjectsRef = useRef<{
     background: Sprite | null;
     foreground: Sprite | null;
@@ -93,6 +118,7 @@ const Page = () => {
     movables: (Sprite | Boundary)[];
     renderables: (Sprite | Boundary)[];
     boundaries: Boundary[];
+    characters: Character[];
   }>({
     background: null,
     foreground: null,
@@ -100,6 +126,7 @@ const Page = () => {
     movables: [],
     renderables: [],
     boundaries: [],
+    characters: [],
   });
 
   const movablesRef = useRef<Sprite[]>([]);
@@ -112,7 +139,9 @@ const Page = () => {
       !playerDownImage ||
       !playerUpImage ||
       !playerLeftImage ||
-      !playerRightImage
+      !playerRightImage ||
+      !villagerImage ||
+      !oldManImage
     ) {
       console.log("[v0] Waiting for images to load...");
       return;
@@ -145,6 +174,61 @@ const Page = () => {
               },
             })
           );
+      });
+    });
+
+    const characters: Character[] = [];
+
+    charactersMap.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        // 1026 === villager
+        if (symbol === 1026) {
+          characters.push(
+            new Character({
+              position: {
+                x: j * TILE_SIZE + offset.x,
+                y: i * TILE_SIZE + offset.y,
+              },
+              image: villagerImage,
+              frames: {
+                max: 4,
+                hold: 60,
+              },
+              scale: 3,
+              animate: true,
+              dialogue: ["...", "Hey mister, have you seen my Doggochu?"],
+            })
+          );
+        }
+        // 1031 === oldMan
+        else if (symbol === 1031) {
+          characters.push(
+            new Character({
+              position: {
+                x: j * TILE_SIZE + offset.x,
+                y: i * TILE_SIZE + offset.y,
+              },
+              image: oldManImage,
+              frames: {
+                max: 4,
+                hold: 60,
+              },
+              scale: 3,
+              dialogue: ["My bones hurt."],
+            })
+          );
+        }
+
+        if (symbol !== 0) {
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: j * TILE_SIZE + offset.x,
+                y: i * TILE_SIZE + offset.y,
+              },
+            })
+          );
+        }
       });
     });
 
@@ -187,13 +271,13 @@ const Page = () => {
       ...boundaries,
       foreground,
       // ...battleZones,
-      // ...characters,
+      ...characters,
     ];
     const renderables = [
       background,
       ...boundaries,
       // ...battleZones,
-      // ...characters,
+      ...characters,
       player,
       foreground,
     ];
@@ -205,13 +289,14 @@ const Page = () => {
       renderables,
       movables,
       boundaries,
+      characters,
     };
 
     movablesRef.current = [
       background,
       // ...boundaries,
       // foreground,
-      // ...gameCharacters,
+      ...characters,
     ];
 
     setIsInitialized(true);
@@ -228,9 +313,16 @@ const Page = () => {
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
-    const { background, foreground, player, movables, boundaries } =
+    const { background, foreground, player, movables, boundaries, characters } =
       gameObjectsRef.current;
-    if (!background || !foreground || !player || !movables || !boundaries)
+    if (
+      !background ||
+      !foreground ||
+      !player ||
+      !movables ||
+      !boundaries ||
+      !characters
+    )
       return;
 
     // Clear canvas
@@ -238,6 +330,9 @@ const Page = () => {
 
     // Draw background
     background.draw(c);
+
+    // Draw characters
+    characters.forEach((character) => character.draw(c));
 
     // Draw player
     player.draw(c);
@@ -265,6 +360,12 @@ const Page = () => {
       player.animate = true;
       player.image = player.sprites!.up;
 
+      checkForCharacterCollision({
+        characters,
+        player,
+        characterOffset: { x: 0, y: 3 },
+      });
+
       for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (
@@ -288,13 +389,20 @@ const Page = () => {
         }
       }
 
-      if (moving)
+      if (moving) {
         movables.forEach((movable) => {
           movable.position.y += PLAYER_SPEED;
         });
+      }
     } else if (keys.a || keys.ArrowLeft) {
       player.animate = true;
       player.image = player.sprites!.left;
+
+      checkForCharacterCollision({
+        characters,
+        player,
+        characterOffset: { x: 3, y: 0 },
+      });
 
       for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
@@ -328,6 +436,12 @@ const Page = () => {
       player.animate = true;
       player.image = player.sprites!.down;
 
+      checkForCharacterCollision({
+        characters,
+        player,
+        characterOffset: { x: 0, y: -3 },
+      });
+
       for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (
@@ -359,6 +473,12 @@ const Page = () => {
     } else if (keys.d || keys.ArrowRight) {
       player.animate = true;
       player.image = player.sprites!.right;
+
+      checkForCharacterCollision({
+        characters,
+        player,
+        characterOffset: { x: -3, y: 0 },
+      });
 
       for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];

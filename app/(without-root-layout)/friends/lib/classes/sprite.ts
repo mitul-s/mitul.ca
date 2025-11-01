@@ -9,6 +9,8 @@ export class Sprite {
   rotation: number;
   scale: number;
   opacity: number;
+  width: number;
+  height: number;
 
   constructor(config: {
     position: Position;
@@ -29,6 +31,18 @@ export class Sprite {
     this.rotation = config.rotation ?? 0;
     this.scale = config.scale ?? 1;
     this.opacity = 1;
+
+    if (this.image.complete && this.image.naturalWidth > 0) {
+      this.width = (this.image.width / this.frames.max) * this.scale;
+      this.height = this.image.height * this.scale;
+    } else {
+      this.width = 0;
+      this.height = 0;
+      this.image.onload = () => {
+        this.width = (this.image.width / this.frames.max) * this.scale;
+        this.height = this.image.height * this.scale;
+      };
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -87,5 +101,34 @@ export class Sprite {
         this.frames.val = (this.frames.val ?? 0) + 1;
       else this.frames.val = 0;
     }
+  }
+}
+
+export class Character extends Sprite {
+  dialogue: string[];
+  dialogueIndex: number;
+
+  constructor(config: {
+    position: Position;
+    image: HTMLImageElement;
+    frames?: Frames;
+    sprites?: Record<string, HTMLImageElement>;
+    animate?: boolean;
+    rotation?: number;
+    scale?: number;
+    dialogue?: string[];
+  }) {
+    super({
+      position: config.position,
+      image: config.image,
+      frames: config.frames,
+      sprites: config.sprites,
+      animate: config.animate,
+      rotation: config.rotation,
+      scale: config.scale,
+    });
+
+    this.dialogue = config.dialogue ?? [""];
+    this.dialogueIndex = 0;
   }
 }
