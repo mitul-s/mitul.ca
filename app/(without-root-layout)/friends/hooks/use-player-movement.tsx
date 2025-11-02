@@ -1,7 +1,18 @@
 import { Sprite, Character } from "../lib/classes/sprite";
 import { Boundary } from "../lib/classes/boundary";
-import { PLAYER_SPEED } from "../lib/constants";
+import { PLAYER_SPEED, COLLISION_OFFSETS } from "../lib/constants";
 import { checkForCharacterCollision, rectangularCollision } from "../lib/utils";
+
+type Direction = "up" | "left" | "down" | "right";
+
+interface MovementConfig {
+  direction: Direction;
+  keys: boolean;
+  sprite: HTMLImageElement;
+  characterOffset: { x: number; y: number };
+  boundaryOffset: { x: number; y: number };
+  movableOffset: { x: number; y: number };
+}
 
 interface UsePlayerMovementParams {
   player: Sprite | null;
@@ -10,6 +21,38 @@ interface UsePlayerMovementParams {
   movables: (Sprite | Boundary)[];
   keys: Record<string, boolean>;
 }
+
+/**
+ * Check if the player can move in the given direction without hitting boundaries
+ */
+const canMove = (
+  player: Sprite,
+  boundaries: Boundary[],
+  boundaryOffset: { x: number; y: number }
+): boolean => {
+  for (let i = 0; i < boundaries.length; i++) {
+    const boundary = boundaries[i];
+    if (
+      rectangularCollision({
+        rectangle1: {
+          position: player.position,
+          width: player.image.width / player.frames.max,
+          height: player.image.height,
+        },
+        rectangle2: {
+          ...boundary,
+          position: {
+            x: boundary.position.x + boundaryOffset.x,
+            y: boundary.position.y + boundaryOffset.y,
+          },
+        },
+      })
+    ) {
+      return false;
+    }
+  }
+  return true;
+};
 
 export const usePlayerMovement = ({
   player,
@@ -20,186 +63,62 @@ export const usePlayerMovement = ({
 }: UsePlayerMovementParams) => {
   if (!player) return;
 
-  let moving = true;
   player.animate = false;
 
-  const anyKeyPressed =
-    keys.w ||
-    keys.a ||
-    keys.s ||
-    keys.d ||
-    keys.ArrowUp ||
-    keys.ArrowLeft ||
-    keys.ArrowDown ||
-    keys.ArrowRight;
+  const movementConfigs: MovementConfig[] = [
+    {
+      direction: "up",
+      keys: keys.w || keys.ArrowUp,
+      sprite: player.sprites!.up,
+      characterOffset: COLLISION_OFFSETS.up,
+      boundaryOffset: { x: 0, y: PLAYER_SPEED },
+      movableOffset: { x: 0, y: PLAYER_SPEED },
+    },
+    {
+      direction: "left",
+      keys: keys.a || keys.ArrowLeft,
+      sprite: player.sprites!.left,
+      characterOffset: COLLISION_OFFSETS.left,
+      boundaryOffset: { x: PLAYER_SPEED, y: 0 },
+      movableOffset: { x: PLAYER_SPEED, y: 0 },
+    },
+    {
+      direction: "down",
+      keys: keys.s || keys.ArrowDown,
+      sprite: player.sprites!.down,
+      characterOffset: COLLISION_OFFSETS.down,
+      boundaryOffset: { x: 0, y: -PLAYER_SPEED },
+      movableOffset: { x: 0, y: -PLAYER_SPEED },
+    },
+    {
+      direction: "right",
+      keys: keys.d || keys.ArrowRight,
+      sprite: player.sprites!.right,
+      characterOffset: COLLISION_OFFSETS.right,
+      boundaryOffset: { x: -PLAYER_SPEED, y: 0 },
+      movableOffset: { x: -PLAYER_SPEED, y: 0 },
+    },
+  ];
 
-  if (anyKeyPressed) {
-    console.log("[v0] Keys pressed:", keys);
-  }
+  for (const config of movementConfigs) {
+    if (!config.keys) continue;
 
-  // Move Up
-  if (keys.w || keys.ArrowUp) {
     player.animate = true;
-    player.image = player.sprites!.up;
+    player.image = config.sprite;
 
     checkForCharacterCollision({
       characters,
       player,
-      characterOffset: { x: 0, y: 3 },
+      characterOffset: config.characterOffset,
     });
 
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      if (
-        rectangularCollision({
-          rectangle1: {
-            position: player.position,
-            width: player.image.width / player.frames.max,
-            height: player.image.height,
-          },
-          rectangle2: {
-            ...boundary,
-            position: {
-              x: boundary.position.x,
-              y: boundary.position.y + PLAYER_SPEED,
-            },
-          },
-        })
-      ) {
-        moving = false;
-        break;
-      }
-    }
-
-    if (moving) {
+    if (canMove(player, boundaries, config.boundaryOffset)) {
       movables.forEach((movable) => {
-        movable.position.y += PLAYER_SPEED;
+        movable.position.x += config.movableOffset.x;
+        movable.position.y += config.movableOffset.y;
       });
     }
-  }
-  // Move Left
-  else if (keys.a || keys.ArrowLeft) {
-    player.animate = true;
-    player.image = player.sprites!.left;
 
-    checkForCharacterCollision({
-      characters,
-      player,
-      characterOffset: { x: 3, y: 0 },
-    });
-
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      if (
-        rectangularCollision({
-          rectangle1: {
-            position: player.position,
-            width: player.image.width / player.frames.max,
-            height: player.image.height,
-          },
-          rectangle2: {
-            ...boundary,
-            position: {
-              x: boundary.position.x + PLAYER_SPEED,
-              y: boundary.position.y,
-            },
-          },
-        })
-      ) {
-        moving = false;
-        break;
-      }
-    }
-
-    if (moving) {
-      movables.forEach((movable) => {
-        movable.position.x += PLAYER_SPEED;
-      });
-    }
-  }
-  // Move Down
-  else if (keys.s || keys.ArrowDown) {
-    player.animate = true;
-    player.image = player.sprites!.down;
-
-    checkForCharacterCollision({
-      characters,
-      player,
-      characterOffset: { x: 0, y: -3 },
-    });
-
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      if (
-        rectangularCollision({
-          rectangle1: {
-            position: player.position,
-            width: player.image.width / player.frames.max,
-            height: player.image.height,
-          },
-          rectangle2: {
-            ...boundary,
-            position: {
-              x: boundary.position.x,
-              y: boundary.position.y - PLAYER_SPEED,
-            },
-          },
-        })
-      ) {
-        moving = false;
-        break;
-      }
-    }
-
-    if (moving) {
-      movables.forEach((movable) => {
-        movable.position.y -= PLAYER_SPEED;
-      });
-    }
-  }
-  // Move Right
-  else if (keys.d || keys.ArrowRight) {
-    player.animate = true;
-    player.image = player.sprites!.right;
-
-    checkForCharacterCollision({
-      characters,
-      player,
-      characterOffset: { x: -3, y: 0 },
-    });
-
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      if (
-        rectangularCollision({
-          rectangle1: {
-            position: player.position,
-            width: player.image.width / player.frames.max,
-            height: player.image.height,
-          },
-          rectangle2: {
-            ...boundary,
-            position: {
-              x: boundary.position.x - PLAYER_SPEED,
-              y: boundary.position.y,
-            },
-          },
-        })
-      ) {
-        moving = false;
-        break;
-      }
-    }
-
-    if (moving) {
-      movables.forEach((movable) => {
-        movable.position.x -= PLAYER_SPEED;
-      });
-    }
-  }
-
-  if (!anyKeyPressed) {
-    player.animate = false;
+    break;
   }
 };
-
