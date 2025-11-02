@@ -5,6 +5,7 @@ import { Character, Sprite } from "../friends/lib/classes/sprite";
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
+  IMAGE_URLS,
   PLAYER_SPEED,
   TILE_SIZE,
 } from "./lib/constants";
@@ -15,33 +16,19 @@ import { useGameLoop } from "./hooks/use-game-load";
 import { useKeyboard } from "./hooks/use-keyboard";
 import { checkForCharacterCollision, rectangularCollision } from "./lib/utils";
 import { Boundary } from "./lib/classes/boundary";
-
-const GAME_ASSETS_URLS = {
-  mapImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/background.png",
-  foregroundImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/foreground.png",
-  villagerImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/villager.png",
-  oldManImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/oldMan.png",
-  playerDownImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/playerDown.png",
-  playerUpImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/playerUp.png",
-  playerLeftImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/playerLeft.png",
-  playerRightImage:
-    "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/playerRight.png",
-};
+import { usePlayerMovement } from "./hooks/use-player-movement";
 
 const Page = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const keys = useKeyboard();
 
-  const { assets, loading: imagesLoading, error: imageError, allImagesLoaded } =
-    useGameAssets(GAME_ASSETS_URLS);
+  const {
+    assets,
+    loading: imagesLoading,
+    error: imageError,
+    allImagesLoaded,
+  } = useGameAssets(IMAGE_URLS);
   const gameObjectsRef = useRef<{
     background: Sprite | null;
     foreground: Sprite | null;
@@ -110,7 +97,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-              image: assets.villagerImage!,
+              image: assets.villager!,
               frames: {
                 max: 4,
                 hold: 60,
@@ -129,7 +116,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-              image: assets.oldManImage!,
+              image: assets.oldMan!,
               frames: {
                 max: 4,
                 hold: 60,
@@ -158,16 +145,16 @@ const Page = () => {
         x: CANVAS_WIDTH / 2 - 192 / 4 / 2,
         y: CANVAS_HEIGHT / 2 - 68 / 2,
       },
-      image: assets.playerDownImage!,
+      image: assets.playerDown!,
       frames: {
         max: 4,
         hold: 10,
       },
       sprites: {
-        up: assets.playerUpImage!,
-        left: assets.playerLeftImage!,
-        right: assets.playerRightImage!,
-        down: assets.playerDownImage!,
+        up: assets.playerUp!,
+        left: assets.playerLeft!,
+        right: assets.playerRight!,
+        down: assets.playerDown!,
       },
     });
 
@@ -176,7 +163,7 @@ const Page = () => {
         x: offset.x,
         y: offset.y,
       },
-      image: assets.mapImage!,
+      image: assets.background!,
     });
 
     const foreground = new Sprite({
@@ -184,7 +171,7 @@ const Page = () => {
         x: offset.x,
         y: offset.y,
       },
-      image: assets.foregroundImage!,
+      image: assets.foreground!,
     });
 
     const movables = [
@@ -223,14 +210,14 @@ const Page = () => {
     setIsInitialized(true);
   }, [
     allImagesLoaded,
-    assets.mapImage,
-    assets.foregroundImage,
-    assets.villagerImage,
-    assets.oldManImage,
-    assets.playerDownImage,
-    assets.playerUpImage,
-    assets.playerLeftImage,
-    assets.playerRightImage,
+    assets.background,
+    assets.foreground,
+    assets.villager,
+    assets.oldMan,
+    assets.playerDown,
+    assets.playerUp,
+    assets.playerLeft,
+    assets.playerRight,
   ]);
 
   const animate = useCallback(() => {
