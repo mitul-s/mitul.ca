@@ -5,13 +5,14 @@ import { Character, Sprite } from "../friends/lib/classes/sprite";
 import { useGameAssets } from "./hooks/use-game-assets";
 import { useGameLoop } from "./hooks/use-game-load";
 import { useKeyboard } from "./hooks/use-keyboard";
-import { usePlayerMovement } from "./hooks/use-player-movement";
+import { handlePlayerMovement } from "./hooks/use-player-movement";
 import { Boundary } from "./lib/classes/boundary";
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
   IMAGE_URLS,
   TILE_SIZE,
+  FRIENDS,
 } from "./lib/constants";
 import { charactersMapData } from "./lib/data/characters";
 import { collisions } from "./lib/data/collisions";
@@ -258,8 +259,7 @@ const Page = () => {
     // Draw foreground
     foreground.draw(ctx);
 
-    // Handle player movement
-    usePlayerMovement({
+    handlePlayerMovement({
       player,
       boundaries,
       characters,
@@ -296,8 +296,18 @@ const Page = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="rounded-[10px] shadow-lg overflow-hidden">
-        <canvas ref={canvasRef} />
+      <div className="border border-gray-9 bg-gray-6 p-6 rounded-6">
+        <div className="rounded-[10px] overflow-hidden border-black border-4">
+          <canvas ref={canvasRef} />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-y-2">
+        {FRIENDS.map((friend) => (
+          <div key={friend.id} className="text-xl">
+            {friend.name}
+          </div>
+        ))}
       </div>
     </div>
   );

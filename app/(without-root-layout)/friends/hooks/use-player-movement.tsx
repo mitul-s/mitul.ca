@@ -28,7 +28,7 @@ interface UsePlayerMovementParams {
 const canMove = (
   player: Sprite,
   boundaries: Boundary[],
-  boundaryOffset: { x: number; y: number }
+  boundaryOffset: { x: number; y: number },
 ): boolean => {
   for (let i = 0; i < boundaries.length; i++) {
     const boundary = boundaries[i];
@@ -54,7 +54,7 @@ const canMove = (
   return true;
 };
 
-export const usePlayerMovement = ({
+export const handlePlayerMovement = ({
   player,
   boundaries,
   characters,
