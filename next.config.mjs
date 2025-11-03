@@ -53,6 +53,7 @@ const config = {
         hostname: "img.youtube.com",
       },
     ],
+    qualities: [5, 25, 40, 75],
   },
 };
 
