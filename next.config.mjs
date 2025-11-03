@@ -7,6 +7,7 @@ const config = {
   pageExtensions: ["mdx", "ts", "tsx"],
   experimental: {
     mdxRs: true,
+    cacheComponents: true,
   },
   // async redirects() {
   //   return [

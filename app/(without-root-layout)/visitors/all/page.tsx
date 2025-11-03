@@ -11,14 +11,10 @@ import Link from "next/link";
 
 const ITEMS_PER_PAGE = 50;
 
-export default async function Page(
   props: {
     searchParams: Promise<{ page?: string }>;
   }
 ) {
-  const searchParams = await props.searchParams;
-  const currentPage = Number(searchParams.page) || 1;
-
   return (
     <div className="relative">
       <div className="fixed top-8 left-8 text-gray-2 z-10 isolate flex gap-x-4">
@@ -37,10 +33,21 @@ export default async function Page(
           return home
         </LinkPrimitive>
       </div>
-      <Suspense key={currentPage} fallback={<p>Loading entries...</p>}>
-        <EntriesList currentPage={currentPage} />
+      <Suspense fallback={<p className="text-center mt-12">Loading entries...</p>}>
+        <PageContent searchParams={props.searchParams} />
       </Suspense>
     </div>
+  );
+}
+
+async function PageContent({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+
+  return (
+    <Suspense key={currentPage} fallback={<p>Loading entries...</p>}>
+      <EntriesList currentPage={currentPage} />
+    </Suspense>
   );
 }
 

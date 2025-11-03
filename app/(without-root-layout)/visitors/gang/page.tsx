@@ -3,8 +3,14 @@ import ApproveButton from "@/components/visitors/approve-btn";
 import { sql } from "@vercel/postgres";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-export default async function ProtectedPage() {
+      <AuthenticatedContent />
+    </Suspense>
+  );
+}
+
+async function AuthenticatedContent() {
   const cookieStore = await cookies();
   const isAuthenticated = cookieStore.get("auth");
 
@@ -16,14 +22,16 @@ export default async function ProtectedPage() {
     <div className="bg-gray-1 text-gray-12 p-12 h-screen">
       <h1>Welcome to the gang page</h1>
       <p>Only authenticated users can access this page.</p>
-      <div
-        className="grid gap-4 mt-6"
-        style={{
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-        }}
-      >
-        <GuestbookEntries />
-      </div>
+      <Suspense fallback={<div className="text-gray-11">Loading entries...</div>}>
+        <div
+          className="grid gap-4 mt-6"
+          style={{
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          }}
+        >
+          <GuestbookEntries />
+        </div>
+      </Suspense>
     </div>
   );
 }
