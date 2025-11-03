@@ -34,7 +34,7 @@ export const GAME_CONFIG = {
   collisionSymbol: 1025,
   villagerSymbol: 1026,
   oldManSymbol: 1031,
-  mapWidth: 70, // tiles per row
+  mapWidth: 70,
 };
 
 export const COLLISION_OFFSETS = {
@@ -42,4 +42,23 @@ export const COLLISION_OFFSETS = {
   left: { x: 3, y: 0 },
   down: { x: 0, y: -3 },
   right: { x: -3, y: 0 },
-} as const;
+};
+
+export const FRIENDS = [
+  {
+    id: 1,
+    name: "Alice",
+    image:
+      "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/alice.png",
+    href: "https://example.com/alice",
+    position: { x: 10, y: 10 },
+  },
+  {
+    id: 2,
+    name: "Bob",
+    image:
+      "https://inqeleafibjx2dzc.public.blob.vercel-storage.com/friends/bob.png",
+    href: "https://example.com/bob",
+    position: { x: 20, y: 20 },
+  },
+];

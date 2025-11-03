@@ -1,20 +1,20 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Character, Sprite } from "../friends/lib/classes/sprite";
+import { useGameAssets } from "./hooks/use-game-assets";
+import { useGameLoop } from "./hooks/use-game-load";
+import { useKeyboard } from "./hooks/use-keyboard";
+import { usePlayerMovement } from "./hooks/use-player-movement";
+import { Boundary } from "./lib/classes/boundary";
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
   IMAGE_URLS,
   TILE_SIZE,
 } from "./lib/constants";
-import { collisions } from "./lib/data/collisions";
 import { charactersMapData } from "./lib/data/characters";
-import { useGameAssets } from "./hooks/use-game-assets";
-import { useGameLoop } from "./hooks/use-game-load";
-import { useKeyboard } from "./hooks/use-keyboard";
-import { usePlayerMovement } from "./hooks/use-player-movement";
-import { Boundary } from "./lib/classes/boundary";
+import { collisions } from "./lib/data/collisions";
 
 const Page = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,7 +78,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-            })
+            }),
           );
       });
     });
@@ -103,7 +103,7 @@ const Page = () => {
               scale: 3,
               animate: true,
               dialogue: ["...", "Hey mister, have you seen my Doggochu?"],
-            })
+            }),
           );
         }
         // 1031 === oldMan
@@ -121,7 +121,7 @@ const Page = () => {
               },
               scale: 3,
               dialogue: ["My bones hurt."],
-            })
+            }),
           );
         }
 
@@ -132,7 +132,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-            })
+            }),
           );
         }
       });
@@ -223,8 +223,8 @@ const Page = () => {
 
     if (!canvas || !isInitialized) return;
 
-    const c = canvas.getContext("2d");
-    if (!c) return;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+    if (!ctx) return;
 
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
@@ -242,19 +242,21 @@ const Page = () => {
       return;
 
     // Clear canvas
-    c.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // Draw background
-    background.draw(c);
+    background.draw(ctx);
 
     // Draw characters
-    characters.forEach((character) => character.draw(c));
+    for (const character of characters) {
+      character.draw(ctx);
+    }
 
     // Draw player
-    player.draw(c);
+    player.draw(ctx);
 
     // Draw foreground
-    foreground.draw(c);
+    foreground.draw(ctx);
 
     // Handle player movement
     usePlayerMovement({
