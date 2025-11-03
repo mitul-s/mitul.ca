@@ -3,8 +3,11 @@ import Image from "next/image";
 import { getShelves } from "@/lib/literal";
 import NowPlayingClient from "./now-playing-client";
 import Link from "next/link";
+import { cacheLife } from "next/cache";
 
 const MusicPlayer = async () => {
+  "use cache";
+  cacheLife("minutes");
   const { data: song } = await getLastPlayed();
   const { reading } = await getShelves();
 

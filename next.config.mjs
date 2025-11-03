@@ -7,6 +7,7 @@ const config = {
   pageExtensions: ["mdx", "ts", "tsx"],
   experimental: {
     mdxRs: true,
+    cacheComponents: true,
   },
   // async redirects() {
   //   return [
@@ -53,6 +54,7 @@ const config = {
         hostname: "img.youtube.com",
       },
     ],
+    qualities: [5, 25, 40, 75],
   },
 };
 
