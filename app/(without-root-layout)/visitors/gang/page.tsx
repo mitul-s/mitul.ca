@@ -5,6 +5,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+export default function ProtectedPage() {
+  return (
+    <Suspense fallback={<div className="bg-gray-1 text-gray-12 p-12 h-screen">Loading...</div>}>
       <AuthenticatedContent />
     </Suspense>
   );

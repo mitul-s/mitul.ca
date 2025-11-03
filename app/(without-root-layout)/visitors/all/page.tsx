@@ -11,6 +11,7 @@ import Link from "next/link";
 
 const ITEMS_PER_PAGE = 50;
 
+export default function Page(
   props: {
     searchParams: Promise<{ page?: string }>;
   }
