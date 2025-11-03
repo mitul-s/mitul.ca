@@ -17,8 +17,6 @@ import MusicPlayer from "@/components/music-player";
 import Shader from "@/components/shader";
 import { Project } from "./page.client";
 
-export const dynamic = "force-static";
-
 const DottedSpacer = ({
   lines = 3,
   className,
@@ -128,9 +126,7 @@ export default function Home() {
             </p>
             <p className="mt-2">
               I'm a creative{" "}
-              <VideoHoverPreview
-                href="https://www.youtube.com/watch?v=jG7dSXcfVqE"
-              >
+              <VideoHoverPreview href="https://www.youtube.com/watch?v=jG7dSXcfVqE">
                 doing what I can't
               </VideoHoverPreview>
             </p>

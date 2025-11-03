@@ -18,7 +18,7 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
         <Image
           src={src}
           alt={alt}
-          layout="fill"
+          fill
           sizes="(max-width: 768px) 20vw, 35vw"
           className="max-w-full h-fit object-contain"
           draggable={false}

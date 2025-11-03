@@ -14,8 +14,8 @@ import {
 } from "@/components/visitors/stickers";
 import Image from "next/image";
 import GuestbookEntries from "@/components/visitors/guestbook-entries";
+import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
 
 export const viewport: Viewport = {
   themeColor: "#FCFCFC",
@@ -53,32 +53,34 @@ const Page = () => {
               <span>Premium made in toronto quality</span>
             </div>
 
-            <GuestbookEntries />
-            <Polaroid src="/images/banff-2.jpg" alt="toronto" />
-            <Polaroid src="/images/toronto.jpg" alt="toronto" />
-            <Polaroid src="/images/nyc.jpg" alt="toronto" />
-            <Sticker>
-              <img
-                className="w-36"
-                src="/images/spiderman.png"
-                alt="Spiderman sticker"
-                draggable={false}
-              />
-            </Sticker>
-            <Sticker>
-              <img
-                className="w-24"
-                src="/images/cntower.png"
-                alt="CN Tower sticker"
-                draggable={false}
-              />
-            </Sticker>
-            <Sticker>
-              <VercelLogo />
-            </Sticker>
-            <Sticker>
-              <NextWordmark />
-            </Sticker>
+            <Suspense fallback={null}>
+              <GuestbookEntries />
+              <Polaroid src="/images/banff-2.jpg" alt="toronto" />
+              <Polaroid src="/images/toronto.jpg" alt="toronto" />
+              <Polaroid src="/images/nyc.jpg" alt="toronto" />
+              <Sticker>
+                <img
+                  className="w-36"
+                  src="/images/spiderman.png"
+                  alt="Spiderman sticker"
+                  draggable={false}
+                />
+              </Sticker>
+              <Sticker>
+                <img
+                  className="w-24"
+                  src="/images/cntower.png"
+                  alt="CN Tower sticker"
+                  draggable={false}
+                />
+              </Sticker>
+              <Sticker>
+                <VercelLogo />
+              </Sticker>
+              <Sticker>
+                <NextWordmark />
+              </Sticker>
+            </Suspense>
 
             <Link
               href="/"

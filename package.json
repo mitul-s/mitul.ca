@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,7 +13,7 @@
     "@ai-sdk/openai": "^2.0.5",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
-    "@next/mdx": "15.3.4",
+    "@next/mdx": "16.0.1",
     "@phosphor-icons/react": "^2.0.13",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -32,12 +32,12 @@
     "jotai": "^2.9.3",
     "motion": "^12.23.12",
     "ms": "^2.1.3",
-    "next": "15.3.4",
+    "next": "16.0.1",
     "next-themes": "^0.4.4",
     "openai": "^4.55.4",
     "p5": "^1.11.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "react-use-measure": "^2.1.1",
     "resend": "^4.0.1",
     "swr": "^2.3.4",
@@ -51,16 +51,16 @@
     "@types/ms": "^0.7.34",
     "@types/node": "^20.17.9",
     "@types/p5": "^1.7.6",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
-    "eslint": "^8",
-    "eslint-config-next": "15.3.4",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.1",
     "postcss": "^8",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2"
   },
   "overrides": {
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6"
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
   }
 }
