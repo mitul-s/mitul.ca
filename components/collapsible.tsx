@@ -1,6 +1,6 @@
 "use client";
 
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretRight } from "@phosphor-icons/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 //@ts-ignore
@@ -90,9 +90,9 @@ const AccordionItem = ({
         className="flex justify-between items-center text-left w-full px-4 py-2 hover:bg-accent hover:text-white data-[state=open]:bg-accent/10 transition-all duration-150 hover:data-[state=open]:text-accent cursor-pointer group"
       >
         <div className="flex items-center gap-x-1">
-          <CaretDown
+          <CaretRight
             size={11}
-            className="text-accent group-data-[state=open]:-rotate-90 transition duration-150 mr-1 group-hover:text-gray-1 group-focus-visible:text-gray-12 group-data-[state=open]:text-accent -ml-1"
+            className="text-accent group-data-[state=open]:rotate-90 transition duration-150 mr-1 group-hover:text-gray-1 group-focus-visible:text-gray-12 group-data-[state=open]:text-accent -ml-1"
             aria-hidden={true}
           />
           <span className="font-medium">{company}</span>
