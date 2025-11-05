@@ -79,7 +79,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-            }),
+            })
           );
       });
     });
@@ -104,7 +104,7 @@ const Page = () => {
               scale: 3,
               animate: true,
               dialogue: ["...", "Hey mister, have you seen my Doggochu?"],
-            }),
+            })
           );
         }
         // 1031 === oldMan
@@ -122,7 +122,7 @@ const Page = () => {
               },
               scale: 3,
               dialogue: ["My bones hurt."],
-            }),
+            })
           );
         }
 
@@ -133,7 +133,7 @@ const Page = () => {
                 x: j * TILE_SIZE + offset.x,
                 y: i * TILE_SIZE + offset.y,
               },
-            }),
+            })
           );
         }
       });
@@ -296,12 +296,24 @@ const Page = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="border border-gray-9 bg-gray-6 p-6 rounded-6">
-        <div className="rounded-[10px] overflow-hidden border-black border-4">
-          <canvas ref={canvasRef} />
+      <div className="bg-[green]/90 rounded-[1rem]">
+        <div className="relative m-4 ">
+          <div className="absolute top-0 -right-0.5 -bottom-0.5 left-0 rounded-[18px] bg-gradient-to-tl from-white/60 to-white/0"></div>
+          <div className="absolute -top-0.5 right-0 bottom-0 -left-0.5 rounded-[18px] bg-gradient-to-br from-[black]-9/30 to-[black]-9/0"></div>
+          <div className="relative overflow-hidden rounded-[1rem]">
+            <div className="w-full bg-[black] p-0.5">
+              <div className="delay-100 duration-200 flex flex-col mx-auto opacity-100 py-1 relative transition w-[calc(100%-calc(var(--spacing)*2))]">
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-full rounded-[0.75rem]"
+                />
+              </div>
+            </div>
+            <div className="absolute inset-1 rounded-[0.75rem] border-t-4 border-l-4 border-t-[black]-3/15 border-l-[black]-3/15"></div>
+            <div className="absolute inset-[5px] rounded-[0.75rem] border-t border-l border-t-[black]-2/50 border-l-[black]-2/50"></div>
+          </div>
         </div>
       </div>
-
       <div className="flex flex-col gap-y-2">
         {FRIENDS.map((friend) => (
           <div key={friend.id} className="text-xl">
