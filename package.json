@@ -49,16 +49,20 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0-beta.4",
     "@types/bad-words": "^3.0.3",
+    "@types/d3-geo": "^3.1.0",
     "@types/ms": "^0.7.34",
     "@types/node": "^20.17.9",
     "@types/p5": "^1.7.6",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "@types/react-simple-maps": "^3.0.6",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.1",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "postcss": "^8",
     "tailwindcss": "^4.0.0",
+    "topojson-client": "^3.1.0",
     "typescript": "^5.7.2"
   },
   "overrides": {
