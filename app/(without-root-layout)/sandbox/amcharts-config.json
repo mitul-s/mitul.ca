@@ -1,0 +1,18 @@
+{
+  "settings": {
+    "editor": {
+      "themeTags": ["dark"],
+      "userData": {"projection": "geoMercator", "geodata": "worldLow"},
+      "polygonStrokeWidth": 0.5,
+      "pixelFillOpacity": 0.8,
+      "pixelStroke": {"type": "Color", "value": "#232323"},
+      "pixelStrokeWidth": 0.5,
+      "pixelStrokeOpacity": 1,
+      "pixelHorizontalGap": 3,
+      "pixelVerticalGap": 3,
+      "pixelType": "Rectangle",
+      "pixelSize": 8,
+      "pixelSvgPath": ""
+    }
+  }
+}

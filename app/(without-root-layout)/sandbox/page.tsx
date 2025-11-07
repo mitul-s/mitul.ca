@@ -42,7 +42,7 @@ function PixelGrid({ geographies, projection }: PixelGridProps) {
           y={pixel.y - pixelGrid.pixelHeight / 2 + gap}
           width={pixelGrid.pixelWidth - gap * 2}
           height={pixelGrid.pixelHeight - gap * 2}
-          fill="white"
+          fill="black"
           stroke="none"
         />
       ))}
@@ -52,22 +52,51 @@ function PixelGrid({ geographies, projection }: PixelGridProps) {
 
 export default function MapChart() {
   return (
-    <div className="w-full h-full bg-[black]">
-      <ComposableMap
-        projection="geoMercator"
-        projectionConfig={{
-          center: [0, 40],
-          scale: 80,
+    <>
+      <div
+        className="h-screen w-screen absolute inset-0"
+        style={{
+          // backgroundColor: "#e5e5f7",
+          opacity: 0.8,
+          backgroundColor: "transparent",
+          backgroundImage:
+            "linear-gradient(gray 1px, transparent 1px), linear-gradient(to right, gray 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
         }}
-        width={MAP_WIDTH}
-        height={MAP_HEIGHT}
-      >
-        <Geographies geography={geoUrl}>
-          {({ geographies, projection }) => (
-            <PixelGrid geographies={geographies} projection={projection} />
-          )}
-        </Geographies>
-      </ComposableMap>
-    </div>
+      ></div>
+      {/* Noise overlay */}
+      <div
+        className="h-screen w-screen absolute inset-0 pointer-events-none z-[1000] isolate"
+        style={{
+          background: "url(/noise.svg)",
+          // opacity: 0.4,
+          // backgroundColor: "red",
+          mixBlendMode: "overlay",
+        }}
+      ></div>
+
+      <div className="w-full h-full relative">
+        <ComposableMap
+          projection="geoMercator"
+          // projection="geoEqualEarth"
+          projectionConfig={{
+            center: [0, 40],
+            scale: 80,
+          }}
+          style={{
+            zIndex: 100,
+            position: "relative",
+          }}
+          width={MAP_WIDTH}
+          height={MAP_HEIGHT}
+        >
+          <Geographies geography={geoUrl}>
+            {({ geographies, projection }) => (
+              <PixelGrid geographies={geographies} projection={projection} />
+            )}
+          </Geographies>
+        </ComposableMap>
+      </div>
+    </>
   );
 }
