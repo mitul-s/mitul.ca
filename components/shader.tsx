@@ -249,6 +249,17 @@ export default function DitherShaderCanvas() {
     v.muted = true;
     v.defaultMuted = true;
 
+    const START_TIME = 5;
+
+    v.currentTime = START_TIME;
+
+    const handleEnded = () => {
+      v.currentTime = START_TIME;
+      v.play().catch(() => {});
+    };
+
+    v.addEventListener("ended", handleEnded);
+
     const tryPlay = () => v.play().catch(() => {});
     tryPlay();
 
@@ -262,8 +273,15 @@ export default function DitherShaderCanvas() {
         scheduleRender();
       };
       v.addEventListener("loadeddata", onLoadedData, { once: true });
-      return () => v.removeEventListener("loadeddata", onLoadedData);
+      return () => {
+        v.removeEventListener("loadeddata", onLoadedData);
+        v.removeEventListener("ended", handleEnded);
+      };
     }
+
+    return () => {
+      v.removeEventListener("ended", handleEnded);
+    };
   }, []);
 
   // Main GL setup
@@ -473,7 +491,7 @@ export default function DitherShaderCanvas() {
         }
         muted
         autoPlay={!reducedMotion}
-        loop
+        // loop
         playsInline
         preload="metadata"
         aria-hidden="true"
