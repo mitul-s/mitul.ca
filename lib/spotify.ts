@@ -1,5 +1,3 @@
-import { unstable_cache } from "next/cache";
-
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
@@ -51,34 +49,25 @@ const fetchSpotifyData = async (endpoint: string) => {
   }
 };
 
-export const getSpotifyData = unstable_cache(
-  async () => {
-    const nowPlaying = await fetchSpotifyData(NOW_PLAYING_ENDPOINT);
-    if (nowPlaying.status === 200 && nowPlaying.data.is_playing) {
-      return {
-        type: "now-playing",
-        data: nowPlaying.data,
-      };
-    }
-
-    const lastPlayer = await fetchSpotifyData(RECENTLY_PLAYED_ENDPOINT);
+export const getSpotifyData = async () => {
+  const nowPlaying = await fetchSpotifyData(NOW_PLAYING_ENDPOINT);
+  if (nowPlaying.status === 200 && nowPlaying.data.is_playing) {
     return {
-      type: "last-played",
-      data: lastPlayer.data,
+      type: "now-playing",
+      data: nowPlaying.data,
     };
-  },
-  ["spotify-data"],
-  { revalidate: 30, tags: ["spotify"] }
-);
+  }
+
+  const lastPlayer = await fetchSpotifyData(RECENTLY_PLAYED_ENDPOINT);
+  return {
+    type: "last-played",
+    data: lastPlayer.data,
+  };
+};
 
 export const getNowPlaying = async () => {
   const result = await getSpotifyData();
   return result;
-};
-
-export const getLastPlayed = async () => {
-  const result = await getSpotifyData();
-  return result.data;
 };
 
 export const getTopTracks = async () => {
