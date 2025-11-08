@@ -1,5 +1,5 @@
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
+  return <div className="bg-[black]">{children}</div>;
 };
 
 export default Layout;
