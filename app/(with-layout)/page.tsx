@@ -16,6 +16,7 @@ import { ScribbleLoop } from "@phosphor-icons/react/dist/ssr/ScribbleLoop";
 import MusicPlayer from "@/components/music-player";
 import Shader from "@/components/shader";
 import { Project } from "./page.client";
+import VideoPauseButton from "@/components/video-pause-button";
 
 const DottedSpacer = ({
   lines = 3,
@@ -110,6 +111,7 @@ export default function Home() {
             Guestbook
           </Link>
           <CopyEmailButtonAlt />
+          <VideoPauseButton />
           {/* <ThemeChanger /> */}
         </nav>
 
