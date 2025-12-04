@@ -37,7 +37,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
       <footer className="max-w-[60ch] mx-auto w-full text-left">
         <p className="text-[10px] text-gray-10 font-medium">
-          from toronto, with love / typicalmitul
+          from <span className="line-through">toronto</span> nyc, with love /
+          typicalmitul
         </p>
       </footer>
     </div>

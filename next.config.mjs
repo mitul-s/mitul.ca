@@ -51,6 +51,11 @@ const config = {
       {
         protocol: "https",
         port: "",
+        hostname: "inqeleafibjx2dzc.public.blob.vercel-storage.com",
+      },
+      {
+        protocol: "https",
+        port: "",
         hostname: "img.youtube.com",
       },
     ],
