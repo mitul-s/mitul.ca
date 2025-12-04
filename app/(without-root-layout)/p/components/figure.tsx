@@ -16,6 +16,9 @@ const Figure = (props: FigureProps) => {
           src={src}
           alt={alt}
           fetchPriority="high"
+          quality={30}
+          placeholder="blur"
+          sizes="(max-width: 768px) 100vw, 700px"
         />
         <figcaption className="text-sm text-gray-11 mt-1.5">
           {caption}
