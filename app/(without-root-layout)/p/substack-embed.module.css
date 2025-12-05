@@ -1,0 +1,31 @@
+.wrapper {
+  position: relative;
+  width: 480px;
+  max-width: 100%;
+  height: 150px;
+  margin: -20px auto 2rem;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #f9f2e2;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.logoCover {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 28px;
+  background: #f9f2e2;
+  pointer-events: none;
+}

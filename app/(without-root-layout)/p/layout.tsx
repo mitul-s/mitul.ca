@@ -1,5 +1,6 @@
 import type { Viewport } from "next";
 import Link from "next/link";
+import styles from "./substack-embed.module.css";
 
 export const viewport: Viewport = {
   themeColor: "#F9F2E2",
@@ -35,6 +36,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <main className="max-w-[60ch] mx-auto w-full space-y-6 pb-12">
         {children}
       </main>
+      <div className={styles.wrapper}>
+        <iframe
+          src="https://fieldnotesbymitul.substack.com/embed"
+          className={styles.iframe}
+          frameBorder="0"
+          scrolling="no"
+        />
+        <div className={styles.overlay} />
+        <div className={styles.logoCover} />
+      </div>
       <footer className="max-w-[60ch] mx-auto w-full text-left">
         <p className="text-[10px] text-gray-10 font-medium">
           from <span className="line-through">toronto</span> nyc, with love /
