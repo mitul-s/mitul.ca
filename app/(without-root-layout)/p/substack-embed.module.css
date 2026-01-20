@@ -12,13 +12,13 @@
   border: none;
 }
 
-.overlay {
+/* .overlay {
   position: absolute;
   inset: 0;
   background: #f9f2e2;
   mix-blend-mode: multiply;
   pointer-events: none;
-}
+} */
 
 .logoCover {
   position: absolute;
