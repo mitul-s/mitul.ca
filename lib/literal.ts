@@ -26,21 +26,28 @@ const getAccessToken = async () => {
         password: process.env.LITERAL_USER_PASSWORD,
       },
     }),
-  }).then((res) => res.json());
-  return response.data.login.token;
+  });
+
+  if (!response.ok) {
+    throw new Error(`Literal API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.data.login.token;
 };
 
 export const getShelves = async () => {
-  const access_token = await getAccessToken();
+  try {
+    const access_token = await getAccessToken();
 
-  const response = await fetch(LITERAL_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
+    const response = await fetch(LITERAL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
           query myReadingStates {
             myReadingStates {
               ...ReadingStateParts # find fragments below
@@ -71,26 +78,35 @@ export const getShelves = async () => {
             }
           }
             `,
-    }),
-  });
+      }),
+    });
 
-  if (!response.ok) throw new Error("Something went wrong");
+    if (!response.ok) throw new Error("Something went wrong");
 
-  const { data } = await response.json();
+    const { data } = await response.json();
 
-  const latestBook = data.myReadingStates
-    .filter(
-      (shelf: { status: string; book: Book }) => shelf.status === "IS_READING"
-    )
-    .slice(-1)
-    .map(({ book }: { book: Book }) => ({
-      slug: book.slug,
-      title: book.title,
-      author: book.authors[0].name,
-      cover: book.cover,
-    }))[0];
+    const latestBook = data.myReadingStates
+      .filter(
+        (shelf: { status: string; book: Book }) => shelf.status === "IS_READING"
+      )
+      .slice(-1)
+      .map(({ book }: { book: Book }) => ({
+        slug: book.slug,
+        title: book.title,
+        author: book.authors[0].name,
+        cover: book.cover,
+      }))[0];
 
-  return {
-    reading: latestBook,
-  };
+    return {
+      reading: latestBook,
+    };
+  } catch (error) {
+    console.error("Failed to fetch from Literal:", error);
+    return { reading: {
+      slug: "kitchen-confidential-updated-ed-p2gbl",
+      title: "Kitchen Confidential",
+      author: "Anthony Bourdain",
+      cover: "https://assets.literal.club/2/ckwdtpcpj46828913h1bfxfouew.jpg?size=600",
+    } };
+  }
 };
