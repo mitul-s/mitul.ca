@@ -69,6 +69,11 @@ export const metadata: Metadata = {
     images: "/og-2.png",
     url: "https://mitul.ca",
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@typicalmitul",
+    creator: "@typicalmitul",
+  },
   alternates: {
     canonical: "https://mitul.ca",
   },
