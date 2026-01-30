@@ -5,7 +5,7 @@ interface Book {
   cover: string;
 }
 
-const LITERAL_ENDPOINT = "https://literal.club/graphql/";
+const LITERAL_ENDPOINT = "https://api.literal.club/graphql";
 
 const getAccessToken = async () => {
   const response = await fetch(LITERAL_ENDPOINT, {
