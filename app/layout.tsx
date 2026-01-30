@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
+import { PersonJsonLd, WebSiteJsonLd } from "@/components/json-ld";
 
 // const monument = localFont({
 //   src: [
@@ -81,6 +82,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(chico.className)}>
+        <PersonJsonLd />
+        <WebSiteJsonLd />
         <ThemeProvider
           themes={["blue", "green", "red"]}
           defaultTheme="blue"
