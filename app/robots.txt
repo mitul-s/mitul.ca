@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /visitors/login
+
+Sitemap: https://mitul.ca/sitemap.xml
