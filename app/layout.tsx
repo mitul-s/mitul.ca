@@ -76,6 +76,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://mitul.ca",
+    types: {
+      "application/rss+xml": "https://mitul.ca/feed.xml",
+    },
   },
 };
 
