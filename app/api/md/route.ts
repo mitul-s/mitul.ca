@@ -144,7 +144,11 @@ Welcome to the guestbook! This is an interactive page where visitors can leave n
 }
 
 export async function GET(request: NextRequest) {
-  const path = request.nextUrl.searchParams.get("path") || "/";
+  // Try searchParams first, then x-original-path header from proxy
+  const path =
+    request.nextUrl.searchParams.get("path") ||
+    request.headers.get("x-original-path") ||
+    "/";
 
   let markdown: string;
 

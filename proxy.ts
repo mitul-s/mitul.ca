@@ -103,7 +103,10 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/api/md";
     url.searchParams.set("path", pathname);
-    return NextResponse.rewrite(url);
+
+    const response = NextResponse.rewrite(url);
+    response.headers.set("x-original-path", pathname);
+    return response;
   }
 
   return NextResponse.next();
