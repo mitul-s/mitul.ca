@@ -39,7 +39,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-use-measure": "^2.1.1",
-    "resend": "^4.0.1",
+    "resend": "^4.8.0",
     "swr": "^2.3.4",
     "tailwind-merge": "^2.0.0",
     "use-sound": "^4.0.1",
