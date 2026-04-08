@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import moderateText from "@/lib/openai";
 import { saveGuestbookEntry } from "@/app/actions";
 import { sql } from "@vercel/postgres";
 
@@ -26,12 +25,7 @@ export async function validateAndSaveEntry(
   validateOnly = false
 ) {
   try {
-    const data = GuestbookEntrySchema.parse(Object.fromEntries(formData));
-
-    const isModerated = await moderateText(data.entry);
-    if (!isModerated) {
-      return { success: false, errors: { entry: ["let's keep it clean"] } };
-    }
+    GuestbookEntrySchema.parse(Object.fromEntries(formData));
 
     if (validateOnly) {
       return { success: true };
