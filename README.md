@@ -33,3 +33,4 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 #### Deploy on Vercel 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fmitul-s%2Fmitul.ca)
+[![Deploy to PandaStack](https://dashboard.pandastack.io/deploy-button.svg)](https://dashboard.pandastack.io/deploy?repo=mitul-s/mitul.ca&type=static&buildCmd=npm+run+build&outputDir=dist)
