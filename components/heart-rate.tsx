@@ -55,7 +55,7 @@ export default function HeartRate() {
           {data.bpm} bpm
         </span>
         <span className="text-sm">
-          {data.stale ? "last" : "live"} · {data.source.toLowerCase()}
+          {data.stale ? "last" : "live"}
         </span>
       </div>
     </div>
