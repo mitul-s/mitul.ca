@@ -110,6 +110,8 @@
   --animate-blur-and-slide-down: blur-and-slide-down 0.25s
     cubic-bezier(0.16, 0, 0.13, 1);
 
+  --animate-heartbeat: heartbeat 1s ease-in-out infinite;
+
   @keyframes accordion-down {
     from {
       height: 0;
@@ -182,6 +184,24 @@
       opacity: 1;
       filter: blur(0);
       transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.25);
+    }
+    30% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.15);
+    }
+    60% {
+      transform: scale(1);
     }
   }
 }
