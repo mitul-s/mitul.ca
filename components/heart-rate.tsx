@@ -43,10 +43,7 @@ export default function HeartRate() {
   const beatDuration = `${(60 / data.bpm).toFixed(3)}s`;
 
   return (
-    <div
-      className="flex flex-row items-center gap-x-1.5 w-fit"
-      title={`${data.bpm} bpm · ${data.source}${data.stale ? " · stale" : ""}`}
-    >
+    <div className="flex flex-row items-center gap-x-1.5 w-fit">
       <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square flex items-center justify-center bg-accent/5">
         <Heart
           aria-hidden={true}
