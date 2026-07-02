@@ -33,8 +33,8 @@ export default function HeartRate() {
           />
         </div>
         <div className="flex flex-col gap-y-1 justify-center leading-none">
-          <span className="font-medium text-accent tabular-nums">00 bpm</span>
-          <span className="text-sm">&nbsp;</span>
+          <span className="font-medium text-accent tabular-nums">00</span>
+          <span className="text-sm">bpm</span>
         </div>
       </div>
     );
@@ -55,9 +55,9 @@ export default function HeartRate() {
       </div>
       <div className="flex flex-col gap-y-1 justify-center leading-none">
         <span className="font-medium text-accent tabular-nums">
-          {data.bpm} bpm
+          {data.bpm}
         </span>
-        <span className="text-sm">&nbsp;</span>
+        <span className="text-sm">bpm</span>
       </div>
     </div>
   );
