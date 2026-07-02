@@ -67,7 +67,7 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
     return null;
   }
 
-  const since = new Date(now - 24 * 60 * 60 * 1000)
+  const since = new Date(now - 60 * 60 * 1000)
     .toISOString()
     .replace(/\.\d{3}Z$/, "Z");
   const filter = `heart_rate.sample_time.physical_time >= "${since}"`;
