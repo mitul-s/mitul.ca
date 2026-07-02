@@ -2,6 +2,7 @@ import getLastPlayed from "@/lib/spotify";
 import Image from "next/image";
 import { getShelves } from "@/lib/literal";
 import NowPlayingClient from "./now-playing-client";
+import HeartRate from "./heart-rate";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 
@@ -12,7 +13,7 @@ const MusicPlayer = async () => {
   const { reading } = await getShelves();
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-4 my-4">
+    <div className="grid grid-cols-2 min-md:grid-cols-3 gap-x-4 gap-y-4 my-4">
       <NowPlayingClient initial={song} />
       <Link
         href={`https://literal.club/ms/book/${reading.slug}`}
@@ -35,6 +36,7 @@ const MusicPlayer = async () => {
           <span className="text-sm">{reading.author}</span>
         </div>
       </Link>
+      <HeartRate />
     </div>
   );
 };
