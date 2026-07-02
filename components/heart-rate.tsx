@@ -14,24 +14,14 @@ const fetcher = (url: string) =>
   fetch(url, { cache: "no-store" }).then((r) => r.json());
 
 export default function HeartRate() {
-  const { data } = useSWR<HeartRateReading | null>(
+  const { data, isLoading } = useSWR<HeartRateReading | null>(
     "/api/heart-rate",
     fetcher,
     { refreshInterval: 10_000, revalidateOnFocus: true }
   );
 
-  if (!data?.bpm) {
-    return (
-      <div className="flex flex-row items-center gap-x-1.5 w-fit">
-        <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square flex items-center justify-center text-gray-9">
-          <Heart aria-hidden={true} size={20} weight="regular" />
-        </div>
-        <div className="flex flex-col gap-y-1 justify-center leading-none">
-          <span className="font-medium text-accent">—</span>
-          <span className="text-sm">no hr data</span>
-        </div>
-      </div>
-    );
+  if (isLoading || !data?.bpm) {
+    return null;
   }
 
   const beatDuration = `${(60 / data.bpm).toFixed(3)}s`;
