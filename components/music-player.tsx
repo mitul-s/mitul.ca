@@ -1,6 +1,7 @@
 import getLastPlayed from "@/lib/spotify";
 import Image from "next/image";
 import { getShelves } from "@/lib/literal";
+import { getLatestHeartRate } from "@/lib/ghealth";
 import NowPlayingClient from "./now-playing-client";
 import HeartRate from "./heart-rate";
 import Link from "next/link";
@@ -9,8 +10,11 @@ import { cacheLife } from "next/cache";
 const MusicPlayer = async () => {
   "use cache";
   cacheLife("minutes");
-  const { data: song } = await getLastPlayed();
-  const { reading } = await getShelves();
+  const [{ data: song }, { reading }, heartRate] = await Promise.all([
+    getLastPlayed(),
+    getShelves(),
+    getLatestHeartRate(),
+  ]);
 
   return (
     <div className="grid grid-cols-2 min-md:grid-cols-3 gap-x-4 gap-y-4 my-4">
@@ -36,7 +40,7 @@ const MusicPlayer = async () => {
           <span className="text-sm">{reading.author}</span>
         </div>
       </Link>
-      <HeartRate />
+      <HeartRate initial={heartRate} />
     </div>
   );
 };

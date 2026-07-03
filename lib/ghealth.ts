@@ -1,3 +1,5 @@
+import redis from "@/lib/redis";
+
 const CLIENT_ID = process.env.GHEALTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GHEALTH_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.GHEALTH_REFRESH_TOKEN;
@@ -5,6 +7,9 @@ const REFRESH_TOKEN = process.env.GHEALTH_REFRESH_TOKEN;
 const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 const HR_ENDPOINT =
   "https://health.googleapis.com/v4/users/me/dataTypes/heart-rate/dataPoints";
+
+const REDIS_KEY = "heart-rate:latest";
+const REDIS_CACHE_TTL_S = 30;
 
 export interface HeartRateReading {
   bpm: number;
@@ -61,6 +66,17 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
     return cached.value;
   }
 
+  try {
+    const redisValue = await redis.get(REDIS_KEY);
+    if (redisValue) {
+      const parsed = JSON.parse(redisValue) as HeartRateReading;
+      cached = { ts: now, value: parsed };
+      return parsed;
+    }
+  } catch {
+    // Redis is unavailable; fall through to the source API.
+  }
+
   const accessToken = await getAccessToken();
   if (!accessToken) {
     cached = { ts: now, value: null };
@@ -104,6 +120,12 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
       source: point?.dataSource?.platform ?? "unknown",
       stale: now - Date.parse(time) > STALE_MS,
     };
+
+    try {
+      await redis.setex(REDIS_KEY, REDIS_CACHE_TTL_S, JSON.stringify(reading));
+    } catch {
+      // Best-effort cache write; ignore failures.
+    }
 
     cached = { ts: now, value: reading };
     return reading;
