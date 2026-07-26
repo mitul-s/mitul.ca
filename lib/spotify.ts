@@ -9,7 +9,14 @@ const RECENTLY_PLAYED_ENDPOINT =
   "https://api.spotify.com/v1/me/player/recently-played";
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
-const getAccessToken = async () => {
+// Spotify refresh tokens expire 6 months after the user authorized the app,
+// and refreshing does NOT extend that window. Once it lapses the token
+// endpoint returns `invalid_grant` and the only fix is re-running the
+// authorization flow to mint a new one.
+// https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
+const getAccessToken = async (): Promise<string | null> => {
+  if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) return null;
+
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
@@ -18,16 +25,27 @@ const getAccessToken = async () => {
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: REFRESH_TOKEN ?? "",
+      refresh_token: REFRESH_TOKEN,
     }),
   });
 
+  if (!response.ok) {
+    const reason = await response.text().catch(() => "");
+    console.error(
+      `Spotify token refresh failed (${response.status}): ${reason.slice(0, 200)}`
+    );
+    return null;
+  }
+
   const data = await response.json();
-  return data.access_token;
+  return (data.access_token as string) ?? null;
 };
 
 const fetchSpotifyData = async (endpoint: string) => {
   const accessToken = await getAccessToken();
+  // Without this the request goes out as `Bearer null`, Spotify answers 401,
+  // and the error body gets mistaken for track data downstream.
+  if (!accessToken) return { status: 401 };
 
   const response = await fetch(endpoint, {
     headers: {
@@ -74,6 +92,7 @@ export const getNowPlaying = async () => {
 
 export const getTopTracks = async () => {
   const accessToken = await getAccessToken();
+  if (!accessToken) return { status: 401 };
 
   const response = await fetch(
     "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20",
@@ -87,7 +106,7 @@ export const getTopTracks = async () => {
     }
   );
 
-  if (response.status === 204) {
+  if (response.status === 204 || !response.ok) {
     return {
       status: response.status,
     };
@@ -109,6 +128,7 @@ export const getTopTracks = async () => {
 
 export const getSeveralTracksFeatures = async (trackIDs: string[]) => {
   const accessToken = await getAccessToken();
+  if (!accessToken) return { status: 401 };
 
   const response = await fetch(
     `https://api.spotify.com/v1/audio-features?ids=${trackIDs.join(",")}`,
@@ -122,7 +142,7 @@ export const getSeveralTracksFeatures = async (trackIDs: string[]) => {
     }
   );
 
-  if (response.status === 204) {
+  if (response.status === 204 || !response.ok) {
     return {
       status: response.status,
     };
