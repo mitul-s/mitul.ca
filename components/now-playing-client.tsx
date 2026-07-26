@@ -17,9 +17,9 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
   if (!data) return null;
   const song = data?.data || initial;
 
-  const recent = song.is_playing ? song.item : song.items[0].track;
+  const recent = song?.is_playing ? song.item : song?.items?.[0]?.track;
 
-  if (!recent)
+  if (!recent?.album?.images?.[0]?.url)
     return (
       <div className="h-16 w-full">
         im probably being rate limited by spotify if u see this
@@ -29,11 +29,11 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
   const filter = new Filter();
 
   const track = {
-    title: filter.clean(recent.name),
-    artist: recent.artists
+    title: filter.clean(recent.name ?? ""),
+    artist: (recent.artists ?? [])
       .map((_artist: { name: string }) => _artist.name)
       .shift(),
-    songUrl: recent.external_urls.spotify,
+    songUrl: recent.external_urls?.spotify,
     coverArt: recent.album.images[0].url,
     previewUrl: recent.preview_url,
   };
