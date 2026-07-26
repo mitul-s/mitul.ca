@@ -35,7 +35,9 @@ const fetchSpotifyData = async (endpoint: string) => {
     },
   });
 
-  if (response.status === 204) {
+  // 204 = nothing playing, non-2xx = rate limited / expired token. Both return
+  // an error body we must not pass along as if it were track data.
+  if (response.status === 204 || !response.ok) {
     return {
       status: response.status,
     };
@@ -51,7 +53,7 @@ const fetchSpotifyData = async (endpoint: string) => {
 
 export const getSpotifyData = async () => {
   const nowPlaying = await fetchSpotifyData(NOW_PLAYING_ENDPOINT);
-  if (nowPlaying.status === 200 && nowPlaying.data.is_playing) {
+  if (nowPlaying.status === 200 && nowPlaying.data?.is_playing) {
     return {
       type: "now-playing",
       data: nowPlaying.data,
