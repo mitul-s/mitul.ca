@@ -1,74 +1,77 @@
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
-import Note from "@/components/visitors/note";
-import { cn } from "@/lib/utils";
-import { sql } from "@vercel/postgres";
-import styles from "./visitors-all.module.css";
+import StaticNote from "@/components/visitors/static-note";
 import LinkPrimitive from "@/components/link-primitive";
-import { Suspense } from "react";
+import { sql } from "@vercel/postgres";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const ITEMS_PER_PAGE = 50;
 
-export default function Page(
-  props: {
-    searchParams: Promise<{ page?: string }>;
-  }
-) {
+const SKELETON_CARDS = Array.from({ length: 15 });
+
+export default function Page(props: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   return (
-    <div className="relative">
-      <div className="fixed top-8 left-8 text-gray-2 z-10 isolate flex gap-x-4">
+    <div className="min-h-screen">
+      <header className="mx-auto flex w-full max-w-6xl items-center gap-x-3 px-4 pt-8">
         <LinkPrimitive
           href="/visitors"
           variant="route"
-          className="rounded-full text-gray-12 px-3 shadow-md font-medium"
+          className="mx-0 rounded-full px-3 font-medium text-gray-12 shadow-md"
         >
           return to the visitor's log
         </LinkPrimitive>
         <LinkPrimitive
           href="/"
           variant="route"
-          className="rounded-full text-gray-12 px-3 shadow-md font-medium"
+          className="mx-0 rounded-full px-3 font-medium text-gray-12 shadow-md"
         >
           return home
         </LinkPrimitive>
-      </div>
-      <Suspense fallback={<p className="text-center mt-12">Loading entries...</p>}>
-        <PageContent searchParams={props.searchParams} />
-      </Suspense>
+      </header>
+      <main className="mx-auto w-full max-w-6xl px-4 pb-16">
+        <Suspense fallback={<EntriesSkeleton />}>
+          <PageContent searchParams={props.searchParams} />
+        </Suspense>
+      </main>
     </div>
   );
 }
 
-async function PageContent({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+async function PageContent({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const params = await searchParams;
-  const currentPage = Number(params.page) || 1;
+  const currentPage = Math.max(1, Number(params.page) || 1);
 
   return (
-    <Suspense key={currentPage} fallback={<p>Loading entries...</p>}>
+    <Suspense key={currentPage} fallback={<EntriesSkeleton />}>
       <EntriesList currentPage={currentPage} />
     </Suspense>
   );
 }
 
 async function EntriesList({ currentPage }: { currentPage: number }) {
-  const { entries, totalPages } = await getGuestbookEntries(currentPage);
+  const { entries, totalPages, totalEntries } =
+    await getGuestbookEntries(currentPage);
 
   if (!entries.length) {
-    return <p>No entries found.</p>;
+    return <p className="mt-16 text-center text-gray-11">No entries found.</p>;
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div
-        className={cn(
-          "flex flex-wrap gap-x-4 gap-y-4 *:relative! *:transform-none! *:rotate-0! py-12",
-          styles.container
-        )}
-      >
+    <>
+      <div className="mt-8 mb-6 flex items-baseline justify-between">
+        <h1 className="text-xl font-semibold text-gray-12">all entries</h1>
+        <span className="text-sm text-gray-11 tabular-nums">
+          {totalEntries} notes
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {entries.map((entry) => (
-          <Note
+          <StaticNote
             key={entry.id}
             name={entry.created_by}
             content={entry.body}
@@ -77,6 +80,32 @@ async function EntriesList({ currentPage }: { currentPage: number }) {
         ))}
       </div>
       <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </>
+  );
+}
+
+function EntriesSkeleton() {
+  return (
+    <div className="animate-pulse">
+      <div className="mt-8 mb-6 flex items-baseline justify-between">
+        <div className="h-7 w-28 rounded bg-gray-3" />
+        <div className="h-4 w-16 rounded bg-gray-3" />
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {SKELETON_CARDS.map((_, i) => (
+          <div
+            key={i}
+            className="rounded-lg border border-black/10 bg-gray-1 px-2.5 pt-2.5 pb-3 shadow-sm"
+          >
+            <div className="aspect-[3/2] w-full rounded-[4px] border border-gray-6 bg-gray-3" />
+            <div className="mt-1.5 space-y-1.5">
+              <div className="h-3.5 w-16 rounded bg-gray-3" />
+              <div className="h-4 w-full rounded bg-gray-3" />
+              <div className="h-4 w-1/2 rounded bg-gray-3" />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -88,84 +117,35 @@ function Pagination({
   currentPage: number;
   totalPages: number;
 }) {
+  const linkClass =
+    "inline-flex h-9 items-center justify-center rounded-md border border-gray-6 bg-gray-2 px-4 text-sm font-medium text-gray-12 transition-colors hover:bg-gray-3 aria-disabled:pointer-events-none aria-disabled:opacity-40";
+
   return (
-    <div className="flex justify-center space-x-2 mt-8 text-[black] pb-12">
+    <nav className="mt-10 flex items-center justify-center gap-3">
       <Link
         href={`/visitors/all?page=${currentPage - 1}`}
         aria-disabled={currentPage <= 1}
-        className={cn(currentPage <= 1 ? "pointer-events-none" : "")}
         tabIndex={currentPage <= 1 ? -1 : undefined}
+        className={linkClass}
+        prefetch={true}
       >
-        <Button variant="outline" disabled={currentPage <= 1}>
-          Previous
-        </Button>
+        Previous
       </Link>
-      <span className="py-2 px-3 bg-gray-100 rounded">
+      <span className="rounded-md bg-gray-3 px-3 py-1.5 text-sm text-gray-11 tabular-nums">
         Page {currentPage} of {totalPages}
       </span>
       <Link
         href={`/visitors/all?page=${currentPage + 1}`}
         aria-disabled={currentPage >= totalPages}
-        className={cn(currentPage >= totalPages ? "pointer-events-none" : "")}
         tabIndex={currentPage >= totalPages ? -1 : undefined}
+        className={linkClass}
+        prefetch={true}
       >
-        <Button variant="outline" disabled={currentPage >= totalPages}>
-          Next
-        </Button>
+        Next
       </Link>
-    </div>
+    </nav>
   );
 }
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-);
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
-Button.displayName = "Button";
 
 async function getGuestbookEntries(page: number) {
   const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -187,6 +167,7 @@ async function getGuestbookEntries(page: number) {
     return {
       entries: entriesResult.rows,
       totalPages,
+      totalEntries,
     };
   } catch (error) {
     console.error("Failed to fetch guestbook entries:", error);

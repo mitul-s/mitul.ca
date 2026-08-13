@@ -1,5 +1,3 @@
-import redis from "@/lib/redis";
-
 const CLIENT_ID = process.env.GHEALTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GHEALTH_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.GHEALTH_REFRESH_TOKEN;
@@ -7,9 +5,6 @@ const REFRESH_TOKEN = process.env.GHEALTH_REFRESH_TOKEN;
 const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 const HR_ENDPOINT =
   "https://health.googleapis.com/v4/users/me/dataTypes/heart-rate/dataPoints";
-
-const REDIS_KEY = "heart-rate:latest";
-const REDIS_CACHE_TTL_S = 30;
 
 export interface HeartRateReading {
   bpm: number;
@@ -42,7 +37,10 @@ const CACHE_MS = 5_000;
 const STALE_MS = 5 * 60 * 1000;
 
 const getAccessToken = async (): Promise<string | null> => {
-  if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) return null;
+  if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
+    console.warn("[ghealth] missing GHEALTH_* env vars; skipping fetch");
+    return null;
+  }
 
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
@@ -55,7 +53,10 @@ const getAccessToken = async (): Promise<string | null> => {
     }),
   });
 
-  if (!response.ok) return null;
+  if (!response.ok) {
+    console.warn("[ghealth] token refresh failed", response.status);
+    return null;
+  }
   const data = await response.json();
   return data.access_token as string;
 };
@@ -64,17 +65,6 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
   const now = Date.now();
   if (now - cached.ts < CACHE_MS) {
     return cached.value;
-  }
-
-  try {
-    const redisValue = await redis.get(REDIS_KEY);
-    if (redisValue) {
-      const parsed = JSON.parse(redisValue) as HeartRateReading;
-      cached = { ts: now, value: parsed };
-      return parsed;
-    }
-  } catch {
-    // Redis is unavailable; fall through to the source API.
   }
 
   const accessToken = await getAccessToken();
@@ -101,6 +91,7 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
     );
 
     if (!response.ok) {
+      console.warn("[ghealth] heart rate request failed", response.status);
       cached = { ts: now, value: null };
       return null;
     }
@@ -110,6 +101,7 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
     const bpm = point?.heartRate?.beatsPerMinute;
     const time = point?.heartRate?.sampleTime?.physicalTime;
     if (!bpm || !time) {
+      console.warn("[ghealth] no heart rate data points in the last hour");
       cached = { ts: now, value: null };
       return null;
     }
@@ -121,15 +113,10 @@ export async function getLatestHeartRate(): Promise<HeartRateReading | null> {
       stale: now - Date.parse(time) > STALE_MS,
     };
 
-    try {
-      await redis.setex(REDIS_KEY, REDIS_CACHE_TTL_S, JSON.stringify(reading));
-    } catch {
-      // Best-effort cache write; ignore failures.
-    }
-
     cached = { ts: now, value: reading };
     return reading;
-  } catch {
+  } catch (error) {
+    console.error("[ghealth] heart rate fetch threw", error);
     cached = { ts: now, value: null };
     return null;
   }

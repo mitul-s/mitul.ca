@@ -86,7 +86,7 @@ const AccordionItem = ({
   return (
     <AccordionPrimitive.Item value={company}>
       <AccordionPrimitive.Trigger
-        onClick={play}
+        onClick={() => play()}
         className="flex justify-between items-center text-left w-full px-4 py-2 hover:bg-accent hover:text-white data-[state=open]:bg-accent/10 transition-all duration-150 hover:data-[state=open]:text-accent cursor-pointer group"
       >
         <div className="flex items-center gap-x-1">

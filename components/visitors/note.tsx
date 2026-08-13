@@ -51,6 +51,7 @@ const Note = React.memo(
                 src="/images/33.jpeg"
                 className="absolute object-cover"
                 fill
+                sizes="165px"
                 draggable={false}
                 quality={25}
                 alt=""

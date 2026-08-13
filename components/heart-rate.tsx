@@ -2,6 +2,8 @@
 
 import useSWR from "swr";
 import { Heart } from "@phosphor-icons/react";
+import * as HoverCard from "@radix-ui/react-hover-card";
+import NumberFlow from "@number-flow/react";
 
 interface HeartRateReading {
   bpm: number;
@@ -30,21 +32,38 @@ export default function HeartRate({
 
   if (!data?.bpm) {
     return (
-      <div className="flex flex-row items-center gap-x-1.5 w-fit">
-        <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square flex items-center justify-center bg-accent/5">
-          <Heart
-            aria-hidden={true}
-            size={24}
-            weight="fill"
-            className="text-accent animate-heartbeat"
-            style={{ animationDuration: "1s" }}
-          />
-        </div>
-        <div className="flex flex-col gap-y-1 justify-center leading-none">
-          <span className="font-medium text-accent tabular-nums">00</span>
-          <span className="text-sm">bpm</span>
-        </div>
-      </div>
+      <HoverCard.Root openDelay={75} closeDelay={150}>
+        <HoverCard.Trigger asChild>
+          <div className="flex flex-row items-center gap-x-1.5 w-fit">
+            <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square flex items-center justify-center bg-accent/5">
+              <Heart
+                aria-hidden={true}
+                size={24}
+                weight="fill"
+                className="text-accent"
+              />
+            </div>
+            <div className="flex flex-col gap-y-1 justify-center leading-none">
+              <NumberFlow
+                value={0}
+                className="font-medium text-accent tabular-nums"
+                format={{ useGrouping: false }}
+              />
+              <span className="text-sm">bpm</span>
+            </div>
+          </div>
+        </HoverCard.Trigger>
+        <HoverCard.Portal>
+          <HoverCard.Content
+            className="rounded-md bg-gray-12 px-2.5 py-1.5 text-sm text-gray-1 shadow-md z-50 animate-tooltip-in"
+            sideOffset={6}
+            align="center"
+            side="top"
+          >
+            not dead, just forgot to wear my fitbit
+          </HoverCard.Content>
+        </HoverCard.Portal>
+      </HoverCard.Root>
     );
   }
 
@@ -62,9 +81,11 @@ export default function HeartRate({
         />
       </div>
       <div className="flex flex-col gap-y-1 justify-center leading-none">
-        <span className="font-medium text-accent tabular-nums">
-          {data.bpm}
-        </span>
+        <NumberFlow
+          value={data.bpm}
+          className="font-medium text-accent tabular-nums"
+          format={{ useGrouping: false }}
+        />
         <span className="text-sm">bpm</span>
       </div>
     </div>
