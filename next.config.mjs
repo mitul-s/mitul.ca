@@ -5,9 +5,10 @@ const withMDX = createMDX({});
 
 const config = {
   pageExtensions: ["mdx", "ts", "tsx"],
+  cacheComponents: true,
+  partialPrefetching: true,
   experimental: {
     mdxRs: true,
-    cacheComponents: true,
   },
   // async redirects() {
   //   return [
