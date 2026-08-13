@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import useMaxZIndex from "@/hooks/useMaxZIndex";
-import { cn, getRandomRotation } from "@/lib/utils";
+import { cn, getRandomRotation, seededRandom } from "@/lib/utils";
 import { motion, type PanInfo, useAnimation } from "motion/react";
 import React from "react";
 
@@ -12,27 +12,34 @@ const Drag = React.memo(
     className,
     initialX,
     initialY,
+    seed,
     ...props
   }: {
     children: React.ReactNode;
     className?: string;
     initialX?: number;
     initialY?: number;
+    seed?: string;
   }) => {
     const [zIndex, updateZIndex] = useMaxZIndex();
     const controls = useAnimation();
-    const r = getRandomRotation();
-    const [initialRotate] = useState(r);
-    const [x, y] = [
-      initialX ?? Math.floor(Math.random() * 1300),
-      initialY ?? Math.floor(Math.random() * 900),
-    ];
+    const [initial] = useState(() => ({
+      rotate: seed
+        ? Math.floor(seededRandom(seed, 0) * 120) - 60
+        : getRandomRotation(),
+      x:
+        initialX ??
+        Math.floor((seed ? seededRandom(seed, 1) : Math.random()) * 1300),
+      y:
+        initialY ??
+        Math.floor((seed ? seededRandom(seed, 2) : Math.random()) * 900),
+    }));
 
     const handleDragEnd = (event: MouseEvent, info: PanInfo) => {
       const direction = info.offset.x > 0 ? 1 : -1;
       const velocity = Math.min(Math.abs(info.velocity.x), 1);
       controls.start({
-        rotate: Math.floor(initialRotate + velocity * 20 * direction),
+        rotate: Math.floor(initial.rotate + velocity * 20 * direction),
         transition: {
           type: "spring",
           duration: 1,
@@ -58,9 +65,9 @@ const Drag = React.memo(
         onDragEnd={handleDragEnd}
         animate={controls}
         initial={{
-          rotate: r,
-          x,
-          y,
+          rotate: initial.rotate,
+          x: initial.x,
+          y: initial.y,
         }}
         style={{
           zIndex,

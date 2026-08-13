@@ -15,6 +15,8 @@ import {
 import Image from "next/image";
 import GuestbookEntries from "@/components/visitors/guestbook-entries";
 import { Suspense } from "react";
+import { getGuestbookEntries } from "./actions";
+import type { Entry } from "@/atoms/guestbook";
 
 
 export const viewport: Viewport = {
@@ -41,6 +43,7 @@ const Page = () => {
                 width={80}
                 height={80}
                 src="/images/Star_002.png"
+                priority
               />
             </div>
             {/* <div aria-hidden className={styles.moreNoise} /> */}
@@ -54,11 +57,14 @@ const Page = () => {
             </div>
 
             <Suspense fallback={null}>
-              <GuestbookEntries />
+              <GuestbookEntriesServer />
+            </Suspense>
+
+            <Suspense fallback={null}>
               <Polaroid src="/images/banff-2.jpg" alt="toronto" />
               <Polaroid src="/images/toronto.jpg" alt="toronto" />
               <Polaroid src="/images/nyc.jpg" alt="toronto" />
-              <Sticker>
+              <Sticker seed="sticker-spiderman">
                 <img
                   className="w-36"
                   src="/images/spiderman.png"
@@ -66,7 +72,7 @@ const Page = () => {
                   draggable={false}
                 />
               </Sticker>
-              <Sticker>
+              <Sticker seed="sticker-cntower">
                 <img
                   className="w-24"
                   src="/images/cntower.png"
@@ -74,10 +80,10 @@ const Page = () => {
                   draggable={false}
                 />
               </Sticker>
-              <Sticker>
+              <Sticker seed="sticker-vercel">
                 <VercelLogo />
               </Sticker>
-              <Sticker>
+              <Sticker seed="sticker-next">
                 <NextWordmark />
               </Sticker>
             </Suspense>
@@ -109,5 +115,12 @@ const Page = () => {
     </Provider>
   );
 };
+
+async function GuestbookEntriesServer() {
+  const entries = await getGuestbookEntries();
+  return (
+    <GuestbookEntries initialEntries={entries as unknown as Entry[]} />
+  );
+}
 
 export default Page;

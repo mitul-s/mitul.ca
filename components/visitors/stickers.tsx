@@ -55,8 +55,18 @@ const VercelLogo = ({ ...props }) => {
   );
 };
 
-const Sticker = ({ children }: { children: React.ReactNode }) => {
-  return <Drag className="drop-shadow-xs">{children}</Drag>;
+const Sticker = ({
+  children,
+  seed,
+}: {
+  children: React.ReactNode;
+  seed?: string;
+}) => {
+  return (
+    <Drag className="drop-shadow-xs" seed={seed}>
+      {children}
+    </Drag>
+  );
 };
 
 export { VercelLogo, Sticker, NextWordmark };

@@ -13,12 +13,14 @@ const Polaroid = ({ src, alt }: { src: string; alt: string }) => {
         "p-1 pb-6 bg-gray-1 rounded-[8px] transition-all duration-300 ease-out hover:shadow-md",
         styles.polaroid
       )}
+      seed={src}
     >
       <div className="h-full overflow-hidden relative">
         <Image
           src={src}
           alt={alt}
           fill
+          priority
           sizes="(max-width: 768px) 20vw, 35vw"
           className="max-w-full h-fit object-contain"
           draggable={false}

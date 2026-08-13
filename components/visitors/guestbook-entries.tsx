@@ -2,41 +2,35 @@
 
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
 import Note from "@/components/visitors/note";
 import {
+  type Entry,
   allEntriesAtom,
   localEntriesAtom,
   serverEntriesAtom,
 } from "@/atoms/guestbook";
-import { getGuestbookEntries } from "@/app/(without-root-layout)/visitors/actions";
 
-function GuestbookEntries() {
+function GuestbookEntries({ initialEntries }: { initialEntries: Entry[] }) {
+  useHydrateAtoms([[serverEntriesAtom, initialEntries]]);
   const [allEntries] = useAtom(allEntriesAtom);
-  const [, setServerEntries] = useAtom(serverEntriesAtom);
   const [, setLocalEntries] = useAtom(localEntriesAtom);
 
   useEffect(() => {
-    const fetchEntries = async () => {
-      const entries = await getGuestbookEntries();
-      // @ts-ignore
-      setServerEntries(entries);
-
-      // if entries contains an approved entry that matches an entry in localEntries, remove it
-      setLocalEntries((prev) =>
-        prev.filter(
-          (localEntry) =>
-            !entries.some(
-              (entry) =>
-                (entry.local_entry_id === localEntry.local_entry_id &&
-                  entry.approved) ||
-                (entry.signature === localEntry.signature && entry.approved)
-            )
-        )
-      );
-    };
-
-    fetchEntries();
-  }, [setServerEntries, setLocalEntries]);
+    // if initialEntries contains an approved entry that matches an entry in
+    // localEntries, remove it
+    setLocalEntries((prev) =>
+      prev.filter(
+        (localEntry) =>
+          !initialEntries.some(
+            (entry) =>
+              (entry.local_entry_id === localEntry.local_entry_id &&
+                entry.approved) ||
+              (entry.signature === localEntry.signature && entry.approved)
+          )
+      )
+    );
+  }, [initialEntries, setLocalEntries]);
 
   return allEntries.map((entry) => (
     <Note
@@ -46,6 +40,7 @@ function GuestbookEntries() {
       signature={entry.signature}
       initialX={entry.initialX}
       initialY={entry.initialY}
+      seed={String(entry.id)}
     />
   ));
 }

@@ -20,6 +20,18 @@ export const getRandomRotation = () => {
   return isNegative ? -angle : angle;
 };
 
+export function seededRandom(seed: string, salt = 0) {
+  let hash = 2166136261 ^ salt;
+  for (let i = 0; i < seed.length; i++) {
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  hash ^= hash >>> 13;
+  hash = Math.imul(hash, 1274126177);
+  hash ^= hash >>> 16;
+  return (hash >>> 0) / 4294967295;
+}
+
 export function formatDate(date: Date) {
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");

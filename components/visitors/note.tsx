@@ -14,18 +14,21 @@ const Note = React.memo(
     signature,
     initialX,
     initialY,
+    seed,
   }: {
     name: string;
     content: string;
     signature: string;
     initialX?: number;
     initialY?: number;
+    seed?: string;
   }) => {
     return (
       <Drag
         className={cn("z-10 max-w-[200px]")}
         initialX={initialX}
         initialY={initialY}
+        seed={seed}
       >
         <motion.div
           initial={{ opacity: 0, y: 2 }}
@@ -51,6 +54,7 @@ const Note = React.memo(
                 src="/images/33.jpeg"
                 className="absolute object-cover"
                 fill
+                priority
                 sizes="165px"
                 draggable={false}
                 quality={25}
