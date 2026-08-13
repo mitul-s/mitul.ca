@@ -44,8 +44,8 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
     : FALLBACK_TRACK;
 
   return (
-    <div className="flex flex-row items-center gap-x-1.5 w-fit overflow-hidden">
-      <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square relative">
+    <div className="flex flex-row items-center gap-x-1.5 min-w-0">
+      <div className="rounded-md border border-gray-6 h-16 w-16 aspect-square relative shrink-0">
         <Image
           src={track.coverArt}
           fill
@@ -54,11 +54,8 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
           quality={40}
         />
       </div>
-      <div className="flex flex-col gap-y-1 justify-center leading-none">
-        <span
-          className="font-medium text-accent truncate max-w-[200px]"
-          title={track.title}
-        >
+      <div className="flex flex-col gap-y-1 justify-center leading-none min-w-0">
+        <span className="font-medium text-accent truncate" title={track.title}>
           {track.title}
         </span>
         <span className="text-sm">{track.artist}</span>
