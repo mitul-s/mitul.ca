@@ -110,7 +110,29 @@
   --animate-blur-and-slide-down: blur-and-slide-down 0.25s
     cubic-bezier(0.16, 0, 0.13, 1);
 
+  --animate-tooltip-in: tooltip-in 0.15s ease-out;
+
   --animate-heartbeat: heartbeat 1s ease-in-out infinite;
+  --animate-drive-across: drive-across 12s linear infinite;
+  --animate-drive-across-reverse: drive-across-reverse 12s linear infinite;
+
+  @keyframes drive-across {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100vw);
+    }
+  }
+
+  @keyframes drive-across-reverse {
+    from {
+      transform: translateX(100vw) scaleX(-1);
+    }
+    to {
+      transform: translateX(-100%) scaleX(-1);
+    }
+  }
 
   @keyframes accordion-down {
     from {
@@ -183,6 +205,17 @@
     to {
       opacity: 1;
       filter: blur(0);
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes tooltip-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px) scale(0.98);
+    }
+    to {
+      opacity: 1;
       transform: translateY(0) scale(1);
     }
   }

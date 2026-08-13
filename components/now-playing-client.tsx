@@ -55,7 +55,12 @@ export default function NowPlayingClient({ initial }: { initial: any }) {
         />
       </div>
       <div className="flex flex-col gap-y-1 justify-center leading-none">
-        <span className="font-medium text-accent">{track.title}</span>
+        <span
+          className="font-medium text-accent truncate max-w-[200px]"
+          title={track.title}
+        >
+          {track.title}
+        </span>
         <span className="text-sm">{track.artist}</span>
       </div>
     </div>
