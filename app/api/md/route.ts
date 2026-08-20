@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { experiences, beliefs, bucketList, Status } from "@/content";
 import { blogPosts, getBlogPost } from "@/lib/blog-posts";
+import { MARKDOWN_VARY_HEADER } from "@/lib/content-negotiation";
 import { readFileSync } from "fs";
 import { join } from "path";
 
@@ -174,6 +175,7 @@ export async function GET(request: NextRequest) {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
+      Vary: MARKDOWN_VARY_HEADER,
     },
   });
 }
