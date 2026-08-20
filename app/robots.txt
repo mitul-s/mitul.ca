@@ -3,7 +3,18 @@ Allow: /
 Disallow: /api/
 Disallow: /visitors/login
 
+# Answer engines: allowed to read and cite this site
 User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /visitors/login
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /visitors/login
+
+User-agent: ChatGPT-User
 Allow: /
 Disallow: /api/
 Disallow: /visitors/login
@@ -13,7 +24,17 @@ Allow: /
 Disallow: /api/
 Disallow: /visitors/login
 
-User-agent: CCBot
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+Disallow: /visitors/login
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /visitors/login
+
+User-agent: Perplexity-User
 Allow: /
 Disallow: /api/
 Disallow: /visitors/login
@@ -22,5 +43,12 @@ User-agent: Google-Extended
 Allow: /
 Disallow: /api/
 Disallow: /visitors/login
+
+# Training-only crawlers: not welcome
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
 
 Sitemap: https://mitul.ca/sitemap.xml
