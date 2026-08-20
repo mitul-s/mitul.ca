@@ -1,22 +1,10 @@
 import type { MetadataRoute } from "next";
-import { readdirSync } from "fs";
-import { join } from "path";
+import { blogPosts } from "@/lib/blog-posts";
 
 const BASE_URL = "https://mitul.ca";
 
-function getBlogSlugs(): string[] {
-  const postsDir = join(process.cwd(), "app/(without-root-layout)/p");
-  try {
-    return readdirSync(postsDir, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name);
-  } catch {
-    return [];
-  }
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const blogSlugs = getBlogSlugs();
+  const blogSlugs = blogPosts.map((post) => post.slug);
 
   return [
     {
