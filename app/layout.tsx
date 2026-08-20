@@ -5,7 +5,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
-import { PersonJsonLd, WebSiteJsonLd } from "@/components/json-ld";
+import {
+  OrganizationJsonLd,
+  PersonJsonLd,
+  WebSiteJsonLd,
+} from "@/components/json-ld";
 
 // const monument = localFont({
 //   src: [
@@ -64,6 +68,8 @@ export const metadata: Metadata = {
   },
   description: "Design engineer, photographer, and a bit more.",
   openGraph: {
+    type: "website",
+    siteName: "Mitul Shah",
     title: "Mitul Shah",
     description: "Design engineer, photographer, and a bit more.",
     images: "/og-2.png",
@@ -92,6 +98,7 @@ export default function RootLayout({
       <body className={cn(chico.className)}>
         <PersonJsonLd />
         <WebSiteJsonLd />
+        <OrganizationJsonLd />
         <ThemeProvider
           themes={["blue", "green", "red"]}
           defaultTheme="blue"
