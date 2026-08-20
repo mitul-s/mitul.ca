@@ -3,6 +3,7 @@ export function PersonJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Mitul Shah",
+    alternateName: "typicalmitul",
     url: "https://mitul.ca",
     image: "https://mitul.ca/og-2.png",
     jobTitle: "Design Engineer",
@@ -33,12 +34,52 @@ export function WebSiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Mitul Shah",
+    alternateName: "typicalmitul",
     url: "https://mitul.ca",
     description: "Personal portfolio and blog of Mitul Shah",
     author: {
       "@type": "Person",
       name: "Mitul Shah",
     },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export function OrganizationJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "typicalmitul",
+    url: "https://typicalmitul.com",
+    description:
+      "Independent photography business of Mitul Shah, focused on music and concert photography.",
+    founder: {
+      "@type": "Person",
+      name: "Mitul Shah",
+      url: "https://mitul.ca",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer inquiries",
+      email: "mitulxshah@gmail.com",
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "New York City",
+      addressRegion: "NY",
+      addressCountry: "US",
+    },
+    sameAs: [
+      "https://twitter.com/typicalmitul",
+      "https://instagram.com/typicalmitul",
+      "https://github.com/mitul-s",
+    ],
   };
 
   return (
