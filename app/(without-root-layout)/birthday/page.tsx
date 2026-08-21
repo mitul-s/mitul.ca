@@ -1,5 +1,6 @@
 import DrivingCar from "./driving-car";
 import Ferraris from "./ferraris";
+import RsvpButton from "./rsvp-button";
 import { Fraunces } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 
@@ -37,7 +38,7 @@ const Page = () => {
         {/* Shared column width tracks the height-capped hero so subtitle edges stay flush.
             Width scales with viewport height (minus room for subtitle + button) but is
             capped so it can't get comically large, and stays centred as one group. */}
-        <div className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),680px)] flex-col">
+        <div className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),600px)] flex-col">
           <img
             src="/images/birthday/hero.svg"
             alt="Somebody save Mitul"
@@ -45,23 +46,16 @@ const Page = () => {
             height={511}
             className="h-auto w-full"
           />
-          <div className="mt-10 flex flex-col items-center gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+          <div className="mt-3 flex flex-col items-center gap-1 sm:flex-row sm:items-baseline sm:justify-between">
             <p className="font-[family-name:var(--font-fraunces)] text-[32px] tracking-[-0.64px]">
               You&apos;re invited.
             </p>
             <p className="font-[family-name:var(--font-fraunces)] text-[32px] tracking-[-0.64px] sm:text-right">
-              October 10th, 2026
+              October 17th, 2026
             </p>
           </div>
           <div className="mt-9 flex justify-center">
-            <a
-              href="https://partiful.com/e/nfHRrtboDRfOI8NdqCAn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 items-center justify-center rounded-full bg-[#ed1717] px-10 font-[family-name:var(--font-fraunces)] text-[18px] tracking-[-0.36px] text-white transition hover:bg-[#d41414] active:scale-[0.99]"
-            >
-              RSVP
-            </a>
+            <RsvpButton />
           </div>
         </div>
       </main>
@@ -78,6 +72,12 @@ const Page = () => {
           />
         ))}
       </footer>
+
+      {/* Film-grain overlay; same noise texture as the main site */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-10 bg-[url(/noise.svg)] opacity-20"
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import Taxi from "./taxi";
+import Honk from "./honk";
 
 const DrivingCar = ({ reverse = false }: { reverse?: boolean }) => (
   <div
@@ -10,7 +11,9 @@ const DrivingCar = ({ reverse = false }: { reverse?: boolean }) => (
         reverse ? "animate-drive-across-reverse" : "animate-drive-across"
       }`}
     >
-      <Taxi className="w-full" />
+      <Honk className="block w-full">
+        <Taxi className="w-full" />
+      </Honk>
     </div>
   </div>
 );

@@ -113,10 +113,8 @@
   --animate-tooltip-in: tooltip-in 0.15s ease-out;
 
   --animate-heartbeat: heartbeat 1s ease-in-out infinite;
-  --animate-drive-across: drive-across 12s cubic-bezier(0.45, 0, 0.55, 1)
-    infinite;
-  --animate-drive-across-reverse: drive-across-reverse 12s
-    cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  --animate-drive-across: drive-across 22s linear infinite;
+  --animate-drive-across-reverse: drive-across-reverse 22s linear infinite;
 
   @keyframes drive-across {
     from {
