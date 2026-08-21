@@ -40,7 +40,7 @@ const Page = () => {
             capped so it can't get comically large, and stays centred as one group. */}
         <div className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),600px)] flex-col">
           <img
-            src="/images/birthday/hero.svg"
+            src="/images/rsvp/hero.svg"
             alt="Somebody save Mitul"
             width={603}
             height={511}
