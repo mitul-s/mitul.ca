@@ -174,7 +174,7 @@ const RsvpButton = () => {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="relative flex h-12 items-center justify-center overflow-hidden rounded-full bg-[#ed1717] px-10 font-[family-name:var(--font-fraunces)] text-[18px] tracking-[-0.36px] text-white transition hover:bg-[#d41414] active:scale-[0.99]"
+      className="relative flex h-11 items-center justify-center overflow-hidden rounded-full bg-[#ed1717] px-8 font-[family-name:var(--font-fraunces)] text-[16px] tracking-[-0.32px] text-white transition hover:bg-[#d41414] active:scale-[0.99] sm:h-12 sm:px-10 sm:text-[18px] sm:tracking-[-0.36px]"
     >
       <canvas
         ref={canvasRef}
