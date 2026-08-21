@@ -15,6 +15,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://mitul.ca/rsvp",
   },
+  openGraph: {
+    videos: [
+      {
+        url: "https://mitul.ca/rsvp/og.mp4",
+        secureUrl: "https://mitul.ca/rsvp/og.mp4",
+        type: "video/mp4",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
