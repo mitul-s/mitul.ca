@@ -33,7 +33,8 @@ export const viewport: Viewport = {
   themeColor: "#f7f8fa",
 };
 
-const footerLines = [20, 16, 12, 8, 4, 2];
+// footerLines[0] is the taxi bar (h-2 below); slice(1) renders the rest
+const footerLines = [8, 5, 4, 3, 2];
 
 const Page = () => {
   return (
@@ -42,8 +43,8 @@ const Page = () => {
     >
       <Ferraris />
       <header aria-hidden className="shrink-0 flex flex-col gap-1">
-        <div className="h-5 w-full bg-[#ed1717]" />
-        <div className="h-1 w-full bg-[#ed1717]" />
+        <div className="h-3 w-full bg-[#ed1717]" />
+        <div className="h-0.5 w-full bg-[#ed1717]" />
       </header>
 
       <main className="flex min-h-0 w-full flex-1 flex-col items-center justify-center px-5 [container-type:size]">
@@ -60,10 +61,10 @@ const Page = () => {
             className="h-auto w-full"
           />
           <div className="mt-3 flex flex-col items-center gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <p className="font-[family-name:var(--font-fraunces)] text-[32px] tracking-[-0.64px]">
+            <p className="font-[family-name:var(--font-fraunces)] text-[6cqi] tracking-[-0.02em]">
               You&apos;re invited.
             </p>
-            <p className="font-[family-name:var(--font-fraunces)] text-[32px] tracking-[-0.64px] sm:text-right">
+            <p className="font-[family-name:var(--font-fraunces)] text-[6cqi] tracking-[-0.02em] sm:text-right">
               October 17th, 2026
             </p>
           </div>
@@ -73,8 +74,8 @@ const Page = () => {
         </HeroSizer>
       </main>
 
-      <footer aria-hidden className="relative shrink-0 flex flex-col gap-2">
-        <div className="relative h-5 w-full bg-[#ed1717]">
+      <footer aria-hidden className="relative shrink-0 flex flex-col gap-1">
+        <div className="relative h-2 w-full bg-[#ed1717]">
           <DrivingCar />
         </div>
         {footerLines.slice(1).map((height) => (
