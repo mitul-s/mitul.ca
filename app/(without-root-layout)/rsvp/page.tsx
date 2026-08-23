@@ -1,5 +1,6 @@
 import DrivingCar from "./driving-car";
 import Ferraris from "./ferraris";
+import HeroSizer from "./hero-sizer";
 import RsvpButton from "./rsvp-button";
 import { Fraunces } from "next/font/google";
 import type { Metadata, Viewport } from "next";
@@ -48,8 +49,9 @@ const Page = () => {
       <main className="flex min-h-0 w-full flex-1 flex-col items-center justify-center px-5 [container-type:size]">
         {/* Shared column width tracks the height-capped hero so subtitle edges stay flush.
             Width scales with viewport height (minus room for subtitle + button) but is
-            capped so it can't get comically large, and stays centred as one group. */}
-        <div className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),600px)] flex-col">
+            capped so it can't get comically large, and stays centred as one group.
+            Tune via /rsvp?debug (see hero-sizer.tsx). */}
+        <HeroSizer>
           <img
             src="/images/rsvp/hero.svg"
             alt="Somebody save Mitul"
@@ -68,7 +70,7 @@ const Page = () => {
           <div className="mt-9 flex justify-center">
             <RsvpButton />
           </div>
-        </div>
+        </HeroSizer>
       </main>
 
       <footer aria-hidden className="relative shrink-0 flex flex-col gap-2">
