@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 const HeroSizer = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [debug, setDebug] = useState(false);
-  const [cap, setCap] = useState(480);
+  const [cap, setCap] = useState(440);
   const [reserve, setReserve] = useState(200);
   const [viewport, setViewport] = useState("");
   const [heroWidth, setHeroWidth] = useState(0);
@@ -50,7 +50,7 @@ const HeroSizer = ({ children }: { children: ReactNode }) => {
     <>
       <div
         ref={ref}
-        className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),480px)] flex-col [container-type:inline-size]"
+        className="flex w-[min(100%,calc((100cqh-200px)*603/510.689),440px)] flex-col [container-type:inline-size]"
         style={debug ? { width } : undefined}
       >
         {children}

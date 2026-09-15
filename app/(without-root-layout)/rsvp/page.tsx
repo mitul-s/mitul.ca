@@ -1,5 +1,4 @@
 import DrivingCar from "./driving-car";
-import Ferraris from "./ferraris";
 import HeroSizer from "./hero-sizer";
 import RsvpButton from "./rsvp-button";
 import { Fraunces } from "next/font/google";
@@ -41,17 +40,15 @@ const Page = () => {
     <div
       className={`${fraunces.variable} relative flex h-dvh flex-col overflow-hidden bg-[#f7f8fa] text-black`}
     >
-      <Ferraris />
       <header aria-hidden className="shrink-0 flex flex-col gap-1">
         <div className="h-3 w-full bg-[#ed1717]" />
         <div className="h-0.5 w-full bg-[#ed1717]" />
       </header>
 
-      <main className="flex min-h-0 w-full flex-1 flex-col items-center justify-center px-5 [container-type:size]">
-        {/* Shared column width tracks the height-capped hero so subtitle edges stay flush.
-            Width scales with viewport height (minus room for subtitle + button) but is
-            capped so it can't get comically large, and stays centred as one group.
-            Tune via /rsvp?debug (see hero-sizer.tsx). */}
+      <main className="flex min-h-0 w-full flex-1 flex-col items-center justify-center px-6 [container-type:size] sm:px-12">
+        {/* Hero is deliberately undersized (height-capped, 440px max) so the type
+            gets real negative space; the info row clusters on the same central
+            axis. Tune via /rsvp?debug (see hero-sizer.tsx). */}
         <HeroSizer>
           <img
             src="/images/rsvp/hero.svg"
@@ -60,18 +57,29 @@ const Page = () => {
             height={511}
             className="h-auto w-full"
           />
-          <div className="mt-3 flex flex-col items-center gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <p className="font-[family-name:var(--font-fraunces)] text-[6cqi] tracking-[-0.02em]">
-              You&apos;re invited.
-            </p>
-            <p className="font-[family-name:var(--font-fraunces)] text-[6cqi] tracking-[-0.02em] sm:text-right">
-              October 17th, 2026
-            </p>
-          </div>
-          <div className="mt-9 flex justify-center">
-            <RsvpButton />
-          </div>
         </HeroSizer>
+        <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-3 text-center">
+          <p className="font-[family-name:var(--font-fraunces)] text-[15px] tracking-[-0.02em] sm:text-[16px] lg:text-[18px]">
+            October 17th, 2026 at 7pm
+          </p>
+          <span
+            aria-hidden
+            className="font-[family-name:var(--font-fraunces)] text-[15px] sm:text-[16px] lg:text-[18px]"
+          >
+            ·
+          </span>
+          <a
+            href="https://maps.app.goo.gl/TryCsLjQbiTbCcbV7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-[family-name:var(--font-fraunces)] text-[15px] tracking-[-0.02em] underline decoration-1 underline-offset-4 transition-colors hover:text-[#ed1717] sm:text-[16px] lg:text-[18px]"
+          >
+            All Street Gallery
+          </a>
+        </div>
+        <div className="mt-8 flex justify-center">
+          <RsvpButton />
+        </div>
       </main>
 
       <footer aria-hidden className="relative shrink-0 flex flex-col gap-1">
