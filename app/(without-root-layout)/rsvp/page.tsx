@@ -11,7 +11,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "RSVP",
+  title: "Somebody Save Mitul",
+  description:
+    "You're invited. October 17th, 2026 at 7pm · All Street Gallery, NYC.",
   alternates: {
     canonical: "https://mitul.ca/rsvp",
   },
