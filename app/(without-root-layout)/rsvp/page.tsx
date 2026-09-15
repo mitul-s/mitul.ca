@@ -1,6 +1,7 @@
 import DrivingCar from "./driving-car";
 import HeroSizer from "./hero-sizer";
 import RsvpButton from "./rsvp-button";
+import { EventJsonLd } from "@/components/json-ld";
 import { Fraunces } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 
@@ -42,6 +43,7 @@ const Page = () => {
     <div
       className={`${fraunces.variable} relative flex h-dvh flex-col overflow-hidden bg-[#f7f8fa] text-black`}
     >
+      <EventJsonLd />
       <header aria-hidden className="shrink-0 flex flex-col gap-1">
         <div className="h-3 w-full bg-[#ed1717]" />
         <div className="h-0.5 w-full bg-[#ed1717]" />
@@ -62,7 +64,9 @@ const Page = () => {
         </HeroSizer>
         <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-3 text-center">
           <p className="font-[family-name:var(--font-fraunces)] text-[15px] tracking-[-0.02em] sm:text-[16px] lg:text-[18px]">
-            October 17th, 2026 at 7pm
+            <time dateTime="2026-10-17T19:00:00-04:00">
+              October 17th, 2026 at 7pm
+            </time>
           </p>
           <span
             aria-hidden

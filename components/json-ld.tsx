@@ -90,6 +90,41 @@ export function OrganizationJsonLd() {
   );
 }
 
+export function EventJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "Somebody Save Mitul",
+    startDate: "2026-10-17T19:00:00-04:00",
+    eventStatus: "https://schema.org/EventScheduled",
+    url: "https://mitul.ca/rsvp",
+    location: {
+      "@type": "Place",
+      name: "All Street Gallery",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "77 E 3rd St",
+        addressLocality: "New York",
+        addressRegion: "NY",
+        postalCode: "10003",
+        addressCountry: "US",
+      },
+    },
+    organizer: {
+      "@type": "Person",
+      name: "Mitul Shah",
+      url: "https://mitul.ca",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 import { getBlogPost } from "@/lib/blog-posts";
 
 const BASE_URL = "https://mitul.ca";
