@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 
 const VERT = `
@@ -232,6 +233,7 @@ const RsvpButton = () => {
       href="https://partiful.com/e/nfHRrtboDRfOI8NdqCAn"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => track("rsvp_clicked")}
       onMouseEnter={() => {
         measureLabel();
         hoveredRef.current = true;
