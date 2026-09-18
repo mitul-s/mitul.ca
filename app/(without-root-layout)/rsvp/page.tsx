@@ -1,3 +1,4 @@
+import AddToCalendar from "./add-to-calendar";
 import DrivingCar from "./driving-car";
 import HeroSizer from "./hero-sizer";
 import RsvpButton from "./rsvp-button";
@@ -83,8 +84,9 @@ const Page = () => {
             All Street Gallery
           </a>
         </div>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex flex-col items-center gap-3">
           <RsvpButton />
+          <AddToCalendar />
         </div>
       </main>
 
