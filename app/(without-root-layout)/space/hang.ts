@@ -178,16 +178,15 @@ export const PLAN: WallPlan[] = [
         ],
         gapAfter: 2,
       },
-      // Concerts, portraits over landscapes, warm / cool / warm / cool / warm.
-      // Packed so portraits sit as close as the landscapes. Reserves sit at
-      // the end of each row.
+      // Concerts: 5 portraits over 3 landscapes (Mitul's pick), packed so the
+      // portraits sit as close as the landscapes. Reserves follow in each row.
       {
         pack: true,
         grid: [
-          ["DSC03037", "DSC09550", "DSC07994", "DSC02754", "DSC02938",
-           "DSC02979", "DSC08302", "DSC08351", "DSC05374", "DSC07974", "AZ_00075"],
-          ["DSC00719", "DSC09966", "DSC08040", "DSC02916", "AZ_00097",
-           "DSC07976", "DSC08417", "DSC00897"],
+          ["DSC03037", "DSC09550", "DSC02979", "DSC08351", "DSC05374",
+           "DSC07994", "DSC02754", "DSC02938", "DSC08302", "DSC07974", "AZ_00075"],
+          ["DSC00719", "DSC09966", "DSC08040",
+           "DSC02916", "AZ_00097", "DSC07976", "DSC08417", "DSC00897"],
         ],
       },
     ],
@@ -226,8 +225,8 @@ export const PLAN: WallPlan[] = [
 /** Hung on first load; everything else sits in reserve. */
 const RESERVE = new Set([
   "DSC08217",
-  "DSC02979", "DSC08302", "DSC08351", "DSC05374", "DSC07974", "AZ_00075",
-  "DSC07976", "DSC08417", "DSC00897",
+  "DSC07994", "DSC02754", "DSC02938", "DSC08302", "DSC07974", "AZ_00075",
+  "DSC02916", "AZ_00097", "DSC07976", "DSC08417", "DSC00897",
 ]);
 
 export type FrameWidth = 0 | 1 | 2;

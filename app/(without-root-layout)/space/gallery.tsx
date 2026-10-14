@@ -19,7 +19,7 @@ import {
 } from "./hang";
 import { GalleryScene, STOPS } from "./scene";
 
-const STORAGE_KEY = "space-hang:v4";
+const STORAGE_KEY = "space-hang:v5";
 
 function loadSaved(): HangConfig | null {
   try {
