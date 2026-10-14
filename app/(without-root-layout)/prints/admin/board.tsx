@@ -92,7 +92,7 @@ export default function SoldBoard({
                       aria-pressed={isSold}
                       aria-label={`No. ${item.no}, ${isSold ? "sold, tap to undo" : "tap to mark sold"}`}
                       onClick={() => toggle(item.id)}
-                      className="block w-full text-left"
+                      className="block w-full select-none text-left [-webkit-touch-callout:none]"
                     >
                       <span
                         className={`relative block overflow-hidden rounded-[3px] bg-[#eceef1] outline-2 outline-offset-2 transition-[outline-color,opacity] duration-150 ${
@@ -101,10 +101,11 @@ export default function SoldBoard({
                       >
                         <img
                           src={item.src}
+                          draggable={false}
                           alt=""
                           loading="lazy"
                           decoding="async"
-                          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-150 ${isSold ? "opacity-40" : ""}`}
+                          className={`pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-opacity duration-150 ${isSold ? "opacity-40" : ""}`}
                         />
                         {isSold && (
                           <span className="absolute inset-0 grid place-items-center">

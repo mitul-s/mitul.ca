@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import type { CatalogItem, CatalogSection } from "./catalog";
 
 const POLL_MS = 15_000;
@@ -41,24 +41,11 @@ const VENMO = "mitulito";
 const pad = (n: number) => String(n).padStart(2, "0");
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
-const CASHTAG = "mitulito";
-
-const noopSubscribe = () => () => {};
-
-const numbers = (items: CatalogItem[]) => items.map((i) => `#${pad(i.no)}`).join(" ");
-
 /** Same query works for the app scheme and Venmo's web pay page. */
 function venmoQuery(items: CatalogItem[], total: number) {
-  const note = `Somebody Save Mitul prints ${numbers(items)}`;
+  const note = `Somebody Save Mitul prints ${items.map((i) => `#${pad(i.no)}`).join(" ")}`;
   return `txn=pay&recipients=${VENMO}&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`;
 }
-
-/**
- * Universal link: opens Cash App with the amount filled in. Cash App can't
- * prefill a note, so the bar asks for the print numbers and we copy them.
- */
-const cashAppHref = (total: number) =>
-  `https://cash.app/$${CASHTAG}/${Number.isInteger(total) ? total : total.toFixed(2)}`;
 
 /**
  * Phones: try the Venmo app first. If the page is still in front after a
@@ -87,11 +74,6 @@ export default function PrintList({
   initialSold: string[];
 }) {
   const sold = useLiveSold(initialSold);
-  const mobile = useSyncExternalStore(
-    noopSubscribe,
-    () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-    () => false,
-  );
   const [picked, setPicked] = useState<string[]>([]);
   const toggle = (id: string) =>
     setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
@@ -135,7 +117,7 @@ export default function PrintList({
                       aria-label={`No. ${item.no}, ${item.series}, ${item.size}, ${isSold ? "sold" : price}`}
                       disabled={isSold}
                       onClick={() => toggle(item.id)}
-                      className="block w-full text-left disabled:cursor-default"
+                      className="block w-full select-none text-left [-webkit-touch-callout:none] disabled:cursor-default"
                     >
                       {/* Tile matches the photo's own 3:2, so nothing is cropped */}
                       <span
@@ -145,10 +127,11 @@ export default function PrintList({
                       >
                         <img
                           src={item.src}
+                          draggable={false}
                           alt=""
                           loading="lazy"
                           decoding="async"
-                          className={`absolute inset-0 h-full w-full object-cover ${isSold ? "opacity-45" : ""}`}
+                          className={`pointer-events-none absolute inset-0 h-full w-full select-none object-cover ${isSold ? "opacity-45" : ""}`}
                         />
                         {!isSold && (
                           <span
@@ -198,47 +181,28 @@ export default function PrintList({
           open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
         }`}
       >
-        <div className="mx-auto max-w-[520px] rounded-[14px] bg-[#111] p-2 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
-          <div className="flex items-center gap-3 pl-2">
-            <p className="flex-1 text-[13px]">
-              {shown.length} {shown.length === 1 ? "print" : "prints"}
-              {priced && <span className="text-white/60"> · {usd(total)}</span>}
-            </p>
-            <button
-              type="button"
-              onClick={() => setPicked([])}
-              className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-colors hover:text-white"
-            >
-              Clear
-            </button>
-          </div>
+        <div className="mx-auto flex max-w-[520px] items-center gap-3 rounded-[14px] bg-[#111] py-2 pl-4 pr-2 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
+          <p className="flex-1 text-[13px]">
+            {shown.length} {shown.length === 1 ? "print" : "prints"}
+            {priced && <span className="text-white/60"> · {usd(total)}</span>}
+          </p>
+          <button
+            type="button"
+            onClick={() => setPicked([])}
+            className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-colors hover:text-white"
+          >
+            Clear
+          </button>
           {priced && (
-            <>
-              <div className="mt-1.5 grid grid-cols-2 gap-2">
-                <a
-                  href={`https://account.venmo.com/pay?${venmoQuery(shown, total)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => openVenmo(venmoQuery(shown, total), e)}
-                  className="rounded-[9px] bg-white py-2 text-center text-[13px] font-medium text-[#111] transition-transform duration-150 ease-out active:scale-[0.97]"
-                >
-                  Pay with Venmo
-                </a>
-                <a
-                  href={cashAppHref(total)}
-                  // Phones: same tab, so iOS hands the universal link to the app
-                  target={mobile ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  onClick={() => navigator.clipboard?.writeText(numbers(shown)).catch(() => {})}
-                  className="rounded-[9px] bg-white/12 py-2 text-center text-[13px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97]"
-                >
-                  Pay with Cash App
-                </a>
-              </div>
-              <p className="px-2 pb-0.5 pt-2 text-[11px] text-white/50">
-                Using Cash App? Put {numbers(shown)} in the note.
-              </p>
-            </>
+            <a
+              href={`https://account.venmo.com/pay?${venmoQuery(shown, total)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => openVenmo(venmoQuery(shown, total), e)}
+              className="rounded-[9px] bg-white px-3 py-1.5 text-[13px] font-medium text-[#111] transition-transform duration-150 ease-out active:scale-[0.97]"
+            >
+              Pay with Venmo
+            </a>
           )}
         </div>
       </div>

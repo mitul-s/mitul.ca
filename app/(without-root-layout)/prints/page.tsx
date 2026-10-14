@@ -35,7 +35,7 @@ export default async function Page() {
           </p>
           <p className="mt-4 max-w-[40ch] text-pretty text-[13px] leading-[1.5] text-[#6b6a66]">
             Thanks for coming. If one stuck with you, it&apos;s yours. Buy it here with
-            Venmo or Cash&nbsp;App (mitulito on both). Questions? Ask me or{" "}
+            Venmo (@mitulito). Questions? Ask me or{" "}
             <a
               href="mailto:mitulxshah@gmail.com"
               className="text-[#111] underline decoration-[rgba(0,0,0,0.25)] underline-offset-2"
