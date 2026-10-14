@@ -55,7 +55,7 @@ export const GROUPS: Record<GroupId, Group> = {
   concerts: { name: "Concerts", size: "16x24", tone: "#2c303b", ink: "#e9ebf2" },
   cityscapes: { name: "Cityscapes", size: "16x24", tone: "#56687a", ink: "#eef2f6" },
   cntower: { name: "CN Tower", size: "20x30", tone: "#9fb3c3", ink: "#1d2a35" },
-  montreal: { name: "Montreal metro", size: "10x15", tone: "#b9ad9b", ink: "#2d2820" },
+  montreal: { name: "Montreal in Motion", size: "10x15", tone: "#b9ad9b", ink: "#2d2820" },
   street: { name: "Street", size: "8x12", tone: "#8b7462", ink: "#f6efe8" },
 };
 
