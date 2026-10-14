@@ -4,7 +4,7 @@ import { catalog } from "./catalog";
 import PrintList from "./print-list";
 
 export const metadata: Metadata = {
-  title: "Print list",
+  title: "Print List",
   description: "Prints from Somebody Save Mitul at All Street Gallery, NYC.",
   robots: { index: false, follow: false },
 };
@@ -31,7 +31,7 @@ export default async function Page() {
             />
           </h1>
           <p className="mt-5 text-[13px] text-[#6b6a66]">
-            Print list · All Street Gallery, NYC
+            Print List · All Street Gallery, NYC
           </p>
           <p className="mt-4 max-w-[40ch] text-pretty text-[13px] leading-[1.5] text-[#6b6a66]">
             Thanks for coming. If one stuck with you, it&apos;s yours. Buy it here with
