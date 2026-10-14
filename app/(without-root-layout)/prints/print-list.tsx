@@ -1,18 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import type { CatalogItem, CatalogSection } from "./catalog";
+
+const POLL_MS = 15_000;
+
+/**
+ * The page itself can be a minute stale, so check right away, then every
+ * 15s while the tab is visible and whenever it comes back into view.
+ */
+function useLiveSold(initial: string[]) {
+  const [sold, setSold] = useState(initial);
+  useEffect(() => {
+    let alive = true;
+    const pull = async () => {
+      if (document.visibilityState !== "visible") return;
+      try {
+        const res = await fetch("/api/prints/sold", { cache: "no-store" });
+        if (!res.ok) return;
+        const data: { sold: string[] | null } = await res.json();
+        if (alive && Array.isArray(data.sold)) setSold(data.sold);
+      } catch {
+        // Offline or a blip; keep what we have and try again next tick.
+      }
+    };
+    pull();
+    const timer = window.setInterval(pull, POLL_MS);
+    document.addEventListener("visibilitychange", pull);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", pull);
+    };
+  }, []);
+  return sold;
+}
 
 const VENMO = "mitulito";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
+const CASHTAG = "mitulito";
+
+const noopSubscribe = () => () => {};
+
+const numbers = (items: CatalogItem[]) => items.map((i) => `#${pad(i.no)}`).join(" ");
+
 /** Same query works for the app scheme and Venmo's web pay page. */
 function venmoQuery(items: CatalogItem[], total: number) {
-  const note = `Somebody Save Mitul prints ${items.map((i) => `#${pad(i.no)}`).join(" ")}`;
+  const note = `Somebody Save Mitul prints ${numbers(items)}`;
   return `txn=pay&recipients=${VENMO}&amount=${total.toFixed(2)}&note=${encodeURIComponent(note)}`;
 }
+
+/**
+ * Universal link: opens Cash App with the amount filled in. Cash App can't
+ * prefill a note, so the bar asks for the print numbers and we copy them.
+ */
+const cashAppHref = (total: number) =>
+  `https://cash.app/$${CASHTAG}/${Number.isInteger(total) ? total : total.toFixed(2)}`;
 
 /**
  * Phones: try the Venmo app first. If the page is still in front after a
@@ -33,14 +79,38 @@ function openVenmo(query: string, event: React.MouseEvent<HTMLAnchorElement>) {
   window.location.href = `venmo://paycharge?${query}`;
 }
 
-export default function PrintList({ sections }: { sections: CatalogSection[] }) {
+export default function PrintList({
+  sections,
+  initialSold,
+}: {
+  sections: CatalogSection[];
+  initialSold: string[];
+}) {
+  const sold = useLiveSold(initialSold);
+  const mobile = useSyncExternalStore(
+    noopSubscribe,
+    () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+    () => false,
+  );
   const [picked, setPicked] = useState<string[]>([]);
   const toggle = (id: string) =>
     setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
 
-  const chosen = sections.flatMap((s) => s.items).filter((i) => picked.includes(i.id));
-  const priced = chosen.every((i) => i.price !== null);
-  const total = chosen.reduce((sum, i) => sum + (i.price ?? 0), 0);
+  // A pick that sells while someone's browsing drops out of the total.
+  const chosen = sections
+    .flatMap((s) => s.items)
+    .filter((i) => picked.includes(i.id) && !sold.includes(i.id));
+  const open = chosen.length > 0;
+
+  // While the bar animates out, keep showing the last selection so its text
+  // and buttons don't snap to the empty state mid-exit.
+  const chosenKey = chosen.map((i) => i.id).join(",");
+  const [held, setHeld] = useState<{ key: string; items: CatalogItem[] }>({ key: "", items: [] });
+  if (open && chosenKey !== held.key) setHeld({ key: chosenKey, items: chosen });
+  const shown = open ? chosen : held.items;
+
+  const priced = shown.every((i) => i.price !== null);
+  const total = shown.reduce((sum, i) => sum + (i.price ?? 0), 0);
 
   return (
     <>
@@ -49,20 +119,21 @@ export default function PrintList({ sections }: { sections: CatalogSection[] }) 
           <section key={section.group}>
             <h2 className="flex items-baseline justify-between border-b border-[rgba(0,0,0,0.12)] pb-2 text-[13px]">
               <span className="font-medium">{section.series}</span>
-              <span className="tabular-nums text-[#8a8984]">{section.size} in</span>
+              <span className="text-[#8a8984]">{section.size} in</span>
             </h2>
             {/* Rows share a bottom edge so captions line up across orientations */}
             <ul className="mt-4 grid grid-cols-2 items-end gap-x-3 gap-y-6 sm:grid-cols-3">
               {section.items.map((item) => {
-                const on = picked.includes(item.id);
+                const isSold = sold.includes(item.id);
+                const on = picked.includes(item.id) && !isSold;
                 const price = item.price !== null ? usd(item.price) : "—";
                 return (
                   <li key={item.id}>
                     <button
                       type="button"
                       aria-pressed={on}
-                      aria-label={`No. ${item.no}, ${item.series}, ${item.size}, ${item.sold ? "sold" : price}`}
-                      disabled={item.sold}
+                      aria-label={`No. ${item.no}, ${item.series}, ${item.size}, ${isSold ? "sold" : price}`}
+                      disabled={isSold}
                       onClick={() => toggle(item.id)}
                       className="block w-full text-left disabled:cursor-default"
                     >
@@ -77,9 +148,9 @@ export default function PrintList({ sections }: { sections: CatalogSection[] }) 
                           alt=""
                           loading="lazy"
                           decoding="async"
-                          className={`absolute inset-0 h-full w-full object-cover ${item.sold ? "opacity-45" : ""}`}
+                          className={`absolute inset-0 h-full w-full object-cover ${isSold ? "opacity-45" : ""}`}
                         />
-                        {!item.sold && (
+                        {!isSold && (
                           <span
                             aria-hidden
                             className={`absolute right-2 top-2 grid size-5 place-items-center rounded-full border transition-[background-color,border-color] duration-150 ${
@@ -101,9 +172,9 @@ export default function PrintList({ sections }: { sections: CatalogSection[] }) 
                           </span>
                         )}
                       </span>
-                      <span className="mt-1.5 flex items-baseline justify-between text-[12px] tabular-nums">
+                      <span className="mt-1.5 flex items-baseline justify-between text-[12px]">
                         <span className="text-[#a3a29d]">{pad(item.no)}</span>
-                        {item.sold ? (
+                        {isSold ? (
                           <span className="inline-flex items-center gap-1.5 text-[#6b6a66]">
                             <span aria-hidden className="size-2 rounded-full bg-[#ed1717]" />
                             Sold
@@ -123,32 +194,51 @@ export default function PrintList({ sections }: { sections: CatalogSection[] }) 
 
       <div
         aria-live="polite"
-        className={`fixed inset-x-0 bottom-0 px-4 pb-[max(16px,env(safe-area-inset-bottom))] transition-[opacity,transform] duration-200 ease-out ${
-          chosen.length ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+        className={`fixed inset-x-0 bottom-0 px-4 pb-[max(16px,env(safe-area-inset-bottom))] transition-[opacity,translate] duration-200 ease-out ${
+          open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
         }`}
       >
-        <div className="mx-auto flex max-w-[520px] items-center gap-3 rounded-[14px] bg-[#111] py-2 pl-4 pr-2 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
-          <p className="flex-1 text-[13px] tabular-nums">
-            {chosen.length} {chosen.length === 1 ? "print" : "prints"}
-            {chosen.length > 0 && priced && <span className="text-white/60"> · {usd(total)}</span>}
-          </p>
-          <button
-            type="button"
-            onClick={() => setPicked([])}
-            className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-colors hover:text-white"
-          >
-            Clear
-          </button>
-          {priced && (
-            <a
-              href={`https://account.venmo.com/pay?${venmoQuery(chosen, total)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => openVenmo(venmoQuery(chosen, total), e)}
-              className="rounded-[9px] bg-white px-3 py-1.5 text-[13px] font-medium text-[#111] transition-transform duration-150 ease-out active:scale-[0.97]"
+        <div className="mx-auto max-w-[520px] rounded-[14px] bg-[#111] p-2 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
+          <div className="flex items-center gap-3 pl-2">
+            <p className="flex-1 text-[13px]">
+              {shown.length} {shown.length === 1 ? "print" : "prints"}
+              {priced && <span className="text-white/60"> · {usd(total)}</span>}
+            </p>
+            <button
+              type="button"
+              onClick={() => setPicked([])}
+              className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-colors hover:text-white"
             >
-              Pay on Venmo
-            </a>
+              Clear
+            </button>
+          </div>
+          {priced && (
+            <>
+              <div className="mt-1.5 grid grid-cols-2 gap-2">
+                <a
+                  href={`https://account.venmo.com/pay?${venmoQuery(shown, total)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => openVenmo(venmoQuery(shown, total), e)}
+                  className="rounded-[9px] bg-white py-2 text-center text-[13px] font-medium text-[#111] transition-transform duration-150 ease-out active:scale-[0.97]"
+                >
+                  Pay with Venmo
+                </a>
+                <a
+                  href={cashAppHref(total)}
+                  // Phones: same tab, so iOS hands the universal link to the app
+                  target={mobile ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  onClick={() => navigator.clipboard?.writeText(numbers(shown)).catch(() => {})}
+                  className="rounded-[9px] bg-white/12 py-2 text-center text-[13px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97]"
+                >
+                  Pay with Cash App
+                </a>
+              </div>
+              <p className="px-2 pb-0.5 pt-2 text-[11px] text-white/50">
+                Using Cash App? Put {numbers(shown)} in the note.
+              </p>
+            </>
           )}
         </div>
       </div>

@@ -201,7 +201,7 @@ export default function Gallery() {
 
       <aside
         inert={!panelOpen}
-        className={`absolute inset-x-2 bottom-2 z-10 flex max-h-[64dvh] flex-col overflow-hidden rounded-[14px] bg-white/95 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-[rgba(0,0,0,0.06)] transition-[opacity,transform] duration-200 ease-out md:inset-x-auto md:bottom-3 md:right-3 md:top-3 md:max-h-none md:w-[328px] ${
+        className={`absolute inset-x-2 bottom-2 z-10 flex max-h-[64dvh] flex-col overflow-hidden rounded-[14px] bg-white/95 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-[rgba(0,0,0,0.06)] transition-[opacity,translate] duration-200 ease-out md:inset-x-auto md:bottom-3 md:right-3 md:top-3 md:max-h-none md:w-[328px] ${
           panelOpen ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
         }`}
       >
@@ -583,7 +583,7 @@ function NavButton({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="grid size-9 place-items-center rounded-[10px] text-[#3a3936] transition-[background-color,transform] duration-150 ease-out hover:bg-[#ecebe7] active:scale-[0.96]"
+      className="grid size-9 place-items-center rounded-[10px] text-[#3a3936] transition-[background-color,scale] duration-150 ease-out hover:bg-[#ecebe7] active:scale-[0.96]"
     >
       <svg
         viewBox="0 0 16 16"

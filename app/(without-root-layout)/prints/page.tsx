@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { cachedSold } from "@/lib/print-sales";
 import { catalog } from "./catalog";
 import PrintList from "./print-list";
 
@@ -12,8 +13,9 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-export default function Page() {
+export default async function Page() {
   const sections = catalog();
+  const sold = await cachedSold();
   const count = sections.reduce((n, s) => n + s.items.length, 0);
 
   return (
@@ -32,19 +34,19 @@ export default function Page() {
           <p className="mt-5 text-[13px] text-[#6b6a66]">
             Print list · {count} works · All Street Gallery, NYC
           </p>
-          <p className="mt-4 max-w-[40ch] text-[13px] leading-[1.5] text-[#6b6a66]">
-            Tap the prints you want and pay on Venmo (@mitulito). The note fills in
-            with your picks and I&apos;ll set them aside. Questions?{" "}
+          <p className="mt-4 max-w-[40ch] text-pretty text-[13px] leading-[1.5] text-[#6b6a66]">
+            Thanks for coming. If one stuck with you, it&apos;s yours. Buy it here with
+            Venmo or Cash&nbsp;App (mitulito on both). Questions? Ask me or{" "}
             <a
               href="mailto:mitulxshah@gmail.com"
               className="text-[#111] underline decoration-[rgba(0,0,0,0.25)] underline-offset-2"
             >
-              Email me
+              email&nbsp;me
             </a>
             .
           </p>
         </header>
-        <PrintList sections={sections} />
+        <PrintList sections={sections} initialSold={sold} />
       </main>
     </div>
   );

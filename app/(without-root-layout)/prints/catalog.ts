@@ -26,8 +26,7 @@ export const PRICES: Partial<Record<GroupId, number>> = {
   cntower: 250,
 };
 
-/** Add ids here as things sell during the show. */
-export const SOLD = new Set<string>([]);
+// Sold state lives in Postgres (lib/print-sales.ts), toggled at /prints/admin.
 
 export type CatalogItem = {
   no: number;
@@ -37,7 +36,6 @@ export type CatalogItem = {
   portrait: boolean;
   src: string;
   price: number | null;
-  sold: boolean;
 };
 
 export type CatalogSection = {
@@ -63,9 +61,11 @@ export function catalog(): CatalogSection[] {
         portrait: p.portrait,
         src: p.src,
         price: PRICES[group] ?? null,
-        sold: SOLD.has(p.id),
       }),
     );
     return { group, series: GROUPS[group].name, size: sizeLabel(size), items };
   }).filter((s) => s.items.length > 0);
 }
+
+export const isCatalogId = (id: string) =>
+  catalog().some((s) => s.items.some((i) => i.id === id));
