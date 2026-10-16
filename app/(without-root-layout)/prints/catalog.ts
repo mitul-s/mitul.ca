@@ -11,6 +11,9 @@ import {
 // plus every print in the series below (for sale even if it isn't on a wall).
 const SELL_ALL = new Set<GroupId>(["concerts"]);
 
+/** Single prints for sale that aren't on a wall. Listed after the rest of their series. */
+const EXTRAS = new Set<string>(["DSC08217"]); // Chicago lakefront
+
 /** Page order. Concerts go last, since they're the least likely to sell. */
 const ORDER: GroupId[] = [...GROUP_ORDER.filter((g) => g !== "concerts"), "concerts"];
 
@@ -21,9 +24,24 @@ const ORDER: GroupId[] = [...GROUP_ORDER.filter((g) => g !== "concerts"), "conce
 export const PRICES: Partial<Record<GroupId, number>> = {
   street: 40,
   montreal: 60,
-  cityscapes: 125,
+  cityscapes: 100,
   concerts: 75,
-  cntower: 250,
+  cntower: 200,
+};
+
+/** One line under each series heading. Years come from the photos' capture dates. */
+export const ABOUT: Partial<
+  Record<GroupId, { blurb: string; link?: { href: string; label: string } }>
+> = {
+  cityscapes: { blurb: "Toronto, 2015–2018, mostly from up high. Plus one from Chicago." },
+  cntower: { blurb: "One from 2016, one from 2017." },
+  montreal: {
+    blurb:
+      "The Montreal metro, shot between December 2021 and January 2022 while the city was under lockdown and curfew.",
+    link: { href: "https://typicalmitul.com/montreal-in-motion", label: "See the project" },
+  },
+  street: { blurb: "Out walking, 2015–2017." },
+  concerts: { blurb: "Live shows, 2023–2024." },
 };
 
 // Sold state lives in Postgres (lib/print-sales.ts), toggled at /prints/admin.
@@ -42,6 +60,7 @@ export type CatalogSection = {
   group: GroupId;
   series: string;
   size: string;
+  about?: (typeof ABOUT)[GroupId];
   items: CatalogItem[];
 };
 
@@ -51,8 +70,10 @@ export function catalog(): CatalogSection[] {
   return ORDER.map((group) => {
     const size = config.sizes[group];
     const items = PIECES.filter(
-      (p) => p.group === group && (SELL_ALL.has(group) || config.hung[p.id]),
-    ).map(
+      (p) => p.group === group && (SELL_ALL.has(group) || config.hung[p.id] || EXTRAS.has(p.id)),
+    )
+      .sort((a, b) => Number(EXTRAS.has(a.id)) - Number(EXTRAS.has(b.id)))
+      .map(
       (p): CatalogItem => ({
         no: ++no,
         id: p.id,
@@ -63,7 +84,7 @@ export function catalog(): CatalogSection[] {
         price: PRICES[group] ?? null,
       }),
     );
-    return { group, series: GROUPS[group].name, size: sizeLabel(size), items };
+    return { group, series: GROUPS[group].name, size: sizeLabel(size), about: ABOUT[group], items };
   }).filter((s) => s.items.length > 0);
 }
 
