@@ -16,27 +16,10 @@ import {
   type GroupId,
   type HangConfig,
   type SizeKey,
+  swapSlots,
 } from "./hang";
+import { STORAGE_KEY, loadSaved } from "./saved";
 import { GalleryScene, STOPS } from "./scene";
-
-const STORAGE_KEY = "space-hang:v6";
-
-function loadSaved(): HangConfig | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const saved = JSON.parse(raw) as Partial<HangConfig>;
-    const base = defaultConfig();
-    return {
-      ...base,
-      ...saved,
-      sizes: { ...base.sizes, ...saved.sizes },
-      hung: { ...base.hung, ...saved.hung },
-    };
-  } catch {
-    return null;
-  }
-}
 
 const isField = (t: EventTarget | null) =>
   t instanceof HTMLElement &&
@@ -53,6 +36,7 @@ export default function Gallery() {
   const [guides, setGuides] = useState(false);
   const [faces, setFaces] = useState<"photos" | "names">("photos");
   const [panelOpen, setPanelOpen] = useState(true);
+  const [arranging, setArranging] = useState(false);
   const [webgl, setWebgl] = useState(true);
 
   const layout = useMemo(() => computeLayout(config), [config]);
@@ -124,6 +108,13 @@ export default function Gallery() {
   useEffect(() => sceneRef.current?.setPeople(people), [people]);
   useEffect(() => sceneRef.current?.setGuides(guides), [guides]);
   useEffect(() => sceneRef.current?.setFaces(faces), [faces]);
+  useEffect(() => {
+    sceneRef.current?.setArrange(
+      arranging
+        ? (a, b) => setConfig((c) => ({ ...c, slots: swapSlots(c.slots, a, b) }))
+        : null,
+    );
+  }, [arranging]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -162,6 +153,7 @@ export default function Gallery() {
     setConfig((c) => ({ ...c, sizes: { ...c.sizes, [g]: size } }));
 
   const overflowing = layout.walls.some((w) => w.overflow > 0 || w.tooTall);
+  const moved = Object.keys(config.slots).length;
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#e7e5e0] text-[#1c1c1a]">
@@ -187,6 +179,27 @@ export default function Gallery() {
           (Shift for faster) · ← → for views
         </p>
       </header>
+
+      <div className="absolute bottom-[104px] left-3 flex max-w-[calc(100%-24px)] flex-col items-start gap-2 md:bottom-4 md:left-4">
+        {arranging && (
+          <p className="rounded-[10px] bg-white/95 px-3 py-2 text-[12px] leading-[1.45] text-[#3a3936] shadow-[0_4px_16px_rgba(0,0,0,0.08)] ring-1 ring-[rgba(0,0,0,0.06)] md:max-w-[280px]">
+            Drag a print onto another of the same series and shape to swap them, or tap
+            one and then the other. Esc cancels.
+          </p>
+        )}
+        <button
+          type="button"
+          aria-pressed={arranging}
+          onClick={() => setArranging((on) => !on)}
+          className={`rounded-[10px] px-3 py-2 text-[13px] shadow-[0_4px_16px_rgba(0,0,0,0.08)] ring-1 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] ${
+            arranging
+              ? "bg-[#1c1c1a] text-white ring-[#1c1c1a]"
+              : "bg-white/95 text-[#1c1c1a] ring-[rgba(0,0,0,0.06)]"
+          }`}
+        >
+          {arranging ? "Done" : "Rearrange"}
+        </button>
+      </div>
 
       {!panelOpen && (
         <button
@@ -371,6 +384,20 @@ export default function Gallery() {
 
           <Section title="Hanging">
             <div className="space-y-3.5">
+              {moved > 0 && (
+                <div className="flex items-center justify-between gap-3 text-[12px] text-[#6b6a66]">
+                  <span>
+                    {moved} prints moved from the plan
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => update({ slots: {} })}
+                    className="rounded-[8px] px-2 py-1 text-[#1c1c1a] transition-colors hover:bg-[#ecebe7]"
+                  >
+                    Reset order
+                  </button>
+                </div>
+              )}
               <Field label="Frame">
                 <Segmented<FrameWidth>
                   label="Frame width"
@@ -410,6 +437,13 @@ export default function Gallery() {
               />
               <Switch label="People for scale (5′7″)" checked={people} onChange={setPeople} />
               <Switch label="57″ eye line + wall limits" checked={guides} onChange={setGuides} />
+              <a
+                href="/space/sheet"
+                className="flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] ring-1 ring-[rgba(0,0,0,0.08)] transition-colors hover:bg-[#f2f1ee]"
+              >
+                Hanging sheet with measurements
+                <span aria-hidden className="text-[#8a8984]">→</span>
+              </a>
             </div>
           </Section>
         </div>

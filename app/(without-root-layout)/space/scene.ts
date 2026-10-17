@@ -5,6 +5,7 @@ import {
   GROUPS,
   ROOM,
   SURFACES,
+  canSwap,
   sizeLabel,
   type GroupId,
   type Layout,
@@ -309,6 +310,12 @@ function labelTexture(p: Placed, anisotropy: number) {
   return tex;
 }
 
+/** Hidden walls (the dollhouse cutaway) keep their meshes, so check the chain. */
+function shown(o: THREE.Object3D | null) {
+  for (; o; o = o.parent) if (!o.visible) return false;
+  return true;
+}
+
 /** Position + facing for something hung on a surface, `off` inches proud. */
 function onSurface(surface: SurfaceId, s: number, y: number, off: number) {
   switch (surface) {
@@ -358,6 +365,27 @@ export class GalleryScene {
     plane: new THREE.PlaneGeometry(1, 1),
   };
   private mat: Record<string, THREE.Material> = {};
+
+  // Rearrange: drag (or tap two) prints of the same series + orientation to
+  // swap their spots. The scene only reports the swap; the layout moves them.
+  private onSwap: ((a: string, b: string) => void) | null = null;
+  private prints = new Map<string, { group: THREE.Group; placed: Placed }>();
+  private pickable: THREE.Object3D[] = [];
+  private raycaster = new THREE.Raycaster();
+  private pick: {
+    slot: string;
+    pointerId: number;
+    x: number;
+    y: number;
+    moved: boolean;
+    /** Wall-parallel plane through the grab point, world space. */
+    plane: THREE.Plane;
+    /** Grab point → print origin, in the print's parent space. */
+    offset: THREE.Vector3;
+    hover: string | null;
+  } | null = null;
+  private selected: string | null = null;
+  private outlines: THREE.Mesh[] = [];
   private tex: Record<string, THREE.Texture> = {};
 
   constructor(
@@ -402,6 +430,18 @@ export class GalleryScene {
       this.sides[SIDE_OF[id]].add(this.art[id]);
 
     this.buildMaterials();
+    this.mat.outline = new THREE.MeshBasicMaterial({
+      color: 0x1c1c1a,
+      transparent: true,
+      opacity: 0.14,
+      depthWrite: false,
+    });
+    this.mat.outlineOn = new THREE.MeshBasicMaterial({
+      color: 0x1c1c1a,
+      transparent: true,
+      opacity: 0.85,
+      depthWrite: false,
+    });
     this.buildShell();
     this.buildStorefront();
     this.buildCeiling();
@@ -439,6 +479,12 @@ export class GalleryScene {
   setLayout(layout: Layout) {
     this.layout = layout;
     for (const g of Object.values(this.art)) g.clear();
+    // Groups were just replaced, so any pick in progress is stale.
+    this.pick = null;
+    this.selected = null;
+    this.outlines = [];
+    this.prints.clear();
+    this.pickable = [];
 
     // Only hung prints hold a texture; anything taken down is freed below.
     const used = new Set<string>();
@@ -449,7 +495,10 @@ export class GalleryScene {
       let face = this.labels.get(key);
       if (!face) face = this.faces === "photos" ? this.loadPhoto(p, key) : this.nameCard(p);
       this.labels.set(key, face);
-      this.art[p.surface].add(this.makePrint(p, face.mat, layout.frame));
+      const group = this.makePrint(p, face.mat, layout.frame);
+      this.art[p.surface].add(group);
+      this.prints.set(p.slot, { group, placed: p });
+      group.traverse((o) => o.userData.slot && this.pickable.push(o));
     }
     this.labels.forEach((face, key) => {
       if (used.has(key)) return;
@@ -466,6 +515,14 @@ export class GalleryScene {
     a.position.copy(local(22, 0, Math.max(BI.length + 10, left.center - left.half - 16)));
     b.position.copy(local(W - 22, 0, Math.min(L - 16, right.center + right.half + 14)));
     this.invalidate();
+  }
+
+  /** Pass a handler to turn rearranging on (orbit-drag is paused), null to turn it off. */
+  setArrange(onSwap: ((a: string, b: string) => void) | null) {
+    this.clearPick();
+    this.onSwap = onSwap;
+    this.controls.enableRotate = !onSwap;
+    this.renderer.domElement.style.cursor = "";
   }
 
   setFaces(mode: "photos" | "names") {
@@ -984,11 +1041,13 @@ export class GalleryScene {
     const body = new THREE.Mesh(this.unit.box, frame > 0 ? this.mat.frame : this.mat.mount);
     body.scale.set(p.w, p.h, depth);
     body.position.z = depth / 2;
+    body.userData.slot = p.slot;
     g.add(body);
 
     const print = new THREE.Mesh(this.unit.plane, face);
     print.scale.set(p.printW, p.printH, 1);
     print.position.z = depth + 0.02;
+    print.userData.slot = p.slot;
     g.add(print);
     return g;
   }
@@ -1071,14 +1130,199 @@ export class GalleryScene {
     };
     const up = (e: KeyboardEvent) => this.keys.delete(e.code);
     const blur = () => this.keys.clear();
+    const escape = (e: KeyboardEvent) => e.key === "Escape" && this.clearPick();
     window.addEventListener("keydown", down);
+    window.addEventListener("keydown", escape);
     window.addEventListener("keyup", up);
     window.addEventListener("blur", blur);
+
+    const el = this.renderer.domElement;
+    const press = (e: PointerEvent) => this.pressPrint(e);
+    const move = (e: PointerEvent) => this.movePrint(e);
+    const release = (e: PointerEvent) => this.releasePrint(e, false);
+    const cancel = (e: PointerEvent) => this.releasePrint(e, true);
+    el.addEventListener("pointerdown", press);
+    el.addEventListener("pointermove", move);
+    el.addEventListener("pointerup", release);
+    el.addEventListener("pointercancel", cancel);
+
     this.cleanup.push(() => {
       window.removeEventListener("keydown", down);
+      window.removeEventListener("keydown", escape);
       window.removeEventListener("keyup", up);
       window.removeEventListener("blur", blur);
+      el.removeEventListener("pointerdown", press);
+      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointerup", release);
+      el.removeEventListener("pointercancel", cancel);
     });
+  }
+
+  // ------------------------------------------------------------- rearrange
+
+  private aim(e: PointerEvent) {
+    const r = this.renderer.domElement.getBoundingClientRect();
+    const ndc = new THREE.Vector2(
+      ((e.clientX - r.left) / r.width) * 2 - 1,
+      -((e.clientY - r.top) / r.height) * 2 + 1,
+    );
+    this.raycaster.setFromCamera(ndc, this.camera);
+    return this.raycaster.ray;
+  }
+
+  /** Nearest print under the pointer on a wall that's currently shown. */
+  private printAt(e: PointerEvent, skip?: string) {
+    this.aim(e);
+    for (const hit of this.raycaster.intersectObjects(this.pickable, false)) {
+      const slot = hit.object.userData.slot as string;
+      if (slot !== skip && shown(hit.object)) return { slot, point: hit.point };
+    }
+    return null;
+  }
+
+  private swappable(a: string, b: string) {
+    const A = this.prints.get(a)?.placed;
+    const B = this.prints.get(b)?.placed;
+    return !!A && !!B && canSwap(A, B);
+  }
+
+  private home(slot: string) {
+    const entry = this.prints.get(slot);
+    if (!entry) return null;
+    const { surface, s, y } = entry.placed;
+    return { entry, pos: onSurface(surface, s, y, 0).pos };
+  }
+
+  /** 4″ off the wall, toward the room, so the moving print sits above its neighbours. */
+  private lift(slot: string, lifted: boolean) {
+    const h = this.home(slot);
+    if (!h) return;
+    h.entry.group.position.copy(h.pos);
+    if (lifted) h.entry.group.translateZ(4);
+    this.invalidate();
+  }
+
+  private showTargets(from: string) {
+    this.clearTargets();
+    this.prints.forEach(({ group, placed }, slot) => {
+      const source = slot === from;
+      if (!source && !this.swappable(from, slot)) return;
+      // The picked-up print gets a dark frame too; a 4″ lift barely reads head-on.
+      const ring = new THREE.Mesh(this.unit.plane, source ? this.mat.outlineOn : this.mat.outline);
+      ring.userData.source = source;
+      ring.scale.set(placed.w + 2.5, placed.h + 2.5, 1);
+      ring.position.z = 0.04;
+      ring.userData.ringFor = slot;
+      group.add(ring);
+      this.outlines.push(ring);
+    });
+    this.invalidate();
+  }
+
+  private markTarget(slot: string | null) {
+    for (const ring of this.outlines)
+      ring.material =
+        ring.userData.source || ring.userData.ringFor === slot ? this.mat.outlineOn : this.mat.outline;
+    this.invalidate();
+  }
+
+  private clearTargets() {
+    for (const ring of this.outlines) ring.removeFromParent();
+    this.outlines = [];
+  }
+
+  private clearPick() {
+    if (this.pick) this.lift(this.pick.slot, false);
+    if (this.selected) this.lift(this.selected, false);
+    this.pick = null;
+    this.selected = null;
+    this.clearTargets();
+    this.invalidate();
+  }
+
+  private pressPrint(e: PointerEvent) {
+    if (!this.onSwap || (e.pointerType === "mouse" && e.button !== 0) || this.pick) return;
+    const hit = this.printAt(e);
+    if (!hit) {
+      if (this.selected) this.clearPick(); // tap on the wall drops a selection
+      return;
+    }
+    const { group } = this.prints.get(hit.slot)!;
+    const normal = new THREE.Vector3(0, 0, 1).applyQuaternion(
+      group.getWorldQuaternion(new THREE.Quaternion()),
+    );
+    const grab = group.parent!.worldToLocal(hit.point.clone());
+    this.pick = {
+      slot: hit.slot,
+      pointerId: e.pointerId,
+      x: e.clientX,
+      y: e.clientY,
+      moved: false,
+      plane: new THREE.Plane().setFromNormalAndCoplanarPoint(normal, hit.point),
+      offset: group.position.clone().sub(grab),
+      hover: null,
+    };
+    this.renderer.domElement.setPointerCapture(e.pointerId);
+  }
+
+  private movePrint(e: PointerEvent) {
+    if (!this.onSwap) return;
+    const el = this.renderer.domElement;
+    const pick = this.pick;
+    if (!pick || pick.pointerId !== e.pointerId) {
+      if (e.pointerType === "mouse") el.style.cursor = this.printAt(e) ? "grab" : "";
+      return;
+    }
+    if (!pick.moved) {
+      if (Math.hypot(e.clientX - pick.x, e.clientY - pick.y) < 5) return;
+      pick.moved = true;
+      if (this.selected && this.selected !== pick.slot) this.lift(this.selected, false);
+      this.selected = null;
+      this.showTargets(pick.slot);
+      el.style.cursor = "grabbing";
+    }
+    const point = this.aim(e).intersectPlane(pick.plane, new THREE.Vector3());
+    if (!point) return;
+    const { group } = this.prints.get(pick.slot)!;
+    group.position.copy(group.parent!.worldToLocal(point).add(pick.offset));
+    group.translateZ(4);
+    const over = this.printAt(e, pick.slot);
+    const target = over && this.swappable(pick.slot, over.slot) ? over.slot : null;
+    if (target !== pick.hover) {
+      pick.hover = target;
+      this.markTarget(target);
+    }
+    this.invalidate();
+  }
+
+  private releasePrint(e: PointerEvent, cancelled: boolean) {
+    const pick = this.pick;
+    if (!pick || pick.pointerId !== e.pointerId) return;
+    const el = this.renderer.domElement;
+    if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+    this.pick = null;
+    el.style.cursor = "";
+
+    if (pick.moved || cancelled) {
+      this.lift(pick.slot, false);
+      this.clearTargets();
+      if (!cancelled && pick.hover) this.onSwap?.(pick.slot, pick.hover);
+      return;
+    }
+
+    // A tap: first one picks a print up, a second on a match swaps.
+    const first = this.selected;
+    if (first && first !== pick.slot && this.swappable(first, pick.slot)) {
+      this.clearPick();
+      this.onSwap?.(first, pick.slot);
+    } else if (first === pick.slot) {
+      this.clearPick();
+    } else {
+      this.clearPick();
+      this.selected = pick.slot;
+      this.lift(pick.slot, true);
+      this.showTargets(pick.slot);
+    }
   }
 
   /** Returns true if the camera moved. */

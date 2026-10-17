@@ -195,21 +195,21 @@ export const PLAN: WallPlan[] = [
     justifyRows: true,
     segments: [
       // Street flanks, 3 high: the older prints, then the 2025 ones as a second column.
-      { pieces: ["IMG_3790", "IMG_5084", "IMG_9421", "DSCF9114", "DSCF9603", "CashRegister"], rows: 3, gapAfter: 2 },
-      // Column by column (4 high), spread so warm / blue / teal / grey mix.
+      { pieces: ["DSCF0090", "IMG_3790", "IMG_9421", "DSCF9114", "IMG_8266", "IMG_4664"], rows: 3, gapAfter: 2 },
+      // Column by column (4 high), in the order Mitul arranged in /space.
       {
         pieces: [
-          "DSC06927", "DSC05927", "DSC05981", "DSC05633",
-          "DSC05356", "DSC06715", "DSC05603", "DSC07142",
-          "DSC05828", "DSC06387", "DSC07162", "DSC04527",
-          "DSC05804", "DSC05912", "DSC06039", "DSC06643",
-          "DSC06939", "DSC06171", "DSC05597", "DSC05894",
-          "DSC05623", "DSC06414", "DSC06693", "DSC05728",
+          "DSC06414", "DSC05927", "DSC05981", "DSC06927",
+          "DSC06715", "DSC05356", "DSC07142", "DSC05603",
+          "DSC05828", "DSC06387", "DSC06939", "DSC04527",
+          "DSC05804", "DSC06643", "DSC05597", "DSC05728",
+          "DSC07162", "DSC06693", "DSC06039", "DSC06171",
+          "DSC05633", "DSC05623", "DSC05894", "DSC05912",
         ],
         rows: 4,
         gapAfter: 2,
       },
-      { pieces: ["IMG_8266", "IMG_8305", "IMG_4664", "DSCF0090", "DSCF9494", "DSCF9634"], rows: 3 },
+      { pieces: ["DSCF9603", "IMG_8305", "CashRegister", "DSCF9634", "IMG_5084", "DSCF9494"], rows: 3 },
     ],
   },
   {
@@ -239,7 +239,39 @@ export type HangConfig = {
   gap: number;
   /** Between clusters along a wall. */
   spacing: number;
+  /**
+   * Who hangs where: plan spot (the id written in PLAN) → piece shown there.
+   * Missing means the plan's own piece. Only same-series, same-orientation
+   * swaps are allowed, so the layout itself never moves.
+   */
+  slots: Record<string, string>;
 };
+
+/** Swaps keep the geometry identical: same series (so same size), same orientation. */
+export const canSwap = (a: Placed, b: Placed) =>
+  a.slot !== b.slot && a.piece.group === b.piece.group && a.portrait === b.portrait;
+
+export function swapSlots(slots: Record<string, string>, a: string, b: string) {
+  const at = (s: string) => slots[s] ?? s;
+  const next = { ...slots, [a]: at(b), [b]: at(a) };
+  for (const k of [a, b]) if (next[k] === k) delete next[k];
+  return next;
+}
+
+/** Saved maps must still be a clean permutation of known, compatible pieces. */
+export function sanitizeSlots(raw: unknown): Record<string, string> {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Record<string, string> = {};
+  for (const [slot, id] of Object.entries(raw as Record<string, unknown>)) {
+    const a = PIECE_BY_ID.get(slot);
+    const b = typeof id === "string" ? PIECE_BY_ID.get(id) : undefined;
+    if (!a || !b || a.group !== b.group || a.portrait !== b.portrait) return {};
+    out[slot] = b.id;
+  }
+  const keys = Object.keys(out).sort().join();
+  const values = Object.values(out).sort().join();
+  return keys === values ? out : {};
+}
 
 export const defaultConfig = (): HangConfig => ({
   sizes: Object.fromEntries(
@@ -249,10 +281,13 @@ export const defaultConfig = (): HangConfig => ({
   frame: 0,
   gap: 3,
   spacing: 6,
+  slots: {},
 });
 
 export type Placed = {
   piece: Piece;
+  /** The plan spot this print fills (see HangConfig.slots). */
+  slot: string;
   surface: SurfaceId;
   size: SizeKey;
   portrait: boolean;
@@ -298,6 +333,7 @@ function measure(piece: Piece, config: HangConfig) {
 
 type Cell = ReturnType<typeof measure> & {
   piece: Piece;
+  slot: string;
   col: number;
   row: number;
   /** Center offset from the segment's start, when the segment sets it directly. */
@@ -310,8 +346,14 @@ export function computeLayout(config: HangConfig): Layout {
 
   for (const plan of PLAN) {
     const surface = SURFACES[plan.surface];
-    const hungPieces = (ids: string[]) =>
-      ids.filter((id) => config.hung[id]).map((id) => PIECE_BY_ID.get(id)!);
+    // Each plan spot shows whoever config.slots puts there, if they're hung.
+    const hungPieces = (spots: string[]) =>
+      spots
+        .map((slot) => {
+          const id = config.slots[slot];
+          return { slot, piece: PIECE_BY_ID.get(id && PIECE_BY_ID.has(id) ? id : slot)! };
+        })
+        .filter(({ piece }) => config.hung[piece.id]);
 
     const segments = plan.segments
       .map((seg) => {
@@ -326,7 +368,9 @@ export function computeLayout(config: HangConfig): Layout {
           const gridRows = seg.grid.map(hungPieces).filter((r) => r.length > 0);
           rows = gridRows.length;
           colGap = config.spacing;
-          const sized = gridRows.map((r) => r.map((piece) => ({ ...measure(piece, config), piece })));
+          const sized = gridRows.map((r) =>
+            r.map(({ piece, slot }) => ({ ...measure(piece, config), piece, slot })),
+          );
           const rowW = sized.map(
             (r) => r.reduce((s, c) => s + c.w, 0) + (r.length - 1) * colGap,
           );
@@ -348,9 +392,10 @@ export function computeLayout(config: HangConfig): Layout {
           cols = Math.max(0, ...gridRows.map((r) => r.length));
           colGap = config.spacing;
           cells = gridRows.flatMap((r, row) =>
-            r.map((piece, i) => ({
+            r.map(({ piece, slot }, i) => ({
               ...measure(piece, config),
               piece,
+              slot,
               row,
               col: i + (cols - r.length) / 2,
             })),
@@ -362,9 +407,10 @@ export function computeLayout(config: HangConfig): Layout {
           rows = Math.max(1, Math.min(seg.rows ?? 1, pieces.length));
           cols = Math.ceil(pieces.length / rows);
           colGap = config.gap;
-          cells = pieces.map((piece, i) => ({
+          cells = pieces.map(({ piece, slot }, i) => ({
             ...measure(piece, config),
             piece,
+            slot,
             col: Math.floor(i / rows),
             row: i % rows,
           }));
@@ -447,6 +493,7 @@ export function computeLayout(config: HangConfig): Layout {
         bottom = Math.min(bottom, cy - cell.h / 2);
         placed.push({
           piece: cell.piece,
+          slot: cell.slot,
           surface: surface.id,
           size: cell.size,
           portrait: cell.portrait,
