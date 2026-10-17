@@ -68,15 +68,15 @@ export default async function Page() {
             Print List · All Street Gallery, NYC
           </p>
           <p className="mt-4 max-w-[40ch] text-pretty text-[13px] leading-[1.5] text-[#6b6a66]">
-            Thanks for coming. If one stuck with you, it&apos;s yours. Buy it here with
-            Venmo (@mitulito). Questions? Ask me or{" "}
+            Thank you for coming. If one stuck with you, it&apos;s yours. Venmo or Zelle
+            (@mitulito). Always welcome to{" "}
             <a
               href="mailto:mitulxshah@gmail.com"
               className="text-[#111] underline decoration-[rgba(0,0,0,0.25)] underline-offset-2"
             >
               email&nbsp;me
             </a>
-            .
+            , or ask me anything in person.
           </p>
         </header>
         <PrintList sections={sections} initialSold={sold} />

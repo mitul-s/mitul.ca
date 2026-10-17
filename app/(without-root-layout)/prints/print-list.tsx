@@ -111,25 +111,6 @@ export default function PrintList({
               <span className="font-medium">{section.series}</span>
               <span className="text-[#8a8984]">{section.size} in</span>
             </h2>
-            {section.about && (
-              <p className="mt-2.5 max-w-[52ch] text-pretty text-[13px] leading-[1.5] text-[#6b6a66]">
-                {section.about.blurb}
-                {section.about.link && (
-                  <>
-                    {" "}
-                    <a
-                      href={section.about.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#111] underline decoration-[rgba(0,0,0,0.25)] underline-offset-2"
-                    >
-                      {section.about.link.label.replace(/ (\S+)$/, "\u00a0$1")}
-                    </a>
-                    .
-                  </>
-                )}
-              </p>
-            )}
             {/* Rows share a bottom edge so captions line up across orientations */}
             <ul className="mt-4 grid grid-cols-2 items-end gap-x-3 gap-y-6 sm:grid-cols-3">
               {section.items.map((item) => {
