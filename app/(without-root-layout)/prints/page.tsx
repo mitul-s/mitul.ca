@@ -35,7 +35,7 @@ export default async function Page() {
   const sold = await cachedSold();
 
   return (
-    <div className="min-h-dvh bg-white text-[#111]">
+    <div className="min-h-dvh bg-white text-[#111] [-webkit-tap-highlight-color:transparent]">
       <main className="mx-auto w-full max-w-[720px] px-4 pb-32 pt-12 sm:px-6 sm:pt-16">
         <header className="mb-10">
           <div className="flex items-start justify-between gap-4">
@@ -57,7 +57,7 @@ export default async function Page() {
                   rel="noopener noreferrer"
                   aria-label={s.label}
                   title={s.label}
-                  className="grid size-9 place-items-center rounded-full text-[#6b6a66] transition-colors duration-150 hover:text-[#111]"
+                  className="grid size-9 place-items-center rounded-full text-[#6b6a66] transition-[color,scale] duration-150 ease-out hover:text-[#111] active:scale-[0.92]"
                 >
                   {s.icon}
                 </a>

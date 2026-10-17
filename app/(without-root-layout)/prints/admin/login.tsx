@@ -41,7 +41,7 @@ export default function AdminLogin() {
       <button
         type="submit"
         disabled={busy || !password}
-        className="mt-3 w-full rounded-[9px] bg-[#111] px-3 py-2 text-[14px] font-medium text-white transition-opacity disabled:opacity-40"
+        className="mt-3 w-full rounded-[9px] bg-[#111] px-3 py-2 text-[14px] font-medium text-white transition-[opacity,scale] duration-150 ease-out enabled:active:scale-[0.97] disabled:opacity-40"
       >
         {busy ? "Signing in…" : "Sign in"}
       </button>

@@ -1,5 +1,6 @@
 "use client";
 
+import NumberFlow from "@number-flow/react";
 import { useEffect, useState } from "react";
 import type { CatalogItem, CatalogSection } from "./catalog";
 
@@ -40,6 +41,13 @@ const VENMO = "mitulito";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+const USD = { style: "currency", currency: "USD", maximumFractionDigits: 0 } as const;
+
+/** Snappier than NumberFlow's 900ms default roll; same feel, less wait. */
+const FLOW_TIMING = {
+  transformTiming: { duration: 550, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
+  opacityTiming: { duration: 275, easing: "ease-out" },
+} as const;
 
 /** Same query works for the app scheme and Venmo's web pay page. */
 function venmoQuery(items: CatalogItem[], total: number) {
@@ -136,7 +144,7 @@ export default function PrintList({
                       aria-label={`No. ${item.no}, ${item.series}, ${item.size}, ${isSold ? "sold" : price}`}
                       disabled={isSold}
                       onClick={() => toggle(item.id)}
-                      className="block w-full select-none text-left [-webkit-touch-callout:none] disabled:cursor-default"
+                      className="block w-full select-none text-left transition-[scale] duration-150 ease-out [-webkit-touch-callout:none] enabled:active:scale-[0.98] disabled:cursor-default"
                     >
                       {/* Tile matches the photo's own 3:2, so nothing is cropped */}
                       <span
@@ -202,13 +210,27 @@ export default function PrintList({
       >
         <div className="mx-auto flex max-w-[520px] items-center gap-3 rounded-[14px] bg-[#111] py-2 pl-4 pr-2 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
           <p className="flex-1 text-[13px]">
-            {shown.length} {shown.length === 1 ? "print" : "prints"}
-            {priced && <span className="text-white/60"> · {usd(total)}</span>}
+            {/* NumberFlow keeps every digit in the DOM for the roll, so screen
+                readers get the plain sentence instead. */}
+            <span aria-hidden>
+              <NumberFlow value={shown.length} locales="en-US" {...FLOW_TIMING} />{" "}
+              {shown.length === 1 ? "print" : "prints"}
+              {priced && (
+                <span className="text-white/60">
+                  {" · "}
+                  <NumberFlow value={total} locales="en-US" format={USD} {...FLOW_TIMING} />
+                </span>
+              )}
+            </span>
+            <span className="sr-only">
+              {shown.length} {shown.length === 1 ? "print" : "prints"}
+              {priced && `, ${usd(total)}`}
+            </span>
           </p>
           <button
             type="button"
             onClick={() => setPicked([])}
-            className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-colors hover:text-white"
+            className="rounded-[9px] px-2.5 py-1.5 text-[13px] text-white/70 transition-[color,scale] duration-150 ease-out hover:text-white active:scale-[0.96]"
           >
             Clear
           </button>

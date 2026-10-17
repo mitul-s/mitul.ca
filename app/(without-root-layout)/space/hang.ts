@@ -80,18 +80,19 @@ const piece = (group: GroupId, portrait: boolean) => (id: string): Piece => ({
   thumb: `/space/thumbs/${id}.jpg`,
 });
 
-// Mirrors the folders. Concerts are split by orientation.
+// Mirrors the print folders (NOT_PRINTED and Misc stay out). Edited re-exports
+// (-Enhanced-NR, -Edit) keep their original id. Concerts are split by orientation.
 const CONCERTS_P = [
-  "AZ_00075", "DSC02754", "DSC02938", "DSC02979", "DSC03037", "DSC05374",
-  "DSC07974", "DSC07994", "DSC08302", "DSC08351", "DSC09550",
+  "DSC02754", "DSC02938", "DSC02979", "DSC03037", "DSC05374", "DSC08351", "DSC09550",
 ];
-const CONCERTS_L = [
-  "AZ_00097", "DSC00719", "DSC00897", "DSC02916", "DSC07976", "DSC08040",
-  "DSC08417", "DSC09966",
-];
+const CONCERTS_L = ["AZ_00097", "DSC00719", "DSC02916", "DSC08040", "DSC08417", "DSC09966"];
 const CITY = ["DSC08217", "IMG_0348", "IMG_1282", "IMG_1297", "IMG_5583", "IMG_6332", "IMG_8150"];
 const CN_TOWER = ["IMG_7893", "IMG_9552"];
-const STREET = ["IMG_3790", "IMG_4664", "IMG_5084", "IMG_8266", "IMG_8305", "IMG_9421"];
+const STREET = [
+  "IMG_3790", "IMG_4664", "IMG_5084", "IMG_8266", "IMG_8305", "IMG_9421",
+  // 2025, X100V. "Cash Register Restored" on disk.
+  "CashRegister", "DSCF0090", "DSCF9114", "DSCF9494", "DSCF9603", "DSCF9634",
+];
 // mtl_metro minus DSC05580 (Mitul) and the book folder
 const MONTREAL = [
   "DSC04527", "DSC05356", "DSC05597", "DSC05603", "DSC05623", "DSC05633",
@@ -183,10 +184,8 @@ export const PLAN: WallPlan[] = [
       {
         pack: true,
         grid: [
-          ["DSC03037", "DSC09550", "DSC02979", "DSC08351", "DSC05374",
-           "DSC07994", "DSC02754", "DSC02938", "DSC08302", "DSC07974", "AZ_00075"],
-          ["DSC00719", "DSC09966", "DSC08040",
-           "DSC02916", "AZ_00097", "DSC07976", "DSC08417", "DSC00897"],
+          ["DSC03037", "DSC09550", "DSC02979", "DSC08351", "DSC05374", "DSC02754", "DSC02938"],
+          ["DSC00719", "DSC09966", "DSC08040", "DSC02916", "AZ_00097", "DSC08417"],
         ],
       },
     ],
@@ -195,7 +194,8 @@ export const PLAN: WallPlan[] = [
     surface: "left",
     justifyRows: true,
     segments: [
-      { pieces: ["IMG_3790", "IMG_5084", "IMG_9421"], rows: 3, gapAfter: 2 },
+      // Street flanks, 3 high: the older prints, then the 2025 ones as a second column.
+      { pieces: ["IMG_3790", "IMG_5084", "IMG_9421", "DSCF9114", "DSCF9603", "CashRegister"], rows: 3, gapAfter: 2 },
       // Column by column (4 high), spread so warm / blue / teal / grey mix.
       {
         pieces: [
@@ -209,7 +209,7 @@ export const PLAN: WallPlan[] = [
         rows: 4,
         gapAfter: 2,
       },
-      { pieces: ["IMG_8266", "IMG_8305", "IMG_4664"], rows: 3 },
+      { pieces: ["IMG_8266", "IMG_8305", "IMG_4664", "DSCF0090", "DSCF9494", "DSCF9634"], rows: 3 },
     ],
   },
   {
@@ -225,8 +225,7 @@ export const PLAN: WallPlan[] = [
 /** Hung on first load; everything else sits in reserve. */
 const RESERVE = new Set([
   "DSC08217",
-  "DSC07994", "DSC02754", "DSC02938", "DSC08302", "DSC07974", "AZ_00075",
-  "DSC02916", "AZ_00097", "DSC07976", "DSC08417", "DSC00897",
+  "DSC02754", "DSC02938", "DSC02916", "AZ_00097", "DSC08417",
 ]);
 
 export type FrameWidth = 0 | 1 | 2;

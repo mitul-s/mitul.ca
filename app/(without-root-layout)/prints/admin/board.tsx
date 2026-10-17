@@ -92,7 +92,7 @@ export default function SoldBoard({
                       aria-pressed={isSold}
                       aria-label={`No. ${item.no}, ${isSold ? "sold, tap to undo" : "tap to mark sold"}`}
                       onClick={() => toggle(item.id)}
-                      className="block w-full select-none text-left [-webkit-touch-callout:none]"
+                      className="block w-full select-none text-left transition-[scale] duration-150 ease-out [-webkit-touch-callout:none] active:scale-[0.98]"
                     >
                       <span
                         className={`relative block overflow-hidden rounded-[3px] bg-[#eceef1] outline-2 outline-offset-2 transition-[outline-color,opacity] duration-150 ${

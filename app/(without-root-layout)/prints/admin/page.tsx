@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="min-h-dvh bg-white text-[#111]">
+    <div className="min-h-dvh bg-white text-[#111] [-webkit-tap-highlight-color:transparent]">
       <main className="mx-auto w-full max-w-[720px] px-4 pb-16 pt-10 sm:px-6">
         <Suspense fallback={<p className="text-[13px] text-[#6b6a66]">Loading…</p>}>
           <Admin />
