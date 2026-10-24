@@ -17,6 +17,7 @@ export function PersonJsonLd() {
       "https://twitter.com/typicalmitul",
       "https://instagram.com/typicalmitul",
       "https://github.com/mitul-s",
+      "https://linkedin.com/in/heymitul",
       "https://typicalmitul.com",
     ],
   };

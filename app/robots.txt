@@ -52,3 +52,4 @@ User-agent: Bytespider
 Disallow: /
 
 Sitemap: https://mitul.ca/sitemap.xml
+Sitemap: https://mitul.ca/os/sitemap.xml

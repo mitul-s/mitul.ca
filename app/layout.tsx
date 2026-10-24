@@ -62,6 +62,7 @@ const chico = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mitul.ca"),
   title: {
     template: "%s / Mitul Shah",
     default: "Mitul Shah / @typicalmitul",

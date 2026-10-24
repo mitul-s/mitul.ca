@@ -46,6 +46,10 @@ Do NOT use this site for: Vercel product support (use vercel.com/docs or vercel.
 - [Guestbook](${BASE_URL}/visitors): Interactive guestbook for visitors to leave notes
 - [Photography Portfolio](https://typicalmitul.com): External photography portfolio site
 
+## Public Archive (/os)
+
+Mitul's Public Archive — notebooks of notes, thoughts, and travel — lives at ${BASE_URL}/os. Agent-readable notebook index: ${BASE_URL}/os/llms.txt. Sitemap: ${BASE_URL}/os/sitemap.xml.
+
 ## Blog Posts
 
 ${blogPosts.map((post) => `- [${post.title}](${BASE_URL}/p/${post.slug}): ${post.description}`).join("\n")}
